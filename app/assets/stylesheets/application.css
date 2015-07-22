@@ -1,0 +1,260 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require twitter/bootstrap
+ *= require angular-material/angular-material
+ *= require_tree .
+ *= require_self
+ */
+
+ html, body {
+   font-family: 'Roboto', sans-serif;
+   font-size:14px;
+   height:100%;
+   margin: 0px;
+   padding: 0px;
+   user-select:none;
+   -webkit-user-select:none;
+   -moz-user-select:none;
+   -ms-user-select:none;
+ }
+
+ *:focus {
+     outline: none;
+ }
+
+ /* Toolbar area */
+
+ .menu {
+   background-color: transparent;
+   border: none;
+   height: 38px;
+   margin: 16px;
+   width: 36px;
+ }
+
+ md-toolbar h1 {
+   margin: auto;
+ }
+
+ /* Sidenav area */
+
+ md-list .md-button {
+   color: inherit;
+   font-weight: 500;
+   text-align: left;
+   width: 100%;
+ }
+   md-list .md-button.selected {
+     color: #03a9f4;
+   }
+
+   md-sidenav  md-list {
+     padding: 0px 0px 8px 0px;
+   }
+
+
+ /* Primary content area */
+
+ #content {
+   overflow: hidden;
+ }
+
+ #content  {
+   padding-left: 40px;
+   padding-right: 40px;
+   padding-top: 5px;
+ }
+
+ #content .md-button.contact {
+   background-color: transparent;
+   border: none;
+   width: 48px;
+   height: 48px;
+   margin: 8px auto 16px 0;
+   position: absolute;
+   top: 10px;
+   right: 40px;
+ }
+
+ #content md-icon.avatar {
+   margin-top: 10px;
+ }
+
+ #content .md-button.contact > md-icon {
+   fill:black;
+   width:36px;
+   height:36px;
+ }
+
+ md-button.menuBtn > md-icon {
+   fill:white;
+   width:24px;
+   height:24px;
+ }
+
+ #content .md-button.contact:active > md-icon {
+   background-color: #dadada;
+   border-radius: 75%;
+   padding:4px;
+   transition: all 100ms ease-out 30ms;
+ }
+
+ #content img {
+   display: block;
+   height: auto;
+   max-width: 500px;
+ }
+
+ /* Utils */
+
+ .content-wrapper {
+   position: relative;
+ }
+
+ /* Typography support coming in 0.8.0 */
+
+ md-toolbar h1 {
+   font-size: 1.250em;
+   font-weight: 400;
+ }
+
+ .avatar {
+   position: relative;
+   width: 50%;
+   height: auto;
+   display: inline-block;
+   overflow: hidden;
+   margin: 0px;
+   vertical-align: middle;
+   zoom:0.70;
+   transform: translateZ(0);
+   -webkit-transform: scale(0.70);
+   -moz-transform:scale(0.70);
+ }
+
+
+ md-list-item.md-3-line > md-icon.combo {
+   position: relative;
+   width: 128px;
+   height: 128px;
+   border: 1px solid #ddd;
+   border-radius: 50%;
+   display: inline-block;
+   overflow: hidden;
+   margin: 0px;
+   vertical-align: middle;
+   zoom:0.70;
+   transform: translateZ(0);
+   -webkit-transform: scale(0.70);
+   -moz-transform:scale(0.70);
+ }
+
+ md-list-item.md-2-line > md-icon.combo {
+   position: relative;
+   width: 104px;
+   height: 104px;
+   border: 1px solid #ddd;
+   border-radius: 50%;
+   display: inline-block;
+   overflow: hidden;
+   margin: 0px;
+   vertical-align: middle;
+   zoom:0.70;
+   transform: translateZ(0);
+   -webkit-transform: scale(0.70);
+   -moz-transform:scale(0.70);
+ }
+
+ md-list-item.md-2-line > md-icon.food {
+   position: relative;
+   width: 96px;
+   height: 96px;
+   border: 1px solid #ddd;
+   border-radius: 50%;
+   display: inline-block;
+   overflow: hidden;
+   margin: 0px;
+   vertical-align: middle;
+   zoom:0.70;
+   transform: translateZ(0);
+   -webkit-transform: scale(0.70);
+   -moz-transform:scale(0.70);
+ }
+
+ md-bottom-sheet  md-icon {
+   margin-right:20px;
+ }
+
+ span.name {
+   font-weight: bold;
+   font-size:1.1em;
+   padding-left:5px;
+ }
+
+ .rupee:before {
+   content: "₹";
+   display: inline-block;
+   padding-right: 2px;
+ }
+
+ div[ng-view].ng-enter {
+     -webkit-animation: fadeInRight 0.5s;
+     animation: fadeInRight 0.5s;
+ }
+
+ .ng-hide-remove {
+     -webkit-animation: bounceIn 2.5s;
+     animation: bounceIn 2.5s;
+ }
+  
+ .ng-hide-add {
+     -webkit-animation: flipOutX 2.5s;
+     animation: flipOutX 2.5s;
+     display: block !important;
+ }
+
+ .cart.ng-hide-remove {
+     -webkit-animation: bounceIn 1.5s;
+     animation: bounceIn 1.5s;
+ }
+  
+ .cart.ng-hide-add {
+     -webkit-animation: fadeOutRight 0.7s;
+     animation: fadeOutRight 0.7s;
+     display: block !important;
+ }
+
+ .nav-btn-parent {
+   position: relative;
+ }
+
+ .nav-btn {
+   margin:0;
+   width: 100%;
+   text-align: left;
+   position: absolute;
+   left: 0;
+   right: 0;
+   top: 0;
+   bottom: 0;
+ }
+
+ .nav-btn.selected {
+   background-color: #D44;
+   color: #FFF;
+ }
+ .nav-btn.selected:hover { color:#000; }
+
+ .address-radio { margin: 10px; }
+ .address-radio .md-title {margin-top: 0;}
+ .address-radio .md-subhead {margin-bottom: 0;}

@@ -1,0 +1,83 @@
+
+       <!-- Sign In -->
+
+           <h1><span>Sign In</span></h1>
+
+       <div flex="10"></div>
+
+       <div layout="row">
+         <div layout="column" flex offset="33">
+        <form name="login_form" role="form" ng-submit="submitLogin()">
+           <md-input-container layout-padding>
+               <label for="login.email">Email Address</label>
+               <input name="login.email" ng-model="login.email" type="email" required>
+           </md-input-container>
+           <md-input-container layout-padding>
+               <label for="login.password">Password</label>
+               <input name="login.password" ng-model="login.password" type="password" required>
+           </md-input-container>
+           <md-switch class="md-primary" layout-align="center center" layout-padding required>
+             Keep me signed in
+           </md-switch>
+           <div layout="row" layout-align="center center">
+             <md-button class="md-raised" ng-click="login = null">Clear</md-button>
+             <md-button class="md-raised md-primary" type="submit">Login</md-button>
+           </div>
+        </form>
+           <div layout-padding layout-margin></div>
+           <md-divider></md-divider>
+           
+           <!-- <div layout="row" layout-align="space-between center" layout-padding>
+             <md-button>Forgot Password</md-button>
+             <md-button class="md-primary">Create Account</md-button>
+           </div> -->
+         
+         </div>
+         <div flex>
+         </div>
+       </div>
+
+       <!--Sign In ends -->
+
+       <!-- Sign up -->
+
+         <h1><span>Sign Up</span></h1>
+
+       <div flex="10"></div>
+
+       <div layout="row">
+         <div layout="column" flex offset="33">
+          <form name="signup_form" role="form" ng-submit="submitSignup()">
+             <md-input-container layout-padding>
+                 <label for="signup.name">Name</label>
+                 <input name="signup.name" ng-model="signup.name" required>
+             </md-input-container>
+             <md-input-container layout-padding>
+                 <label for="signup.email">Email</label>
+                 <input name="signup.email" ng-model="signup.email" type="email" required>
+             </md-input-container>
+             <md-input-container layout-padding>
+                 <label for="signup.mobile_no">Phone</label>
+                 <input name="signup.mobile_no" ng-model="signup.mobile_no" type="phone" required>
+             </md-input-container>
+             <md-input-container layout-padding>
+                 <label for="signup.password">Password</label>
+                 <input name="signup.password" ng-model="signup.password" type="password" required>
+             </md-input-container>
+             <md-input-container layout-padding>
+                 <label for="signup.password_confirmation">Password Confirmation</label>
+                 <input name="signup.password_confirmation" ng-model="signup.password_confirmation" type="password" required>
+             </md-input-container>
+             <md-switch layout-align="center center" layout-padding required>
+               I accept all terms and conditions
+             </md-switch>
+             <div layout="row" layout-align="center center">
+               <md-button class="md-raised" ng-click="signup = null">Clear</md-button>
+               <md-button class="md-raised md-primary" type="submit">Register</md-button>
+             </div>
+          </form>
+         </div>
+         <div flex> </div>
+       </div>
+
+       <!-- Sign up ends -->

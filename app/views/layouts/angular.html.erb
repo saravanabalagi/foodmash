@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="foodmashApp">
+  <head>
+    <base href="/">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= content_for?(:title) ? yeild(:title) : "Foodmash" %></title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag "application", :media => "all" %>
+  </head>
+  <body>
+
+    <md-toolbar>
+      <h1> <span> Foodmash </span> </h1>
+      <div user-panel></div>
+    </md-toolbar>
+
+    
+    <div id="primary">
+      <div id="main" ng-view></div>
+    </div> <!-- 'primary' view -->
+
+
+    <%= javascript_include_tag "application" %>
+  </body>
+</html>
+
