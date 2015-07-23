@@ -40,7 +40,7 @@ class RestaurantsController < ApplicationController
 		if @restaurant && @restaurant.destroy
 		  head :ok
 		else
-		  render status: :404, json: {error: "Restaurant with id #{params[:id]} not found!"}
+		  render status: 404, json: {error: "Restaurant with id #{params[:id]} not found!"}
 		end
 	end
 

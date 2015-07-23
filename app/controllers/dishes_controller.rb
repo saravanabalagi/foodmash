@@ -40,7 +40,7 @@ class DishesController < ApplicationController
 		if @dish && @dish.destroy
 		  head :ok
 		else
-		  render status: :404, json: {error: "Dish with id #{params[:id]} not found!"}
+		  render status: 404, json: {error: "Dish with id #{params[:id]} not found!"}
 		end
 	end
 

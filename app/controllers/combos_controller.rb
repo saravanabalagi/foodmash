@@ -40,7 +40,7 @@ class CombosController < ApplicationController
 		if @combo && @combo.destroy
 		  head :ok
 		else
-		  render status: :404, json: {error: "Combo with id #{params[:id]} not found!"}
+		  render status: 404, json: {error: "Combo with id #{params[:id]} not found!"}
 		end
 	end
 
