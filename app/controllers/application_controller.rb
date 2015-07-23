@@ -3,6 +3,11 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery
   after_filter :set_csrf_cookie_for_ng
+  before_filter :allow_iframe_requests
+  
+  def allow_iframe_requests
+    response.headers.delete('X-Frame-Options')
+  end
 
   def set_csrf_cookie_for_ng
     cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
