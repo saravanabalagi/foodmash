@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives', [])
 
-.directive('userPanel', function() {
+.directive('userPanel', ['AuthService', 'UserService', function(AuthService, UserService) {
   return {
     templateUrl: '/templates/user_panel.html',
     controller: ['$scope', 'AuthService', 'UserService', function($scope, AuthService, UserService) {
@@ -27,5 +27,5 @@ angular.module('foodmashApp.directives', [])
 
   };
 
-});
+}]);
 
