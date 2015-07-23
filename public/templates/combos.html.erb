@@ -4,25 +4,25 @@
     <div flex layout="column">
       <div flex layout-align="center center" layout="row" class="nav-btn-parent">
         <md-button class="nav-btn selected">
-        <md-icon md-svg-src="assets/svg/offers.svg" class="avatar"></md-icon>
+        <md-icon md-svg-src="<%= asset_path('offers.svg') %>" class="avatar"></md-icon>
         Offers
         </md-button>
       </div>
       <div flex layout-align="center center" layout="row" class="nav-btn-parent">
         <md-button class="nav-btn">
-        <md-icon md-svg-src="assets/svg/for_1.svg" class="avatar"></md-icon>
+        <md-icon md-svg-src="<%= asset_path('for_1.svg') %>" class="avatar"></md-icon>
         Micro
         </md-button>
       </div>
       <div flex layout-align="center center" layout="row" class="nav-btn-parent">
         <md-button class="nav-btn">
-        <md-icon md-svg-src="assets/svg/for_2.svg" class="avatar"></md-icon>
+        <md-icon md-svg-src="<%= asset_path('for_2.svg') %>" class="avatar"></md-icon>
         Medium
         </md-button>
       </div>
       <div flex layout-align="center center" layout="row" class="nav-btn-parent">
         <md-button class="nav-btn">
-        <md-icon md-svg-src="assets/svg/for_3.svg" class="avatar"></md-icon>
+        <md-icon md-svg-src="<%= asset_path('for_3.svg') %>" class="avatar"></md-icon>
         Mega
         </md-button>
       </div>
@@ -34,7 +34,7 @@
 
       <!- - offer card - ->
       <md-card>
-        <img ng-src="/assets/jpg/offer.jpg" class="md-card-image" alt="Washed Out">
+        <img ng-src="<%= asset_path('offer.jpg') %>" class="md-card-image" alt="Washed Out">
         <md-card-content>
           <h2 class="md-title">5% off on Budget Combos</h2>
           <p>
@@ -68,7 +68,7 @@
                 <md-content flex>
                   <md-list>
                     <md-list-item class="md-3-line">
-                      <md-icon md-svg-icon="assets/svg/avatar-1.svg" class="combo"></md-icon>
+                      <md-icon md-svg-icon="<%= asset_path('avatar-1.svg') %>" class="combo"></md-icon>
                       <div class="md-list-item-text">
                           <h3>Combo</h3>
                           <p>Some two line description of what the combo is or what it comprises</p>
@@ -79,7 +79,7 @@
                 <div layout-padding layout-margin class="rupee">150</div>
                 <div layout-padding layout-margin ng-show="combo_1_clicked" class="cart">
                 <md-button class="md-icon-button md-primary" aria-label="Eat cake">
-                      <md-icon md-svg-src="assets/svg/cart.svg"></md-icon>
+                      <md-icon md-svg-src="<%= asset_path('cart.svg') %>"></md-icon>
                   </md-button>
                 </div>
               </div>
@@ -91,7 +91,7 @@
                         <md-content>
                           <md-list>
                             <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                              <md-icon md-svg-src="<%= asset_path('avatar-1.svg') %>" class="food"></md-icon>
                               <div class="md-list-item-text">
                                 <h3>Food</h3>
                                 <p>Description</p>
@@ -99,7 +99,7 @@
                             </md-list-item>
                             <md-divider md-inset></md-divider>
                             <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                              <md-icon md-svg-src="<%= asset_path('avatar-1.svg') %>" class="food"></md-icon>
                               <div class="md-list-item-text">
                                 <h3>Food</h3>
                                 <p>Description</p>
@@ -107,7 +107,7 @@
                             </md-list-item>
                             <md-divider md-inset></md-divider>
                             <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                              <md-icon md-svg-src="<%= asset_path('avatar-1.svg') %>" class="food"></md-icon>
                               <div class="md-list-item-text">
                                 <h3>Food</h3>
                                 <p>Description</p>
@@ -133,7 +133,7 @@
                 <md-content flex>
                   <md-list>
                     <md-list-item class="md-3-line">
-                      <md-icon md-svg-icon="assets/svg/avatar-1.svg" class="combo"></md-icon>
+                      <md-icon md-svg-icon="<%= asset_path('avatar-1.svg') %>" class="combo"></md-icon>
                       <div class="md-list-item-text">
                           <h3>Combo</h3>
                           <p>Some two line description of what the combo is or what it comprises</p>
@@ -144,7 +144,7 @@
                 <div layout-padding layout-margin class="rupee">175</div>
                 <div layout-padding layout-margin ng-show="combo_2_clicked" class="cart">
                 <md-button class="md-icon-button md-primary" aria-label="Eat cake">
-                      <md-icon md-svg-src="assets/svg/cart.svg"></md-icon>
+                      <md-icon md-svg-src="<%= asset_path('cart.svg') %>"></md-icon>
                   </md-button>
                 </div>
               </div>
@@ -156,7 +156,7 @@
                         <md-content>
                           <md-list>
                             <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                              <md-icon md-svg-src="<%= asset_path('avatar-1.svg') %>" class="food"></md-icon>
                               <div class="md-list-item-text">
                                 <h3>Food</h3>
                                 <p>Description</p>
@@ -164,7 +164,7 @@
                             </md-list-item>
                             <md-divider md-inset></md-divider>
                             <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                              <md-icon md-svg-src="<%= asset_path('avatar-1.svg') %>" class="food"></md-icon>
                               <div class="md-list-item-text">
                                 <h3>Food</h3>
                                 <p>Description</p>
@@ -172,7 +172,7 @@
                             </md-list-item>
                             <md-divider md-inset></md-divider>
                             <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                              <md-icon md-svg-src="<%= asset_path('avatar-1.svg') %>" class="food"></md-icon>
                               <div class="md-list-item-text">
                                 <h3>Food</h3>
                                 <p>Description</p>
@@ -198,7 +198,7 @@
                 <md-content flex>
                   <md-list>
                     <md-list-item class="md-3-line">
-                      <md-icon md-svg-icon="assets/svg/avatar-1.svg" class="combo"></md-icon>
+                      <md-icon md-svg-icon="<%= asset_path('avatar-1.svg') %>" class="combo"></md-icon>
                       <div class="md-list-item-text">
                           <h3>Combo</h3>
                           <p>Some two line description of what the combo is or what it comprises</p>
@@ -209,7 +209,7 @@
                 <div layout-padding layout-margin class="rupee">200</div>
                 <div layout-padding layout-margin ng-show="combo_3_clicked" class="cart">
                 <md-button class="md-icon-button md-primary" aria-label="Eat cake">
-                      <md-icon md-svg-src="assets/svg/cart.svg"></md-icon>
+                      <md-icon md-svg-src="<%= asset_path('cart.svg') %>"></md-icon>
                   </md-button>
                 </div>
               </div>
@@ -221,7 +221,7 @@
                         <md-content>
                           <md-list>
                             <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                              <md-icon md-svg-src="<%= asset_path('avatar-1.svg') %>" class="food"></md-icon>
                               <div class="md-list-item-text">
                                 <h3>Food</h3>
                                 <p>Description</p>
@@ -229,7 +229,7 @@
                             </md-list-item>
                             <md-divider md-inset></md-divider>
                             <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                              <md-icon md-svg-src="<%= asset_path('avatar-1.svg') %>" class="food"></md-icon>
                               <div class="md-list-item-text">
                                 <h3>Food</h3>
                                 <p>Description</p>
@@ -237,7 +237,7 @@
                             </md-list-item>
                             <md-divider md-inset></md-divider>
                             <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                              <md-icon md-svg-src="<%= asset_path('avatar-1.svg') %>" class="food"></md-icon>
                               <div class="md-list-item-text">
                                 <h3>Food</h3>
                                 <p>Description</p>
@@ -263,7 +263,7 @@
                 <md-content flex>
                   <md-list>
                     <md-list-item class="md-3-line">
-                      <md-icon md-svg-icon="assets/svg/avatar-1.svg" class="combo"></md-icon>
+                      <md-icon md-svg-icon="<%= asset_path('avatar-1.svg') %>" class="combo"></md-icon>
                       <div class="md-list-item-text">
                           <h3>Combo</h3>
                           <p>Some two line description of what the combo is or what it comprises</p>
@@ -274,7 +274,7 @@
                 <div layout-padding layout-margin class="rupee">220</div>
                 <div layout-padding layout-margin ng-show="combo_4_clicked" class="cart">
                 <md-button class="md-icon-button md-primary" aria-label="Eat cake">
-                      <md-icon md-svg-src="assets/svg/cart.svg"></md-icon>
+                      <md-icon md-svg-src="<%= asset_path('cart.svg') %>"></md-icon>
                   </md-button>
                 </div>
               </div>
@@ -286,7 +286,7 @@
                         <md-content>
                           <md-list>
                             <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                              <md-icon md-svg-src="<%= asset_path('avatar-1.svg') %>" class="food"></md-icon>
                               <div class="md-list-item-text">
                                 <h3>Food</h3>
                                 <p>Description</p>
@@ -294,7 +294,7 @@
                             </md-list-item>
                             <md-divider md-inset></md-divider>
                             <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                              <md-icon md-svg-src="<%= asset_path('avatar-1.svg') %>" class="food"></md-icon>
                               <div class="md-list-item-text">
                                 <h3>Food</h3>
                                 <p>Description</p>
@@ -302,7 +302,7 @@
                             </md-list-item>
                             <md-divider md-inset></md-divider>
                             <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                              <md-icon md-svg-src="<%= asset_path('avatar-1.svg') %>" class="food"></md-icon>
                               <div class="md-list-item-text">
                                 <h3>Food</h3>
                                 <p>Description</p>
