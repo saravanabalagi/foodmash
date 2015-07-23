@@ -8,6 +8,6 @@ class Api::v1::CombosController < ApiApplicationController
 
 	def show
 		combo = Combo.find params[:id]
-		combo_dishes = combo.combo_dishes
+		respond_with status: 200, combo.as_json
 	end
 end
