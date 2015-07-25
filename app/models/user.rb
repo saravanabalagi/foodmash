@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   before_save :ensure_authentication_token
 
-  has_many :delivery_addresses
+  has_many :delivery_addresses, dependent: :destroy
   validates_presence_of :email, :mobile_no, :name
   validates :name, length: {minimum: 2}
   validates :email, format: {with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/}

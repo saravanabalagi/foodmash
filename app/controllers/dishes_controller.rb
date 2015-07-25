@@ -44,6 +44,15 @@ class DishesController < ApplicationController
 		end
 	end
 
+	def belongs_to_combos
+		dish = Dish.find params[:id]
+		if dish
+			render status: 200, json: dish.belongs_to_combos
+		else
+			render status: 404, json: {error: "Could not find the combos!"}
+		end
+	end
+
 
 	private
 	def get_dish

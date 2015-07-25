@@ -3,12 +3,20 @@ class Api::V1::UsersController < ApiApplicationController
 
   def index
     users = User.all
-    render status: 200, json: users.as_json
+    if users
+      render status: 200, json: users.as_json
+    else
+      render status: 404, json: "Could not find all the users!"
+    end
   end
 
   def show
     user = User.find params[:id]
-    render status: 200, json: user.as_json
+    if user
+      render status: 200, json: user.as_json
+    else
+      render status: 404, json: "Could not find user!"
+    end
   end
 
 end

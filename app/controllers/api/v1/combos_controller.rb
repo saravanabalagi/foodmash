@@ -3,11 +3,19 @@ class Api::V1::CombosController < ApiApplicationController
 
 	def index
 		combos = Combo.all
-		render status: 200, json: combos.as_json
+		if combos
+			render status: 200, json: combos.as_json(:include => {:combo_options => {:include => :combo_option_dishes}})
+		else
+			render status: 404, json: {error: "Could not all the combos!"}
+		end
 	end
 
 	def show
 		combo = Combo.find params[:id]
-		render status: 200, json: combo.as_json
+		if combo
+			render status: 200, json: combo.as_json(:include => {:combo_options => {:include => :combo_option_dishes}})
+		else
+			render status: 404, json: {error: "Could not find combo with id #{params[:id]}!"}
+		end
 	end
 end

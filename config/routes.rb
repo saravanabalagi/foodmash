@@ -3,7 +3,11 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: {registrations: 'registrations', sessions: 'sessions'}, defaults: {format: :json}
 
-  resources :restaurants
+  resources :restaurants do 
+    collection do 
+      get '/:id/hasCombos', to: 'restaurants#has_combos'
+    end
+  end
 
   resources :combos do 
     collection do 
@@ -14,7 +18,11 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :dishes
+  resources :dishes do 
+    collection do 
+      get '/:id/belongsToCombos', to: 'dishes#belongs_to_combos'
+    end
+  end
 
   # #get requests for combos
   # get '/getOfferCombos', to: 'combos#get_offer_combos'
@@ -28,10 +36,13 @@ Rails.application.routes.draw do
   namespace :api, path: '/', constraints: { subdomain: 'api' }, defaults: { format: :json } do 
     namespace :v1 do
       resources :restaurants, only: [:index, :show]
+      resources :dishes, only: [:index, :show]
       resources :combos, only: [:index, :show]
       resources :users, only: [:index, :show]
       resources :sessions
       resources :registrations
+      get '/restaurants/:id/hasCombos', to: 'restaurants#has_combos'
+      get '/dishes/:id/belongsToCombos', to: 'dishes#belongs_to_combos'
     end
   end
 
