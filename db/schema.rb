@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150722225948) do
+ActiveRecord::Schema.define(version: 20150724200920) do
 
   create_table "combo_option_dishes", force: :cascade do |t|
     t.integer  "combo_option_id"
@@ -23,9 +23,9 @@ ActiveRecord::Schema.define(version: 20150722225948) do
   create_table "combo_options", force: :cascade do |t|
     t.string   "name"
     t.integer  "combo_id"
-    t.integer  "dish_type"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "dish_type_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.text     "description"
   end
 
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 20150722225948) do
     t.string   "name"
     t.string   "picture_url"
     t.float    "price"
-    t.integer  "dish_type"
+    t.integer  "dish_type_id"
     t.integer  "restaurant_id"
     t.integer  "no_of_purchases", default: 0
     t.datetime "created_at",                  null: false

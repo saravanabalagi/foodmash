@@ -5,9 +5,23 @@ Rails.application.routes.draw do
 
   resources :restaurants
 
-  resources :combos
+  resources :combos do 
+    collection do 
+      get 'getOfferCombos', to: 'combos#get_offer_combos'
+      get 'getMicroCombos', to: 'combos#get_micro_combos'
+      get 'getMediumCombos', to: 'combos#get_medium_combos'
+      get 'getMegaCombos', to: 'combos#get_mega_combos'
+    end
+  end
   
   resources :dishes
+
+  # #get requests for combos
+  # get '/getOfferCombos', to: 'combos#get_offer_combos'
+  # get '/getMicroCombos', to: 'combos#get_micro_combos'
+  # get '/getMediumCombos', to: 'combos#get_medium_combos'
+  # get '/getMegaCombos', to: 'combos#get_mega_combos'
+
 
   #routes for API calls
 
@@ -15,8 +29,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :restaurants, only: [:index, :show]
       resources :combos, only: [:index, :show]
-      resources :users, only: [:create, :update, :show]
-      resources :sessions, only: [:create, :destroy]
+      resources :users, only: [:index, :show]
+      resources :sessions
+      resources :registrations
     end
   end
 

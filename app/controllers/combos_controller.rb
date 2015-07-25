@@ -44,6 +44,42 @@ class CombosController < ApplicationController
 		end
 	end
 
+	def get_offer_combos
+		offerCombos = Combo.where(group_size: 1)
+		if offerCombos
+			render status: 200, json: offerCombos.as_json
+		else
+			render status: 404, json: {error: "Could not find offer combos"}
+		end
+	end
+
+	def get_micro_combos
+		microCombos = Combo.where(group_size: 1)
+		if microCombos
+			render status: 200, json: microCombos.as_json
+		else
+			render status: 404, json: {error: "Could not find micro combos"}
+		end
+	end
+
+	def get_medium_combos
+		mediumCombos = Combo.where(group_size: 2)
+		if mediumCombos
+			render status: 200, json: mediumCombos.as_json
+		else
+			render status: 404, json: {error: "Could not find medium combos"}
+		end
+	end
+
+	def get_mega_combos
+		megaCombos = Combo.where("group_size >= ?", 3)
+		if megaCombos
+			render status: 200, json: megaCombos.as_json
+		else
+			render status: 404, json: {error: "Could not find mega combos"}
+		end
+	end
+
 
 	private
 	def get_combo

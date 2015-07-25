@@ -1,32 +1,16 @@
 <div layout="row" flex>
 
   <md-sidenav flex class="md-sidenav-left md-whiteframe-z2" md-is-locked-open="$mdMedia('gt-sm')">
-    <div flex layout="column">
-      <div flex layout-align="center center" layout="row" class="nav-btn-parent">
-        <md-button class="nav-btn selected">
-        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/offers.svg" class="avatar"></md-icon>
-        Offers
-        </md-button>
+      <div flex layout="column">
+
+          <div flex layout-align="center center" layout="row" class="nav-btn-parent" ng-repeat="option in sideNavOptions">
+            <md-button class="nav-btn" ng-click="selectOption(option)" ng-class="{'selected' : option === selected}">
+            <md-icon md-svg-src="{{option.pic_url}}" class="avatar"></md-icon>
+            {{option.name}}
+            </md-button>
+          </div>
+
       </div>
-      <div flex layout-align="center center" layout="row" class="nav-btn-parent">
-        <md-button class="nav-btn">
-        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/for_1.svg" class="avatar"></md-icon>
-        Micro
-        </md-button>
-      </div>
-      <div flex layout-align="center center" layout="row" class="nav-btn-parent">
-        <md-button class="nav-btn">
-        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/for_2.svg" class="avatar"></md-icon>
-        Medium
-        </md-button>
-      </div>
-      <div flex layout-align="center center" layout="row" class="nav-btn-parent">
-        <md-button class="nav-btn">
-        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/for_3.svg" class="avatar"></md-icon>
-        Mega
-        </md-button>
-      </div>
-    </div>
   </md-sidenav>
 
   <div layout="row" flex>
@@ -61,7 +45,7 @@
       <!- - for loop - ->
 
         <!- - Combo 1 Card - ->
-        <div layout="row" flex layout-margin class="md-whiteframe-z2" ng-init="combo_1_clicked">
+        <div layout="row" flex layout-margin class="md-whiteframe-z2" ng-repeat="combo in combos">
           <div flex layout="column">
 
               <div layout="row" layout-align="space-between center" slide-toggle="#combo_1_details" ng-click="combo_1_clicked=!combo_1_clicked">
@@ -70,13 +54,13 @@
                     <md-list-item class="md-3-line">
                       <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="combo"></md-icon>
                       <div class="md-list-item-text">
-                          <h3>Combo</h3>
-                          <p>Some two line description of what the combo is or what it comprises</p>
+                          <h3>{{combo.name}}</h3>
+                          <p>{{combo.description}}</p>
                       </div>
                     </md-list-item>
                   </md-list>
                 </md-content>
-                <div layout-padding layout-margin class="rupee">150</div>
+                <div layout-padding layout-margin class="rupee">{{combo.price}}</div>
                 <div layout-padding layout-margin ng-show="combo_1_clicked" class="cart">
                 <md-button class="md-icon-button md-primary" aria-label="Eat cake">
                       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cart.svg"></md-icon>
@@ -125,203 +109,10 @@
         </div>
         <!- - Combo 1 Card ends- ->
 
-        <!- - Combo 2 Card - ->
-        <div layout="row" flex layout-margin class="md-whiteframe-z2" ng-init="combo_2_clicked">
-          <div flex layout="column">
-
-              <div layout="row" layout-align="space-between center" slide-toggle="#combo_2_details" ng-click="combo_2_clicked=!combo_2_clicked">
-                <md-content flex>
-                  <md-list>
-                    <md-list-item class="md-3-line">
-                      <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="combo"></md-icon>
-                      <div class="md-list-item-text">
-                          <h3>Combo</h3>
-                          <p>Some two line description of what the combo is or what it comprises</p>
-                      </div>
-                    </md-list-item>
-                  </md-list>
-                </md-content>
-                <div layout-padding layout-margin class="rupee">175</div>
-                <div layout-padding layout-margin ng-show="combo_2_clicked" class="cart">
-                <md-button class="md-icon-button md-primary" aria-label="Eat cake">
-                      <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cart.svg"></md-icon>
-                  </md-button>
-                </div>
-              </div>
-
-              <div class="slideable" id="combo_2_details">
-                <div layout="row">
-                  <div layout="column" layout-padding flex offset="10">
-                    <div layout="column">
-                        <md-content>
-                          <md-list>
-                            <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
-                              <div class="md-list-item-text">
-                                <h3>Food</h3>
-                                <p>Description</p>
-                              </div>
-                            </md-list-item>
-                            <md-divider md-inset></md-divider>
-                            <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
-                              <div class="md-list-item-text">
-                                <h3>Food</h3>
-                                <p>Description</p>
-                              </div>
-                            </md-list-item>
-                            <md-divider md-inset></md-divider>
-                            <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
-                              <div class="md-list-item-text">
-                                <h3>Food</h3>
-                                <p>Description</p>
-                              </div>
-                            </md-list-item>
-                          </md-list>
-                        </md-content>
-                      </div>
-                    </div>
-                  <div flex="10"></div>
-                </div>
-              </div>
-
-          </div>
-        </div>
-        <!- - Combo 2 Card ends- ->
-
-        <!- - Combo 3 Card - ->
-        <div layout="row" flex layout-margin class="md-whiteframe-z2" ng-init="combo_3_clicked">
-          <div flex layout="column">
-
-              <div layout="row" layout-align="space-between center" slide-toggle="#combo_3_details" ng-click="combo_3_clicked=!combo_3_clicked">
-                <md-content flex>
-                  <md-list>
-                    <md-list-item class="md-3-line">
-                      <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="combo"></md-icon>
-                      <div class="md-list-item-text">
-                          <h3>Combo</h3>
-                          <p>Some two line description of what the combo is or what it comprises</p>
-                      </div>
-                    </md-list-item>
-                  </md-list>
-                </md-content>
-                <div layout-padding layout-margin class="rupee">200</div>
-                <div layout-padding layout-margin ng-show="combo_3_clicked" class="cart">
-                <md-button class="md-icon-button md-primary" aria-label="Eat cake">
-                      <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cart.svg"></md-icon>
-                  </md-button>
-                </div>
-              </div>
-
-              <div class="slideable" id="combo_3_details">
-                <div layout="row">
-                  <div layout="column" layout-padding flex offset="10">
-                    <div layout="column">
-                        <md-content>
-                          <md-list>
-                            <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
-                              <div class="md-list-item-text">
-                                <h3>Food</h3>
-                                <p>Description</p>
-                              </div>
-                            </md-list-item>
-                            <md-divider md-inset></md-divider>
-                            <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
-                              <div class="md-list-item-text">
-                                <h3>Food</h3>
-                                <p>Description</p>
-                              </div>
-                            </md-list-item>
-                            <md-divider md-inset></md-divider>
-                            <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
-                              <div class="md-list-item-text">
-                                <h3>Food</h3>
-                                <p>Description</p>
-                              </div>
-                            </md-list-item>
-                          </md-list>
-                        </md-content>
-                      </div>
-                    </div>
-                  <div flex="10"></div>
-                </div>
-              </div>
-
-          </div>
-        </div>
-        <!- - Combo 3 Card ends- ->
-
-        <!- - Combo 4 Card - ->
-        <div layout="row" flex layout-margin class="md-whiteframe-z2" ng-init="combo_4_clicked">
-          <div flex layout="column">
-
-              <div layout="row" layout-align="space-between center" slide-toggle="#combo_4_details" ng-click="combo_4_clicked=!combo_4_clicked">
-                <md-content flex>
-                  <md-list>
-                    <md-list-item class="md-3-line">
-                      <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="combo"></md-icon>
-                      <div class="md-list-item-text">
-                          <h3>Combo</h3>
-                          <p>Some two line description of what the combo is or what it comprises</p>
-                      </div>
-                    </md-list-item>
-                  </md-list>
-                </md-content>
-                <div layout-padding layout-margin class="rupee">220</div>
-                <div layout-padding layout-margin ng-show="combo_4_clicked" class="cart">
-                <md-button class="md-icon-button md-primary" aria-label="Eat cake">
-                      <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cart.svg"></md-icon>
-                  </md-button>
-                </div>
-              </div>
-
-              <div class="slideable" id="combo_4_details">
-                <div layout="row">
-                  <div layout="column" layout-padding flex offset="10">
-                    <div layout="column">
-                        <md-content>
-                          <md-list>
-                            <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
-                              <div class="md-list-item-text">
-                                <h3>Food</h3>
-                                <p>Description</p>
-                              </div>
-                            </md-list-item>
-                            <md-divider md-inset></md-divider>
-                            <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
-                              <div class="md-list-item-text">
-                                <h3>Food</h3>
-                                <p>Description</p>
-                              </div>
-                            </md-list-item>
-                            <md-divider md-inset></md-divider>
-                            <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
-                              <div class="md-list-item-text">
-                                <h3>Food</h3>
-                                <p>Description</p>
-                              </div>
-                            </md-list-item>
-                          </md-list>
-                        </md-content>
-                      </div>
-                    </div>
-                  <div flex="10"></div>
-                </div>
-              </div>
-
-          </div>
-        </div>
-        <!- - Combo 4 Card ends- ->
       <!- - for loop ends - ->
     
     </div>
+
   </div>
   
 

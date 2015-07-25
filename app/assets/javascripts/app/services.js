@@ -34,6 +34,71 @@ angular.module('foodmashApp.services', [])
 
  }])
 
+.service('CombosService', ['$q','$http', function($q, $http){
+  var service = this;
+  var sideNavOptions = [
+     {pic_url: "https://s3-ap-southeast-1.amazonaws.com/cshare1/images/offers.svg", name: "Offers"},
+     {pic_url: "https://s3-ap-southeast-1.amazonaws.com/cshare1/images/for_1.svg", name: "Micro"},
+     {pic_url: "https://s3-ap-southeast-1.amazonaws.com/cshare1/images/for_2.svg", name: "Medium"},
+     {pic_url: "https://s3-ap-southeast-1.amazonaws.com/cshare1/images/for_3.svg", name: "Mega"}
+  ];
+
+  this.loadSideNavOptions = function(){
+    var d = $q.defer();
+    if(sideNavOptions){
+      d.resolve(sideNavOptions);
+    }else{
+      d.reject(null);
+    }
+    return d.promise;
+  };
+
+  this.loadOfferCombos = function(){
+    var d = $q.defer();
+    $http({url: '/combos/getOfferCombos', method: 'GET'})
+    .then(function(response){
+      d.resolve(response.data);
+    }, function(error){
+      d.reject(error);
+    });
+    return d.promise;
+  };
+
+  this.loadMicroCombos = function(){
+    var d = $q.defer();
+    $http({url: '/combos/getMicroCombos', method: 'GET'})
+    .then(function(response){
+      d.resolve(response.data);
+    }, function(error){
+      d.reject(error);
+    });
+    return d.promise;
+  };
+
+  this.loadMediumCombos = function(){
+    var d = $q.defer();
+    $http({url: '/combos/getMediumCombos', method: 'GET'})
+    .then(function(response){
+      d.resolve(response.data);
+    }, function(error){
+      d.reject(error);
+    });
+    return d.promise;
+  };
+
+  this.loadMegaCombos = function(){
+    var d = $q.defer();
+    $http({url: '/combos/getMegaCombos', method: 'GET'})
+    .then(function(response){
+      d.resolve(response.data);
+    }, function(error){
+      d.reject(error);
+    });
+    return d.promise;
+  };
+
+}])
+
 
 
  .service('UserService', ['$rootScope', '$q', '$cookieStore', '$http', 'AuthService', function($rootScope, $q, $cookieStore, $http, AuthService) {
@@ -64,8 +129,15 @@ angular.module('foodmashApp.services', [])
 
       this.logout = function() {
         var d = $q.defer();
-        AuthService.removeCurrentUser();
-        d.resolve();
+        $http({
+          url: '/users/sign_out',
+          method: 'DELETE'
+        }).success(function(response) { 
+          AuthService.removeCurrentUser();
+          d.resolve();
+        }).error(function(reason) { 
+          d.reject(reason);
+        });
         return d.promise;
       };
 

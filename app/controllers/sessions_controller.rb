@@ -1,13 +1,13 @@
 class SessionsController < Devise::SessionsController
 	before_filter :configure_sign_in_params, only: [:create]
-	skip_before_filter :verify_authenticity_token
+	skip_before_filter :verify_authenticity_token, :verify_signed_out_user
   before_filter :authenticate_user!, except: [:create]
   before_filter :authenticate_user_from_token!, only: [:destroy]
   
 	respond_to :json
 
 	 def create
-    resource = User.find_for_database_authentication(email: params[:user][:email]) 
+    resource = User.find_for_database_authentication(email: params[:user][:email]) || User.find_for_database_authentication(mobile_no: params[:user][:mobile_no])
     return failure unless resource
     return failure unless resource.valid_password?(params[:user][:password])
     render status: 200,
@@ -28,9 +28,9 @@ class SessionsController < Devise::SessionsController
   end 
 
   def destroy
-    return permission_denied unless params[:user][:id].to_s == @current_user.id.to_s
+    return permission_denied unless params[:auth_user_id].to_s == @current_user.id.to_s
 
-    resource = User.find_for_database_authentication(id: params[:user][:id])
+    resource = User.find_for_database_authentication(id: params[:auth_user_id])
     return failure unless resource
     resource.clear_authentication_token
     render status: 200, json: {success: true, info: 'Logged Out'}
