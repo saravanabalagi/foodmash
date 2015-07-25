@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150724200920) do
+ActiveRecord::Schema.define(version: 20150725140309) do
+
+  create_table "carts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "combo_option_dishes", force: :cascade do |t|
     t.integer  "combo_option_id"
@@ -62,6 +68,16 @@ ActiveRecord::Schema.define(version: 20150724200920) do
     t.integer  "no_of_purchases", default: 0
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer  "product_id"
+    t.string   "product_type"
+    t.integer  "quantity",     default: 1
+    t.float    "total"
+    t.integer  "cart_id"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "restaurants", force: :cascade do |t|

@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   before_save :ensure_authentication_token
 
+  has_one :cart, dependent: :destroy
   has_many :delivery_addresses, dependent: :destroy
   validates_presence_of :email, :mobile_no, :name
   validates :name, length: {minimum: 2}
