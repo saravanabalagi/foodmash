@@ -1,6 +1,6 @@
 class Api::V1::CombosController < ApiApplicationController
 	respond_to :json
-	
+
 	def index
 		combos = Combo.all
 		render status: 200, json: combos.as_json

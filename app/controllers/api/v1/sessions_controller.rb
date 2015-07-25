@@ -1,6 +1,6 @@
 class Api::V1::SessionsController < ApiApplicationController
 	before_filter :configure_sign_in_params, only: [:create]
-	before_filter :authenticate_user_from_token!, only: [:create, :destroy]
+	before_filter :authenticate_user_from_token!, only: [:destroy]
 	respond_to :json
 
 	 def create
@@ -34,6 +34,6 @@ class Api::V1::SessionsController < ApiApplicationController
 
 	private
 	 def configure_sign_in_params
-	   devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:email, :mobile_no, :password) }
+	   params.require(:user).permit(:email, :password, :mobile_no)
 	 end
 end

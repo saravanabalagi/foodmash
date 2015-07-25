@@ -4,7 +4,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
 
   def create
   	# Create the user
-	  build_resource(sign_up_params)
+	  resource = User.new(sign_up_params)
 
 	  # Try to save them
 	  if resource.save 
@@ -32,6 +32,15 @@ class Api::V1::RegistrationsController < ApiApplicationController
 	  else
 	    render status: 422, json: {error: user.errors}
 	  end
+  end
+
+  def destroy
+  	if @current_user
+  		@current_user.delete
+  		head status: 200
+  	else
+  		render status: 422, json: {error: "Unable to cancel registration!"}
+  	end
   end
 
 	private 
