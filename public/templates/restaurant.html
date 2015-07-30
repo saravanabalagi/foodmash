@@ -1,0 +1,181 @@
+<!-- Resturants -->
+  <div flex layout="column" layout-gt-lg="row">
+          <div flex layout="column" layout-padding>
+            
+            <div layout="column">
+
+              <div layout="row" layout-align="center center">
+                <h1 class="md-title" layout-padding>
+                   {{restaurant.name}}
+                </h1>
+              </div>
+              <div flex layout-gt-sm="row" layout="column" layout-align="center">
+                <div class="md-whiteframe-z2" layout="row" layout-margin>
+                      <md-icon md-svg-icon="assets/svg/avatar-1.svg" class="restaurant-icon"></md-icon>
+                      <div flex layout="column" layout-align="space-around center" layout-padding layout-align="space-around start">
+                        <md-content>Type: Dine | Delivery | Take-away</md-content>
+                        <md-content>Working hours: 11am to 11pm</md-content>
+                        <md-content>Cuisine: Multi-cuisine</md-content>
+                        <md-content>Speciality: Pizzas</md-content>
+                        <md-content class="md-subhead"> Ratings: 4.3/5</md-content>
+                      </div>
+                </div>
+                <div flex="40" class="md-whiteframe-z2" layout-margin layout="column" layout-align="space-around center" layout-padding>
+                  <h1 class="md-title"> {{restaurant.branch}} </h1>
+                  <md-content>{{restaurant.address}}</md-content>
+                  <div layout="row" layout-align="center center" layout-padding>
+                    <md-button class="md-raised">Call</md-button>
+                    <md-button class="md-raised md-primary">Maps</md-button>
+                  </div>
+                </div>
+              </div>
+
+              
+            </div>
+           <div flex layout="column" class="no-scroll" ng-show="restaurant.description">
+                <div layout="row" layout-padding layout-align="center center">
+                <h1 class="md-title"> About the Restaurant </h1>
+                </div>
+                <div flex layout="column" layout-padding class="auto-scroll">
+                <p class="no-margin" >{{restaurant.description}}</p>
+                </div>
+            </div>
+          </div>
+          <div flex="35" layout="column" layout-padding layout-align="center center" class="md-whiteframe-z2">
+              <div>
+                <h1 class="md-title" layout-padding>
+                  Combos with food from {{restaurant.name}}
+                </h1>
+              </div>
+              <div flex class="auto-scroll">
+                
+              <!-- Combo 1 Card -->
+                <div layout="row" flex layout-margin class="md-whiteframe-z2" ng-init="combo_1_clicked">
+                  <div flex layout="column">
+
+                      <div layout="row" layout-align="space-between center" ng-click="combo_1_clicked=!combo_1_clicked">
+                        <md-content flex>
+                          <md-list>
+                            <md-list-item class="md-3-line">
+                              <md-icon md-svg-icon="assets/svg/avatar-1.svg" class="combo"></md-icon>
+                              <div class="md-list-item-text">
+                                  <h3>Combo</h3>
+                                  <p>Some two line description of what the combo is or what it comprises</p>
+                              </div>
+                            </md-list-item>
+                          </md-list>
+                        </md-content>
+                        <div layout-padding layout-margin class="rupee">150</div>
+                        <div layout-padding layout-margin ng-show="combo_1_clicked" class="cart">
+                        <md-button class="md-icon-button md-primary" aria-label="Eat cake">
+                              <md-icon md-svg-src="assets/svg/cart.svg"></md-icon>
+                          </md-button>
+                        </div>
+                      </div>
+
+                      <div layout="row" ng-show="combo_1_clicked" class="combo-options">
+                          <div layout="column" layout-padding flex offset="10">
+                            <div layout="column">
+                                <md-content>
+                                  <md-list>
+                                    <md-list-item class="md-2-line">
+                                      <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                                      <div class="md-list-item-text">
+                                        <h3>Food</h3>
+                                        <p>Description</p>
+                                      </div>
+                                    </md-list-item>
+                                    <md-divider md-inset></md-divider>
+                                    <md-list-item class="md-2-line">
+                                      <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                                      <div class="md-list-item-text">
+                                        <h3>Food</h3>
+                                        <p>Description</p>
+                                      </div>
+                                    </md-list-item>
+                                    <md-divider md-inset></md-divider>
+                                    <md-list-item class="md-2-line">
+                                      <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                                      <div class="md-list-item-text">
+                                        <h3>Food</h3>
+                                        <p>Description</p>
+                                      </div>
+                                    </md-list-item>
+                                  </md-list>
+                                </md-content>
+                              </div>
+                            </div>
+                          <div flex="10"></div>
+                        </div>
+
+                  </div>
+                </div>
+                <!-- Combo 1 Card ends-->
+
+                <!-- Combo 2 Card -->
+                <div layout="row" flex layout-margin class="md-whiteframe-z2" ng-init="combo_2_clicked">
+                  <div flex layout="column">
+
+                      <div layout="row" layout-align="space-between center" ng-click="combo_2_clicked=!combo_2_clicked">
+                        <md-content flex>
+                          <md-list>
+                            <md-list-item class="md-3-line">
+                              <md-icon md-svg-icon="assets/svg/avatar-1.svg" class="combo"></md-icon>
+                              <div class="md-list-item-text">
+                                  <h3>Combo</h3>
+                                  <p>Some two line description of what the combo is or what it comprises</p>
+                              </div>
+                            </md-list-item>
+                          </md-list>
+                        </md-content>
+                        <div layout-padding layout-margin class="rupee">175</div>
+                        <div layout-padding layout-margin ng-show="combo_2_clicked" class="cart">
+                        <md-button class="md-icon-button md-primary" aria-label="Eat cake">
+                              <md-icon md-svg-src="assets/svg/cart.svg"></md-icon>
+                          </md-button>
+                        </div>
+                      </div>
+
+                      <div layout="row" ng-show="combo_1_clicked" class="combo-options">
+                          <div layout="column" layout-padding flex offset="10">
+                            <div layout="column">
+                                <md-content>
+                                  <md-list>
+                                    <md-list-item class="md-2-line">
+                                      <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                                      <div class="md-list-item-text">
+                                        <h3>Food</h3>
+                                        <p>Description</p>
+                                      </div>
+                                    </md-list-item>
+                                    <md-divider md-inset></md-divider>
+                                    <md-list-item class="md-2-line">
+                                      <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                                      <div class="md-list-item-text">
+                                        <h3>Food</h3>
+                                        <p>Description</p>
+                                      </div>
+                                    </md-list-item>
+                                    <md-divider md-inset></md-divider>
+                                    <md-list-item class="md-2-line">
+                                      <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                                      <div class="md-list-item-text">
+                                        <h3>Food</h3>
+                                        <p>Description</p>
+                                      </div>
+                                    </md-list-item>
+                                  </md-list>
+                                </md-content>
+                              </div>
+                            </div>
+                          <div flex="10"></div>
+                        </div>
+
+                  </div>
+                </div>
+                <!-- Combo 2 Card ends-->
+
+              </div>
+          </div>
+        </div>
+<!-- Restaurant ends -->

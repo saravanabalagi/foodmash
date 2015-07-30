@@ -1,0 +1,49 @@
+<div flex layout="column" layout-gt-lg="row" ng-repeat="restaurant in restaurants">
+      <div flex layout="column" layout-padding>
+        
+        <div layout="column">
+
+          <div layout="row" layout-align="center center">
+            <a href="/restaurant/{{restaurant.id}}"><h1 class="md-title" layout-padding>
+                {{restaurant.name}}
+            </h1></a>
+          </div>
+          <div flex layout-gt-sm="row" layout="column" layout-align="center">
+            <div class="md-whiteframe-z2" layout="row" layout-margin>
+                  <md-icon md-svg-icon="assets/svg/avatar-1.svg" class="restaurant-icon"></md-icon>
+                  <div flex layout="column" layout-align="space-around center" layout-padding layout-align="space-around start">
+                    <md-content>Type: Dine | Delivery | Take-away</md-content>
+                    <md-content>Working hours: 11am to 11pm</md-content>
+                    <md-content>Cuisine: Multi-cuisine</md-content>
+                    <md-content>Speciality: Pizzas</md-content>
+                    <md-content class="md-subhead"> Ratings: 4.3/5</md-content>
+                  </div>
+            </div>
+            <div flex="40" class="md-whiteframe-z2" layout-margin layout="column" layout-align="space-around center" layout-padding>
+              <h1 class="md-title"> {{restaurant.branch}} </h1>
+              <md-content>{{restaurant.address}}</md-content>
+              <div layout="row" layout-align="center center" layout-padding>
+                <md-button class="md-raised">Call</md-button>
+                <md-button class="md-raised md-primary">Maps</md-button>
+              </div>
+            </div>
+          </div>
+
+          
+        </div>
+
+    <div flex layout="column" class="no-scroll" ng-show="restaurant.description">
+          
+          <div layout="row" layout-padding layout-align="center center">
+            <h1 class="md-title"> About the Restaurant </h1>
+          </div>
+          <div flex layout="column" layout-padding class="auto-scroll">
+            <p class="no-margin" >{{restaurant.description}}</p>
+          </div>
+
+      </div>
+
+    </div>
+
+  </div>
+        <!-- Restaurant ends

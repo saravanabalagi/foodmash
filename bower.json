@@ -18,6 +18,7 @@
     "angular-material": "0.10.0",
     "lodash": "~3.10.0",
     "angularjs-toaster": "~0.4.15",
-    "angular-sanitize": "~1.4.3"
+    "angular-sanitize": "~1.4.3",
+    "ng-file-upload": "~6.0.2"
   }
 }

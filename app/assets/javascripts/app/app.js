@@ -31,6 +31,14 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.controllers',
 	      }
 	    }
 	  })
+		.when('/restaurant', {
+			controller: 'RestaurantsController',
+			templateUrl: '/templates/restaurants.html'
+		})
+		.when('/restaurant/:id', {
+			controller: 'RestaurantController', 
+			templateUrl: '/templates/restaurant.html'
+		})
 		.when('/login', 
 		{
 			controller: 'LoginController',

@@ -19,5 +19,7 @@
 //= require angular-animate/angular-animate
 //= require angular-sanitize/angular-sanitize
 //= require angularjs-toaster/toaster
+//= require ng-file-upload/ng-file-upload
+//= require ng-file-upload/ng-file-upload-shim
 //= require lodash/lodash
 //= require_tree .
