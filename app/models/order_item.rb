@@ -1,6 +1,6 @@
 class OrderItem < ActiveRecord::Base
-	has_one :item, polymorphic: true
 	validates_presence_of :order_id, :item_id, :item_type
+	include AASM
 
 	aasm do
 	  state :not_started, :initial => true
@@ -20,5 +20,4 @@ class OrderItem < ActiveRecord::Base
 	    transitions :from => :cooked, :to => :collected
 	  end
 	end
-	
 end

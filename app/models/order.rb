@@ -1,7 +1,7 @@
 class Order < ActiveRecord::Base
-	has_one :product, polymorphic: true
 	has_many :order_items
 	belongs_to :cart
+	validates_presence_of :product_id, :product_type, :cart_id, :quantity
 	include AASM
 
 	aasm do
