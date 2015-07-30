@@ -10,6 +10,7 @@ class SessionsController < Devise::SessionsController
     resource = User.find_for_database_authentication(email: params[:user][:email]) || User.find_for_database_authentication(mobile_no: params[:user][:mobile_no])
     return failure unless resource
     return failure unless resource.valid_password?(params[:user][:password])
+    sign_in(resource)
     render status: 200,
       json: {
         success: true, info: "Logged in", data: {
@@ -33,6 +34,7 @@ class SessionsController < Devise::SessionsController
     resource = User.find_for_database_authentication(id: params[:auth_user_id])
     return failure unless resource
     resource.clear_authentication_token
+    sign_out(resource)
     render status: 200, json: {success: true, info: 'Logged Out'}
   end
 

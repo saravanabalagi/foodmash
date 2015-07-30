@@ -1,6 +1,5 @@
 class OrdersController < ApplicationController
-	before_filter :set_order, only: [:show, :edit, :update, :destroy]
-	before_filter :set_cart
+	before_filter :set_order, only: [:show, :destroy]
 	respond_to :json
 
 	def create
@@ -10,6 +9,14 @@ class OrdersController < ApplicationController
 			render status: 201, json: @order.as_json
 		else
 			render status: 422, json: {error: @order.errors}
+		end
+	end
+
+	def destroy
+		if @order and @order.delete
+			head status: 200
+		else
+			render status: 404, json: {error: "Could not find order with id #{params[:id]}"}
 		end
 	end
 
@@ -26,11 +33,7 @@ class OrdersController < ApplicationController
 		end
 	end
 
-	def set_cart
-		@cart = Cart.find_by user_id: @current_user.id
-	end
-
-	def line_item_params
+	def order_params
 	 params.require(:order).permit(:product_id, :product_type) 
 	end
 

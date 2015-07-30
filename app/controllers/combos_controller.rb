@@ -3,9 +3,9 @@ class CombosController < ApplicationController
 	before_action :get_combo, only: [:show, :update, :destroy]
 
 	def index
-		@combos = Combo.all
+		@combos = Combo.where(params.permit(:id, :name))
 		if @combos 
-			render status: 200, json: @combos.as_json
+			render status: 200, json: @combos.as_json(:include => {:combo_options => {:include => :combo_option_dishes}})
 		else
 			render status: 404, json: {error: 'Combos not found!'}
 		end
@@ -22,7 +22,7 @@ class CombosController < ApplicationController
 
 	def show
 		if @combo
-			render status: 200, json: @combo.as_json
+			render status: 200, json: @combo.as_json(:include => {:combo_options => {:include => :combo_option_dishes}})
 		else
 			render status: 404, json: {error: "Combo with id #{params[:id]} was not found!"}
 		end
@@ -47,7 +47,7 @@ class CombosController < ApplicationController
 	def get_offer_combos
 		offerCombos = Combo.where(group_size: 1)
 		if offerCombos
-			render status: 200, json: offerCombos.as_json
+			render status: 200, json: offerCombos.as_json(:include => {:combo_options => {:include => :combo_option_dishes}})
 		else
 			render status: 404, json: {error: "Could not find offer combos"}
 		end
@@ -56,7 +56,7 @@ class CombosController < ApplicationController
 	def get_micro_combos
 		microCombos = Combo.where(group_size: 1)
 		if microCombos
-			render status: 200, json: microCombos.as_json
+			render status: 200, json: microCombos.as_json(:include => {:combo_options => {:include => :combo_option_dishes}})
 		else
 			render status: 404, json: {error: "Could not find micro combos"}
 		end
@@ -65,7 +65,7 @@ class CombosController < ApplicationController
 	def get_medium_combos
 		mediumCombos = Combo.where(group_size: 2)
 		if mediumCombos
-			render status: 200, json: mediumCombos.as_json
+			render status: 200, json: mediumCombos.as_json(:include => {:combo_options => {:include => :combo_option_dishes}})
 		else
 			render status: 404, json: {error: "Could not find medium combos"}
 		end
@@ -74,7 +74,7 @@ class CombosController < ApplicationController
 	def get_mega_combos
 		megaCombos = Combo.where("group_size >= ?", 3)
 		if megaCombos
-			render status: 200, json: megaCombos.as_json
+			render status: 200, json: megaCombos.as_json(:include => {:combo_options => {:include => :combo_option_dishes}})
 		else
 			render status: 404, json: {error: "Could not find mega combos"}
 		end
@@ -83,7 +83,7 @@ class CombosController < ApplicationController
 
 	private
 	def get_combo
-		combo = Combo.find params[:id]
+		@combo = Combo.find params[:id]
 	end
 
 	def combo_params

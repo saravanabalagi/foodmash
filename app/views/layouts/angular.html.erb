@@ -9,12 +9,28 @@
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag "application", :media => "all" %>
   </head>
-  <body>
+  <body ng-controller="MainController">
 
-    <md-toolbar>
-      <h1> <span> Foodmash </span> </h1>
+    <md-toolbar layout="row" class="md-whiteframe-z3">
+      <div layout-margin>
+        <md-button class="menu md-icon-button" ng-click="toggleList()" aria-label="Show User List">
+          <md-icon md-svg-icon="assets/svg/menu.svg"></md-icon>
+        </md-button>
+      </div>
+      
+      <md-icon class="title-logo" md-svg-icon="assets/svg/logo_hybrid.svg"></md-icon>
+
       <div user-panel></div>
+
+      <div layout-margin>
+        <md-button class="menu md-icon-button" aria-label="Show User List">
+          <md-icon md-svg-icon="assets/svg/cart.svg"></md-icon>
+        </md-button>
+      </div>
+
     </md-toolbar>
+
+    <toaster-container toaster-options="{'close-button': true, 'position-class': 'toast-bottom-right'}"></toaster-container>
 
     
     <div id="primary">

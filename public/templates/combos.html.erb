@@ -1,121 +1,111 @@
-<div layout="row" flex>
+<!-- Main page -->
 
-  <md-sidenav flex class="md-sidenav-left md-whiteframe-z2" md-is-locked-open="$mdMedia('gt-sm')">
-      <div flex layout="column">
+        <div layout="row" flex>
 
-          <div flex layout-align="center center" layout="row" class="nav-btn-parent" ng-repeat="option in sideNavOptions">
-            <md-button class="nav-btn" ng-click="selectOption(option)" ng-class="{'selected' : option === selected}">
-            <md-icon md-svg-src="{{option.pic_url}}" class="avatar"></md-icon>
-            {{option.name}}
-            </md-button>
-          </div>
+          <md-sidenav flex class="md-sidenav-left md-whiteframe-z2 sidebar" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+            <div flex layout="column">
 
-      </div>
-  </md-sidenav>
+              <div flex layout-align="center center" layout="row" class="nav-btn-parent" ng-repeat="option in sideNavOptions">
 
-  <div layout="row" flex>
-    <div flex>
+                <md-button class="nav-btn" 
+                ng-click="selectOption(option)" ng-class="{'selected' : option === selected}">
+                  <md-icon md-svg-src="{{option.pic_url}}" class="nav-icon"></md-icon>
+                  <span class="nav-description">{{option.name}}</span>
+                </md-button>
 
-      <!- - offer card - ->
-      <md-card>
-        <img ng-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/offer.jpg" class="md-card-image" alt="Washed Out">
-        <md-card-content>
-          <h2 class="md-title">5% off on Budget Combos</h2>
-          <p>
-            The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-            two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-          </p>
-        </md-card-content>
-      </md-card>  
-      <!- - offer card ends - ->
-
-      <!- - for loop - ->
-
-        <!- - Combo 1 Card - ->
-        <!- - Combo 1 Card ends- ->
-
-        <!- - Combo 2 Card - ->
-        <!- - Combo 2 Card ends- ->
-
-      <!- - for loop ends - ->
-
-    </div>
-    <div flex>
-
-      <!- - for loop - ->
-
-        <!- - Combo 1 Card - ->
-        <div layout="row" flex layout-margin class="md-whiteframe-z2" ng-repeat="combo in combos">
-          <div flex layout="column">
-
-              <div layout="row" layout-align="space-between center" slide-toggle="#combo_1_details" ng-click="combo_1_clicked=!combo_1_clicked">
-                <md-content flex>
-                  <md-list>
-                    <md-list-item class="md-3-line">
-                      <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="combo"></md-icon>
-                      <div class="md-list-item-text">
-                          <h3>{{combo.name}}</h3>
-                          <p>{{combo.description}}</p>
-                      </div>
-                    </md-list-item>
-                  </md-list>
-                </md-content>
-                <div layout-padding layout-margin class="rupee">{{combo.price}}</div>
-                <div layout-padding layout-margin ng-show="combo_1_clicked" class="cart">
-                <md-button class="md-icon-button md-primary" aria-label="Eat cake">
-                      <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cart.svg"></md-icon>
-                  </md-button>
-                </div>
               </div>
 
-              <div class="slideable" id="combo_1_details">
-                <div layout="row">
-                  <div layout="column" layout-padding flex offset="10">
-                    <div layout="column">
-                        <md-content>
+            </div>
+          </md-sidenav>
+
+          <div layout="column" layout-gt-sm="row" flex class="auto-scroll">
+            <div flex="50">
+
+              <!-- offer card -->
+              <md-card flex>
+                <img ng-src="/assets/jpg/offer.jpg" class="md-card-image" alt="Washed Out">
+                <md-card-content>
+                  <h2 class="md-title">5% off on Budget Combos</h2>
+                  <p>
+                    The titles of Washed Out's breakthrough song and the first single from Paracosm share the
+                    two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
+                  </p>
+                </md-card-content>
+              </md-card>  
+              <!-- offer card ends -->
+
+              <!-- for loop -->
+
+                <!-- Combo 1 Card -->
+                <!-- Combo 1 Card ends-->
+
+                <!-- Combo 2 Card -->
+                <!-- Combo 2 Card ends-->
+
+              <!-- for loop ends -->
+
+            </div>
+            <div flex="50">
+
+              <!-- for loop -->
+                <!-- Combo 1 Card -->
+                <div layout="row" flex layout-margin class="md-whiteframe-z2 combo-card" ng-init="combo_1_clicked" 
+                ng-repeat="combo in combos">
+                  <div flex layout="column">
+
+                      <div layout="row" layout-align="space-between center" ng-click="combo_1_clicked=!combo_1_clicked">
+                        <md-content flex>
                           <md-list>
-                            <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
+                            <md-list-item class="md-3-line">
+                              <md-icon md-svg-icon="assets/svg/avatar-1.svg" class="combo"></md-icon>
                               <div class="md-list-item-text">
-                                <h3>Food</h3>
-                                <p>Description</p>
-                              </div>
-                            </md-list-item>
-                            <md-divider md-inset></md-divider>
-                            <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
-                              <div class="md-list-item-text">
-                                <h3>Food</h3>
-                                <p>Description</p>
-                              </div>
-                            </md-list-item>
-                            <md-divider md-inset></md-divider>
-                            <md-list-item class="md-2-line">
-                              <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
-                              <div class="md-list-item-text">
-                                <h3>Food</h3>
-                                <p>Description</p>
+                                  <h3>{{combo.name}}</h3>
+                                  <p>Some two line description of what the combo is or what it comprises</p>
                               </div>
                             </md-list-item>
                           </md-list>
                         </md-content>
+                        <div layout-padding layout-margin class="rupee">{{combo.price}}</div>
+                        <div layout-padding layout-margin ng-show="combo_1_clicked" class="cart">
+                        <md-button class="md-icon-button md-primary" aria-label="Eat cake" ng-click="addToCart(combo)">
+                              <md-icon md-svg-src="assets/svg/cart.svg"></md-icon>
+                        </md-button>
+                        </div>
                       </div>
-                    </div>
-                  <div flex="10"></div>
+
+                      <div layout="row" ng-show="combo_1_clicked" class="combo-options">
+                          <div layout="column" layout-padding flex offset="10">
+                            <div layout="column">
+                                <md-content>
+                                  <md-list ng-repeat="combo_option in combo.combo_options">
+
+                                    <md-list-item class="md-2-line">
+                                      <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                                      <div class="md-list-item-text">
+                                        <h3>{{combo_option.name}}</h3>
+                                        <p>{{combo_option.description}}</p>
+                                        <select ng-options="combo_option_dish in combo_option.combo_option_dishes">
+                                        <option>{{combo_option_dish.dish_id}}</option>
+                                        </select>
+                                      </div>
+                                    </md-list-item>
+                                    <md-divider md-inset></md-divider>
+                                  
+                                  </md-list>
+                                </md-content>
+                              </div>
+                            </div>
+                          <div flex="10"></div>
+                        </div>
+
+                  </div>
                 </div>
-              </div>
-
+                <!-- Combo 1 Card ends-->
+              <!-- for loop ends -->
+            
+            </div>
           </div>
+          
+
         </div>
-        <!- - Combo 1 Card ends- ->
-
-      <!- - for loop ends - ->
-    
-    </div>
-
-  </div>
-  
-
-</div>
-
-<!- - Main page ends -->
+        <!-- Main page ends -->

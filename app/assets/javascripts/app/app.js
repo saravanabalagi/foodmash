@@ -2,10 +2,13 @@
 
 angular.module('foodmashApp', ['ngRoute', 'foodmashApp.controllers', 
 	'foodmashApp.services', 'ngCookies', 'foodmashApp.directives', 'foodmashApp.resources', 
-	'foodmashApp.interceptors', 'ngMaterial'])
+	'foodmashApp.interceptors', 'ngMaterial', 'ngAnimate', 'toaster'])
 
-.config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider){
+.config(['$routeProvider', '$locationProvider', '$httpProvider','railsSerializerProvider' ,function($routeProvider, $locationProvider, $httpProvider, railsSerializerProvider){
 	$httpProvider.interceptors.push('UserAuthInterceptor');
+
+	railsSerializerProvider.underscore(angular.identity).camelize(angular.identity);
+
 	$routeProvider
 	.when('/user/:user_id', 
 	  {
@@ -33,12 +36,6 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.controllers',
 			controller: 'LoginController',
 			templateUrl: '/templates/login.html'
 		})
-		// .when('/movie/:movie_id',
-		// 	{
-		// 		controller: 'MovieController',
-		// 		templateUrl: '/templates/movie.html'
-		// 	}
-		// )
 		.when('/', 
 		{
 			controller: 'CombosController',

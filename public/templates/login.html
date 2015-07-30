@@ -7,7 +7,7 @@
 
        <div layout="row">
          <div layout="column" flex offset="33">
-        <form name="login_form" role="form" ng-submit="submitLogin()">
+        <form name="login_form" role="form" ng-submit="submitLogin()" autocomplete="on">
            <md-input-container layout-padding>
                <label for="login.email">Email Address</label>
                <input name="login.email" ng-model="login.email" type="email" required>
@@ -47,7 +47,7 @@
 
        <div layout="row">
          <div layout="column" flex offset="33">
-          <form name="signup_form" role="form" ng-submit="submitSignup()">
+          <form name="signup_form" role="form" ng-submit="submitSignup()" autocomplete="on">
              <md-input-container layout-padding>
                  <label for="signup.name">Name</label>
                  <input name="signup.name" ng-model="signup.name" required>

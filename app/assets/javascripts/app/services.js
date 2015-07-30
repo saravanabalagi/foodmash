@@ -34,13 +34,30 @@ angular.module('foodmashApp.services', [])
 
  }])
 
+.service('CartService', ['$q','AuthService', '$http', function($q, AuthService, $http){
+
+  var service = this;
+
+  this.addToCart = function(combo){
+     var d = $q.defer();
+     $http({url: '/carts/addToCart', method: 'POST', data: {combo: combo}})
+     .then(function(response){
+        d.resolve(response);
+     }, function(error){
+        d.reject(error);
+     });
+     return d.promise;
+  };
+
+}])
+
 .service('CombosService', ['$q','$http', function($q, $http){
   var service = this;
   var sideNavOptions = [
-     {pic_url: "https://s3-ap-southeast-1.amazonaws.com/cshare1/images/offers.svg", name: "Offers"},
-     {pic_url: "https://s3-ap-southeast-1.amazonaws.com/cshare1/images/for_1.svg", name: "Micro"},
-     {pic_url: "https://s3-ap-southeast-1.amazonaws.com/cshare1/images/for_2.svg", name: "Medium"},
-     {pic_url: "https://s3-ap-southeast-1.amazonaws.com/cshare1/images/for_3.svg", name: "Mega"}
+     {pic_url: "https://s3-ap-southeast-1.amazonaws.com/cshare1/images/offers.svg", name: "Offers", icon_class: "nav-icon offers"},
+     {pic_url: "https://s3-ap-southeast-1.amazonaws.com/cshare1/images/for_1.svg", name: "Micro", icon_class: "nav-icon micro"},
+     {pic_url: "https://s3-ap-southeast-1.amazonaws.com/cshare1/images/for_2.svg", name: "Medium", icon_class: "nav-icon medium"},
+     {pic_url: "https://s3-ap-southeast-1.amazonaws.com/cshare1/images/for_3.svg", name: "Mega", icon_class: "nav-icon mega"}
   ];
 
   this.loadSideNavOptions = function(){
@@ -53,52 +70,7 @@ angular.module('foodmashApp.services', [])
     return d.promise;
   };
 
-  this.loadOfferCombos = function(){
-    var d = $q.defer();
-    $http({url: '/combos/getOfferCombos', method: 'GET'})
-    .then(function(response){
-      d.resolve(response.data);
-    }, function(error){
-      d.reject(error);
-    });
-    return d.promise;
-  };
-
-  this.loadMicroCombos = function(){
-    var d = $q.defer();
-    $http({url: '/combos/getMicroCombos', method: 'GET'})
-    .then(function(response){
-      d.resolve(response.data);
-    }, function(error){
-      d.reject(error);
-    });
-    return d.promise;
-  };
-
-  this.loadMediumCombos = function(){
-    var d = $q.defer();
-    $http({url: '/combos/getMediumCombos', method: 'GET'})
-    .then(function(response){
-      d.resolve(response.data);
-    }, function(error){
-      d.reject(error);
-    });
-    return d.promise;
-  };
-
-  this.loadMegaCombos = function(){
-    var d = $q.defer();
-    $http({url: '/combos/getMegaCombos', method: 'GET'})
-    .then(function(response){
-      d.resolve(response.data);
-    }, function(error){
-      d.reject(error);
-    });
-    return d.promise;
-  };
-
 }])
-
 
 
  .service('UserService', ['$rootScope', '$q', '$cookieStore', '$http', 'AuthService', function($rootScope, $q, $cookieStore, $http, AuthService) {

@@ -1,8 +1,17 @@
+
+
 <div ng-if="currentUser">
-   <a href="/user/{{currentUser.id}}">{{currentUser.email}}</a>
-  (<a ng-click="logout()">Log out</a>)
+	<div layout-margin layout="row">
+	  <md-button class="menu md-icon-button" aria-label="Show User List">
+	    <md-icon md-svg-icon="assets/svg/user.svg"></md-icon>
+	  </md-button>
+	  <a href="/user/{{currentUser.id}}"><div class="username-title">{{currentUser.email}}</div></a>
+	  <a ng-click="logout()" class="username-title">( Log out )</a>
+	</div>
 </div>
 
-<div ng-if="!currentUser">
-  <a href="/login">Log in</a>
+<div layout-margin layout="row">
+	<div ng-if="!currentUser">
+	  <a href="/login" class="username-title">Log in</a>
+	</div>
 </div>

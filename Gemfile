@@ -27,7 +27,7 @@ gem 'rolify'
 # for having role based authorization(along with rolify)
 gem 'cancan'
 # for change of states of resources
-gem 'state_machine'
+gem 'aasm'
 # a lightweight alternative to Webrick server
 gem 'thin'
 # used for pretty printing of console objects
@@ -40,6 +40,8 @@ gem 'angularjs-rails'
 gem 'angularjs-rails-resource'
 # version manager for front end resources
 # gem "bower-rails"
+# twillio client for sending sms
+gem 'twilio-ruby', '>= 4.2.1'
 
 group :production do
   gem 'pg'

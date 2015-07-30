@@ -15,20 +15,20 @@ class ApplicationController < ActionController::Base
 
   private 
 
-    def authenticate_user_from_token!
-      user_id = params[:auth_user_id].presence
-      user = user_id && User.find_by(user_id)
-      if user && Devise.secure_compare(user.authentication_token, params[:auth_token])
-        @current_user = user
-      else
-        permission_denied
-      end
+  def authenticate_user_from_token!
+    user_id = params[:auth_user_id].presence
+    user = user_id && User.find(user_id)
+    if user && Devise.secure_compare(user.authentication_token, params[:auth_token])
+      @current_user = user
+    else
+      permission_denied
     end
+  end
 
 
-    def permission_denied
-      render file: "public/404.html", status: 401, layout: false
-    end
+  def permission_denied
+    render status: 401, json: {error: "Permission denied!"}
+  end
 
   protected
     def verified_request?

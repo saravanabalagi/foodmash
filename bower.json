@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "angular-material": "0.10.0",
-    "lodash": "~3.10.0"
+    "lodash": "~3.10.0",
+    "angularjs-toaster": "~0.4.15"
   }
 }

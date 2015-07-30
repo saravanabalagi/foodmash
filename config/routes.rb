@@ -17,6 +17,10 @@ Rails.application.routes.draw do
       get 'getMegaCombos', to: 'combos#get_mega_combos'
     end
   end
+
+  resources :combo_options
+
+  resources :combo_option_dishes
   
   resources :dishes do 
     collection do 
@@ -24,11 +28,14 @@ Rails.application.routes.draw do
     end
   end
 
-  # #get requests for combos
-  # get '/getOfferCombos', to: 'combos#get_offer_combos'
-  # get '/getMicroCombos', to: 'combos#get_micro_combos'
-  # get '/getMediumCombos', to: 'combos#get_medium_combos'
-  # get '/getMegaCombos', to: 'combos#get_mega_combos'
+  resources :carts, only: [:create, :destroy] do 
+    collection do 
+      post '/addToCart', to: 'carts#add_to_cart'
+    end
+  end
+
+  get 'users', to: 'users#index'
+  put 'users/:id',to: 'users#update' 
 
 
   #routes for API calls
@@ -46,7 +53,7 @@ Rails.application.routes.draw do
     end
   end
 
-  # match '*path' => "foodmash#index", via: [:get, :post]
+  match '*path' => "foodmash#index", via: [:get, :post]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

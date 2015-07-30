@@ -3,7 +3,7 @@ class DishesController < ApplicationController
 	before_action :get_dish, only: [:show, :update, :destroy]
 
 	def index
-		@dishes = Dish.all
+		@dishes = Dish.where(params.permit(:id, :restaurant_id))
 		if @dishes 
 			render status: 200, json: @dishes.as_json
 		else

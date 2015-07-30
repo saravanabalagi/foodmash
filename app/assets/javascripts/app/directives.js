@@ -5,7 +5,7 @@ angular.module('foodmashApp.directives', [])
 .directive('userPanel', ['AuthService', 'UserService', function(AuthService, UserService) {
   return {
     templateUrl: '/templates/user_panel.html',
-    controller: ['$scope', 'AuthService', 'UserService', function($scope, AuthService, UserService) {
+    controller: ['$scope', 'AuthService', 'UserService','toaster', function($scope, AuthService, UserService, toaster) {
 
     	$scope.$on('user:set', function(event, currentUser){
     		$scope.currentUser = currentUser;
@@ -20,6 +20,7 @@ angular.module('foodmashApp.directives', [])
         UserService.logout()
          .then(function(){
          	 $scope.currentUser = null;
+           toaster.pop('error', 'Signed Out!');
         });
       };
 

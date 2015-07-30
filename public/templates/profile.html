@@ -1,0 +1,33 @@
+
+
+
+
+
+<div layout="row" layout-padding layout-align="center center" ng-init="show=false">
+  <md-content flex>{{user.name}}</md-content>
+  <md-content flex>{{user.email}}</md-content>
+  <md-content flex>{{user.mobile_no}}</md-content>
+  <div layout="row" layout-align="center center">
+    <md-button class="md-icon-button" ng-click="show = !show">
+      <md-icon md-svg-src="assets/svg/edit.svg"></md-icon>
+    </md-button>
+    <md-button class="md-icon-button">
+      <md-icon md-svg-src="assets/svg/bin.svg"></md-icon>
+    </md-button>
+  </div>
+</div>
+
+
+<form role="form" ng-submit="updateProfile()">
+  <div layout="row" layout-padding layout-align="center center" ng-show="show">
+    <input type="text" flex ng-model="user.name" />
+    <input type="text" flex ng-model="user.email" />
+    <input type="text" flex ng-model="user.mobile_no" />
+    <md-button class="md-icon-button" ng-click="show = !show">
+      Save
+    </md-button>
+    <md-button class="md-icon-button" ng-click="show = !show">
+      Cancel
+    </md-button>
+  </div>
+</form>
