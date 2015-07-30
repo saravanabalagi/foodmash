@@ -8,5 +8,15 @@ angular.module('foodmashApp.resources')
 		name: 'restaurant'
 	});
 
+	resource.prototype.hasCombos = function(){
+		var self = this;
+
+		return resource.$get(self.$url('hasCombos')).then(function(combos){
+			self.combos = combos;
+			return self.combos;
+		 });
+		
+	  };
+
 	return resource;
 }])

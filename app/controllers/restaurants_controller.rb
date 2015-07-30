@@ -1,6 +1,6 @@
 class RestaurantsController < ApplicationController
 	respond_to :json
-	before_action :get_restaurant, only: [:show, :update, :destroy]
+	before_action :get_restaurant, only: [:show, :update, :destroy, :has_combos]
 
 	def index
 		@restaurants = Restaurant.where(params.permit(:id))
@@ -41,6 +41,15 @@ class RestaurantsController < ApplicationController
 		  head :ok
 		else
 		  render status: 404, json: {error: "Restaurant with id #{params[:id]} not found!"}
+		end
+	end
+
+	def has_combos
+		if @restaurant
+			@combos = @restaurant.has_combos
+			render status: 200, json: @combos.as_json(:include => {:combo_options => {:include => :combo_option_dishes}})
+		else	
+			render status: 404, json: {error: "Could not find the combos!"}
 		end
 	end
 
