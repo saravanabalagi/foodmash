@@ -19,6 +19,10 @@ Rails.application.configure do
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
+  # Compress JavaScripts and CSS.
+  config.assets.compress = true
+  config.assets.js_compressor = :uglifier
+
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
 
