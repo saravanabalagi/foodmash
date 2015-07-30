@@ -41,7 +41,6 @@ angular.module('foodmashApp.controllers')
 	$scope.offerCombos = function(){
 		Combo.loadOfferCombos().then(function(offerCombos){
 			$scope.combos = offerCombos;
-			console.log(offerCombos);
 		});
 	};
 

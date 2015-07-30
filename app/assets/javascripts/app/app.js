@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp', ['ngRoute', 'foodmashApp.controllers', 
 	'foodmashApp.services', 'ngCookies', 'foodmashApp.directives', 'foodmashApp.resources', 
-	'foodmashApp.interceptors', 'ngMaterial', 'ngAnimate', 'toaster'])
+	'foodmashApp.interceptors', 'ngMaterial', 'ngAnimate', 'toaster', 'ngSanitize'])
 
 .config(['$routeProvider', '$locationProvider', '$httpProvider','railsSerializerProvider' ,function($routeProvider, $locationProvider, $httpProvider, railsSerializerProvider){
 	$httpProvider.interceptors.push('UserAuthInterceptor');

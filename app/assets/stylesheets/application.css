@@ -85,7 +85,7 @@ md-toolbar .username-title { margin-top: 14px; font-size: 16px; cursor: pointer;
 }
 
 md-icon.nav-icon { color:#EEEEEE; }
-.nav-btn.selected > md-icon.nav-icon { color:#d70d00; !important; }
+.nav-btn.selected > md-icon.nav-icon { color:#d70d00 !important; }
 
 .nav-btn.selected, 
 .nav-btn.md-focused { background-color: #444 !important; color: #EEE; }
