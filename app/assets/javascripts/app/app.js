@@ -16,7 +16,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.controllers',
 	    controller: 'ProfileController',
 	    resolve: {
 	      user:
-	      function($q, $route, $location, AuthService) {
+	      function($q, $route, $location, AuthService, toaster, User, $routeParams) {
 	        var d = $q.defer(); 
 
 	        AuthService.currentUser().then(function(user) { 

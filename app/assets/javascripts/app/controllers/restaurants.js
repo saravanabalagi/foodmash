@@ -6,7 +6,6 @@ angular.module('foodmashApp.controllers')
 	$scope.restaurants = {};
 
 	Restaurant.query().then(function(restaurants){
-		console.log(restaurants);
 		$scope.restaurants = restaurants;
 	});
 
