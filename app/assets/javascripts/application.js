@@ -14,12 +14,12 @@
 //= require angular-route
 //= require angular-cookies
 //= require angularjs/rails/resource
-//= require angular-material/angular-material
-//= require angular-aria/angular-aria
-//= require angular-animate/angular-animate
-//= require angular-sanitize/angular-sanitize
 //= require angularjs-toaster/toaster
+//= require angular-sanitize/angular-sanitize
 //= require ng-file-upload/ng-file-upload
 //= require ng-file-upload/ng-file-upload-shim
 //= require lodash/lodash
+//= require angular-material/angular-material
+//= require angular-aria/angular-aria
+//= require angular-animate/angular-animate
 //= require_tree .
