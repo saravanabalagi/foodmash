@@ -62,15 +62,15 @@ angular.module('foodmashApp.controllers')
 		});
 	};
 
-	$scope.addToCart = function(combo){
-		if($scope.user){
-			CartService.addToCart(combo).then(function(){
-				toaster.pop('success', 'added the combo to cart!');
-			});
-		}else{
-			$location.path('/login');
-			toaster.pop('warning', '', 'You need to be logged in first!');
-		}
-	};
+	// $scope.addToCart = function(combo){
+	// 	if($scope.user){
+	// 		CartService.addToCart(combo).then(function(){
+	// 			toaster.pop('success', 'added the combo to cart!');
+	// 		});
+	// 	}else{
+	// 		$location.path('/login');
+	// 		toaster.pop('warning', '', 'You need to be logged in first!');
+	// 	}
+	// };
 
 }]);
