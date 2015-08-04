@@ -42,8 +42,8 @@ Rails.application.routes.draw do
 
   #routes for API calls
 
-  namespace :api, path: '/', constraints: { subdomain: 'api' }, defaults: { format: :json } do 
-    namespace :v1 do
+  # namespace :api, path: '/', constraints: { subdomain: 'api' }, defaults: { format: :json } do 
+    namespace :v1, defaults: {format: :json} do
       resources :restaurants, only: [:index, :show]
       resources :dishes, only: [:index, :show]
       resources :combos, only: [:index, :show]
@@ -53,7 +53,7 @@ Rails.application.routes.draw do
       get '/restaurants/:id/hasCombos', to: 'restaurants#has_combos'
       get '/dishes/:id/belongsToCombos', to: 'dishes#belongs_to_combos'
     end
-  end
+  # end
 
   match '*path' => "foodmash#index", via: [:get, :post]
 
