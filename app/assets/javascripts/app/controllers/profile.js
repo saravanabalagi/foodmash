@@ -22,8 +22,10 @@ angular.module('foodmashApp.controllers')
         toaster.pop('error', 'Profile info failed to update!');
         d.reject();
       });
-      return d.promise;
+    }else{
+      d.reject(null);
     }
+    return d.promise;
    };
 
 }]);

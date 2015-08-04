@@ -23,8 +23,10 @@ angular.module('foodmashApp.controllers')
 				toaster.pop('error', 'Restaurant was not created!');
 				d.reject(err);
 			});
-			return d.promise;
+		}else{
+			d.reject(null);
 		}
+		return d.promise;
 	};
 
 }]);

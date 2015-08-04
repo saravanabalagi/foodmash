@@ -27,7 +27,7 @@ angular.module('foodmashApp.services')
        service.setCurrentUser($cookieStore.get('user'));
        d.resolve(service._user);
      } else {
-       d.resolve(null);
+       d.reject(null);
      }
      return d.promise;
    };

@@ -26,8 +26,10 @@ angular.module('foodmashApp.controllers')
 				toaster.pop('alert', 'Restaurant was not updated!');
 				d.reject(err);
 			});
-			return d.promise;
+		}else{
+			d.reject(null);
 		}
+		return d.promise;
 	};
 
 }]);
