@@ -27,7 +27,7 @@ angular.module('foodmashApp.controllers')
 				d.reject(err);
 			});
 		}else{
-			d.reject(null);
+			d.resolve(null);
 		}
 		return d.promise;
 	};

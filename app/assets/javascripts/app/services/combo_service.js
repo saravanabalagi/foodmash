@@ -16,7 +16,7 @@ angular.module('foodmashApp.services')
     if(sideNavOptions){
       d.resolve(sideNavOptions);
     }else{
-      d.reject(null);
+      d.resolve(null);
     }
     return d.promise;
   };
