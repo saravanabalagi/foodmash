@@ -43,6 +43,8 @@ gem 'angularjs-rails-resource'
 # twillio client for sending sms
 gem 'twilio-ruby', '>= 4.2.1'
 
+gem 'tzinfo-data'
+
 group :production do
   gem 'pg'
   gem 'rails_12factor'
