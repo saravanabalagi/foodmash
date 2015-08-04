@@ -9,7 +9,7 @@
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag "application", :media => "all" %>
   </head>
-  <body ng-controller="MainController">
+  <body ng-controller="MainController" layout="column">
 
     <md-toolbar layout="row" class="md-whiteframe-z3">
       <div layout-margin>
@@ -33,8 +33,8 @@
     <toaster-container toaster-options="{'close-button': true, 'position-class': 'toast-bottom-right'}"></toaster-container>
 
     
-    <div id="primary" flex>
-      <div id="main" ng-view flex></div>
+    <div id="primary" flex layout="column">
+      <div id="main" ng-view flex layout="column"></div>
     </div> <!-- 'primary' view -->
 
 
