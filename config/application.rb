@@ -22,6 +22,11 @@ module Foodmash
 
     config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
 
+    s3 = Aws::S3::Resource.new(
+      credentials: Aws::Credentials.new('akid', 'secret'),
+      region: 'ap-southeast-1'
+    )
+
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
   end

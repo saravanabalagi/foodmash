@@ -41,6 +41,12 @@ GEM
     angularjs-rails-resource (2.0.0)
     arel (6.0.2)
     awesome_print (1.6.1)
+    aws-sdk (2.1.11)
+      aws-sdk-resources (= 2.1.11)
+    aws-sdk-core (2.1.11)
+      jmespath (~> 1.0)
+    aws-sdk-resources (2.1.11)
+      aws-sdk-core (= 2.1.11)
     bcrypt (3.1.10)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
@@ -80,6 +86,12 @@ GEM
     jbuilder (2.3.1)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
+    jmespath (1.0.2)
+      multi_json (~> 1.0)
+    jquery-fileupload-rails (0.4.5)
+      actionpack (>= 3.1)
+      railties (>= 3.1)
+      sass (>= 3.2)
     jquery-rails (4.0.4)
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
@@ -136,6 +148,10 @@ GEM
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
     rolify (4.0.0)
+      coffee-rails (>= 3.1)
+      jquery-fileupload-rails (~> 0.4.1)
+      rails (>= 3.1)
+      sass-rails (>= 3.1)
     sass (3.4.16)
     sass-rails (5.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -186,6 +202,7 @@ DEPENDENCIES
   angularjs-rails
   angularjs-rails-resource
   awesome_print
+  aws-sdk (~> 2)
   bootstrap-sass-rails
   byebug
   cancan

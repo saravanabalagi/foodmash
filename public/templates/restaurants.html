@@ -1,4 +1,31 @@
 
+<md-button class="md-icon-button" ng-init="show=false" ng-click="show = !show">
+  <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/add.svg"></md-icon>
+</md-button>
+
+<form role="form" name="restaurantAddForm" ng-submit="addRestaurant()">
+  <div layout="row" layout-padding layout-align="center center" ng-show="show">
+    <md-input-container flex>
+      <input type="text" ng-model="restaurant.name" placeholder="name">
+    </md-input-container>
+    <md-input-container flex>
+      <textarea ng-model="restaurant.address" placeholder="address"></textarea>
+    </md-input-container>
+    <md-input-container flex>
+      <textarea ng-model="restaurant.description" placeholder="description"></textarea>
+    </md-input-container>
+     <md-input-container flex>
+      <input type="text" ng-model="restaurant.branch" placeholder="branch">
+    </md-input-container>
+    <md-button class="md-icon-button" ng-click="show = !show">
+      <md-icon md-svg-src="assets/svg/done.svg"></md-icon>
+    </md-button>
+    <md-button class="md-icon-button" ng-click="show = !show">
+      <md-icon md-svg-src="assets/svg/bin.svg"></md-icon>
+    </md-button>
+  </div>
+</form>
+
 <div flex layout="column" layout-gt-lg="row" ng-repeat="restaurant in restaurants">
       <div flex layout="column" layout-padding>
         
@@ -42,7 +69,7 @@
             <p class="no-margin" >{{restaurant.description}}</p>
           </div>
 
-      </div>
+    </div>
 
     </div>
 

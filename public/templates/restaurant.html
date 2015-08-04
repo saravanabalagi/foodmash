@@ -1,4 +1,37 @@
 <!-- Resturants -->
+<md-button class="md-icon-button" ng-init="show=false" ng-click="show = !show">
+  <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
+</md-button>
+
+<form role="form" name="restaurantUpdateForm" ng-submit="updateRestaurant()">
+  <div layout="row" layout-padding layout-align="center center" ng-show="show">
+    <md-input-container flex>
+      <input type="text" ng-model="restaurant.name" placeholder="name">
+    </md-input-container>
+    <md-input-container flex>
+      <textarea ng-model="restaurant.address" placeholder="address"></textarea>
+    </md-input-container>
+    <md-input-container flex>
+      <textarea ng-model="restaurant.description" placeholder="description"></textarea>
+    </md-input-container>
+     <md-input-container flex>
+      <input type="text" ng-model="restaurant.branch" placeholder="branch">
+    </md-input-container>
+    <md-input-container flex>
+      <input type="text" ng-model="restaurant.latitude" placeholder="lat">
+    </md-input-container>
+    <md-input-container flex>
+      <input type="text" ng-model="restaurant.longitude" placeholder="long">
+    </md-input-container>
+    <md-button class="md-icon-button" ng-click="show = !show" name="save">
+      <md-icon md-svg-src="assets/svg/done.svg"></md-icon>
+    </md-button>
+    <md-button class="md-icon-button" ng-click="show = !show" name="cancel">
+     <md-icon md-svg-src="assets/svg/bin.svg"></md-icon>
+    </md-button>
+  </div>
+</form>
+
   <div flex layout="column" layout-gt-lg="row">
           <div flex layout="column" layout-padding>
             
@@ -99,4 +132,58 @@
               </div>
           </div>
         </div>
+
+        <!-- Dishes -->
+
+      <div layout="row">
+          <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm></div>
+          <div layout="column" flex layout-padding layout-margin>
+              <md-content flex class="md-display-1">Dishes</md-content>
+              <md-divider class="bottom-margin bottom-padding"></md-divider>
+              
+              <!-- add new -->
+              <md-button class="md-icon-button" layout-padding ng-click="dshow = !dshow" ng-init="dshow = false">
+                  <md-icon md-svg-src="assets/svg/add.svg"></md-icon>
+              </md-button>
+              <div layout="row" ng-show="dshow">
+                <md-input-container flex>
+                    <label>Name</label>
+                    <input>
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Price</label>
+                    <input>
+                </md-input-container>
+                <div layout="row" layout-align="center center" layout-padding>
+                  <md-button class="md-icon-button" layout-padding ng-click="dshow = !dshow">
+                    <md-icon md-svg-src="assets/svg/done.svg"></md-icon>
+                  </md-button>
+                  <md-button class="md-icon-button" layout-padding ng-click="dshow = !dshow">
+                    <md-icon md-svg-src="assets/svg/bin.svg"></md-icon>
+                  </md-button>
+                </div>
+              </div>
+              <!-- add new ends -->
+
+              <!-- for loop for listing -->
+
+              <!-- item 1 -->
+              <div layout="row" layout-padding layout-align="center center">
+                <md-content flex>Chocolate Sandwich</md-content>
+                <md-content flex>40</md-content>
+                <div layout="row" layout-align="center center">
+                  <md-button class="md-icon-button">
+                    <md-icon md-svg-src="assets/svg/edit.svg"></md-icon>
+                  </md-button>
+                  <md-button class="md-icon-button">
+                    <md-icon md-svg-src="assets/svg/bin.svg"></md-icon>
+                  </md-button>
+                </div>
+              </div>
+              <!-- for loop ends -->
+              
+          </div>
+          <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm> </div>
+        </div>
+                <!-- Dishes ends-->
 <!-- Restaurant ends -->

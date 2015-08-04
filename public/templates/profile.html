@@ -18,7 +18,7 @@
 </div>
 
 
-<form role="form" ng-submit="updateProfile()">
+<form role="form" name="profileUpdateForm" ng-submit="updateProfile()">
   <div layout="row" layout-padding layout-align="center center" ng-show="show">
     <md-input-container flex>
       <input type="text" ng-model="user.name">
@@ -30,10 +30,10 @@
       <input type="text" ng-model="user.mobile_no">
     </md-input-container>
     <md-button class="md-icon-button" ng-click="show = !show">
-      Save
+     <md-icon md-svg-src="assets/svg/done.svg"></md-icon>
     </md-button>
     <md-button class="md-icon-button" ng-click="show = !show">
-      Cancel
+     <md-icon md-svg-src="assets/svg/bin.svg"></md-icon>
     </md-button>
   </div>
 </form>

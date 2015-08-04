@@ -42,6 +42,8 @@ gem 'angularjs-rails-resource'
 # gem "bower-rails"
 # twillio client for sending sms
 gem 'twilio-ruby', '>= 4.2.1'
+# direct upload to S3 bucket 
+gem 'aws-sdk', '~> 2'
 
 group :production do
   gem 'pg'

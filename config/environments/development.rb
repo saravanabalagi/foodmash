@@ -20,8 +20,12 @@ Rails.application.configure do
   config.active_support.deprecation = :log
 
   # Compress JavaScripts and CSS.
-  config.assets.compress = true
-  config.assets.js_compressor = :uglifier
+  config.assets.compress = false
+  # config.assets.js_compressor = :uglifier
+
+  ENV['BUCKET_NAME'] = 'cshare1'
+  ENV['ACCESS_KEY_ID'] = 'AKIAJI5DG4DQQV5GEFAQ'
+  ENV['SECRET_ACCESS_KEY'] = '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'
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load

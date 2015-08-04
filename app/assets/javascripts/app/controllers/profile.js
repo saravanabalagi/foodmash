@@ -14,14 +14,16 @@ angular.module('foodmashApp.controllers')
 
   $scope.updateProfile = function(){
     var d = $q.defer()
-    $scope.user.update().then(function(result){
-      toaster.pop('success', 'Profile info updated!');
-      d.resolve();
-    }, function(err){
-      toaster.pop('error', 'Profile info failed to update!');
-      d.reject();
-    });
-    return d.promise;
-  };
+    if(!$scope.profileUpdateForm.$pristine){
+      $scope.user.update().then(function(result){
+        toaster.pop('success', 'Profile info updated!');
+        d.resolve();
+      }, function(err){
+        toaster.pop('error', 'Profile info failed to update!');
+        d.reject();
+      });
+      return d.promise;
+    }
+   };
 
 }]);
