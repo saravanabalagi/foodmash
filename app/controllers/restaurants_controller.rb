@@ -47,9 +47,13 @@ class RestaurantsController < ApplicationController
 	def has_combos
 		if @restaurant
 			@combos = @restaurant.has_combos
-			render status: 200, json: @combos.as_json(:include => {:combo_options => {:include => :combo_option_dishes}})
+			if @combos
+				render status: 200, json: @combos.as_json(:include => {:combo_options => {:include => :combo_option_dishes}})
+			else
+				render status: 404, json: {error: "Could not find the combos!"}
+			end
 		else	
-			render status: 404, json: {error: "Could not find the combos!"}
+			render status: 404, json: {error: "Could not find the restaurant!"}
 		end
 	end
 
