@@ -15,6 +15,8 @@ angular.module('foodmashApp.controllers')
 				}else{
 					$scope.combos = null;
 				}
+			}, function(err){
+				$scope.combos = null;
 			});
 		}
 	});
