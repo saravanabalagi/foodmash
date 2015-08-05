@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('foodmashApp.controllers')
+
 .controller('ProfileController', ['$scope', '$routeParams', 'User','$q','toaster', function($scope, $routeParams, User, $q, toaster){
 
   $scope.user = {};

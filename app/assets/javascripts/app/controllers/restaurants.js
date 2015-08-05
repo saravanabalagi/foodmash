@@ -18,6 +18,7 @@ angular.module('foodmashApp.controllers')
 			$scope.restaurant.save().then(function(response){
 				toaster.pop('success', 'Restaurant was created!');
 				$scope.restaurants.unshift($scope.restaurant);
+				$scope.restaurant = new Restaurant;
 				d.resolve(response);
 			}, function(err){
 				toaster.pop('error', 'Restaurant was not created!');

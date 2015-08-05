@@ -10,7 +10,11 @@ angular.module('foodmashApp.controllers')
 		if(restaurants.length > 0){
 			$scope.restaurant = restaurants[0];
 			$scope.restaurant.hasCombos().then(function(combos){
-				$scope.combos = combos;
+				if(combos.length > 0){
+					$scope.combos = combos;
+				}else{
+					$scope.combos = null;
+				}
 			});
 		}
 	});
@@ -30,6 +34,13 @@ angular.module('foodmashApp.controllers')
 			d.resolve(null);
 		}
 		return d.promise;
+	};
+
+	$scope.addDish = function(){
+		var d = $q.defer();
+		if($scope.addDishForm.$pristine){
+			
+		}
 	};
 
 }]);
