@@ -24,10 +24,10 @@
       <input type="text" ng-model="restaurant.longitude" placeholder="long">
     </md-input-container>
     <md-button class="md-icon-button" ng-click="show = !show" name="save">
-      <md-icon md-svg-src="assets/svg/done.svg"></md-icon>
+      <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
     </md-button>
     <md-button class="md-icon-button" ng-click="show = !show" name="cancel">
-     <md-icon md-svg-src="assets/svg/bin.svg"></md-icon>
+     <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
     </md-button>
   </div>
 </form>
@@ -44,7 +44,7 @@
               </div>
               <div flex layout-gt-sm="row" layout="column" layout-align="center">
                 <div class="md-whiteframe-z2" layout="row" layout-margin>
-                      <md-icon md-svg-icon="assets/svg/avatar-1.svg" class="restaurant-icon"></md-icon>
+                      <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="restaurant-icon"></md-icon>
                       <div flex layout="column" layout-align="space-around center" layout-padding layout-align="space-around start">
                         <md-content>Type: Dine | Delivery | Take-away</md-content>
                         <md-content>Working hours: 11am to 11pm</md-content>
@@ -90,7 +90,7 @@
                         <md-content flex>
                           <md-list>
                             <md-list-item class="md-3-line">
-                              <md-icon md-svg-icon="assets/svg/avatar-1.svg" class="combo"></md-icon>
+                              <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="combo"></md-icon>
                               <div class="md-list-item-text">
                                   <h3>{{combo.name}}</h3>
                                   <p>{{combo.description}}</p>
@@ -101,7 +101,7 @@
                         <div layout-padding layout-margin class="rupee">{{combo.price}}</div>
                         <div layout-padding layout-margin ng-show="combo_1_clicked" class="cart">
                         <md-button class="md-icon-button md-primary" aria-label="Eat cake">
-                              <md-icon md-svg-src="assets/svg/cart.svg"></md-icon>
+                              <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cart.svg"></md-icon>
                           </md-button>
                         </div>
                       </div>
@@ -112,7 +112,7 @@
                                 <md-content>
                                   <md-list>
                                     <md-list-item class="md-2-line" ng-repeat="combo_option in combo.combo_options">
-                                      <md-icon md-svg-src="assets/svg/avatar-1.svg" class="food"></md-icon>
+                                      <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
                                       <div class="md-list-item-text">
                                         <h3>{{combo_option.name}}</h3>
                                         <p>{{combo_option.description}}</p>
@@ -143,7 +143,7 @@
               
               <!-- add new -->
               <md-button class="md-icon-button" layout-padding ng-click="dshow = !dshow" ng-init="dshow = false">
-                  <md-icon md-svg-src="assets/svg/add.svg"></md-icon>
+                  <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/add.svg"></md-icon>
               </md-button>
               <div layout="row" ng-show="dshow">
                 <md-input-container flex>
@@ -156,10 +156,10 @@
                 </md-input-container>
                 <div layout="row" layout-align="center center" layout-padding>
                   <md-button class="md-icon-button" layout-padding ng-click="dshow = !dshow">
-                    <md-icon md-svg-src="assets/svg/done.svg"></md-icon>
+                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
                   </md-button>
                   <md-button class="md-icon-button" layout-padding ng-click="dshow = !dshow">
-                    <md-icon md-svg-src="assets/svg/bin.svg"></md-icon>
+                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
                   </md-button>
                 </div>
               </div>
@@ -173,10 +173,10 @@
                 <md-content flex>40</md-content>
                 <div layout="row" layout-align="center center">
                   <md-button class="md-icon-button">
-                    <md-icon md-svg-src="assets/svg/edit.svg"></md-icon>
+                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
                   </md-button>
                   <md-button class="md-icon-button">
-                    <md-icon md-svg-src="assets/svg/bin.svg"></md-icon>
+                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
                   </md-button>
                 </div>
               </div>
