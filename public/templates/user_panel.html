@@ -3,7 +3,7 @@
 <div ng-if="currentUser">
 	<div layout-margin layout="row">
 	  <md-button class="menu md-icon-button" aria-label="Show User List">
-	    <md-icon md-svg-icon="assets/svg/user.svg"></md-icon>
+	    <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/user.svg"></md-icon>
 	  </md-button>
 	  <a href="/user/{{currentUser.id}}"><div class="username-title">{{currentUser.email}}</div></a>
 	  <a ng-click="logout()" class="username-title">( Log out )</a>
