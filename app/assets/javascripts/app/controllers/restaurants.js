@@ -5,6 +5,7 @@ angular.module('foodmashApp.controllers')
 .controller('RestaurantsController', ['$scope','Restaurant','$q','toaster','$location', function($scope, Restaurant, $q, toaster, $location){
 	$scope.restaurant = new Restaurant;
 	$scope.restaurants = {};
+	$scope.updatedRestaurant = {};
 
 	Restaurant.query().then(function(restaurants){
 		if(restaurants.length > 0){
@@ -14,6 +15,31 @@ angular.module('foodmashApp.controllers')
 
 	$scope.routeToRestaurant = function(r){
 		$location.path("restaurant/" + r.id);
+	};
+
+	$scope.setUpdate = function(r){
+		$scope.updatedRestaurant = r;
+	};
+
+	$scope.updateRestaurant = function(r){
+		var d = $q.defer();
+		console.log($scope.restaurantUpdateForm);
+		if(!$scope.restaurantUpdateForm.$pristine){
+			$scope.updatedRestaurant.update().then(function(response){
+				toaster.pop('success', 'Restaurant was updated!');
+				var index = $scope.restaurants.indexOf(r);
+				if(index){
+					$scope[index] = $scope.updatedRestaurant;
+				}
+				d.resolve(response);
+			}, function(err){
+				toaster.pop('error', 'Restaurant failed to update!');
+				d.reject(err);
+			});
+		}else{
+			d.resolve(null);
+		}
+		return d.promise;
 	};
 
 	$scope.addRestaurant = function(){
@@ -43,6 +69,5 @@ angular.module('foodmashApp.controllers')
 			toaster.pop('alert', 'Restaurant was not deleted!');
 		});
 	};
-
 
 }]);

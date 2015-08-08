@@ -33,7 +33,7 @@
 </form>
 
   <div ng-repeat="restaurant in restaurants">
-    <div layout="row" layout-padding layout-align="center center">
+    <div layout="row" layout-padding layout-align="center center" ng-show="!updateShow">
       <md-button class="md-icon-button">
           <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg"></md-icon>
         </md-button>
@@ -41,10 +41,43 @@
       <md-content flex>{{restaurant.address}}</md-content>
       <md-content flex>{{restaurant.branch}}</md-content>
       <md-content flex>{{restaurant.description}}</md-content>
+      <md-button class="md-icon-button" ng-click="updateShow = !updateShow; setUpdate(restaurant)">
+        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
+      </md-button>
       <md-button class="md-icon-button" ng-click="deleteRestaurant(restaurant)">
         <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
       </md-button>
     </div>
+
+  <form role="form" name="restaurantUpdateForm" ng-submit="updateRestaurant(restaurant)" ng-init="updateShow=false" ng-show="updateShow">
+    <div layout="row" layout-padding layout-align="center center">
+      <md-button class="md-icon-button">
+        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg"></md-icon>
+      </md-button>
+      <md-input-container flex>
+        <label>name</label>
+        <input type="text" ng-model="updatedRestaurant.name" />
+      </md-input-container>
+      <md-input-container flex>
+        <label>address</label>
+        <input ng-model="updatedRestaurant.address" />
+      </md-input-container>
+       <md-input-container flex>
+        <label>branch</label>
+        <input type="text" ng-model="updatedRestaurant.branch">
+      </md-input-container>
+      <md-input-container flex>
+        <label>description</label>
+        <input ng-model="updatedRestaurant.description" />
+      </md-input-container>
+      <md-button class="md-icon-button" ng-show="updateShow = !updateShow">
+        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
+      </md-button>
+      <md-button class="md-icon-button" ng-show="updateShow = !updateShow">
+        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
+      </md-button>
+    </div>
+  </form>
 
   </div>
         <!-- Restaurant ends -->
