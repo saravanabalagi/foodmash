@@ -140,10 +140,5 @@ md-bottom-sheet md-icon { margin-right:20px; }
 
 
 div[ng-view].ng-enter { -webkit-animation: fadeInRight 0.5s; animation: fadeInRight 0.5s;}
-.ng-hide-remove { -webkit-animation: bounceIn 1s; animation: bounceIn 1s; }
-.ng-hide-add { -webkit-animation: bounceOut 1s; animation: bounceOut 1s; display: block !important; }
 .cart.ng-hide-remove { -webkit-animation: rotateInDownRight 0.7s; animation: rotateInDownRight 0.7s; }
 .cart.ng-hide-add { -webkit-animation: fadeOutRight 0.7s; animation: fadeOutRight 0.7s; display: block !important; }
-.combo-options.ng-hide-remove { -webkit-animation: fadeIn 0.7s; animation: fadeIn 0.7s; }
-.combo-options.ng-hide-add { -webkit-animation: fadeOut 0.7s; animation: fadeOut 0.7s; display: block !important; }
-

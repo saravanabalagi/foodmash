@@ -15,21 +15,15 @@ angular.module('foodmashApp.controllers')
 	});
 
 	$scope.addDishType = function(){
-		var d = $q.defer();
-		if($scope.addDishTypeForm.$pristine){
+		if(!$scope.addDishTypeForm.$pristine){
 			$scope.dish_type.save().then(function(result){
 				toaster.pop('success', 'A new Dish Type was created!');
 				$scope.dish_types.unshift($scope.dish_type);
 				$scope.dish_type = new DishType;
-				d.resolve(result);
 			}, function(err){
 				toaster.pop('error', 'Failed to create new Dish Type');
-				d.reject(err);
 			});
-		}else{
-			d.resolve(null);
 		}
-		return d.promise;
 	};
 
 }]);

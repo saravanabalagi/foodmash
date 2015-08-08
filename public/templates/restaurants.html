@@ -1,77 +1,50 @@
+  <md-button class="md-icon-button" ng-init="show = false" ng-click="show = !show">
+    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/add.svg"></md-icon>
+  </md-button>
 
-<md-button class="md-icon-button" ng-init="show=false" ng-click="show = !show">
-  <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/add.svg"></md-icon>
-</md-button>
-
-<form role="form" name="restaurantAddForm" ng-submit="addRestaurant()">
-  <div layout="row" layout-padding layout-align="center center" ng-show="show">
+<form role="form" name="restaurantAddForm" ng-submit="addRestaurant()" ng-show="show">
+  <div layout="row" layout-padding layout-align="center center">
+    <md-button class="md-icon-button">
+      <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg"></md-icon>
+    </md-button>
     <md-input-container flex>
-      <input type="text" ng-model="restaurant.name" placeholder="name">
+      <label>name</label>
+      <input type="text" ng-model="restaurant.name" />
     </md-input-container>
     <md-input-container flex>
-      <textarea ng-model="restaurant.address" placeholder="address"></textarea>
-    </md-input-container>
-    <md-input-container flex>
-      <textarea ng-model="restaurant.description" placeholder="description"></textarea>
+      <label>address</label>
+      <input ng-model="restaurant.address" />
     </md-input-container>
      <md-input-container flex>
-      <input type="text" ng-model="restaurant.branch" placeholder="branch">
+      <label>branch</label>
+      <input type="text" ng-model="restaurant.branch">
     </md-input-container>
-    <md-button class="md-icon-button" ng-click="show = !show">
+    <md-input-container flex>
+      <label>description</label>
+      <input ng-model="restaurant.description" />
+    </md-input-container>
+    <md-button class="md-icon-button">
       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
     </md-button>
-    <md-button class="md-icon-button" ng-click="show = !show">
+    <md-button class="md-icon-button">
       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
     </md-button>
   </div>
 </form>
 
-<div flex layout="column" layout-gt-lg="row" ng-repeat="restaurant in restaurants">
-      <div flex layout="column" layout-padding>
-        
-        <div layout="column">
-
-          <div layout="row" layout-align="center center">
-            <a href="/restaurant/{{restaurant.id}}"><h1 class="md-title" layout-padding>
-                {{restaurant.name}}
-            </h1></a>
-          </div>
-          <div flex layout-gt-sm="row" layout="column" layout-align="center">
-            <div class="md-whiteframe-z2" layout="row" layout-margin>
-                  <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="restaurant-icon"></md-icon>
-                  <div flex layout="column" layout-align="space-around center" layout-padding layout-align="space-around start">
-                    <md-content>Type: Dine | Delivery | Take-away</md-content>
-                    <md-content>Working hours: 11am to 11pm</md-content>
-                    <md-content>Cuisine: Multi-cuisine</md-content>
-                    <md-content>Speciality: Pizzas</md-content>
-                    <md-content class="md-subhead"> Ratings: 4.3/5</md-content>
-                  </div>
-            </div>
-            <div flex="40" class="md-whiteframe-z2" layout-margin layout="column" layout-align="space-around center" layout-padding>
-              <h1 class="md-title"> {{restaurant.branch}} </h1>
-              <md-content>{{restaurant.address}}</md-content>
-              <div layout="row" layout-align="center center" layout-padding>
-                <md-button class="md-raised">Call</md-button>
-                <md-button class="md-raised md-primary">Maps</md-button>
-              </div>
-            </div>
-          </div>
-
-          
-        </div>
-
-    <div flex layout="column" class="no-scroll" ng-show="restaurant.description">
-          
-          <div layout="row" layout-padding layout-align="center center">
-            <h1 class="md-title"> About the Restaurant </h1>
-          </div>
-          <div flex layout="column" layout-padding class="auto-scroll">
-            <p class="no-margin" >{{restaurant.description}}</p>
-          </div>
-
-    </div>
-
+  <div ng-repeat="restaurant in restaurants">
+    <div layout="row" layout-padding layout-align="center center">
+      <md-button class="md-icon-button">
+          <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg"></md-icon>
+        </md-button>
+      <md-content flex ng-click="routeToRestaurant(restaurant)">{{restaurant.name}}</md-content>
+      <md-content flex>{{restaurant.address}}</md-content>
+      <md-content flex>{{restaurant.branch}}</md-content>
+      <md-content flex>{{restaurant.description}}</md-content>
+      <md-button class="md-icon-button" ng-click="deleteRestaurant(restaurant)">
+        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
+      </md-button>
     </div>
 
   </div>
-        <!-- Restaurant ends
+        <!-- Restaurant ends -->

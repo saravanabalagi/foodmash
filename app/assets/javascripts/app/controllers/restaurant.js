@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('RestaurantController', ['$scope','Restaurant','$routeParams','toaster','$q', function($scope, Restaurant, $routeParams, toaster, $q){
+.controller('RestaurantController', ['$scope','Restaurant','$routeParams','toaster','$q','$location', function($scope, Restaurant, $routeParams, toaster, $q, $location){
 	$scope.restaurant = {};
 	$scope.combos = {};
 
@@ -20,6 +20,15 @@ angular.module('foodmashApp.controllers')
 			});
 		}
 	});
+
+	$scope.deleteRestaurant = function(){
+		$scope.restaurant.delete().then(function(){
+			toaster.pop('success', 'Restaurant was deleted!');
+			$location.path("/restaurant");
+		}, function(){
+			toaster.pop('alert', 'Restaurant was not deleted!');
+		});
+	};
 
 		
 	$scope.updateRestaurant = function(){

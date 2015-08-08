@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('RestaurantsController', ['$scope','Restaurant','$q','toaster', function($scope, Restaurant, $q, toaster){
+.controller('RestaurantsController', ['$scope','Restaurant','$q','toaster','$location', function($scope, Restaurant, $q, toaster, $location){
 	$scope.restaurant = new Restaurant;
 	$scope.restaurants = {};
 
@@ -11,6 +11,10 @@ angular.module('foodmashApp.controllers')
 			$scope.restaurants = restaurants;
 		}
 	});
+
+	$scope.routeToRestaurant = function(r){
+		$location.path("restaurant/" + r.id);
+	};
 
 	$scope.addRestaurant = function(){
 		var d = $q.defer();
@@ -29,5 +33,16 @@ angular.module('foodmashApp.controllers')
 		}
 		return d.promise;
 	};
+
+	$scope.deleteRestaurant = function(r){
+		r.delete().then(function(){
+			$scope.restaurants.splice($scope.restaurants.indexOf(r));
+			toaster.pop('success', 'Restaurant was deleted!');
+			$location.path("/restaurant");
+		}, function(){
+			toaster.pop('alert', 'Restaurant was not deleted!');
+		});
+	};
+
 
 }]);

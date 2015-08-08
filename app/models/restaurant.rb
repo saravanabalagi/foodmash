@@ -1,6 +1,5 @@
 class Restaurant < ActiveRecord::Base
 	resourcify
-	has_many :contacts, as: :owner, dependent: :destroy
 	has_many :dishes, dependent: :destroy
 
 	def has_combos

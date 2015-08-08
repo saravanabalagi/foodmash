@@ -1,27 +1,39 @@
 <!-- Resturants -->
-<md-button class="md-icon-button" ng-init="show=false" ng-click="show = !show">
-  <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
-</md-button>
+<div layout="row" layout-align="center left">
+  <md-button class="md-icon-button" ng-init="show=false" ng-click="show = !show">
+    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
+  </md-button>
+
+  <md-button class="md-icon-button" ng-init="show=false">
+    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg" ng-click="deleteRestaurant()"></md-icon>
+  </md-button>
+</div>
 
 <form role="form" name="restaurantUpdateForm" ng-submit="updateRestaurant()">
   <div layout="row" layout-padding layout-align="center center" ng-show="show">
     <md-input-container flex>
-      <input type="text" ng-model="restaurant.name" placeholder="name">
+      <label>name</label>
+      <input type="text" ng-model="restaurant.name" />
     </md-input-container>
     <md-input-container flex>
-      <textarea ng-model="restaurant.address" placeholder="address"></textarea>
+      <label>address</label>
+      <input ng-model="restaurant.address" />
     </md-input-container>
     <md-input-container flex>
-      <textarea ng-model="restaurant.description" placeholder="description"></textarea>
+      <label>description</label>
+      <input ng-model="restaurant.description" />
     </md-input-container>
      <md-input-container flex>
-      <input type="text" ng-model="restaurant.branch" placeholder="branch">
+      <label>branch</label>
+      <input type="text" ng-model="restaurant.branch" />
     </md-input-container>
     <md-input-container flex>
-      <input type="text" ng-model="restaurant.latitude" placeholder="lat">
+      <label>latitude</label>
+      <input type="text" ng-model="restaurant.latitude" />
     </md-input-container>
     <md-input-container flex>
-      <input type="text" ng-model="restaurant.longitude" placeholder="long">
+      <label>longitude</label>
+      <input type="text" ng-model="restaurant.longitude" />
     </md-input-container>
     <md-button class="md-icon-button" ng-click="show = !show" name="save">
       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
