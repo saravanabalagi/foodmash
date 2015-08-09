@@ -26,8 +26,8 @@
     <md-button class="md-icon-button">
       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
     </md-button>
-    <md-button class="md-icon-button">
-      <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
+    <md-button class="md-icon-button" ng-click="show = !show">
+      <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cross.svg"></md-icon>
     </md-button>
   </div>
 </form>
@@ -49,7 +49,7 @@
       </md-button>
     </div>
 
-  <form role="form" name="restaurantUpdateForm" ng-submit="updateRestaurant(restaurant)" ng-init="updateShow=false" ng-show="updateShow">
+  <form role="form" name="restaurantUpdateForm" ng-submit="updateRestaurant(restaurant, cross)" ng-init="updateShow=false; cross = false" ng-show="updateShow">
     <div layout="row" layout-padding layout-align="center center">
       <md-button class="md-icon-button">
         <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg"></md-icon>
@@ -70,11 +70,11 @@
         <label>description</label>
         <input ng-model="updatedRestaurant.description" />
       </md-input-container>
-      <md-button class="md-icon-button" ng-show="updateShow = !updateShow">
+      <md-button class="md-icon-button" ng-click="updateShow = !updateShow">
         <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
       </md-button>
-      <md-button class="md-icon-button" ng-show="updateShow = !updateShow">
-        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
+      <md-button class="md-icon-button" ng-click="updateShow = !updateShow; cross = true">
+        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cross.svg"></md-icon>
       </md-button>
     </div>
   </form>
