@@ -70,7 +70,7 @@
         <label>description</label>
         <input ng-model="updatedRestaurant.description" />
       </md-input-container>
-      <md-button class="md-icon-button" ng-click="updateShow = !updateShow">
+      <md-button class="md-icon-button" ng-click="updateShow = !updateShow; cross = false">
         <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
       </md-button>
       <md-button class="md-icon-button" ng-click="updateShow = !updateShow; cross = true">
