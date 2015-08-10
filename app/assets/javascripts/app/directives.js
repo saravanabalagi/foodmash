@@ -28,5 +28,11 @@ angular.module('foodmashApp.directives', [])
 
   };
 
-}]);
+}])
+
+.directive('confirm', [function(){
+  return {
+    
+  };
+}]); 
 

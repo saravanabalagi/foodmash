@@ -157,7 +157,7 @@
               <md-button class="md-icon-button" layout-padding ng-click="dshow = !dshow" ng-init="dshow = false">
                   <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/add.svg"></md-icon>
               </md-button>
-              <div layout="row" ng-show="dshow">
+              <form name="dishAddForm" layout="row" ng-show="dshow" ng-submit="addDish()">
                 <md-input-container flex>
                     <label>Name</label>
                     <input>
@@ -174,23 +174,28 @@
                     <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
                   </md-button>
                 </div>
-              </div>
+              </form>
               <!-- add new ends -->
 
               <!-- for loop for listing -->
 
               <!-- item 1 -->
-              <div layout="row" layout-padding layout-align="center center">
-                <md-content flex>Chocolate Sandwich</md-content>
-                <md-content flex>40</md-content>
-                <div layout="row" layout-align="center center">
-                  <md-button class="md-icon-button">
-                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
-                  </md-button>
-                  <md-button class="md-icon-button">
-                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
-                  </md-button>
+              <div ng-repeat="dish in dishes" ng-init="dishEditShow=false" ng-hide="dishEditShow">
+                <div layout="row" layout-padding layout-align="center center">
+                  <md-content flex>{{dish.name}}</md-content>
+                  <md-content flex>{{dish.price}}</md-content>
+                  <div layout="row" layout-align="center center">
+                    <md-button class="md-icon-button" ng-click="dishEditShow= !dishEditShow">
+                      <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" ng-click="dishEditShow = !dishEditShow; deleteDish(dish)">
+                      <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
+                    </md-button>
+                  </div>
                 </div>
+
+
+
               </div>
               <!-- for loop ends -->
               

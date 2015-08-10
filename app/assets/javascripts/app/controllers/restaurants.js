@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('RestaurantsController', ['$scope','Restaurant','$q','toaster', function($scope, Restaurant, $q, toaster){
+.controller('RestaurantsController', ['$scope','Restaurant','$q','toaster','$location', function($scope, Restaurant, $q, toaster, $location){
 	$scope.restaurant = new Restaurant;
 	$scope.restaurants = {};
 	$scope.updatedRestaurant = {};
@@ -18,7 +18,7 @@ angular.module('foodmashApp.controllers')
 	};
 
 	$scope.setUpdate = function(r){
-		$scope.updatedRestaurant = r;
+		$scope.updatedRestaurant = angular.copy(r);
 	};
 
 	$scope.updateRestaurant = function(r, cross){

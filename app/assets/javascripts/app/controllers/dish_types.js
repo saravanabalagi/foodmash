@@ -16,7 +16,7 @@ angular.module('foodmashApp.controllers')
 	});
 
 	$scope.setUpdate = function(d){
-		$scope.updatedDishType = angular.extend(d);
+		$scope.updatedDishType = angular.copy(d);
 	};
 
 	$scope.updateDishType = function(d, cross){
