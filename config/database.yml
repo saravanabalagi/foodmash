@@ -23,5 +23,9 @@ test:
 
 production:
   <<: *default
-  database: db/production.postgresql
   adapter: postgresql
+  database: foodmash-point-1
+  username: pravcfc
+  password: 88lampard88
+  host: foodmash-point-1.cy5vwgwyfger.ap-southeast-1.rds.amazonaws.com
+  port: 5432
