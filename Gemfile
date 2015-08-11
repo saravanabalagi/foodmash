@@ -53,6 +53,7 @@ gem 'tzinfo-data'
 
 group :production do
   gem 'pg'
+  gem 'mysql2'
   gem 'unicorn'
   gem 'rails_12factor'
 end
