@@ -23,9 +23,9 @@ test:
 
 production:
   <<: *default
-  adapter: mysql
+  adapter: mysql2
   database: foodmash_db_1
-  encoding: unicode
+  encoding: utf8
   username: pravcfc
   password: 88lampard88
   host: foodmash-db-1.cy5vwgwyfger.ap-southeast-1.rds.amazonaws.com
