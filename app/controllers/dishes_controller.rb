@@ -56,7 +56,7 @@ class DishesController < ApplicationController
 
 	private
 	def get_dish
-		dish = Dish.find params[:id]
+		@dish = Dish.find params[:id]
 	end
 
 	def dish_params

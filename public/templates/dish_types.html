@@ -8,20 +8,20 @@
               
               <!-- add new -->
               <div layout="row">
-              <md-button class="md-icon-button" layout-padding ng-init="show=false" ng-click="show = !show">
+              <md-button class="md-icon-button" layout-padding ng-init="addShow=false; addCross=false" ng-click="addShow = !addShow">
                 <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/add.svg"></md-icon>
               </md-button>
-               <form name="addDishTypeForm" ng-submit="addDishType()" ng-show="show">
+               <form name="addDishTypeForm" ng-submit="addDishType(addCross)" ng-show="addShow">
                 <md-input-container flex>
                     <label>Dish Type</label>
                     <input ng-model="dish_type.name" type="text" />
                 </md-input-container>
                 <div layout="row" layout-align="center center" layout-padding>
-                  <md-button class="md-icon-button" layout-padding ng-click="show = !show">
+                  <md-button class="md-icon-button" layout-padding ng-click="addCross=false">
                     <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
                   </md-button>
-                  <md-button class="md-icon-button" layout-padding ng-click="show = !show">
-                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
+                  <md-button class="md-icon-button" layout-padding ng-click="addShow = !addShow; addCross=true">
+                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cross.svg"></md-icon>
                   </md-button>
                 </div>
                </form>
@@ -44,16 +44,16 @@
                 </div>
               </div>
 
-              <form name="updateDishTypeForm" ng-submit="updateDishType(dish_type, cross)" ng-init="updateShow=false; cross=false" ng-show="updateShow">
+              <form name="updateDishTypeForm" ng-submit="updateDishType(dish_type, updateCross)" ng-init="updateShow=false; updateCross=false" ng-show="updateShow">
                <md-input-container flex>
                    <label>Dish Type</label>
                    <input ng-model="dish_type.name" type="text" />
                </md-input-container>
                <div layout="row" layout-align="center center" layout-padding>
-                 <md-button class="md-icon-button" layout-padding ng-click="updateShow = !updateShow; cross=false">
+                 <md-button class="md-icon-button" layout-padding ng-click="updateShow = !updateShow; updateCross=false">
                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
                  </md-button>
-                 <md-button class="md-icon-button" layout-padding ng-click="updateShow = !updateShow; cross = true">
+                 <md-button class="md-icon-button" layout-padding ng-click="updateShow = !updateShow; updateCross = true">
                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cross.svg"></md-icon>
                  </md-button>
                </div>

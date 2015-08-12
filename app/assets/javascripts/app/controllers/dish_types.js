@@ -19,9 +19,9 @@ angular.module('foodmashApp.controllers')
 		$scope.updatedDishType = angular.copy(d);
 	};
 
-	$scope.updateDishType = function(d, cross){
+	$scope.updateDishType = function(d, updateCross){
 		var d = $q.defer();
-		if(!cross){
+		if(!updateCross){
 			$scope.updatedDishType.update().then(function(response){
 				toaster.pop('success', 'Dish Type was successfully updated!');
 				var index = $scope.dish_types.indexOf(d);
@@ -37,15 +37,20 @@ angular.module('foodmashApp.controllers')
 		return d.promise;
 	};
 
-	$scope.addDishType = function(){
-		if(!$scope.addDishTypeForm.$pristine){
-			$scope.dish_type.save().then(function(result){
-				toaster.pop('success', 'A new Dish Type was created!');
-				$scope.dish_types.unshift($scope.dish_type);
-				$scope.dish_type = new DishType;
-			}, function(err){
-				toaster.pop('error', 'Failed to create new Dish Type');
-			});
+	$scope.addDishType = function(addCross){
+		if(!addCross){
+			if(!$scope.addDishTypeForm.$pristine){
+				$scope.dish_type.save().then(function(result){
+					toaster.pop('success', 'A new Dish Type was created!');
+					$scope.dish_types.unshift($scope.dish_type);
+					$scope.dish_type = new DishType;
+				}, function(err){
+					toaster.pop('error', 'Failed to create new Dish Type');
+				});
+			}
+		}else{
+			$scope.dish_type = new DishType;
+			d.resolve(null);
 		}
 	};
 

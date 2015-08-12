@@ -23,11 +23,11 @@ test:
 
 production:
   <<: *default
-  adapter: "postgresql"
-  database: "foodmash-point-1"
-  encoding: "unicode"
-  username: "pravcfc"
-  password: "88lampard88"
-  host: "foodmash-point-1.cy5vwgwyfger.ap-southeast-1.rds.amazonaws.com"
+  adapter: mysql
+  database: foodmash_db_1
+  encoding: unicode
+  username: pravcfc
+  password: 88lampard88
+  host: foodmash-db-1.cy5vwgwyfger.ap-southeast-1.rds.amazonaws.com
   reconnect: true
-  port: 5432
+  port: 3306

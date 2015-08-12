@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.resources')
 
-.factory('Combo', ['railsResourceFactory', '$q','railsSerializer', function(railsResourceFactory, $q){
+.factory('Combo', ['railsResourceFactory', '$q', function(railsResourceFactory, $q){
 	
 	var resource = railsResourceFactory({
 		url: '/combos',

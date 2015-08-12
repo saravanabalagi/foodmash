@@ -47,11 +47,5 @@ angular.module('foodmashApp.controllers')
 		return d.promise;
 	};
 
-	$scope.addDish = function(){
-		var d = $q.defer();
-		if($scope.addDishForm.$pristine){
-			
-		}
-	};
 
 }]);

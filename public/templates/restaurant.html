@@ -154,7 +154,7 @@
               <md-divider class="bottom-margin bottom-padding"></md-divider>
               
               <!-- add new -->
-              <md-button class="md-icon-button" layout-padding ng-click="dshow = !dshow" ng-init="dshow = false">
+              <md-button class="md-icon-button" layout-padding ng-click="dshow = !dshow" ng-init="dshow = true">
                   <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/add.svg"></md-icon>
               </md-button>
               <form name="dishAddForm" layout="row" ng-show="dshow" ng-submit="addDish()">
@@ -171,7 +171,7 @@
                     <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
                   </md-button>
                   <md-button class="md-icon-button" layout-padding ng-click="dshow = !dshow">
-                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
+                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cross.svg"></md-icon>
                   </md-button>
                 </div>
               </form>
@@ -180,6 +180,7 @@
               <!-- for loop for listing -->
 
               <!-- item 1 -->
+            <div ng-controller="DishesController">
               <div ng-repeat="dish in dishes" ng-init="dishEditShow=false" ng-hide="dishEditShow">
                 <div layout="row" layout-padding layout-align="center center">
                   <md-content flex>{{dish.name}}</md-content>
@@ -193,7 +194,7 @@
                     </md-button>
                   </div>
                 </div>
-
+              </div>
 
 
               </div>
