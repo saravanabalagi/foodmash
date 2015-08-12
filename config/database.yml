@@ -23,7 +23,7 @@ test:
 
 production:
   <<: *default
-  adapter: mysql2
+  adapter: mysql
   database: foodmash_db_1
   encoding: utf8
   username: pravcfc
