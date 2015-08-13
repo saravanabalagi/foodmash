@@ -5,7 +5,7 @@ class RestaurantsController < ApplicationController
 	def index
 		@restaurants = Restaurant.where(params.permit(:id))
 		if @restaurants 
-			render status: 200, json: @restaurants.as_json
+			render status: 200, json: @restaurants.as_json(:include => :dishes)
 		else
 			render status: 404, json: {error: 'Restaurants not found!'}
 		end

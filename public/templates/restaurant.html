@@ -147,7 +147,7 @@
 
         <!-- Dishes -->
 
-      <div layout="row" ng-controller="DishesController">
+      <div layout="row" ng-controller="DishesController" ng-init="loadDishes(restaurant.id)">
           <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm></div>
           <div layout="column" flex layout-padding layout-margin>
               <md-content flex class="md-display-1">Dishes</md-content>
@@ -157,23 +157,23 @@
               <md-button class="md-icon-button" layout-padding ng-click="dishesAddShow = !dishesAddShow" ng-init="dishesAddShow = true; dishesAddCross = false">
                   <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/add.svg"></md-icon>
               </md-button>
-              <form name="dishAddForm" layout="row" ng-show="dshow" ng-submit="addDish()">
-                <md-input-container flex ng-model="dish.name">
+              <form name="dishAddForm" layout="row" ng-show="dishesAddShow" ng-submit="addDish(dishesAddCross, restaurant.id)">
+                <md-input-container flex>
                   <label>Name</label>
-                  <input type="text" />
+                  <input type="text" ng-model="dish.name" />
                 </md-input-container flex>
-                <md-input-container ng-model="dish.price">
+                <md-input-container>
                   <label>Price</label>
-                  <input type="text" />
+                  <input type="text" ng-model="dish.price" />
                 </md-input-container>
-                <md-input-container ng-model="dish.dish_type_id">
+                <md-input-container>
                   <label>Dish Type</label>
-                  <md-select ng-model="dish_types">
+                  <md-select ng-model="dish.dish_type_id">
                     <md-option ng-repeat="dish_type in dish_types" value="{{dish_type.id}}">{{dish_type.name}}</md-option>
                   </md-select>
                 </md-input-container>
                 <div layout="row" layout-align="center center" layout-padding>
-                  <md-button class="md-icon-button" layout-padding ng-click="dishesAddShow = !dishesAddShow; dishesAddCross=false">
+                  <md-button class="md-icon-button" layout-padding ng-click="dishesAddCross=false">
                     <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
                   </md-button>
                   <md-button class="md-icon-button" layout-padding ng-click="dishesAddShow = !dishesAddShow; dishesAddCross=true">
@@ -186,16 +186,16 @@
               <!-- for loop for listing -->
 
               <!-- item 1 -->
-              <div ng-repeat="dish in dishes" ng-init="dishEditShow=false" ng-hide="dishEditShow">
+              <div ng-repeat="dish in dishes">
                 <div layout="row" layout-padding layout-align="center center">
                   <md-content flex>{{dish.name}}</md-content>
                   <md-content flex>{{dish.price}}</md-content>
                   <md-content flex>{{dish.d}}</md-content>
                   <div layout="row" layout-align="center center">
-                    <md-button class="md-icon-button" ng-click="dishEditShow= !dishEditShow">
+                    <md-button class="md-icon-button">
                       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
                     </md-button>
-                    <md-button class="md-icon-button" ng-click="dishEditShow = !dishEditShow; deleteDish(dish)">
+                    <md-button class="md-icon-button" ng-click="deleteDish(dish)">
                       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
                     </md-button>
                   </div>
