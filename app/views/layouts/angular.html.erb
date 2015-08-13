@@ -9,6 +9,7 @@
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag "application", :media => "all" %>
   </head>
+  <md-progress-linear class="md-warn" id="progress-bar" md-mode="indeterminate" ng-show="loading"></md-progress-linear>
   <body ng-controller="MainController" layout="column" ng-cloak>
 
     <md-toolbar layout="row" class="md-whiteframe-z3">
