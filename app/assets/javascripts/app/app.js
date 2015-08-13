@@ -51,7 +51,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 		.when('/', 
 		{
 			controller: 'CombosController',
-			templateUrl: '/templates/combos.html.erb'
+			templateUrl: '/templates/combos.html'
 		}
 		).otherwise({redirectTo: '/'});
 		$locationProvider.html5Mode(true);

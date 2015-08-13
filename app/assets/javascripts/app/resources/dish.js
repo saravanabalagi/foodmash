@@ -10,5 +10,4 @@ angular.module('foodmashApp.resources')
 	});
 
 	return resource;
-
 }]);

@@ -4,7 +4,7 @@ angular.module('foodmashApp.resources')
 
 .factory('User', ['railsResourceFactory', '$q', function(railsResourceFactory, $q){
 	var resource = railsResourceFactory({
-		url: '/users',
+		url: '/web/users',
 		name: 'user'
 	});
 

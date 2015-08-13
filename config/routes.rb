@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   root to: 'foodmash#index'
 
   devise_for :users, controllers: {registrations: 'registrations', sessions: 'sessions'}, defaults: {format: :json}
@@ -39,8 +40,7 @@ Rails.application.routes.draw do
   get 'users', to: 'users#index'
   put 'users/:id',to: 'users#update' 
 
-
-
+  
   #routes for API calls
 
   namespace :api, path: '/', constraints: { subdomain: 'api' }, defaults: { format: :json } do 
@@ -56,8 +56,8 @@ Rails.application.routes.draw do
     end
   end
 
-
   match '*path' => "foodmash#index", via: [:get, :post]
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -4,7 +4,7 @@ class Api::V1::DishesController < ApiApplicationController
 	def index
 		dishes = Dish.all
 		if dishes
-			render status: 200, json: dishes
+			render status: 200, json: dishes.as_json(:include => :dish_type)
 		else
 			render status: 404, json: "Could not find all the dishes!"
 		end
@@ -13,7 +13,7 @@ class Api::V1::DishesController < ApiApplicationController
 	def show
 		dish = Dish.find params[:id]
 		if dish
-			render status: 200, json: dish
+			render status: 200, json: dish.as_json
 		else
 			render status: 404, json: {error: "Could not find dish with id #{params[:id]}!"}
 		end
@@ -22,7 +22,7 @@ class Api::V1::DishesController < ApiApplicationController
 	def belongs_to_combos
 		dish = Dish.find params[:id]
 		if dish
-			render status: 200, json: dish.belongs_to_combos
+			render status: 200, json: dish.belongs_to_combos.as_json
 		else
 			render status: 404, json: {error: "Could not find the combos!"}
 		end

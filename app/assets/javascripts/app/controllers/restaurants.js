@@ -5,7 +5,7 @@ angular.module('foodmashApp.controllers')
 .controller('RestaurantsController', ['$scope','Restaurant','$q','toaster','$location', function($scope, Restaurant, $q, toaster, $location){
 	$scope.restaurant = new Restaurant;
 	$scope.restaurants = {};
-	$scope.updatedRestaurant = {};
+	$scope.updatedRestaurant = new Restaurant;
 
 	Restaurant.query().then(function(restaurants){
 		if(restaurants.length > 0){
