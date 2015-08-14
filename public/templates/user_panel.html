@@ -1,17 +1,43 @@
 
 
 <div ng-if="currentUser">
-	<div layout-margin layout="row">
+	<div ng-click="logout()" layout-margin layout="row">
 	  <md-button class="menu md-icon-button" aria-label="Show User List">
 	    <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/user.svg"></md-icon>
 	  </md-button>
+
 	  <a href="/user/{{currentUser.id}}"><div class="username-title">{{currentUser.email}}</div></a>
-	  <a ng-click="logout()" class="username-title">( Log out )</a>
 	</div>
 </div>
 
 <div layout-margin layout="row">
 	<div ng-if="!currentUser">
-	  <a href="/login" class="username-title">Log in</a>
+	  <md-menu>
+      <md-button aria-label="Open phone interactions menu" class="menu md-icon-button" ng-click="ctrl.openMenu($mdOpenMenu, $event)">
+        <md-icon md-menu-origin md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/user.svg"></md-icon>
+      </md-button>
+      <md-menu-content width="4">
+        <md-menu-item>
+          <md-button ng-click="ctrl.redial($event)">
+            <md-icon md-svg-icon="call:dialpad" md-menu-align-target></md-icon>
+            Redial
+          </md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button disabled="disabled" ng-click="ctrl.checkVoicemail()">
+            <md-icon md-svg-icon="call:voicemail"></md-icon>
+            Check voicemail
+          </md-button>
+        </md-menu-item>
+        <md-menu-divider></md-menu-divider>
+        <md-menu-item>
+          <md-button ng-click="ctrl.toggleNotifications()">
+            <md-icon md-svg-icon="social:notifications-{{ctrl.notificationsEnabled ? 'off' : 'on'}}"></md-icon>
+            {{ctrl.notificationsEnabled ? 'Disable' : 'Enable' }} notifications
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+
 	</div>
 </div>

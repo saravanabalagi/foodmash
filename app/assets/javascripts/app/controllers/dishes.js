@@ -34,6 +34,8 @@ angular.module('foodmashApp.controllers')
 			if(!$scope.dishAddForm.$pristine){
 				$scope.dish.save().then(function(response){
 					toaster.pop('success', 'A new Dish was created!');
+					$scope.dishes.unshift($scope.dish);
+					$scope.dish = new Dish;
 					d.resolve(response);
 				}, function(err){
 					toaster.pop('error', 'Dish was not created!');

@@ -161,13 +161,13 @@
                 <md-input-container flex>
                   <label>Name</label>
                   <input type="text" ng-model="dish.name" />
-                </md-input-container flex>
-                <md-input-container>
+                </md-input-container>
+                <md-input-container flex>
                   <label>Price</label>
                   <input type="text" ng-model="dish.price" />
                 </md-input-container>
-                <md-input-container>
-                  <label>Dish Type</label>
+                <md-input-container flex>
+                  <label>Type</label>
                   <md-select ng-model="dish.dish_type_id">
                     <md-option ng-repeat="dish_type in dish_types" value="{{dish_type.id}}">{{dish_type.name}}</md-option>
                   </md-select>
@@ -190,7 +190,7 @@
                 <div layout="row" layout-padding layout-align="center center">
                   <md-content flex>{{dish.name}}</md-content>
                   <md-content flex>{{dish.price}}</md-content>
-                  <md-content flex>{{dish.d}}</md-content>
+                  <md-content flex>{{dish.dish_type.name}}</md-content>
                   <div layout="row" layout-align="center center">
                     <md-button class="md-icon-button">
                       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>

@@ -139,7 +139,7 @@ md-icon.restaurant-icon { width: 40%; height: auto; max-height: 100%; }
 md-bottom-sheet md-icon { margin-right:20px; }
 
 #progress-bar > div { top:0; }
-#progress-bar { height:2px; }
+#progress-bar { height:2px; z-index: 99999; }
 
 div[ng-view].ng-enter { -webkit-animation: fadeInRight 0.5s; animation: fadeInRight 0.5s;}
 .cart.ng-hide-remove { -webkit-animation: rotateInDownRight 0.7s; animation: rotateInDownRight 0.7s; }
