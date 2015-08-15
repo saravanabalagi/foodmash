@@ -16,6 +16,15 @@ angular.module('foodmashApp.directives', [])
        		 $scope.currentUser = currentUser;
       });
 
+      $scope.openMenu = function($mdOpenMenu, ev){
+        $mdOpenMenu(ev);
+      };
+
+      $scope.routToProfile = function(){
+        console.log("/user/" + $scope.currentUser.id);
+        $location.path("/user/" + $scope.currentUser.id);
+      };
+
       $scope.logout = function() {
         UserService.logout()
          .then(function(){
@@ -32,11 +41,5 @@ angular.module('foodmashApp.directives', [])
 
   };
 
-}])
-
-.directive('confirm', [function(){
-  return {
-    
-  };
-}]); 
+}]);
 

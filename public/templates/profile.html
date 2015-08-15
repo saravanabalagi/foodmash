@@ -3,34 +3,34 @@
 
 
 
-<div layout="row" layout-padding layout-align="center center" ng-init="show=false" ng-hide="show">
+<div layout="row" layout-padding layout-align="center center" ng-init="show=false;updateCross=false" ng-hide="show">
   <md-content flex>{{user.name}}</md-content>
   <md-content flex>{{user.email}}</md-content>
   <md-content flex>{{user.mobile_no}}</md-content>
   <div layout="row" layout-align="center center">
-    <md-button class="md-icon-button" ng-click="show = !show">
+    <md-button class="md-icon-button" ng-click="show = !show;setUpdate(user)">
       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
     </md-button>
   </div>
 </div>
 
 
-<form role="form" name="profileUpdateForm" ng-submit="updateProfile()">
+<form role="form" name="profileUpdateForm" ng-submit="updateProfile(updateCross)">
   <div layout="row" layout-padding layout-align="center center" ng-show="show">
     <md-input-container flex>
-      <input type="text" ng-model="user.name">
+      <input type="text" ng-model="updatedUser.name">
     </md-input-container>
     <md-input-container flex>
-      <input type="text" ng-model="user.email">
+      <input type="text" ng-model="updatedUser.email">
     </md-input-container>
     <md-input-container flex>
-      <input type="text" ng-model="user.mobile_no">
+      <input type="text" ng-model="updatedUser.mobile_no">
     </md-input-container>
-    <md-button class="md-icon-button" ng-click="show = !show">
+    <md-button class="md-icon-button" ng-click="show=!show;updateCross=false">
      <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
     </md-button>
-    <md-button class="md-icon-button" ng-click="show = !show">
-     <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
+    <md-button class="md-icon-button" ng-click="show=!show;updateCross=true">
+     <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cross.svg"></md-icon>
     </md-button>
   </div>
 </form>

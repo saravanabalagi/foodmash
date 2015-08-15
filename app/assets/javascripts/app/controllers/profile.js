@@ -5,6 +5,7 @@ angular.module('foodmashApp.controllers')
 .controller('ProfileController', ['$scope', '$routeParams', 'User','$q','toaster', function($scope, $routeParams, User, $q, toaster){
 
   $scope.user = {};
+  $scope.updatedUser = new User;
 
   User.query({id: $routeParams.user_id})
   .then(function(users) {
@@ -13,19 +14,26 @@ angular.module('foodmashApp.controllers')
     }
   });
 
-  $scope.updateProfile = function(){
-    var d = $q.defer()
-    if(!$scope.profileUpdateForm.$pristine){
-      $scope.user.update().then(function(result){
-        toaster.pop('success', 'Profile info updated!');
-        d.resolve();
-      }, function(err){
-        toaster.pop('error', 'Profile info failed to update!');
-        d.reject();
-      });
-    }else{
-      d.resolve(null);
-    }
+  $scope.setUpdate = function(u){
+     $scope.updatedUser = angular.copy(u);
+   };
+
+   $scope.updateProfile = function(updateCross){
+     var d = $q.defer()
+     if(!updateCross){
+       if(!$scope.profileUpdateForm.$pristine){
+         $scope.updatedUser.update().then(function(result){
+           toaster.pop('success', 'Profile info updated!');
+           $scope.user = $scope.updatedUser;
+           d.resolve(result);
+         }, function(err){
+           toaster.pop('error', 'Profile info failed to update!');
+           d.reject(err);
+         });
+       }else{
+         d.resolve(null);
+       }
+     }
     return d.promise;
    };
 
