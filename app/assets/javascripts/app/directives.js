@@ -20,8 +20,11 @@ angular.module('foodmashApp.directives', [])
         $mdOpenMenu(ev);
       };
 
+      $scope.routeToPanel = function(){
+        $location.path("/panel");
+      };
+
       $scope.routToProfile = function(){
-        console.log("/user/" + $scope.currentUser.id);
         $location.path("/user/" + $scope.currentUser.id);
       };
 

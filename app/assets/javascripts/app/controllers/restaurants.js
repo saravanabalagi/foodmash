@@ -10,7 +10,11 @@ angular.module('foodmashApp.controllers')
 	Restaurant.query().then(function(restaurants){
 		if(restaurants.length > 0){
 			$scope.restaurants = restaurants;
+		}else{
+			$scope.restaurants = new Array;
 		}
+	}, function(err){
+		$scope.restaurants = null;
 	});
 
 	$scope.routeToRestaurant = function(r){

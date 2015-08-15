@@ -9,10 +9,12 @@ angular.module('foodmashApp.controllers')
 
 	DishType.query().then(function(dish_types){
 		if(dish_types.length > 0){
-			$scope.dish_types = dish_types;
+		  $scope.dish_types = dish_types;		
 		}else{
-			dish_types = null;
+		  $scope.dish_types = new Array;
 		}
+	}, function(err){
+		$scope.dish_types = null;
 	});
 
 	$scope.setUpdate = function(d){
