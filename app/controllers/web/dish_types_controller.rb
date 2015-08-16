@@ -1,4 +1,4 @@
-class DishTypesController < ApplicationController
+class Web::DishTypesController < ApplicationController
 	respond_to :json
 	before_filter :get_dish_type, only: [:update, :destroy]
 

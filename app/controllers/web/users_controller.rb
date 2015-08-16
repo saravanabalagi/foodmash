@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class Web::UsersController < ApplicationController
 	before_filter :set_user, on: :update
 	respond_to :json
 

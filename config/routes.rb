@@ -1,45 +1,46 @@
 Rails.application.routes.draw do
 
-  root to: 'foodmash#index'
+  root to: 'web/foodmash#index'
 
-  devise_for :users, controllers: {registrations: 'registrations', sessions: 'sessions'}, defaults: {format: :json}
+  namespace :web do
+    devise_for :users, controllers: {registrations: 'registrations', sessions: 'sessions'}, defaults: {format: :json}
 
-  resources :restaurants do 
-    collection do 
-      get '/:id/hasCombos', to: 'restaurants#has_combos'
+    resources :restaurants do 
+      collection do 
+        get '/:id/hasCombos', to: 'restaurants#has_combos'
+      end
     end
-  end
 
-  resources :combos do 
-    collection do 
-      get 'getOfferCombos', to: 'combos#get_offer_combos'
-      get 'getMicroCombos', to: 'combos#get_micro_combos'
-      get 'getMediumCombos', to: 'combos#get_medium_combos'
-      get 'getMegaCombos', to: 'combos#get_mega_combos'
+    resources :combos do 
+      collection do 
+        get 'getOfferCombos', to: 'combos#get_offer_combos'
+        get 'getMicroCombos', to: 'combos#get_micro_combos'
+        get 'getMediumCombos', to: 'combos#get_medium_combos'
+        get 'getMegaCombos', to: 'combos#get_mega_combos'
+      end
     end
-  end
 
-  resources :combo_options
+    resources :combo_options
 
-  resources :combo_option_dishes
+    resources :combo_option_dishes
 
-  resources :dish_types
-  
-  resources :dishes do 
-    collection do 
-      get '/:id/belongsToCombos', to: 'dishes#belongs_to_combos'
+    resources :dish_types
+    
+    resources :dishes do 
+      collection do 
+        get '/:id/belongsToCombos', to: 'dishes#belongs_to_combos'
+      end
     end
-  end
 
-  resources :carts, only: [:create, :destroy] do 
-    collection do 
-      post '/addToCart', to: 'carts#add_to_cart'
+    resources :carts, only: [:create, :destroy] do 
+      collection do 
+        post '/addToCart', to: 'carts#add_to_cart'
+      end
     end
+
+    get 'users', to: 'users#index'
+    put 'users/:id',to: 'users#update' 
   end
-
-  get 'users', to: 'users#index'
-  put 'users/:id',to: 'users#update' 
-
   
   #routes for API calls
 
@@ -58,7 +59,7 @@ Rails.application.routes.draw do
     end
   end
 
-  match '*path' => "foodmash#index", via: [:get, :post]
+  match '*path' => "web/foodmash#index", via: [:get, :post]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

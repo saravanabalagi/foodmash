@@ -1,4 +1,4 @@
-class CombosController < ApplicationController
+class Web::CombosController < ApplicationController
 	respond_to :json
 	before_action :get_combo_option, only: [:update, :destroy]
 

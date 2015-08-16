@@ -8,7 +8,6 @@ angular.module('foodmashApp.interceptors', [])
      return {
 
        'request': function(req) {
-
          var d = $q.defer();
          AuthService.currentUser().then(function(user) {
            if(user) {

@@ -1,4 +1,4 @@
-class CartsController < ApplicationController
+class Web::CartsController < ApplicationController
 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 	before_filter :set_cart, only: :destroy
 	before_filter :set_or_create_cart, only: [:create, :add_to_cart]

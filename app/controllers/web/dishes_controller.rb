@@ -1,4 +1,4 @@
-class DishesController < ApplicationController
+class Web::DishesController < ApplicationController
 	respond_to :json
 	before_action :get_dish, only: [:update, :destroy]
 

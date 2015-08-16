@@ -1,4 +1,4 @@
-class OrdersController < ApplicationController
+class Web::OrdersController < ApplicationController
 	before_filter :set_order, only: [:show, :destroy]
 	respond_to :json
 

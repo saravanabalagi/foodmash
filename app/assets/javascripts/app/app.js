@@ -10,7 +10,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 	railsSerializerProvider.underscore(angular.identity).camelize(angular.identity);
 
 	$routeProvider
-	.when('/user/:user_id', 
+	.when('/users/:user_id', 
 	  {
 	    templateUrl: '/templates/profile.html', 
 	    controller: 'ProfileController',
@@ -35,15 +35,15 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			controller: 'PanelController',
 			templateUrl: '/templates/panel.html'
 		})
-		.when('/dish_type', {
+		.when('/dish_types', {
 			controller: 'DishTypesController',
 			templateUrl: '/templates/dish_types.html'
 		})
-		.when('/restaurant', {
+		.when('/restaurants', {
 			controller: 'RestaurantsController',
 			templateUrl: '/templates/restaurants.html'
 		})
-		.when('/restaurant/:id', {
+		.when('/restaurants/:id', {
 			controller: 'RestaurantController', 
 			templateUrl: '/templates/restaurant.html'
 		})

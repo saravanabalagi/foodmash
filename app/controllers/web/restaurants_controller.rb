@@ -1,4 +1,4 @@
-class RestaurantsController < ApplicationController
+class Web::RestaurantsController < ApplicationController
 	respond_to :json
 	before_action :get_restaurant, only: [:update, :destroy, :has_combos]
 

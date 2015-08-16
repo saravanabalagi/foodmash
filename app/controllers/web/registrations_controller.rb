@@ -1,4 +1,4 @@
-class RegistrationsController < Devise::RegistrationsController
+class Web::RegistrationsController < Devise::RegistrationsController
 	before_filter :authenticate_user_from_token!, only: [:update, :destroy]
 	respond_to :json
 
