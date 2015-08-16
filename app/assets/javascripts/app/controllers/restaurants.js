@@ -18,7 +18,7 @@ angular.module('foodmashApp.controllers')
 	});
 
 	$scope.routeToRestaurant = function(r){
-		$location.path("restaurant/" + r.id);
+		$location.path("restaurants/" + r.id);
 	};
 
 	$scope.setUpdate = function(r){

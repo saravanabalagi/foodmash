@@ -2,8 +2,9 @@ Rails.application.routes.draw do
 
   root to: 'web/foodmash#index'
 
+  devise_for :users, controllers: {registrations: 'registrations', sessions: 'sessions'}, defaults: {format: :json}
+
   namespace :web do
-    devise_for :users, controllers: {registrations: 'registrations', sessions: 'sessions'}, defaults: {format: :json}
 
     resources :restaurants do 
       collection do 
@@ -59,7 +60,7 @@ Rails.application.routes.draw do
       resources :registrations, only: [:create]
       post '/registrations', to: 'registrations#update'
       delete '/registrations', to: 'registrations#delete'
-      
+
       get '/restaurants/:id/combos', to: 'restaurants#has_combos'
       get '/dishes/:id/belongsToCombos', to: 'dishes#belongs_to_combos'
     end
