@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  delegate :can?, :cannot?, to: :ability
+
   before_save :ensure_authentication_token
 
   has_many :carts
@@ -24,6 +26,10 @@ class User < ActiveRecord::Base
   	self.authentication_token = nil
     ensure_authentication_token
   	self.save
+  end
+
+  def ability
+    @ability ||= Ability.new(self)
   end
 
   private

@@ -1,6 +1,6 @@
 class DishesController < ApplicationController
 	respond_to :json
-	before_action :get_dish, only: [:show, :update, :destroy]
+	before_action :get_dish, only: [:update, :destroy]
 
 	def index
 		@dishes = Dish.where(params.permit(:id, :restaurant_id))
@@ -17,14 +17,6 @@ class DishesController < ApplicationController
 			render status: 201, json: @dish.as_json
 		else
 			render status: 422, json: @dish.errors.as_json
-		end
-	end
-
-	def show
-		if @dish
-			render status: 200, json: @dish.as_json
-		else
-			render status: 404, json: {error: "Dish with id #{params[:id]} was not found!"}
 		end
 	end
 

@@ -1,6 +1,6 @@
 class CombosController < ApplicationController
 	respond_to :json
-	before_action :get_combo, only: [:show, :update, :destroy]
+	before_action :get_combo, only: [:update, :destroy]
 
 	def index
 		@combos = Combo.where(params.permit(:id, :name))
@@ -17,14 +17,6 @@ class CombosController < ApplicationController
 			render status: 201, json: @combo.as_json
 		else
 			render status: 422, json: @combo.errors.as_json
-		end
-	end
-
-	def show
-		if @combo
-			render status: 200, json: @combo.as_json(:include => {:combo_options => {:include => :combo_option_dishes}})
-		else
-			render status: 404, json: {error: "Combo with id #{params[:id]} was not found!"}
 		end
 	end
 

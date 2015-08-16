@@ -2,20 +2,11 @@ class Api::V1::DishesController < ApiApplicationController
 	respond_to :json
 
 	def index
-		dishes = Dish.all
+		dishes = Dish.where(params.permit(:id, :name))
 		if dishes
 			render status: 200, json: dishes.as_json(:include => :dish_type)
 		else
 			render status: 404, json: "Could not find all the dishes!"
-		end
-	end
-
-	def show
-		dish = Dish.find params[:id]
-		if dish
-			render status: 200, json: dish.as_json
-		else
-			render status: 404, json: {error: "Could not find dish with id #{params[:id]}!"}
 		end
 	end
 

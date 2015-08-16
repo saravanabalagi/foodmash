@@ -1,6 +1,6 @@
 class DishTypesController < ApplicationController
 	respond_to :json
-	before_filter :get_dish_type, only: [:show, :update, :destroy]
+	before_filter :get_dish_type, only: [:update, :destroy]
 
 	def index
 		@dish_types = DishType.where(params.permit(:id, :name))
@@ -17,14 +17,6 @@ class DishTypesController < ApplicationController
 			render status: 201, json: @dish_type.as_json
 		else
 			render status: 422, json: @dish_type.errors.as_json
-		end
-	end
-
-	def show
-		if @dish_type
-			render status: 200, json: @dish_type.as_json
-		else
-			render status: 404, json: {error: "Dish Type with id #{params[:id]} was not found!"}
 		end
 	end
 
