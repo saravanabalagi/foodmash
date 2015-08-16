@@ -44,8 +44,9 @@ angular.module('foodmashApp.controllers')
 		var d = $q.defer();
 		if(!updateCross){
 			if(!$scope.restaurantUpdateForm.$pristine){
-				$scope.restaurant.update().then(function(response){
+				$scope.updatedRestaurant.update().then(function(response){
 					toaster.pop('success', 'Restaurant was updated!');
+					$scope.restaurant = $scope.updatedRestaurant;
 					d.resolve(response);
 				}, function(err){
 					toaster.pop('alert', 'Restaurant was not updated!');
