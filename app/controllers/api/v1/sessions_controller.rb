@@ -1,4 +1,4 @@
-class Api::V1::MobileSessionsController < ApiApplicationController
+class Api::V1::SessionsController < ApiApplicationController
 	before_filter :configure_sign_in_params, only: [:create]
 	before_filter :authenticate_user_from_token!, only: [:destroy]
 	respond_to :json

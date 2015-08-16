@@ -1,10 +1,4 @@
 class ApiApplicationController < ActionController::Base
-	# protect_from_forgery
- #  after_filter :set_csrf_cookie_for_api
-  
- #  def set_csrf_cookie_for_api
- #    cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
- #  end
 
 	private 
 
@@ -22,10 +16,5 @@ class ApiApplicationController < ActionController::Base
   def permission_denied
     render status: 401, json: {error: "Unauthorized!"}
   end
-
- # protected
- #  def verified_request?
- #    super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
- #  end
 
 end

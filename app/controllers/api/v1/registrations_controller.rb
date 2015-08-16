@@ -1,4 +1,4 @@
-class Api::V1::MobileRegistrationsController < ApiApplicationController
+class Api::V1::RegistrationsController < ApiApplicationController
 	before_filter :authenticate_user_from_token!, only: [:update, :destroy]
 	respond_to :json
 
