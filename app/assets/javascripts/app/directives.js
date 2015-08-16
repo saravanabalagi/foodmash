@@ -25,7 +25,7 @@ angular.module('foodmashApp.directives', [])
       };
 
       $scope.routToProfile = function(){
-        $location.path("/user/" + $scope.currentUser.id);
+        $location.path("/users/" + $scope.currentUser.id);
       };
 
       $scope.logout = function() {

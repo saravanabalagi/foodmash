@@ -52,8 +52,8 @@ Rails.application.routes.draw do
       resources :combos, only: [:index, :show]
       resources :users, only: [:index, :show]
       resources :dish_types
-      resources :sessions
-      resources :registrations
+      resources :mobile_sessions
+      resources :mobile_registrations
       get '/restaurants/:id/combos', to: 'restaurants#has_combos'
       get '/dishes/:id/belongsToCombos', to: 'dishes#belongs_to_combos'
     end

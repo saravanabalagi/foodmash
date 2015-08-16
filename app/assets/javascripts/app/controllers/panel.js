@@ -6,19 +6,19 @@ angular.module('foodmashApp.controllers')
 
 
   $scope.routeToCombos = function(){
-  	$location.path("/combo");
+  	$location.path("/combos");
   };
 
   $scope.routeToRestaurants = function(){
-  	$location.path("/restaurant");
+  	$location.path("/restaurants");
   };
 
   $scope.routeToDishTypes = function(){
-  	$location.path("/dish_type");
+  	$location.path("/dish_types");
   };
 
   $scope.routeToUserRoles = function(){
-  	$location.path("/user_role");
+  	$location.path("/user_roles");
   };
 
 }]);
