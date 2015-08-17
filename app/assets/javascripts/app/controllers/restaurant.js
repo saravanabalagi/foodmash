@@ -19,6 +19,8 @@ angular.module('foodmashApp.controllers')
 			}, function(err){
 				$scope.combos = null;
 			});
+		}else{
+			$scope.restaurant = null;
 		}
 	});
 
@@ -35,8 +37,8 @@ angular.module('foodmashApp.controllers')
 		return d.promise;
 	};
 
-	$scope.setUpdate = function(r){
-		$scope.updatedRestaurant = angular.copy(r);
+	$scope.setUpdate = function(restaurant){
+		$scope.updatedRestaurant = angular.copy(restaurant);
 	};
 
 		

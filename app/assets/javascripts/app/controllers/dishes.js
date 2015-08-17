@@ -43,6 +43,7 @@ angular.module('foodmashApp.controllers')
 			if(!$scope.dishAddForm.$pristine){
 				$scope.dish.save().then(function(response){
 					toaster.pop('success', 'A new Dish was created!');
+					$scope.dish.dish_type = findDishType($scope.dish);
 					$scope.dishes.unshift($scope.dish);
 					$scope.dish = new Dish;
 					d.resolve(response);
@@ -58,6 +59,55 @@ angular.module('foodmashApp.controllers')
 			d.resolve(null);
 		}
 		return d.promise;
+	};
+
+	$scope.setUpdate = function(dish){
+		$scope.updatedDish = angular.copy(dish);
+	};
+
+	$scope.updateDish = function(dish, dishUpdateCross){
+		var d = $q.defer();
+		if(!dishUpdateCross){
+			$scope.updatedDish.update().then(function(response){
+				toaster.pop('success', 'Dish was updated!');
+				var index = $scope.dishes.indexOf(dish);
+				if(angular.isNumber(index)){
+					$scope.dishes[index] = $scope.updatedDish;
+					$scope.dishes[index].dish_type = findDishType($scope.updatedDish);
+				}
+				d.resolve(response);
+			}, function(err){
+				toaster.pop('error', 'Dish was not updated!');
+				d.reject(err);
+			});
+		}else{
+			$scope.updatedDish = new Dish;
+			d.resolve(null);
+		}
+		return d.promise;
+	};
+
+	$scope.deleteDish = function(dish){
+		var d = $q.defer();
+		dish.delete().then(function(response){
+			toaster.pop('success', 'Dish was deleted!');
+			$scope.dishes.splice($scope.dishes.indexOf(dish), 1);
+			d.resolve(response);
+		}, function(err){
+			toaster.pop('error', 'Dish was not deleted!');
+			d.reject(err);
+		});
+		return d.promise;
+	};
+
+	function findDishType(dish){
+		for(var i=0;i<$scope.dish_types.length;i++)
+		{
+			if($scope.dish_types[i].id === dish.dish_type_id){
+				return $scope.dish_types[i];
+			}
+		}
+		return null;
 	};
 
 }]);

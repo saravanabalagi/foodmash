@@ -14,8 +14,8 @@ angular.module('foodmashApp.controllers')
     }
   });
 
-  $scope.setUpdate = function(u){
-     $scope.updatedUser = angular.copy(u);
+  $scope.setUpdate = function(user){
+     $scope.updatedUser = angular.copy(user);
    };
 
    $scope.updateProfile = function(updateCross){

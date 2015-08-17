@@ -47,7 +47,7 @@
               <form name="updateDishTypeForm" ng-submit="updateDishType(dish_type, updateCross)" ng-init="updateShow=false; updateCross=false" ng-show="updateShow">
                <md-input-container flex>
                    <label>Dish Type</label>
-                   <input ng-model="dish_type.name" type="text" />
+                   <input ng-model="updatedDishType.name" type="text" />
                </md-input-container>
                <div layout="row" layout-align="center center" layout-padding>
                  <md-button class="md-icon-button" layout-padding ng-click="updateShow = !updateShow; updateCross=false">
