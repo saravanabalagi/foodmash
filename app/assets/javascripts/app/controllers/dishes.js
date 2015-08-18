@@ -4,9 +4,9 @@ angular.module('foodmashApp.controllers')
 
 .controller('DishesController', ['$scope', 'Dish','$q', 'toaster','DishType', function($scope, Dish, $q, toaster, DishType){
 
-	$scope.dish = new Dish;
 	$scope.dishes = {};
 	$scope.dish_types = {};
+	$scope.dish = new Dish;
 	$scope.updatedDish = new Dish;
 
 	DishType.query().then(function(dish_types){
@@ -22,7 +22,6 @@ angular.module('foodmashApp.controllers')
 	$scope.loadDishes = function(restaurant_id){
 		var d = $q.defer();
 		Dish.query({restaurant_id: restaurant_id}).then(function(dishes){
-			$scope.dishes = dishes;
 			if(dishes.length > 0){
 				$scope.dishes = dishes;
 			}else{
@@ -43,7 +42,6 @@ angular.module('foodmashApp.controllers')
 			if(!$scope.dishAddForm.$pristine){
 				$scope.dish.save().then(function(response){
 					toaster.pop('success', 'A new Dish was created!');
-					$scope.dish.dish_type = findDishType($scope.dish);
 					$scope.dishes.unshift($scope.dish);
 					$scope.dish = new Dish;
 					d.resolve(response);
@@ -73,7 +71,6 @@ angular.module('foodmashApp.controllers')
 				var index = $scope.dishes.indexOf(dish);
 				if(angular.isNumber(index)){
 					$scope.dishes[index] = $scope.updatedDish;
-					$scope.dishes[index].dish_type = findDishType($scope.updatedDish);
 				}
 				d.resolve(response);
 			}, function(err){
@@ -98,16 +95,6 @@ angular.module('foodmashApp.controllers')
 			d.reject(err);
 		});
 		return d.promise;
-	};
-
-	function findDishType(dish){
-		for(var i=0;i<$scope.dish_types.length;i++)
-		{
-			if($scope.dish_types[i].id === dish.dish_type_id){
-				return $scope.dish_types[i];
-			}
-		}
-		return null;
 	};
 
 }]);

@@ -1,0 +1,160 @@
+<!-- Combos -->
+<div layout="row" layout-align="center left">
+  <md-button class="md-icon-button" ng-init="updateShow=false" ng-click="updateShow = !updateShow; setUpdate(combo)">
+    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
+  </md-button>
+
+  <md-button class="md-icon-button" ng-init="updateShow=false; updateCross=false">
+    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg" ng-click="deleteCombo()"></md-icon>
+  </md-button>
+</div>
+
+<form role="form" name="comboUpdateForm" ng-submit="updateCombo(updateCross)" ng-show="updateShow">
+  <div layout="row" layout-padding layout-align="center center">
+    <md-input-container flex>
+      <label>name</label>
+      <input type="text" ng-model="updatedCombo.name" />
+    </md-input-container>
+    <md-input-container flex>
+      <label>price</label>
+      <input ng-model="updatedCombo.price" />
+    </md-input-container>
+     <md-input-container flex>
+      <label>group size</label>
+      <input type="text" ng-model="updatedCombo.group_size" />
+    </md-input-container>
+    <md-input-container flex>
+      <label>description</label>
+      <input ng-model="updatedCombo.description" />
+    </md-input-container>
+    <md-button class="md-icon-button" ng-click="updateShow = !updateShow; updateCross = false" name="save">
+      <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
+    </md-button>
+    <md-button class="md-icon-button" ng-click="updateShow = !updateShow; updateCross = true" name="cancel">
+     <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cross.svg"></md-icon>
+    </md-button>
+  </div>
+</form>
+
+    <div flex layout="column" layout-gt-lg="row">
+      <div flex layout="column" layout-padding>
+        
+        <div layout="column">
+
+          <div layout="row" layout-align="center center">
+            <h1 class="md-title" layout-padding>
+               {{combo.name}}
+            </h1>
+          </div>
+
+          <div flex layout-gt-sm="row" layout="column" layout-align="center">
+            <div class="md-whiteframe-z2" layout="row" layout-margin>
+                <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="restaurant-icon"></md-icon>
+                <div flex layout="column" layout-align="space-around center" layout-padding layout-align="space-around start">
+                  <md-content>Price: <span class="rupee">{{combo.price}}</span></md-content>
+                  <md-content>Group Size: {{combo.group_size}}</md-content>
+                  <md-content>Description: {{combo.description}}</md-content>
+                </div>
+            </div>
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+
+      <!-- Combo Options -->
+
+      <div layout="row" ng-controller="ComboOptionsController" ng-init="loadComboOptions(combo.id)">
+               <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm></div>
+               <div layout="column" flex layout-padding layout-margin>
+                   <md-content flex class="md-display-1">Combo Options</md-content>
+                   <md-divider class="bottom-margin bottom-padding"></md-divider>
+                   
+                   <!-- add new -->
+                   <md-button class="md-icon-button" layout-padding ng-click="comboOptionsAddShow = !comboOptionsAddShow" ng-init="comboOptionsAddShow = true; comboOptionsAddCross = false">
+                       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/add.svg"></md-icon>
+                   </md-button>
+                   <form name="comboOptionAddForm" layout="row" ng-show="comboOptionsAddShow" ng-submit="addComboOption(comboOptionsAddCross, combo.id)">
+                     <md-input-container flex>
+                       <label>Name</label>
+                       <input type="text" ng-model="combo_option.name" />
+                     </md-input-container>
+                     <md-input-container flex>
+                       <label>Description</label>
+                       <input type="text" ng-model="combo_option.description" />
+                     </md-input-container>
+                     <md-input-container flex>
+                       <label>Type</label>
+                       <md-select ng-model="combo_option.dish_type_id">
+                         <md-option ng-repeat="dish_type in dish_types" value="{{dish_type.id}}">{{dish_type.name}}</md-option>
+                       </md-select>
+                     </md-input-container>
+                     <div layout="row" layout-align="center center" layout-padding>
+                       <md-button class="md-icon-button" layout-padding ng-click="comboOptionsAddCross=false">
+                         <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
+                       </md-button>
+                       <md-button class="md-icon-button" layout-padding ng-click="comboOptionsAddShow = !comboOptionsAddShow; comboOptionsAddCross=true">
+                         <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cross.svg"></md-icon>
+                       </md-button>
+                     </div>
+                   </form>
+                   <!-- add new ends -->
+
+                   <!-- for loop for listing -->
+
+                   <!-- item 1 -->
+                   <div ng-repeat="combo_option in combo_options">
+                     <div layout="row" layout-padding layout-align="center center" ng-init="comboOptionUpdateShow=false" ng-hide="comboOptionUpdateShow">
+                       <md-content flex>{{combo_option.name}}</md-content>
+                       <md-content flex>{{combo_option.description}}</md-content>
+                       <md-content flex>{{combo_option.dish_type.name}}</md-content>
+                       <div layout="row" layout-align="center center">
+                         <md-button class="md-icon-button" ng-click="setUpdate(combo_option); comboOptionUpdateShow=!comboOptionUpdateShow">
+                           <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
+                         </md-button>
+                         <md-button class="md-icon-button" ng-click="deleteComboOption(combo_option)">
+                           <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
+                         </md-button>
+                       </div>
+                     </div>
+
+                     <form role="form" name="comboOptionUpdateForm" ng-submit="updateComboOption(combo_option, comboOptionUpdateCross)" ng-init="comboOptionUpdateCross = false" ng-show="comboOptionUpdateShow">
+                       <div layout="row" layout-padding layout-align="center center">
+                         <md-button class="md-icon-button">
+                           <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg"></md-icon>
+                         </md-button>
+                         <md-input-container flex>
+                           <label>Name</label>
+                           <input type="text" ng-model="updatedComboOption.name" />
+                         </md-input-container>
+                         <md-input-container flex>
+                           <label>Description</label>
+                           <input ng-model="updatedComboOption.description" />
+                         </md-input-container>
+                         <md-input-container flex>
+                           <label>Type</label>
+                           <md-select ng-model="updatedComboOption.dish_type_id">
+                             <md-option ng-repeat="dish_type in dish_types" value="{{dish_type.id}}">{{dish_type.name}}</md-option>
+                           </md-select>
+                         </md-input-container>
+                         <md-button class="md-icon-button" ng-click="comboOptionUpdateShow = !comboOptionUpdateShow; comboOptionUpdateCross = false">
+                           <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
+                         </md-button>
+                         <md-button class="md-icon-button" ng-click="comboOptionUpdateShow = !comboOptionUpdateShow; comboOptionUpdateCross = true">
+                           <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cross.svg"></md-icon>
+                         </md-button>
+                       </div>
+                     </form>
+
+
+                   </div>
+                   <!-- for loop ends -->
+                   
+           </div>
+           <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm> </div>
+         </div>
+
+     
+      <!-- Combo Option ends-->
+<!-- Combo ends -->

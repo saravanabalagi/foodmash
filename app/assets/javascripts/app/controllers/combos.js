@@ -19,7 +19,7 @@ angular.module('foodmashApp.controllers')
 	});
 
 	$scope.routeToCombo = function(combo){
-		$location.path("/combo/" + combo.id);
+		$location.path("/combos/" + combo.id);
 	};
 
 	$scope.addCombo = function(addCross){

@@ -27,7 +27,7 @@ angular.module('foodmashApp.controllers')
 	$scope.setUpdate = function(restaurant){
 		$scope.updatedRestaurant = angular.copy(restaurant);
 	};
-	
+
 	$scope.updateRestaurant = function(updateCross){
 		var d = $q.defer();
 		if(!updateCross){
@@ -52,7 +52,7 @@ angular.module('foodmashApp.controllers')
 		$scope.restaurant.delete().then(function(response){
 			toaster.pop('success', 'Restaurant was deleted!');
 			d.resolve(response);
-			$location.path("/restaurant");
+			$location.path("/restaurants");
 		}, function(err){
 			toaster.pop('alert', 'Restaurant was not deleted!');
 			d.reject(err);

@@ -3,7 +3,7 @@ class Web::DishesController < ApplicationController
 	before_action :get_dish, only: [:update, :destroy]
 
 	def index
-		@dishes = Dish.where(params.permit(:id, :restaurant_id))
+		@dishes = Dish.where(params.permit(:id, :restaurant_id, :name, :dish_type_id))
 		if @dishes 
 			render status: 200, json: @dishes.as_json(:include => :dish_type)
 		else
@@ -14,7 +14,7 @@ class Web::DishesController < ApplicationController
 	def create
 		@dish = Dish.new dish_params
 		if @dish.save 
-			render status: 201, json: @dish.as_json
+			render status: 201, json: @dish.as_json(:include => :dish_type)
 		else
 			render status: 422, json: @dish.errors.as_json
 		end
@@ -22,7 +22,7 @@ class Web::DishesController < ApplicationController
 
 	def update
 		if @dish && @dish.update_attributes(dish_update_params)
-			render status: 200, json: @dish.as_json
+			render status: 200, json: @dish.as_json(:include => :dish_type)
 		else
 			render status: 422, json: @dish.errors.as_json
 		end
