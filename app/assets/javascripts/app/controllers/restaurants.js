@@ -18,29 +18,7 @@ angular.module('foodmashApp.controllers')
 	});
 
 	$scope.routeToRestaurant = function(restaurant){
-		$location.path("restaurants/" + restaurant.id);
-	};
-
-	$scope.setUpdate = function(restaurant){
-		$scope.updatedRestaurant = angular.copy(restaurant);
-	};
-
-	$scope.updateRestaurant = function(restaurant, updateCross){
-		var d = $q.defer();
-		if(!updateCross){
-			$scope.updatedRestaurant.update().then(function(response){
-				toaster.pop('success', 'Restaurant was updated!');
-				var index = $scope.restaurants.indexOf(restaurant);
-				if(angular.isNumber(index)){
-					$scope[index] = $scope.updatedRestaurant;
-				}
-				d.resolve(response);
-			}, function(err){
-				toaster.pop('error', 'Restaurant failed to update!');
-				d.reject(err);
-			});
-		}
-		return d.promise;
+		$location.path("/restaurants/" + restaurant.id);
 	};
 
 	$scope.addRestaurant = function(addCross){
@@ -66,13 +44,39 @@ angular.module('foodmashApp.controllers')
 		return d.promise;
 	};
 
+	$scope.setUpdate = function(restaurant){
+		$scope.updatedRestaurant = angular.copy(restaurant);
+	};
+
+	$scope.updateRestaurant = function(restaurant, updateCross){
+		var d = $q.defer();
+		if(!updateCross){
+			$scope.updatedRestaurant.update().then(function(response){
+				toaster.pop('success', 'Restaurant was updated!');
+				var index = $scope.restaurants.indexOf(restaurant);
+				if(angular.isNumber(index)){
+					$scope.restaurants[index] = $scope.updatedRestaurant;
+				}
+				d.resolve(response);
+			}, function(err){
+				toaster.pop('error', 'Restaurant failed to update!');
+				d.reject(err);
+			});
+		}
+		return d.promise;
+	};
+
 	$scope.deleteRestaurant = function(restaurant){
-		restaurant.delete().then(function(){
+		var d = $q.defer();
+		restaurant.delete().then(function(response){
 			$scope.restaurants.splice($scope.restaurants.indexOf(restaurant), 1);
 			toaster.pop('success', 'Restaurant was deleted!');
-		}, function(){
+			d.resolve(response);
+		}, function(err){
 			toaster.pop('alert', 'Restaurant was not deleted!');
+			d.reject(err);
 		});
+		return d.promise;
 	};
 
 }]);

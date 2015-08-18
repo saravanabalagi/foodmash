@@ -24,24 +24,10 @@ angular.module('foodmashApp.controllers')
 		}
 	});
 
-	$scope.deleteRestaurant = function(){
-		var d = $q.defer();
-		$scope.restaurant.delete().then(function(response){
-			toaster.pop('success', 'Restaurant was deleted!');
-			d.resolve(response);
-			$location.path("/restaurant");
-		}, function(err){
-			toaster.pop('alert', 'Restaurant was not deleted!');
-			d.reject(err);
-		});
-		return d.promise;
-	};
-
 	$scope.setUpdate = function(restaurant){
 		$scope.updatedRestaurant = angular.copy(restaurant);
 	};
-
-		
+	
 	$scope.updateRestaurant = function(updateCross){
 		var d = $q.defer();
 		if(!updateCross){
@@ -61,5 +47,17 @@ angular.module('foodmashApp.controllers')
 		return d.promise;
 	};
 
+	$scope.deleteRestaurant = function(){
+		var d = $q.defer();
+		$scope.restaurant.delete().then(function(response){
+			toaster.pop('success', 'Restaurant was deleted!');
+			d.resolve(response);
+			$location.path("/restaurant");
+		}, function(err){
+			toaster.pop('alert', 'Restaurant was not deleted!');
+			d.reject(err);
+		});
+		return d.promise;
+	};
 
 }]);

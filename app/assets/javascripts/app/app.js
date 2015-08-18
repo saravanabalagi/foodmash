@@ -31,6 +31,14 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 	      }
 	    }
 	  })
+		.when('/combos', {
+			controller: 'CombosController',
+			templateUrl: '/templates/combos.html'
+		})
+		.when('/combos/:id', {
+			controller: 'ComboController',
+			templateUrl: '/templates/combo.html'
+		})
 		.when('/panel', {
 			controller: 'PanelController',
 			templateUrl: '/templates/panel.html'
@@ -58,5 +66,6 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			templateUrl: '/templates/main.html'
 		}
 		).otherwise({redirectTo: '/'});
+
 		$locationProvider.html5Mode(true);
 }]);
