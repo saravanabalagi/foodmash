@@ -106,7 +106,7 @@
                    <!-- item 1 -->
                    <div ng-repeat="combo_option in combo_options">
                      <div layout="row" layout-padding layout-align="center center" ng-init="comboOptionUpdateShow=false" ng-hide="comboOptionUpdateShow">
-                       <md-content flex>{{combo_option.name}}</md-content>
+                       <md-content flex ng-click="routeToComboOption(combo_option)">{{combo_option.name}}</md-content>
                        <md-content flex>{{combo_option.description}}</md-content>
                        <md-content flex>{{combo_option.dish_type.name}}</md-content>
                        <div layout="row" layout-align="center center">

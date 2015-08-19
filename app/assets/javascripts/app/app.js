@@ -31,6 +31,10 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 	      }
 	    }
 	  })
+		.when('/combo_options/:id', {
+			controller: 'ComboOptionController',
+			templateUrl: '/templates/combo_option.html'
+		})
 		.when('/combos', {
 			controller: 'CombosController',
 			templateUrl: '/templates/combos.html'
