@@ -3,7 +3,7 @@ class Web::ComboOptionsController < ApplicationController
 	before_action :get_combo_option, only: [:update, :destroy]
 
 	def index
-		@combo_options = ComboOption.where(params.permit(:combo_id, :dish_type_id))
+		@combo_options = ComboOption.where(params.permit(:id,:combo_id, :dish_type_id))
 		if @combo_options 
 			render status: 200, json: @combo_options.as_json(:include => :dish_type)
 		else

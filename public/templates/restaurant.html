@@ -146,8 +146,7 @@
         </div>
 
         <!-- Dishes -->
-
-      <div layout="row" ng-controller="DishesController" ng-init="loadDishes(restaurant.id)">
+      <div layout="row" id="load-dishes" ng-controller="DishesController" ng-load="loadDishes(restaurant.id)">
           <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm></div>
           <div layout="column" flex layout-padding layout-margin>
               <md-content flex class="md-display-1">Dishes</md-content>
@@ -238,3 +237,17 @@
         </div>
                 <!-- Dishes ends-->
 <!-- Restaurant ends -->
+    <script type="text/javascript"> 
+     $(document).ready(function(){
+        console.log("document loaded");
+       });
+    </script>
+
+
+
+
+
+
+
+
+

@@ -19,7 +19,7 @@
     "lodash": "~3.10.0",
     "angularjs-toaster": "~0.4.15",
     "angular-sanitize": "~1.4.3",
-    "ng-file-upload": "~6.0.2",
-    "jquery": "~2.1.4"
+    "jquery": "~2.1.4",
+    "ng-load": "~1.0.2"
   }
 }

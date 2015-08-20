@@ -1,6 +1,7 @@
 class Restaurant < ActiveRecord::Base
 	resourcify
 	has_many :dishes, dependent: :destroy
+	has_many :dish_types, through: :dishes
 
 	def has_combos
 	   Combo.find_by_sql("select * from Combos where Combos.id in

@@ -18,5 +18,15 @@ angular.module('foodmashApp.resources')
 		
 	  };
 
+	  resource.hasDishType = function(){
+		var self = this;
+
+		return resource.$get(self.$url('hasDishType')).then(function(restaurants){
+			self.restaurants = restaurants;
+			return self.restaurants;
+		 });
+		
+	  };
+
 	return resource;
 }]);

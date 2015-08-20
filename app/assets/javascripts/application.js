@@ -16,10 +16,10 @@
 //= require angularjs/rails/resource
 //= require angularjs-toaster/toaster
 //= require angular-sanitize/angular-sanitize
-//= require ng-file-upload/ng-file-upload
-//= require ng-file-upload/ng-file-upload-shim
 //= require lodash/lodash
 //= require angular-material/angular-material
 //= require angular-aria/angular-aria
 //= require angular-animate/angular-animate
+//= require jquery/dist/jquery
+//= require ng-load/ng-load
 //= require_tree .

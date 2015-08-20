@@ -49,6 +49,15 @@ class Web::RestaurantsController < ApplicationController
 		end
 	end
 
+	def has_dish_type(dish_type_id)
+		@restaurants = Restaurant.all.each { |r| r if r.dish_types.pluck(:id).include? dish_type_id }
+		if @restaurants
+			render status: 200, json: @restaurants.as_json(:include => :dishes)
+		else
+			render status: 404, json: {error: 'Restaurants not found!'}
+		end
+	end
+
 	private
 	def get_restaurant
 		@restaurant = Restaurant.find params[:id]

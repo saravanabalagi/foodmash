@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :restaurants do 
       collection do 
         get '/:id/hasCombos', to: 'restaurants#has_combos'
+        get '/hasDishType', to: 'restaurants#has_dish_type'
       end
     end
 
