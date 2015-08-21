@@ -6,13 +6,12 @@
 
         return {
             restrict: 'A',
-            scope: true,
             link: function(scope, ele, attr){
                 var fn = $parse(attr.ngLoad);
-                ele.on('load', function(event, row_id){
-                    console.log(row_id);
+                ele.on('load', function(e, row_id){
+                    console.log('hello');
                     scope.$apply(function(){
-                        fn(scope, {$event: event});
+                        fn(scope, {restaurant_id: null});
                     });
                 });
             }

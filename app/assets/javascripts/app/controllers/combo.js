@@ -2,11 +2,17 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('ComboController', ['$scope', 'Combo', '$location', '$routeParams', 'toaster', '$q', function($scope, Combo, $location, $routeParams, toaster, $q){
+.controller('ComboController', ['$scope', 'Combo', '$location', '$routeParams', 'toaster', '$q','$timeout', function($scope, Combo, $location, $routeParams, toaster, $q, $timeout){
 
 	$scope.combo = {};
 	$scope.combo_options = {};
 	$scope.updatedCombo = new Combo;
+
+	$scope.$on('$viewContentLoaded', function() {
+    $timeout(function() {
+    	    angular.element(document.querySelector('#load-combo-options')).triggerHandler('click');
+    	}, 1000);
+	});
 
 	Combo.query({id: $routeParams.id}).then(function(combos){
 		if(combos.length > 0){
