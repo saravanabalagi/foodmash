@@ -2,15 +2,23 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('ComboOptionController', ['$scope', 'ComboOptionDish', '$location', '$routeParams', 'toaster', '$q', 'Dish', 'ComboOption', function($scope, ComboOptionDish, $location, $routeParams, toaster, $q, Dish, ComboOption){
+.controller('ComboOptionController', ['$scope', 'ComboOptionDish', '$location', '$routeParams', 'toaster', '$q', 'Dish', 'ComboOption','$timeout', function($scope, ComboOptionDish, $location, $routeParams, toaster, $q, Dish, ComboOption, $timeout){
 
 	$scope.dishes = {};
 	$scope.combo_option_dishes = {};
-	$scope.selectedRestaurant = {};
+	$scope.combo_option = {};
+	// $scope.selectedRestaurant = {};
+	// $scope.restaurantSelected = false;
 	$scope.combo_option_dish = new ComboOptionDish;
 
+	$scope.$on('$viewContentLoaded', function(){
+		$timeout(function(){
+			angular.element(document.querySelector('#load-dishes')).triggerHandler('click');
+		}, 1000)
+	});
+
 	ComboOption.query({id: $routeParams.id}).then(function(combo_options){
-		if(combo_options > 0){
+		if(combo_options.length > 0){
 			$scope.combo_option = combo_options[0];
 		}else{
 			$scope.combo_option = null;
@@ -52,10 +60,10 @@ angular.module('foodmashApp.controllers')
 		return d.promise;
 	};
 
-	$scope.addComboOptionDish = function(comboOptionsAddCross, combo_option_id){
+	$scope.addComboOptionDish = function(comboOptionDishesAddCross, combo_option_id){
 		var d = $q.defer();
 		$scope.combo_option_dish.combo_option_id = combo_option_id;
-		if(!comboOptionsAddCross){
+		if(!comboOptionDishesAddCross){
 			if(!$scope.comboOptionDishAddForm.$pristine){
 				$scope.combo_option_dish.save().then(function(response){
 					toaster.pop('success', 'Combo Option Dish was created!');

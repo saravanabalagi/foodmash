@@ -1,24 +1,18 @@
-<div layout="row" ng-controller="ComboOptionController" ng-load="loadDishes(combo_option.dish_type_id)">
+<div layout="row" ng-controller="ComboOptionController">
    <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm></div>
    <div layout="column" flex layout-padding layout-margin>
-       <md-content flex class="md-display-1">Combo Option Dishes</md-content>
+       <md-content flex class="md-display-1" id="load-dishes" ng-click="loadDishes(combo_option.dish_type_id)">Combo Option Dishes</md-content>
        <md-divider class="bottom-margin bottom-padding"></md-divider>
          
        <!-- add new -->
        <md-button class="md-icon-button" layout-padding ng-click="comboOptionDishesAddShow = !comboOptionDishesAddShow" ng-init="comboOptionDishesAddShow = true; comboOptionDishesAddCross = false">
            <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/add.svg"></md-icon>
        </md-button>
-       <form name="comboOptionDishAddForm" layout="row" ng-show="comboOptionDishesAddShow" ng-submit="addComboOptionDish(comboOptionsAddCross, combo_option.id)">
-        <md-input-container flex>
-          <label>Restaurant</label>
-          <md-select ng-model="selectedRestaurant">
-            <md-option ng-repeat="restaurant in restaurants" value="{{restaurant}}">Name: {{restaurant.name}}, Branch: {{restaurant.branch}}</md-option>
-          </md-select>
-        </md-input-container>
-         <md-input-container flex ng-show="selectedRestaurant">
-           <label>Dish</label>
+       <form name="comboOptionDishAddForm" layout="row" ng-show="comboOptionDishesAddShow" ng-submit="addComboOptionDish(comboOptionDishesAddCross, combo_option.id)">
+         <md-input-container flex>
+           <label>Dishes</label>
            <md-select ng-model="combo_option_dish.dish_id">
-             <md-option ng-repeat="dish in dishes" value="{{dish.id}}">{{dish.name}}</md-option>
+             <md-option ng-repeat="dish in dishes" value="{{dish.id}}">{{dish.name}}   ({{dish.restaurant.name}} : {{dish.restaurant.branch}})</md-option>
            </md-select>
          </md-input-container>
          <div layout="row" layout-align="center center" layout-padding>
