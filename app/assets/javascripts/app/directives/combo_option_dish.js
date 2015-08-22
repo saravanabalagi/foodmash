@@ -2,15 +2,24 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('comboOptionDish', ['ComboOptionDish', 'Dish', '$location', 'toaster', '$q', function(ComboOptionDish, Dish, $location, toaster, $q){
+.directive('comboOptionDish', ['ComboOptionDish', 'Dish', '$location', 'toaster', '$q','$timeout', function(ComboOptionDish, Dish, $location, toaster, $q, $timeout){
 
 	return {
 
+		restrict: 'E',
+
+		priority: 1001,
+
 		templateUrl: '/templates/combo_option_dish.html',
 
-		controller: ['ComboOptionDish', 'Dish', '$location', 'toaster', '$q', function(ComboOptionDish, Dish, $location, toaster, $q){
+		controller: ['ComboOptionDish', 'Dish', '$location', 'toaster', '$q','$timeout','$scope', function(ComboOptionDish, Dish, $location, toaster, $q, $timeout, $scope){
 
 			$scope.updatedComboOptionDish = new ComboOptionDish;
+
+			$scope.setUpdate = function(){
+				$scope.updatedComboOptionDish = angular.copy($scope.combo_option_dish);
+				$scope.loadDishes($scope.combo_option_dish.combo_option);
+			};
 
 			$scope.loadDishes = function(combo_option){
 				var d = $q.defer();
@@ -26,14 +35,10 @@ angular.module('foodmashApp.directives')
 				return d.promise;
 			};
 
-			$scope.setUpdate = function(){
-				$scope.updatedComboOptionDish = angular.copy($scope.combo_option_dish);
-			};
-
 			$scope.updateComboOptionDish = function(){
 				var d = $q.defer();
-				if(!updateComboOptionDishCross){
-					if(!$scope.updateComboOptionDishForm.$pristine){
+				if(!comboOptionDishUpdateCross){
+					if(!$scope.comboOptionDishUpdateForm.$pristine){
 						$scope.updatedComboOptionDish.update().then(function(response){
 							toaster.pop('success', 'Updated Combo Option Dish!');
 							$scope.combo_option_dish = $scope.updatedComboOptionDish;

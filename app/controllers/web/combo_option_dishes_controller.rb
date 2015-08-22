@@ -5,7 +5,7 @@ class Web::ComboOptionDishesController < ApplicationController
 	def index
 		@combo_option_dishes = ComboOptionDish.where(params.permit(:combo_option_id, :dish_id))
 		if @combo_option_dishes 
-			render status: 200, json: @combo_option_dishes.as_json(:include => :dish, :include => :combo_option)
+			render status: 200, json: @combo_option_dishes.as_json(:include => [{:dish => {:include => :restaurant}}, :combo_option])
 		else
 			render status: 404, json: {error: 'Combos Option Dishes not found!'}
 		end
@@ -14,7 +14,7 @@ class Web::ComboOptionDishesController < ApplicationController
 	def create
 		@combo_option_dish = ComboOptionDish.new combo_option_dish_params
 		if @combo_option_dish.save 
-			render status: 201, json: @combo_option_dish.as_json(:include => :dish)
+			render status: 201, json: @combo_option_dish.as_json(:include => [{:dish => {:include => :restaurant}}, :combo_option])
 		else
 			render status: 422, json: @combo_option_dish.errors.as_json
 		end
@@ -22,7 +22,7 @@ class Web::ComboOptionDishesController < ApplicationController
 
 	def update
 		if @combo_option_dish && @combo_option_dish.update_attributes(combo_option_dish_update_params)
-			render status: 200, json: @combo_option_dish.as_json(:include => :dish)
+			render status: 200, json: @combo_option_dish.as_json(:include => [{:dish => {:include => :restaurant}}, :combo_option])
 		else
 			render status: 422, json: @combo_option_dish.errors.as_json
 		end

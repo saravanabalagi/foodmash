@@ -17,6 +17,12 @@ angular.module('foodmashApp.controllers')
 		}, 1000)
 	});
 
+	$scope.$on('$viewContentLoaded', function(){
+		$timeout(function(){
+			angular.element(document.querySelector('#load-combo-option-dishes')).triggerHandler('click');
+		}, 1000)
+	});
+
 	ComboOption.query({id: $routeParams.id}).then(function(combo_options){
 		if(combo_options.length > 0){
 			$scope.combo_option = combo_options[0];
@@ -27,11 +33,12 @@ angular.module('foodmashApp.controllers')
 		$scope.combo_option = null;
 	});
 
-	$scope.loadComboOptionDishes = function(){
+	$scope.loadComboOptionDishes = function(combo_option_id){
 		var d = $q.defer();
-		ComboOptionDish.query({combo_option_id: $scope.combo_option.id}).then(function(combo_option_dishes){
+		ComboOptionDish.query({combo_option_id: combo_option_id}).then(function(combo_option_dishes){
 			if(combo_option_dishes.length > 0){
 				$scope.combo_option_dishes = combo_option_dishes;
+				console.log(combo_option_dishes);
 			}else{
 				$scope.combo_option_dishes = new Array;
 			}
