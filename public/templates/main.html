@@ -81,13 +81,15 @@
 
                                     <md-list-item class="md-2-line">
                                       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
+
                                       <div class="md-list-item-text">
-                                        <h3>{{combo_option.name}}</h3>
+                                        <label>{{combo_option.name}}</label>
                                         <p>{{combo_option.description}}</p>
-                                        <select ng-options="combo_option_dish in combo_option.combo_option_dishes">
-                                        <option>{{combo_option_dish.dish_id}}</option>
-                                        </select>
+                                        <md-select ng-model="ordered_dish.dish_id">
+                                          <md-option ng-repeat="combo_option_dish in combo_option.combo_option_dishes" value="{{combo_option_dish.id}}">{{combo_option_dish.dish.name}}  ({{combo_option_dish.dish.restaurant.name}} : {{combo_option_dish.dish.restaurant.branch}})</md-option>
+                                        </md-select>
                                       </div>
+
                                     </md-list-item>
                                     <md-divider md-inset></md-divider>
                                   

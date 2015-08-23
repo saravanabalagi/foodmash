@@ -56,6 +56,7 @@ angular.module('foodmashApp.controllers')
 
 	$scope.mediumCombos = function(){
 		Combo.loadMediumCombos().then(function(mediumCombos){
+			console.log(mediumCombos);
 			$scope.combos = mediumCombos;
 		});
 	};
