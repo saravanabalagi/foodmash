@@ -20,6 +20,10 @@ angular.module('foodmashApp.controllers')
    	 $location.path("/");
    };
 
+   $scope.routeToCart = function(){
+   	$location.path("/cart");
+   };
+
 	AuthService.currentUser().then(function(user){
 		$scope.user = user;
 	});

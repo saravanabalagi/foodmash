@@ -4,7 +4,7 @@ class Api::V1::UsersController < ApiApplicationController
   def index
     users = User.where(params.permit(:id, :email, :mobile_no))
     if users
-      render status: 200, json: users.as_json
+      render status: 200, json: users.as_json(except: [:authentication_token, :mobile_authentication_token])
     else
       render status: 404, json: "Could not find all the users!"
     end

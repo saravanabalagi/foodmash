@@ -1,0 +1,57 @@
+<!-- Checkout_delivery -->
+
+        <div flex layout="row">
+          <div flex offset="20" layout="column" layout-align="center center">
+            
+            <div layout="column" layout-align="center center">
+              <md-radio-group layout="column">
+
+                <!-- Repeatable Saved Address -->
+                <div layout="row" layout-align="center center">
+                  <md-radio-button value="address_1" class="md-primary address-radio">
+                    <div layout="column" layout-padding>
+                      <h1 class="md-title">Alexandra Jason</h1>
+                      <div>#2E, First Floor, Regency Residency</div>
+                      <div>Lake View Street, Kotturpuram,</div>
+                      <div>Chennai, 600025</div>
+                      <h1 class="md-subhead">+91 9876 543210</h1>
+                    </div>
+                  </md-radio-button>
+                  <md-button class="md-icon-button md-primary" layout-padding>
+                    <md-icon md-svg-src="assets/svg/edit.svg"></md-icon>
+                  </md-button>
+                  <md-button class="md-icon-button md-primary" layout-padding>
+                    <md-icon md-svg-src="assets/svg/bin.svg"></md-icon>
+                  </md-button>
+                </div>
+                <!-- Repeatable Saved Address ends-->
+
+              </md-radio-group>
+            </div>
+
+            <div layout="row" layout-align="center center" layout-margin layout-padding>
+              <md-button class="md-primary" layout-padding>
+                <md-icon md-svg-src="assets/svg/add.svg"></md-icon>
+                <span class="md-subhead" layout-padding>
+                  NEW ADDRESS
+                </span>
+              </md-button>
+              
+            </div>
+
+            <md-divider></md-divider>
+
+            <div layout="row" layout-padding layout-align="center center">
+              <h2 class="md-title" layout-padding layout-margin>Delivery Charges</h2>
+              <h2 class="md-display-1 rupee" layout-padding layout-margin>30</h2>
+            </div>
+            <div layout="row" layout-align="center center">
+              <md-button class="md-raised" ng-click="routeToCart()">Cart</md-button>
+              <md-button class="md-raised md-primary">Pay</md-button>
+            </div>
+
+          </div>
+          <div flex="20"></div>
+        </div> 
+
+        <!-- Checkout_delivery ends -->

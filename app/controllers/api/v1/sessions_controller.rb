@@ -7,11 +7,12 @@ class Api::V1::SessionsController < ApiApplicationController
 	  resource = User.find_for_database_authentication(email: params[:user][:email]) || User.find_for_database_authentication(mobile_no: params[:user][:mobile_no])
 	  return failure unless resource
 	  return failure unless resource.valid_password?(params[:user][:password])
+	  resource.clear_mobile_authentication_token
 	  render status: 200,
 	    json: {
 	      success: true, info: "Logged in", data: {
-	        user: resource,
-	        auth_token: resource.authentication_token
+	        user: resource.as_json(except: :authentication_token),
+	        mobile_auth_token: resource.mobile_authentication_token
 	      }
 	    }
 	end
@@ -28,7 +29,6 @@ class Api::V1::SessionsController < ApiApplicationController
 
 	  resource = User.find_for_database_authentication(id: params[:auth_user_id])
 	  return failure unless resource
-	  resource.clear_authentication_token
 	  render status: 200, json: {success: true, info: 'Logged Out'}
 	end
 
