@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   delegate :can?, :cannot?, to: :ability
 
   before_save :ensure_authentication_token
+  before_save :ensure_mobile_authentication_token
 
   has_many :carts
   has_many :delivery_addresses, dependent: :destroy

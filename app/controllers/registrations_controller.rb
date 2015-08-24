@@ -15,7 +15,7 @@ class RegistrationsController < Devise::RegistrationsController
 	    render status: 200,
 	    json: {
 	      success: true, info: "Registered", data: {
-	        user: resource,
+	        user: resource.as_json(except: [:authentication_token, :mobile_authentication_token]),
 	        auth_token: resource.authentication_token
 	      }
 	    }
@@ -32,7 +32,7 @@ class RegistrationsController < Devise::RegistrationsController
 
  def update
 	if @current_user and @current_user.update_attributes update_params
-  	render status: 200, json: @current_user
+  	render status: 200, json: @current_user.as_json(except: [:authentication_token, :mobile_authentication_token])
 	else
   	render status: 422, json: {error: user.errors}
 	end

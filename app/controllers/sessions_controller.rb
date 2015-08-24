@@ -14,7 +14,7 @@ class SessionsController < Devise::SessionsController
     render status: 200,
       json: {
         success: true, info: "Logged in", data: {
-          user: resource,
+          user: resource.as_json(except: [:authentication_token, :mobile_authentication_token]),
           auth_token: resource.authentication_token
         }
       }
