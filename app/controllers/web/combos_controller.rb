@@ -37,7 +37,7 @@ class Web::CombosController < ApplicationController
 	end
 
 	def get_offer_combos
-		@offerCombos = Combo.where(group_size: 1)
+		@offerCombos = Combo.where(group_size: 1, available: true)
 		if @offerCombos
 			render status: 200, json: @offerCombos.as_json(:include => {:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => :restaurant} } } } } } )
 		else
@@ -46,7 +46,7 @@ class Web::CombosController < ApplicationController
 	end
 
 	def get_micro_combos
-		@microCombos = Combo.where(group_size: 1)
+		@microCombos = Combo.where(group_size: 1, available: true)
 		if @microCombos
 			render status: 200, json: @microCombos.as_json(:include => {:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => :restaurant} } } } } } )
 		else
@@ -55,7 +55,7 @@ class Web::CombosController < ApplicationController
 	end
 
 	def get_medium_combos
-		@mediumCombos = Combo.where(group_size: 2)
+		@mediumCombos = Combo.where(group_size: 2, available: true)
 		if @mediumCombos
 			render status: 200, json: @mediumCombos.as_json(:include => {:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => :restaurant} } } } } } )
 		else
@@ -64,7 +64,7 @@ class Web::CombosController < ApplicationController
 	end
 
 	def get_mega_combos
-		@megaCombos = Combo.where("group_size >= ?", 3)
+		@megaCombos = Combo.where("group_size >= ?", 3).where(available: true)
 		if @megaCombos
 			render status: 200, json: @megaCombos.as_json(:include => {:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => :restaurant} } } } } } )
 		else
@@ -79,10 +79,10 @@ class Web::CombosController < ApplicationController
 	end
 
 	def combo_params
-		params.require(:combo).permit(:name, :price, :group_size, :no_of_purchases, :description)
+		params.require(:combo).permit(:name, :price, :group_size, :no_of_purchases, :description, :active)
 	end
 
 	def combo_update_params
-		params.require(:combo).permit(:name, :price, :group_size, :description)
+		params.require(:combo).permit(:name, :price, :group_size, :description, :active)
 	end
 end

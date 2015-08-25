@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources', 
 	'foodmashApp.services', 'ngCookies', 'foodmashApp.directives', 'foodmashApp.controllers', 
-	'foodmashApp.interceptors', 'ngMaterial', 'ngAnimate', 'toaster', 'ngSanitize', 'ngLoad'])
+	'foodmashApp.interceptors', 'ngMaterial', 'ngAnimate', 'toaster', 'ngSanitize'])
 
 .config(['$routeProvider', '$locationProvider', '$httpProvider','railsSerializerProvider', function($routeProvider, $locationProvider, $httpProvider, railsSerializerProvider){
 	$httpProvider.interceptors.push('UserAuthInterceptor');
@@ -10,10 +10,9 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 	railsSerializerProvider.underscore(angular.identity).camelize(angular.identity);
 
 	$routeProvider
-	.when('/users/:user_id', 
-	  {
-	    templateUrl: '/templates/profile.html', 
+	.when('/users/:user_id', {
 	    controller: 'ProfileController',
+	    templateUrl: '/templates/profile.html', 
 	    resolve: {
 	      user:
 	      function($q, $route, $location, AuthService, toaster, User, $routeParams) {

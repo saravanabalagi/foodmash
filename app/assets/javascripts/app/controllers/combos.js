@@ -33,6 +33,7 @@ angular.module('foodmashApp.controllers')
 					d.resolve(response);
 				}, function(err){
 					toaster.pop('error', 'Combo was not created!');
+					console.log(err);
 					d.reject(err);
 				});
 			}else{

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150824050605) do
+ActiveRecord::Schema.define(version: 20150825051337) do
 
   create_table "cart_delivery_addresses", force: :cascade do |t|
     t.integer  "cart_id"
@@ -47,10 +47,13 @@ ActiveRecord::Schema.define(version: 20150824050605) do
     t.string   "name"
     t.float    "price"
     t.integer  "group_size"
-    t.integer  "no_of_purchases", default: 0
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.integer  "no_of_purchases",     default: 0
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.text     "description"
+    t.integer  "packaging_centre_id"
+    t.boolean  "active",              default: false
+    t.boolean  "available"
   end
 
   create_table "delivery_addresses", force: :cascade do |t|
@@ -76,16 +79,19 @@ ActiveRecord::Schema.define(version: 20150824050605) do
     t.integer  "dish_type_id"
     t.integer  "restaurant_id"
     t.integer  "no_of_purchases", default: 0
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.boolean  "available",       default: true
   end
 
   create_table "order_items", force: :cascade do |t|
     t.integer  "order_id"
     t.integer  "item_id"
     t.string   "item_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "category_id"
+    t.string   "category_type"
   end
 
   create_table "orders", force: :cascade do |t|

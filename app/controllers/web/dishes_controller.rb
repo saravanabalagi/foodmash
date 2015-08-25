@@ -51,10 +51,10 @@ class Web::DishesController < ApplicationController
 	end
 
 	def dish_params
-		params.require(:dish).permit(:name, :price, :dish_type_id, :restaurant_id, :no_of_purchases, :picture_url)
+		params.require(:dish).permit(:name, :price, :dish_type_id, :restaurant_id, :no_of_purchases, :picture_url, :available)
 	end
 
 	def dish_update_params
-		params.require(:dish).permit(:name, :price, :dish_type_id, :restaurant_id, :no_of_purchases,:picture_url)
+		params.require(:dish).permit(:name, :price, :dish_type_id, :restaurant_id, :no_of_purchases,:picture_url, :available)
 	end
 end
