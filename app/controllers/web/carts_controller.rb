@@ -13,7 +13,7 @@ class Web::CartsController < ApplicationController
 	end
 
 	def add_to_cart
-		if @cart.add_product(params[:combo])
+		if @cart and @cart.add_combo(params[:cart][:combo_id], params[:cart][:selected_dishes])
 			render status: 200, json: {message: "successfully added to cart!"}
 		else
 			render status: 422, json: {error: "Could not add to cart!"}
@@ -29,10 +29,6 @@ class Web::CartsController < ApplicationController
 	end
 
 	private
-	def cart_params
-		params.require(:cart).permit(:user_id)
-	end
-
 	def invalid_cart
 		render status: 422, json: {error: "Attempt to access invalid cart!"}
 	end

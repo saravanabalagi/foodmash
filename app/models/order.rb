@@ -1,5 +1,5 @@
 class Order < ActiveRecord::Base
-	has_many :order_items
+	has_many :order_items, dependent: :destroy
 	belongs_to :cart
 	validates_presence_of :product_id, :product_type, :cart_id, :quantity
 	include AASM

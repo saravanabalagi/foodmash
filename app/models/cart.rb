@@ -2,6 +2,7 @@ class Cart < ActiveRecord::Base
 	belongs_to :user
 	has_one :delivery_address, through: :cart_delivery_address
 	has_one :cart_delivery_address
+	has_many :order_items, through: :orders, dependent: :destroy
 	has_many :orders, dependent: :destroy
 	include AASM
 
@@ -38,17 +39,41 @@ class Cart < ActiveRecord::Base
 	  end
 	end
 
-	def add_product(product)
-		current_item = orders.find_by(product: product)
-		if current_item
-			current_item.quantity += 1
+	def add_combo(combo_id, selected_dishes)
+		combo = Combo.find combo_id
+		current_order = self.orders.find_by(product_id: combo_id)
+		current_order_items = current_order.order_items if current_order
+
+		if current_order and check_with_incoming_order(current_order, selected_dishes, combo_id)
+			current_order.quantity += 1
+			return current_order
 		else
-			current_item = orders.build(product_id: product_id)
+			future_order = self.orders.build(product_id: combo_id, product_type: "Combo", total: combo.price)
+			selected_dishes.each do |s_dish|
+				if(s_dish.combo_id == combo_id)
+					future_order_items = future_order.order_items.build(item_id: s_dish.dish_id, item_type: "Dish", category_id: s_dish.combo_option_id, category_type: "ComboOption")
+				end
+			end
+			return future_order
 		end
-		current_item
 	end
 
+	def check_with_incoming_order(current_order, selected_dishes, combo_id)
+		current_order_items_length = current_order.order_items.length
+		counting_length = 0
+		selected_dishes.each do |s_dish|
+			if current_order.order_items.item_id == s_dish.dish_id and current_order.order_items.category_id == s_dish.combo_option_id and combo_id == s_dish.combo_id
+				counting_length += 1
+			end
+		end
+		if counting_length == current_order_items
+			return true
+		else
+			return false
+		end
+	end
+	
 	def total_price
-		orders.to_a.sum {|order| order.total_price}
+		self.orders.to_a.sum {|order| order.total_price}
 	end
 end

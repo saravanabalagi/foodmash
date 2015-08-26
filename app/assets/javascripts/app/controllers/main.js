@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('MainController', ['$scope', 'CombosService','AuthService','$location','toaster' ,'CartService','Combo' , function($scope, CombosService, AuthService, $location, toaster, CartService, Combo){
+.controller('MainController', ['$scope', 'CombosService','AuthService','$location','toaster' ,'Cart','Combo' ,'$q', function($scope, CombosService, AuthService, $location, toaster, Cart, Combo, $q){
 	$scope.combos = {};
 	$scope.selected = null;
 	$scope.selectedDishes = [];
@@ -81,7 +81,21 @@ angular.module('foodmashApp.controllers')
 	};
 
 	$scope.addToCart = function(combo_id){
-		console.log($scope.selectedDishes);
+		var d = $q.defer();
+		if($scope.user){
+			Cart.addToCart(combo_id, $scope.selectedDishes).then(function(response){
+				toaster.pop('success' ,'Added to cart!');
+				d.resolve(response);
+			}, function(err){
+				toaster.pop('error', 'Failed to add to cart!');
+				d.reject(err);
+			});
+		}else{
+			toaster.pop('error', 'Need to login first!');
+			$location.path('/login');
+			d.resolve(null);
+		}
+		return d.promise;
 	};
 
 	$scope.checkComboSelection = function(combo){

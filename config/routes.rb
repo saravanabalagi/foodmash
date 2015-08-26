@@ -4,8 +4,8 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: {registrations: 'registrations', sessions: 'sessions'}, defaults: {format: :json}
 
+  #routes for web API
   namespace :web do
-
     resources :restaurants do 
       collection do 
         get '/:id/hasCombos', to: 'restaurants#has_combos'
@@ -49,10 +49,17 @@ Rails.application.routes.draw do
   # namespace :api, path: '/', constraints: { subdomain: 'api' }, defaults: { format: :json } do 
   namespace :api, defaults: {format: :json} do
     namespace :v1 do 
+      #restaurants
       resources :restaurants, only: [:index, :show]
+      get '/restaurants/:id/combos', to: 'restaurants#has_combos'
+      #dishes
       resources :dishes, only: [:index, :show]
+      get '/dishes/:id/belongsToCombos', to: 'dishes#belongs_to_combos'
+      #combos
       resources :combos, only: [:index, :show]
+      #users
       resources :users, only: [:index, :show]
+      #dishes_types
       resources :dish_types
       #sessions
       resources :sessions, only: [:create]
@@ -61,9 +68,6 @@ Rails.application.routes.draw do
       resources :registrations, only: [:create]
       post '/registrations', to: 'registrations#update'
       delete '/registrations', to: 'registrations#delete'
-
-      get '/restaurants/:id/combos', to: 'restaurants#has_combos'
-      get '/dishes/:id/belongsToCombos', to: 'dishes#belongs_to_combos'
     end
   end
 

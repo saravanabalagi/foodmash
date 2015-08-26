@@ -1,5 +1,6 @@
 class OrderItem < ActiveRecord::Base
 	validates_presence_of :order_id, :item_id, :item_type
+	belongs_to :order
 	include AASM
 
 	aasm do
