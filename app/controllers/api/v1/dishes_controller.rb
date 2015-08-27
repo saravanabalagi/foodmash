@@ -4,7 +4,7 @@ class Api::V1::DishesController < ApiApplicationController
 	def index
 		dishes = Dish.where(params.permit(:id, :name))
 		if dishes
-			render status: 200, json: dishes.as_json(:include => :dish_type)
+			render status: 200, json: dishes.as_json(:include => [:restaurant, :dish_type])
 		else
 			render status: 404, json: "Could not find all the dishes!"
 		end
