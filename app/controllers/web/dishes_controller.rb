@@ -13,7 +13,7 @@ class Web::DishesController < ApplicationController
 
 	def create
 		@dish = Dish.new dish_params
-		if @dish.save 
+		if @dish.save! 
 			render status: 201, json: @dish.as_json(:include => :dish_type)
 		else
 			render status: 422, json: @dish.errors.as_json

@@ -7,7 +7,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
 	  resource = User.new(sign_up_params)
 
 	  # Try to save them
-	  if resource.save 
+	  if resource.save! 
 	    render status: 200,
 	    json: {
 	      success: true, info: "Registered", data: {

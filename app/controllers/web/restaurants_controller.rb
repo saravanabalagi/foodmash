@@ -13,7 +13,7 @@ class Web::RestaurantsController < ApplicationController
 
 	def create
 		@restaurant = Restaurant.new restaurant_params
-		if @restaurant.save 
+		if @restaurant.save! 
 			render status: 201, json: @restaurant.as_json
 		else
 			render status: 422, json: @restaurant.errors.as_json

@@ -5,7 +5,7 @@ class Web::OrdersController < ApplicationController
 	def create
 		product = set_product
 		@order = @cart.add_product(product.id)
-		if @order.save
+		if @order.save!
 			render status: 201, json: @order.as_json
 		else
 			render status: 422, json: {error: @order.errors}

@@ -13,7 +13,7 @@ class Web::ComboOptionsController < ApplicationController
 
 	def create
 		@combo_option = ComboOption.new combo_option_params
-		if @combo_option.save 
+		if @combo_option.save! 
 			render status: 201, json: @combo_option.as_json(:include => :dish_type)
 		else
 			render status: 422, json: @combo_option.errors.as_json

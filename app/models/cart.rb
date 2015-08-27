@@ -45,17 +45,17 @@ class Cart < ActiveRecord::Base
 		current_orders.each do |current_order|
 			if current_order and check_with_incoming_order(current_order, selected_dishes, combo_id)
 				current_order.quantity += 1
-				return current_order if current_order.save
+				return current_order if current_order.save!
 			end
 		end
-		
+
 		future_order = self.orders.build(product_id: combo_id, product_type: "Combo", total: combo.price)
 		selected_dishes.each do |s_dish|
 			if(s_dish[:combo_id] == combo_id)
 				future_order_items = future_order.order_items.build(item_id: s_dish[:dish_id], item_type: "Dish", category_id: s_dish[:combo_option_id], category_type: "ComboOption")
 			end
 		end
-		return future_order if future_order.save
+		return future_order if future_order.save!
 	end
 
 	def check_with_incoming_order(current_order, selected_dishes, combo_id)

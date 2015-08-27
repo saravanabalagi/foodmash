@@ -13,7 +13,7 @@ class Web::CombosController < ApplicationController
 
 	def create
 		@combo = Combo.new combo_params
-		if @combo.save 
+		if @combo.save! 
 			render status: 201, json: @combo.as_json
 		else
 			render status: 422, json: @combo.errors.as_json
