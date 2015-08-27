@@ -41,32 +41,35 @@ class Cart < ActiveRecord::Base
 
 	def add_combo(combo_id, selected_dishes)
 		combo = Combo.find combo_id
-		current_order = self.orders.find_by(product_id: combo_id)
-		current_order_items = current_order.order_items if current_order
-
-		if current_order and check_with_incoming_order(current_order, selected_dishes, combo_id)
-			current_order.quantity += 1
-			return current_order
-		else
-			future_order = self.orders.build(product_id: combo_id, product_type: "Combo", total: combo.price)
-			selected_dishes.each do |s_dish|
-				if(s_dish.combo_id == combo_id)
-					future_order_items = future_order.order_items.build(item_id: s_dish.dish_id, item_type: "Dish", category_id: s_dish.combo_option_id, category_type: "ComboOption")
-				end
+		current_orders = self.orders.where(product_id: combo_id)
+		current_orders.each do |current_order|
+			if current_order and check_with_incoming_order(current_order, selected_dishes, combo_id)
+				current_order.quantity += 1
+				return current_order if current_order.save
 			end
-			return future_order
 		end
+		
+		future_order = self.orders.build(product_id: combo_id, product_type: "Combo", total: combo.price)
+		selected_dishes.each do |s_dish|
+			if(s_dish[:combo_id] == combo_id)
+				future_order_items = future_order.order_items.build(item_id: s_dish[:dish_id], item_type: "Dish", category_id: s_dish[:combo_option_id], category_type: "ComboOption")
+			end
+		end
+		return future_order if future_order.save
 	end
 
 	def check_with_incoming_order(current_order, selected_dishes, combo_id)
 		current_order_items_length = current_order.order_items.length
 		counting_length = 0
 		selected_dishes.each do |s_dish|
-			if current_order.order_items.item_id == s_dish.dish_id and current_order.order_items.category_id == s_dish.combo_option_id and combo_id == s_dish.combo_id
-				counting_length += 1
-			end
+			current_order.order_items.each do |order_item|
+				if order_item[:item_id] == s_dish[:dish_id] and order_item[:category_id] == s_dish[:combo_option_id] and combo_id == s_dish[:combo_id]
+					counting_length += 1
+					break
+				end
+		  end
 		end
-		if counting_length == current_order_items
+		if counting_length == current_order_items_length
 			return true
 		else
 			return false

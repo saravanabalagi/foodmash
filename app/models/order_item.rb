@@ -1,6 +1,10 @@
 class OrderItem < ActiveRecord::Base
-	validates_presence_of :order_id, :item_id, :item_type
 	belongs_to :order
+	belongs_to :item, polymorphic: true
+	belongs_to :category, polymorphic: true
+	validates :item, presence: true
+	validates :category, presence: true
+	validates :order, presence: true
 	include AASM
 
 	aasm do

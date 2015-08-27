@@ -1,7 +1,9 @@
 class Order < ActiveRecord::Base
 	has_many :order_items, dependent: :destroy
 	belongs_to :cart
-	validates_presence_of :product_id, :product_type, :cart_id, :quantity
+	belongs_to :product, polymorphic: true
+	validates_presence_of :cart_id, :quantity
+	validates :product, presence: true
 	include AASM
 
 	aasm do
@@ -24,6 +26,6 @@ class Order < ActiveRecord::Base
 	end
 
 	def total_price
-		product.price * quantity
+		self.product.price * quantity
 	end
 end
