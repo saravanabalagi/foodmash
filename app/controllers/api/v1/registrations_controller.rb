@@ -17,7 +17,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
 	    }
 	  else
 	    # Otherwise fail
-	    render status: :unprocessable_entity,
+	    render status: 422,
 	    json: {
 	      success: false,
 	      info: resource.errors, data: {}

@@ -68,6 +68,8 @@ Rails.application.routes.draw do
       resources :registrations, only: [:create]
       post '/registrations', to: 'registrations#update'
       delete '/registrations', to: 'registrations#delete'
+      #profile 
+      get '/profile', to: 'profile#show'
     end
   end
 
