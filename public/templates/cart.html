@@ -4,7 +4,7 @@
           <div flex offset="20" layout="column" layout-align="center center">
 
             <!-- Combo in cart -->
-            <div class="md-whiteframe-z2" layout-margin ng-repeat="order in orders">
+            <div class="md-whiteframe-z2" layout-margin ng-repeat="order in cart.orders">
               <div layout="row" layout-align="space-between center">
                 <md-content flex>
                   <md-list>
@@ -19,8 +19,8 @@
                 </md-content>
                 <div layout-padding layout-margin>
                   <md-input-container>
-                    <label>{{order.quantity}}</label>
-                    <input>
+                    <label>quantity</label>
+                    <input ng-model="order.quantity" />
                   </md-input-container>
                 </div>
                 <div layout-padding layout-margin class="rupee">{{order.total}}</div>

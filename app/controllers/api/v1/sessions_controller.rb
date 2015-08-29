@@ -9,8 +9,10 @@ class Api::V1::SessionsController < ApiApplicationController
 	  return failure unless resource.valid_password?(params[:user][:password])
 	  render status: 200,
 	    json: {
-	      success: true, info: "Logged in", data: {
-	        user: resource.as_json(except: [:authentication_token, :mobile_authentication_token]),
+	      success: true, 
+	      info: "Logged in", 
+	      data: {
+	        user: resource.as_json(only: :user_token),
 	        mobile_auth_token: resource.mobile_authentication_token
 	      }
 	    }
@@ -24,12 +26,16 @@ class Api::V1::SessionsController < ApiApplicationController
 	end 
 
 	def destroy
-	  return permission_denied unless params[:auth_user_id].to_s == @current_user.id.to_s
+	  return permission_denied unless params[:auth_user_token] == @current_user.user_token
 
-	  resource = User.find_for_database_authentication(id: params[:auth_user_id])
+	  resource = User.find_for_database_authentication(user_token: params[:auth_user_token])
 	  return failure unless resource
 	  resource.clear_mobile_authentication_token
-	  render status: 200, json: {success: true, info: 'Logged Out'}
+	  render status: 200, 
+	  json: {
+	  	success: true,
+	   info: 'Logged Out'
+	 }
 	end
 
 	private

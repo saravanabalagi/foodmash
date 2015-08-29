@@ -6,7 +6,9 @@ class Api::V1::CartsController < ApiApplicationController
 
 	def index
 		if @cart 
-			render status: 200, json: @cart.as_json(:include => [{:orders, :order_items}])
+			@cart.total = @cart.total_price
+			@cart.save! if @cart.total
+			render status: 200, json: @cart.as_json(:include => {:orders => {:include => :order_items} } )
 		else
 			render status: 422, json: {error: "Could not find cart!"}
 		end

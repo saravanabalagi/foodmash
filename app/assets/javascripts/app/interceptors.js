@@ -13,7 +13,7 @@ angular.module('foodmashApp.interceptors', [])
            if(user) {
              req.params = req.params || {};
              req.params['auth_token'] = req.params['auth_token'] || user.auth_token;
-             req.params['auth_user_id'] = req.params['auth_user_id'] || user.id;
+             req.params['auth_user_token'] = req.params['auth_user_token'] || user.user_token;
              d.resolve(req);
            } else {
              d.resolve(req);
