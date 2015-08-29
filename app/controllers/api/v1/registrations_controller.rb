@@ -19,7 +19,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
 	    render status: 422,
 	    json: {
 	      success: false,
-	      info: resource.errors
+	      error: resource.errors
 	    }
 	  end 
     

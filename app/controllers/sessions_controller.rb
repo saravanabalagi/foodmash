@@ -13,7 +13,8 @@ class SessionsController < Devise::SessionsController
     sign_in(resource)
     render status: 200,
       json: {
-        success: true, info: "Logged in", data: {
+        success: true, info: "Logged in", 
+        data: {
           user: resource.as_json(except: [:authentication_token, :mobile_authentication_token]),
           auth_token: resource.authentication_token
         }
@@ -24,14 +25,15 @@ class SessionsController < Devise::SessionsController
     warden.custom_failure! 
     render status: 200,
     json: {
-      success: false, info: "Login failed", data: {}
+      success: false, 
+      info: "Login failed"
     }
   end 
 
   def destroy
-    return permission_denied unless params[:auth_user_id].to_s == @current_user.id.to_s
+    return permission_denied unless params[:auth_user_token] == @current_user.user_token
 
-    resource = User.find_for_database_authentication(id: params[:auth_user_id])
+    resource = User.find_for_database_authentication(user_token: params[:auth_user_token])
     return failure unless resource
     resource.clear_authentication_token
     sign_out(resource)

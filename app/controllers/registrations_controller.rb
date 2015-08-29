@@ -24,7 +24,7 @@ class RegistrationsController < Devise::RegistrationsController
 	    render status: :unprocessable_entity,
 	    json: {
 	      success: false,
-	      info: resource.errors, data: {}
+	      info: resource.errors
 	    }
 	  end 
     
