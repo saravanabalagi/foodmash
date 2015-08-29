@@ -3,8 +3,8 @@ class Api::V1::ProfileController < ApiApplicationController
   respond_to :json
 
   def show
-    if params[:auth_user_id] and params[:mobile_auth_token]
-    	@user = User.find params[:auth_user_id] || User.find_by(mobile_authentication_token: params[:mobile_auth_token])
+    if params[:auth_user_token] and params[:auth_mobile_token]
+    	@user = User.find_by params[:auth_user_token] || User.find_by(mobile_authentication_token: params[:auth_mobile_token])
       render status: 200, json: @user.as_json(except: [:authentication_token, :mobile_authentication_token])
     else
       render status: 404, json: "Could not find the user!"

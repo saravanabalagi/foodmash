@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150829134359) do
+ActiveRecord::Schema.define(version: 20150829171035) do
 
   create_table "cart_delivery_addresses", force: :cascade do |t|
     t.integer  "cart_id"
@@ -157,7 +157,6 @@ ActiveRecord::Schema.define(version: 20150829134359) do
     t.string   "authentication_token"
     t.string   "mobile_authentication_token"
     t.string   "user_token"
-    t.string   "android_id"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true
