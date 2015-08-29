@@ -11,7 +11,6 @@ class Api::V1::RegistrationsController < ApiApplicationController
 	    render status: 200,
 	    json: {
 	      success: true, 
-	      info: "Registered", 
 	      data: {
 	        user: resource.as_json(only: :user_token),
 	        mobile_token: resource.mobile_authentication_token
@@ -22,8 +21,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
 	    render status: 422,
 	    json: {
 	      success: false,
-	      info: resource.errors, 
-	      data: {}
+	      info: resource.errors
 	    }
 	  end 
     

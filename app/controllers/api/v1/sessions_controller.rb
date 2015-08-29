@@ -10,7 +10,6 @@ class Api::V1::SessionsController < ApiApplicationController
 	  render status: 200,
 	    json: {
 	      success: true, 
-	      info: "Logged in", 
 	      data: {
 	        user: resource.as_json(only: :user_token),
 	        mobile_token: resource.mobile_authentication_token
@@ -21,7 +20,7 @@ class Api::V1::SessionsController < ApiApplicationController
 	def failure 
 	  render status: 200,
 	  json: {
-	    success: false, info: "Login failed", data: {}
+	    success: false
 	  }
 	end 
 
@@ -33,8 +32,7 @@ class Api::V1::SessionsController < ApiApplicationController
 	  resource.clear_mobile_authentication_token
 	  render status: 200, 
 	  json: {
-	  	success: true,
-	   info: 'Logged Out'
+	  	success: true
 	 }
 	end
 
