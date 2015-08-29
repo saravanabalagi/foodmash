@@ -1,6 +1,7 @@
 class Api::V1::SessionsController < ApiApplicationController
 	before_filter :configure_sign_in_params, only: [:create]
 	before_filter :authenticate_user_from_token!, only: [:destroy]
+	before_filter :check_for_android!, only: [:create, :destroy]
 	respond_to :json
 
 	 def create

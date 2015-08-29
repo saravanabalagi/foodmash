@@ -1,10 +1,13 @@
 class Api::V1::RegistrationsController < ApiApplicationController
 	before_filter :authenticate_user_from_token!, only: [:update, :destroy]
+	before_filter :check_for_android!, except: :create
 	respond_to :json
 
   def create
   	# Create the user
 	  resource = User.new(sign_up_params)
+	  return android_denied unless params[:auth_android_id].presence
+	  resource.android_id = params[:auth_android_id]
 
 	  # Try to save them
 	  if resource.save! 
