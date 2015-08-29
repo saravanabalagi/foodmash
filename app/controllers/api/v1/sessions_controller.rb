@@ -13,7 +13,7 @@ class Api::V1::SessionsController < ApiApplicationController
 	      info: "Logged in", 
 	      data: {
 	        user: resource.as_json(only: :user_token),
-	        mobile_auth_token: resource.mobile_authentication_token
+	        mobile_token: resource.mobile_authentication_token
 	      }
 	    }
 	end
