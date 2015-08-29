@@ -10,10 +10,8 @@ class Api::V1::SessionsController < ApiApplicationController
 	  render status: 200,
 	    json: {
 	      success: true, 
-	      data: {
-	        user: resource.as_json(only: :user_token),
-	        mobile_token: resource.mobile_authentication_token
-	      }
+        user_token: resource.user_token,
+        mobile_token: resource.mobile_authentication_token
 	    }
 	end
 
