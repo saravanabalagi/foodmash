@@ -1,4 +1,4 @@
-class Web::CartsController < ApplicationController
+class Api::V1::CartsController < ApiApplicationController
 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 	before_filter :set_cart, only: :destroy
 	before_filter :set_or_create_cart, only: [:create, :add_to_cart, :index]
@@ -36,7 +36,7 @@ class Web::CartsController < ApplicationController
 		end
 	end
 
-	private
+	private 
 	def invalid_cart
 		render status: 422, json: {error: "Attempt to access invalid cart!"}
 	end

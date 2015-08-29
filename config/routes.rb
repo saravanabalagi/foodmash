@@ -34,7 +34,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :carts, only: [:create, :destroy] do 
+    resources :carts, only: [:create, :destroy, :index] do 
       collection do 
         post '/addToCart', to: 'carts#add_to_cart'
       end
@@ -70,6 +70,12 @@ Rails.application.routes.draw do
       delete '/registrations', to: 'registrations#delete'
       #profile 
       get '/profile', to: 'profile#show'
+      #carts
+      resources :carts, only: [:create, :destroy, :index] do 
+        collection do 
+          post '/addToCart', to: 'carts#add_to_cart'
+        end
+      end
     end
   end
 

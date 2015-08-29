@@ -4,56 +4,26 @@
           <div flex offset="20" layout="column" layout-align="center center">
 
             <!-- Combo in cart -->
-            <div class="md-whiteframe-z2" layout-margin>
+            <div class="md-whiteframe-z2" layout-margin ng-repeat="order in orders">
               <div layout="row" layout-align="space-between center">
                 <md-content flex>
                   <md-list>
                     <md-list-item class="md-2-line">
                       <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="combo"></md-icon>
                       <div class="md-list-item-text">
-                          <h3>Combo</h3>
-                          <p>Some two line description of what the combo is</p>
+                          <h3>{{order.product.name}}</h3>
+                          <p>{{order.product.description}}</p>
                       </div>
                     </md-list-item>
                   </md-list>
                 </md-content>
                 <div layout-padding layout-margin>
                   <md-input-container>
-                    <label>Quantity</label>
+                    <label>{{order.quantity}}</label>
                     <input>
                   </md-input-container>
                 </div>
-                <div layout-padding layout-margin class="rupee">220</div>
-                <div layout-padding layout-margin>
-                <md-button class="md-icon-button md-primary">
-                      <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/wrong.svg"></md-icon>
-                  </md-button>
-                </div>
-              </div>
-            </div>
-            <!-- Combo in cart ends -->
-
-            <!-- Combo in cart -->
-            <div class="md-whiteframe-z2" layout-margin>
-              <div layout="row" layout-align="space-between center">
-                <md-content flex>
-                  <md-list>
-                    <md-list-item class="md-2-line">
-                      <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="combo"></md-icon>
-                      <div class="md-list-item-text">
-                          <h3>Combo</h3>
-                          <p>Some two line description of what the combo is</p>
-                      </div>
-                    </md-list-item>
-                  </md-list>
-                </md-content>
-                <div layout-padding layout-margin>
-                  <md-input-container>
-                    <label>Quantity</label>
-                    <input>
-                  </md-input-container>
-                </div>
-                <div layout-padding layout-margin class="rupee">450</div>
+                <div layout-padding layout-margin class="rupee">{{order.total}}</div>
                 <div layout-padding layout-margin>
                 <md-button class="md-icon-button md-primary">
                       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/wrong.svg"></md-icon>
@@ -65,7 +35,7 @@
 
             <div layout="row" layout-padding layout-align="center center">
               <h2 class="md-title" layout-padding layout-margin>Total Amount</h2>
-              <h2 class="md-display-1 rupee" layout-padding layout-margin>650</h2>
+              <h2 class="md-display-1 rupee" layout-padding layout-margin>{{cart.total}}</h2>
             </div>
             <div layout="row" layout-align="center center">
               <md-button class="md-raised" ng-click="routeToRoot()">Shop</md-button>
