@@ -67,8 +67,8 @@ Rails.application.routes.draw do
       #registrations
       resources :registrations, only: [:create] do 
         collection do 
-          get '/checkEmail', to: 'registrations#check_email'
-          get '/checkMobileNo', to: 'registrations#check_mobile_no'
+          post '/checkEmail', to: 'registrations#check_email'
+          post '/checkMobileNo', to: 'registrations#check_mobile_no'
         end
       end
       post '/registrations', to: 'registrations#update'
@@ -81,6 +81,8 @@ Rails.application.routes.draw do
           post '/addToCart', to: 'carts#add_to_cart'
         end
       end
+      #delivery_addresses
+      resources :delivery_addresses
     end
   end
 

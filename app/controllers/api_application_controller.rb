@@ -1,5 +1,5 @@
 class ApiApplicationController < ActionController::Base
-
+  
 	private 
 
   def check_for_android!
