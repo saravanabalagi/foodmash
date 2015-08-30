@@ -1,6 +1,6 @@
 class Api::V1::DeliveryAddressesController < ApiApplicationController
 	before_filter :authenticate_user_from_token!
-	before_filter set_delivery_address, only: [:update, :destroy]
+	before_filter :set_delivery_address, only: [:update, :destroy]
 	respond_to :json
 
 	def index
@@ -23,7 +23,7 @@ class Api::V1::DeliveryAddressesController < ApiApplicationController
 
 	def update
 		@delivery_address = parse_and_set(@delivery_address, params[:data])
-		if @delivery_address and @delivery_address.update_attributes!
+		if @delivery_address and @delivery_address.save!
 			render status: 200, json: @delivery_address.as_json
 		else
 			render status: 422, json: {error: "Could not update delivery address!"}
@@ -48,14 +48,15 @@ class Api::V1::DeliveryAddressesController < ApiApplicationController
 	end
 
 	def parse_and_set(delivery_address, data)
+		delivery_address.user_id = @current_user.id
 		delivery_address.name = data[:name]
-		delivery_address.line1 = data.address[:line1]
-		delivery_address.line2 = data.address[:line2]
-		delivery_address.area = data.address[:area]
-		delivery_address.city = data.address[:city]
-		delivery_address.pincode = data.address[:pincode]
-		delivery_address.latitude = data.geolocation[:latitude]
-		delivery_address.longitude = data.geolocation[:longitude]
+		delivery_address.line1 = data[:address][:line1]
+		delivery_address.line2 = data[:address][:line2]
+		delivery_address.area = data[:address][:area]
+		delivery_address.city = data[:address][:city]
+		delivery_address.pincode = data[:address][:pincode]
+		delivery_address.latitude = data[:geolocation][:latitude]
+		delivery_address.longitude = data[:geolocation][:longitude]
 		delivery_address.contact_no = data[:phone]
 		delivery_address.primary = data[:primary]
 		return delivery_address
