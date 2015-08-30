@@ -25,8 +25,7 @@ class Api::V1::SessionsController < ApiApplicationController
 
 	def destroy
 	  return permission_denied unless params[:auth_user_token] == @current_user.user_token
-
-	  resource = User.find_for_database_authentication(user_token: params[:auth_user_token])
+	  resource = User.find_for_database_authentication(mobile_authentication_token: params[:auth_session_token])
 	  return failure unless resource
 	  resource.clear_mobile_authentication_token
 	  render status: 200, 

@@ -82,9 +82,10 @@ Rails.application.routes.draw do
         end
       end
       #delivery_addresses
-      resources :delivery_addresses, only: [:create] do 
+      resources :delivery_addresses do 
         collection do 
-          post '/index', to: 'delivery_addresses#index'
+          post '/create', to: 'delivery_addresses#create'
+          post '/', to: 'delivery_addresses#index'
           patch '/', to: 'delivery_addresses#update'
           delete '/', to: 'delivery_addresses#destroy'
         end
