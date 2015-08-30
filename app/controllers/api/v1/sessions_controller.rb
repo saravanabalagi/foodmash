@@ -12,7 +12,7 @@ class Api::V1::SessionsController < ApiApplicationController
 	    json: {
 	      success: true, 
         user_token: resource.user_token,
-        mobile_token: resource.mobile_authentication_token
+        session_token: resource.mobile_authentication_token
 	    }
 	end
 

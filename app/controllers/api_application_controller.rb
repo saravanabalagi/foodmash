@@ -10,7 +10,7 @@ class ApiApplicationController < ActionController::Base
   def authenticate_user_from_token!
     android_id = params[:auth_android_id]
     user_token = params[:auth_user_token].presence
-    user = User.find_by(mobile_authentication_token: params[:auth_mobile_token])
+    user = User.find_by(mobile_authentication_token: params[:auth_session_token])
     if user && user_token && android_id
       @current_user = user
     else

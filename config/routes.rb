@@ -82,7 +82,11 @@ Rails.application.routes.draw do
         end
       end
       #delivery_addresses
-      resources :delivery_addresses
+      resources :delivery_addresses, only: [:create, :destroy, :update] do 
+        collection do 
+          post '/index', to: 'delivery_addresses#index'
+        end
+      end
     end
   end
 
