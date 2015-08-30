@@ -54,7 +54,7 @@ class Api::V1::DeliveryAddressesController < ApiApplicationController
 		delivery_address.line2 = data[:address][:line2]
 		delivery_address.area = data[:address][:area]
 		delivery_address.city = data[:address][:city]
-		delivery_address.pincode = data[:address][:pincode]
+		delivery_address.pincode = data[:address][:pincode].to_i
 		delivery_address.latitude = data[:geolocation][:latitude]
 		delivery_address.longitude = data[:geolocation][:longitude]
 		delivery_address.contact_no = data[:phone]
