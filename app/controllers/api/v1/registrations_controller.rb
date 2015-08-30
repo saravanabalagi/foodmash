@@ -46,18 +46,18 @@ class Api::V1::RegistrationsController < ApiApplicationController
   end
 
   def check_email
-  	if params[:email] and User.where(email: params[:email]).present?
-  		render status: 200, json: {success: true}
+  	if User.where(email: params[:email]).present?
+  		render status: 200, json: {success: false}
   	else
-  		render status: 404, json: {success: false}
+  		render status: 200, json: {success: true}
   	end
   end
 
   def check_mobile_no
-  	if params[:mobile_no] and User.where(mobile_no: params[:mobile_no]).present?
-  		render status: 200, json: {success: true}
+  	if User.where(mobile_no: params[:mobile_no]).present?
+  		render status: 200, json: {success: false}
   	else
-  		render status: 404, json: {success: false}
+  		render status: 200, json: {success: true}
   	end
   end
 
