@@ -1,5 +1,5 @@
 class Api::V1::ProfileController < ApiApplicationController
-	before_filter authenticate_user_from_token! only: :show
+	before_filter :authenticate_user_from_token!, only: :show
   respond_to :json
 
   def show
