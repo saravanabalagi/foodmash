@@ -1,6 +1,6 @@
 class Api::V1::RegistrationsController < ApiApplicationController
 	before_filter :authenticate_user_from_token!, only: [:update, :destroy]
-	before_filter :check_for_android!, except: :create
+	before_filter :check_for_android!, only: [:update, :destroy]
 	respond_to :json
 
   def create
@@ -42,6 +42,22 @@ class Api::V1::RegistrationsController < ApiApplicationController
   		head status: 200
   	else
   		render status: 422, json: {error: "Unable to cancel registration!"}
+  	end
+  end
+
+  def check_email
+  	if params[:email] and User.where(email: params[:email]).present?
+  		render status: 200, json: {success: true}
+  	else
+  		render status: 404, json: {success: false}
+  	end
+  end
+
+  def check_mobile_no
+  	if params[:mobile_no] and User.where(mobile_no: params[:mobile_no]).present?
+  		render status: 200, json: {success: true}
+  	else
+  		render status: 404, json: {success: false}
   	end
   end
 

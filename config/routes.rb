@@ -65,7 +65,12 @@ Rails.application.routes.draw do
       resources :sessions, only: [:create]
       delete '/sessions', to: 'sessions#destroy'
       #registrations
-      resources :registrations, only: [:create]
+      resources :registrations, only: [:create] do 
+        collection do 
+          get '/checkEmail', to: 'registrations#check_email'
+          get '/checkMobileNo', to: 'registrations#check_mobile_no'
+        end
+      end
       post '/registrations', to: 'registrations#update'
       delete '/registrations', to: 'registrations#delete'
       #profile 

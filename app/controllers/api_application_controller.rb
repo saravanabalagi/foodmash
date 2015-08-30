@@ -4,7 +4,7 @@ class ApiApplicationController < ActionController::Base
 
   def check_for_android!
     android_id = params[:auth_android_id]
-    return android_denied unless User.find_by(android_id: android_id).presence
+    return android_denied unless android_id
   end
 
   def authenticate_user_from_token!
