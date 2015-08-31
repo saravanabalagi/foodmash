@@ -14,11 +14,15 @@ angular.module('foodmashApp.controllers')
 		$location.path("/checkout");
 	};
 
+	$scope.checkForOrders = function(){
+		console.log($scope.cart);
+		return $scope.cart.orders.length == 0;
+	};
+
 	Cart.query().then(function(cart){
-		console.log(cart);
 		$scope.cart = cart;
 	}, function(err){
-
+		$scope.cart = null;
 	});
 
 }]);

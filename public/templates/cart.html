@@ -4,7 +4,7 @@
           <div flex offset="20" layout="column" layout-align="center center">
 
             <!-- Combo in cart -->
-            <div class="md-whiteframe-z2" layout-margin ng-repeat="order in cart.orders">
+            <div class="md-whiteframe-z2" layout-margin ng-repeat="order in cart.orders" ng-hide="checkForOrders()">
               <div layout="row" layout-align="space-between center">
                 <md-content flex>
                   <md-list>
@@ -20,7 +20,7 @@
                 <div layout-padding layout-margin>
                   <md-input-container>
                     <label>quantity</label>
-                    <input ng-model="order.quantity" />
+                    <input ng-change="updateOrder()" ng-model="order.quantity" />
                   </md-input-container>
                 </div>
                 <div layout-padding layout-margin class="rupee">{{order.total}}</div>
@@ -33,13 +33,21 @@
             </div>
             <!-- Combo in cart ends -->
 
+            <div class="md-whiteframe-z2" layout-margin ng-repeat="order in cart.orders" ng-show="checkForOrders()">
+              <div layout="row" layout-align="space-between center">
+                <md-content flex>
+                  No items present in the cart yet!
+                </md-content>
+              </div>
+            </div>
+
             <div layout="row" layout-padding layout-align="center center">
               <h2 class="md-title" layout-padding layout-margin>Total Amount</h2>
               <h2 class="md-display-1 rupee" layout-padding layout-margin>{{cart.total}}</h2>
             </div>
             <div layout="row" layout-align="center center">
               <md-button class="md-raised" ng-click="routeToRoot()">Shop</md-button>
-              <md-button class="md-raised md-primary" ng-click="routeToCheckout()">Deliver</md-button>
+              <md-button class="md-raised md-primary" ng-disabled="checkForOrders()" ng-click="routeToCheckout()">Deliver</md-button>
             </div>
 
           </div>  

@@ -2,9 +2,9 @@ class ApiApplicationController < ActionController::Base
   
 	private 
 
-  def check_for_android!
-    android_token = params[:auth_android_token]
-    return android_denied unless android_token
+  def check_for_android_id!
+    android_id = params[:android_id]
+    return android_denied unless android_id
   end
 
   def authenticate_user_from_token!

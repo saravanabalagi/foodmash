@@ -26,7 +26,15 @@ angular.module('foodmashApp.controllers')
  	};
 
  	$scope.routeToCart = function(){
+ 		var d = $q.defer();
+ 		(new Cart).save().then(function(response){
+ 			d.resolve(response);
+ 		}, function(err){
+ 			toaster.pop('error', 'Cart could not be created!');
+ 			d.reject(err);
+ 		});
  		$location.path("/cart");
+ 		return d.promise;
  	};
 
 

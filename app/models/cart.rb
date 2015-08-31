@@ -2,7 +2,7 @@ class Cart < ActiveRecord::Base
 	belongs_to :user
 	has_one :delivery_address, through: :cart_delivery_address
 	has_one :cart_delivery_address
-	has_many :order_items, through: :orders, dependent: :destroy
+	has_many :order_items, through: :orders
 	has_many :orders, dependent: :destroy
 	include AASM
 
