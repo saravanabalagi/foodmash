@@ -4,7 +4,7 @@
           <div flex offset="20" layout="column" layout-align="center center">
 
             <!-- Combo in cart -->
-            <div class="md-whiteframe-z2" layout-margin ng-repeat="order in cart.orders" ng-hide="checkForOrders()">
+            <div class="md-whiteframe-z2" layout-margin ng-repeat="order in cart.orders">
               <div layout="row" layout-align="space-between center">
                 <md-content flex>
                   <md-list>
@@ -33,25 +33,17 @@
             </div>
             <!-- Combo in cart ends -->
 
-            <div class="md-whiteframe-z2" layout-margin ng-repeat="order in cart.orders" ng-show="checkForOrders()">
-              <div layout="row" layout-align="space-between center">
-                <md-content flex>
-                  No items present in the cart yet!
-                </md-content>
-              </div>
-            </div>
-
             <div layout="row" layout-padding layout-align="center center">
               <h2 class="md-title" layout-padding layout-margin>Total Amount</h2>
               <h2 class="md-display-1 rupee" layout-padding layout-margin>{{cart.total}}</h2>
             </div>
             <div layout="row" layout-align="center center">
               <md-button class="md-raised" ng-click="routeToRoot()">Shop</md-button>
-              <md-button class="md-raised md-primary" ng-disabled="checkForOrders()" ng-click="routeToCheckout()">Deliver</md-button>
+              <md-button class="md-raised md-primary" ng-disabled="cart.total == 0" ng-click="routeToCheckout()">Deliver</md-button>
             </div>
 
           </div>  
           <div flex="20"></div>        
         </div>
 
-        <!-- Shopping cart ends -->
+        <!-- Shopping cart ends

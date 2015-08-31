@@ -40,11 +40,11 @@ class Api::V1::DeliveryAddressesController < ApiApplicationController
 
 	private
 	def set_delivery_address
-		@delivery_address = DeliveryAddress.find params[:id]
+		@delivery_address = DeliveryAddress.find params[:data][:id]
 	end
 
 	def delivery_address_update_params
-		params.require(:data).permit(:name, )
+		params.require(:data)
 	end
 
 	def jsonify_object(delivery_address)

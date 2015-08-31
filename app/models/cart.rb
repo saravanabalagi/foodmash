@@ -45,6 +45,7 @@ class Cart < ActiveRecord::Base
 		current_orders.each do |current_order|
 			if current_order and check_with_incoming_order(current_order, selected_dishes, combo_id)
 				current_order.quantity += 1
+				current_order.update_order_items
 				return current_order if current_order.save!
 			end
 		end

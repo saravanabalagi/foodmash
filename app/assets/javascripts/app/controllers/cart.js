@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('CartController', ['$scope', '$q', 'toaster','$location','Cart', function($scope, $q, toaster, $location, Cart){
+.controller('CartController', ['$scope', '$q', 'toaster','$location','Cart','$timeout', function($scope, $q, toaster, $location, Cart, $timeout){
 
 	$scope.cart = {};
 
@@ -15,7 +15,6 @@ angular.module('foodmashApp.controllers')
 	};
 
 	$scope.checkForOrders = function(){
-		console.log($scope.cart);
 		return $scope.cart.orders.length == 0;
 	};
 

@@ -6,7 +6,6 @@ class Api::V1::RegistrationsController < ApiApplicationController
   def create
   	# Create the user
 	  resource = User.new(sign_up_params)
-	  return android_denied unless params[:auth_android_token].presence
 
 	  # Try to save them
 	  if resource.save! 

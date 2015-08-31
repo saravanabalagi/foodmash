@@ -62,17 +62,20 @@ Rails.application.routes.draw do
       #dishes_types
       resources :dish_types
       #sessions
-      resources :sessions, only: [:create]
-      delete '/sessions', to: 'sessions#destroy'
+      resources :sessions, only: [:create] do 
+        collection do 
+          post '/destroy', to: 'sessions#destroy'
+        end
+      end
       #registrations
       resources :registrations, only: [:create] do 
         collection do 
           post '/checkEmail', to: 'registrations#check_email'
           post '/checkMobileNo', to: 'registrations#check_mobile_no'
+          patch '/', to: 'registrations#update'
+          post '/destroy', to: 'registrations#destroy'
         end
       end
-      post '/registrations', to: 'registrations#update'
-      delete '/registrations', to: 'registrations#delete'
       #profile 
       get '/profile', to: 'profile#show'
       #carts
@@ -87,7 +90,7 @@ Rails.application.routes.draw do
           post '/create', to: 'delivery_addresses#create'
           post '/', to: 'delivery_addresses#index'
           patch '/', to: 'delivery_addresses#update'
-          delete '/', to: 'delivery_addresses#destroy'
+          post '/destroy', to: 'delivery_addresses#destroy'
         end
       end
     end

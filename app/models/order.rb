@@ -25,6 +25,10 @@ class Order < ActiveRecord::Base
 	  end
 	end
 
+	def update_order_items
+		self.order_items.update_all(quantity: self.quantity)
+	end
+
 	def total_price
 		self.product.price * quantity
 	end
