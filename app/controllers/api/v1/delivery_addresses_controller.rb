@@ -47,14 +47,15 @@ class Api::V1::DeliveryAddressesController < ApiApplicationController
 		params.require(:data).permit(:name, )
 	end
 
-	def jsonify_object(delivery_addresses)
-		if delivery_addresses.count > 1
-			delivery_addresses_json = delivery_addresses.map do |d|
+	def jsonify_object(delivery_address)
+		if delivery_address.kind_of? DeliveryAddress::ActiveRecord_Associations_CollectionProxy
+			delivery_addresses_json = delivery_address.map do |d|
 				{ id: d.id, name: d.name, address: {line1: d.line1, line2: d.line2, area: d.area, city: d.city, pincode: d.pincode}, geolocation: {latitude: d.latitude, longitude: d.longitude}, phone: d.contact_no, primary: d.primary }
 			end
 			return delivery_addresses_json
-		elsif delivery_addresses.count == 1
-			delivery_address_json = { id: delivery_addresses.id, name: delivery_addresses.name, address: {line1: delivery_addresses.line1, line2: delivery_addresses.line2, area: delivery_addresses.area, city: delivery_addresses.city, pincode: delivery_addresses.pincode}, geolocation: {latitude: delivery_addresses.latitude, longitude: delivery_addresses.longitude}, phone: delivery_addresses.contact_no, primary: delivery_addresses.primary }
+		else
+			delivery_address_json = 
+				{ id: delivery_address.id, name: delivery_address.name, address: {line1: delivery_address.line1, line2: delivery_address.line2, area: delivery_address.area, city: delivery_address.city, pincode: delivery_address.pincode}, geolocation: {latitude: delivery_address.latitude, longitude: delivery_address.longitude}, phone: delivery_address.contact_no, primary: delivery_address.primary }
 			return delivery_address_json
 		end
 	end
