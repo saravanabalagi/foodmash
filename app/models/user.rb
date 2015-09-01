@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   has_many :carts
   has_many :delivery_addresses, dependent: :destroy
-  validates_presence_of :email, :mobile_no, :name
+  validates_presence_of :email, :mobile_no, :name, offers: {default: true}
   validates :name, length: {minimum: 2}
   validates :email, format: {with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/}
   validates :mobile_no, presence: true, length: {is: 10}, numericality: {only_integer: true}, uniqueness: true

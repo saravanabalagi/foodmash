@@ -1,14 +1,25 @@
 class Api::V1::ProfileController < ApiApplicationController
-	before_filter :authenticate_user_from_token!, only: :show
+	before_filter :authenticate_user_from_token!
   respond_to :json
 
   def show
-    if params[:auth_user_token] and params[:auth_session_token]
-    	@user = User.find_by params[:auth_user_token] || User.find_by(mobile_authentication_token: params[:auth_session_token])
-      render status: 200, json: {success: true, data: @user.as_json(except: [:authentication_token, :mobile_authentication_token])}
+    if @current_user
+      render status: 200, json: {success: true, data: @current_user.as_json(only: [:name, :dob, :mobile_no, :offers])}
     else
-      render status: 404, json: {success: false, "Could not find the user!"}
+      render status: 404, json: {success: false, error: "Could not find the user!"}
     end
   end
 
+  def update
+    if @current_user and @current_user.update_attributes! profile_update_params
+      render status: 201, json: {success: true, data: @current_user.as_json(only: [:name, :dob, :mobile_no, :offers])}
+    else
+      render status: 422, json: {success: false, error: "Could not update profile!"}
+    end
+  end
+
+  private
+  def profile_update_params
+    params.require(:user).permit(:name, :dob, :mobile_no, :offers)
+  end
 end

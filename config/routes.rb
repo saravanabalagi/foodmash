@@ -77,7 +77,8 @@ Rails.application.routes.draw do
         end
       end
       #profile 
-      get '/profile', to: 'profile#show'
+      post '/profile', to: 'profile#show'
+      patch '/profile', to: 'profile#update'
       #carts
       resources :carts, only: [:create, :destroy, :index] do 
         collection do 
