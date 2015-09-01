@@ -6,14 +6,14 @@ class Api::V1::RegistrationsController < ApiApplicationController
   def create
   	# Create the user
 	  resource = User.new(sign_up_params)
-
+    session[:auth_session_token] = SecureRandom.hex(64)
 	  # Try to save them
 	  if resource.save! 
 	    render status: 200,
 	    json: {
 	      success: true, 
         user_token: resource.user_token,
-        session_token: resource.mobile_authentication_token
+        session_token: session[:auth_session_token]
 	    }
 	  else
 	    # Otherwise fail
@@ -92,12 +92,13 @@ class Api::V1::RegistrationsController < ApiApplicationController
   	user = User.find_by(reset_password_token: params[:user][:reset_password_token])
   	user.password = params[:user][:password]
   	user.password_confirmation = params[:user][:password_confirmation]
-  	if user and user.save! and user.clear_mobile_authentication_token
+    session[:auth_session_token] = SecureRandom.hex(64)
+  	if user and user.save!
   		render status: 200, json: 
   		{
   			success: true, 
   			user_token: resource.user_token,
-        session_token: resource.mobile_authentication_token
+        session_token: session[:auth_session_token]
       }
   	else
   		render status: 422, json: {success: false, error: "Password was not reset!"}

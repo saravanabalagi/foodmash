@@ -8,7 +8,6 @@ class User < ActiveRecord::Base
   delegate :can?, :cannot?, to: :ability
 
   before_save :ensure_authentication_token
-  before_save :ensure_mobile_authentication_token
 
   has_many :carts
   has_many :delivery_addresses, dependent: :destroy
@@ -28,18 +27,6 @@ class User < ActiveRecord::Base
   	self.authentication_token = nil
     ensure_authentication_token
   	self.save
-  end
-
-   def ensure_mobile_authentication_token
-    if mobile_authentication_token.blank?
-      self.mobile_authentication_token = generate_mobile_authentication_token
-    end
-  end
-
-  def clear_mobile_authentication_token
-    self.mobile_authentication_token = nil
-    ensure_mobile_authentication_token
-    self.save
   end
 
   def ability
@@ -70,13 +57,6 @@ class User < ActiveRecord::Base
   		token = SecureRandom.hex(64)
   		break token unless User.where(authentication_token: token).first
   	end
-  end
-
-  def generate_mobile_authentication_token
-    loop do 
-      token = Devise.friendly_token
-      break token unless User.where(mobile_authentication_token: token).first
-    end
   end
 
 end

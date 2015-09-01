@@ -45,13 +45,11 @@ gem 'twilio-ruby', '>= 4.2.1'
 # direct upload to S3 bucket 
 gem 'aws-sdk', '~> 2'
 
-gem 'execjs'
-
-gem 'therubyracer'
-
 gem 'tzinfo-data'
 
 group :production do
+  gem 'therubyracer'
+  gem 'execjs'
   gem 'pg'
   gem 'rails_12factor'
 end
