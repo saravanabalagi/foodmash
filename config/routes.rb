@@ -80,6 +80,12 @@ Rails.application.routes.draw do
           post '/checkEmail', to: 'registrations#check_email'
           post '/checkMobileNo', to: 'registrations#check_mobile_no'
           patch '/', to: 'registrations#update'
+          post '/changePassword', to: 'registrations#change_password'
+          #password reset
+          post '/forgotPassword', to: 'registrations#forgot_password'
+          get '/checkResetPasswordToken', to: 'registrations#check_reset_password_token'
+          post '/resetPasswordFromToken', to: 'registrations#reset_password_from_token'
+          #password reset ends
           post '/destroy', to: 'registrations#destroy'
         end
       end

@@ -46,7 +46,18 @@ class User < ActiveRecord::Base
     @ability ||= Ability.new(self)
   end
 
+  def reset_password_token
+    self.generate_reset_password_token
+    self.save
+  end
+
   private
+
+  def generate_reset_password_token
+    begin 
+      self.reset_password_token = SecureRandom.hex(64)
+    end while self.class.exists?(reset_password_token: self.reset_password_token)
+  end
 
   def generate_user_token
     begin
@@ -56,7 +67,7 @@ class User < ActiveRecord::Base
 
   def generate_authentication_token
   	loop do 
-  		token = Devise.friendly_token
+  		token = SecureRandom.hex(64)
   		break token unless User.where(authentication_token: token).first
   	end
   end
