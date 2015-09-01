@@ -1,7 +1,8 @@
 class Api::V1::CartsController < ApiApplicationController
 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
-	before_filter :set_cart, only: :destroy
-	before_filter :set_or_create_cart, only: [:create, :add_to_cart, :index]
+	prepend_before_filter :authenticate_user_from_token!
+	before_filter :set_cart, only: [:remove_from_cart, :destroy]
+	before_filter :set_or_create_cart, only: [:index, :add_to_cart]
 	respond_to :json
 
 	def index
@@ -10,45 +11,44 @@ class Api::V1::CartsController < ApiApplicationController
 			@cart.save! if @cart.total
 			render status: 200, json: @cart.as_json(:include => {:orders => {:include => :order_items} } )
 		else
-			render status: 422, json: {error: "Could not find cart!"}
-		end
-	end
-
-	def create
-		if @cart
-			render status: 201, json: @cart.as_json
-		else
-			render status: 422, json: {error: @cart.errors.as_json}
+			render status: 404, json: {error: "Could not find cart!"}
 		end
 	end
 
 	def add_to_cart
-		if @cart and @cart.add_combo(params[:cart][:combo_id], params[:cart][:selected_dishes])
-			render status: 200, json: {message: "successfully added to cart!"}
+		if @cart and @cart.add_combo_from_mobile(params[:data])
+			render status: 200, json: {success: true, message: "Successfully added to cart!"}
 		else
-			render status: 422, json: {error: "Could not add to cart!"}
+			render status: 422, json: {success: false, error: "Could not add to cart!"}
+		end
+	end
+
+	def remove_from_cart
+		if @cart and @cart.remove_combo_from_mobile(params[:data][:id])
+			render status :200, json: {success: true, message: "Successfully removed from cart!"}
+		else
+			render status: 422, json: {success: false, error: "Could not remove from cart!"}
 		end
 	end
 
 	def destroy
 		if @cart and @cart.orders.destroy_all
-			render status: 200, json: {message: "Cart was cleared of all orders!"}
+			render status: 200, json: {success: true, message: "Cart was cleared of all orders!"}
 		else
-			render status: 422, json: {error: "Could not clear the cart!"}
+			render status: 422, json: {success: false, error: "Could not clear the cart!"}
 		end
 	end
 
 	private 
 	def invalid_cart
-		render status: 422, json: {error: "Attempt to access invalid cart!"}
+		render status: 422, json: {success: false, error: "Attempt to access invalid cart!"}
 	end
 
 	def set_cart
-		@cart = Cart.find params[:id]
+		@cart = Cart.find params[:data][:id]
 	end
 
 	def set_or_create_cart
-		@current_user = User.find_by(authentication_token: params[:auth_token])
 	  if @current_user
 	    @cart = @current_user.carts.where(aasm_state: 'not_started').first.presence || Cart.create(user_id: @current_user.id)
 	  end

@@ -50,11 +50,18 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: :json} do
     namespace :v1 do 
       #restaurants
-      resources :restaurants, only: [:index, :show]
-      get '/restaurants/:id/combos', to: 'restaurants#has_combos'
+      resources :restaurants, only: [:index, :show] do 
+        collection do 
+          get '/:id/combos', to: 'restaurants#has_combos'
+        end
+      end
+      
       #dishes
-      resources :dishes, only: [:index, :show]
-      get '/dishes/:id/belongsToCombos', to: 'dishes#belongs_to_combos'
+      resources :dishes, only: [:index, :show] do 
+        collection do 
+          get '/:id/belongsToCombos', to: 'dishes#belongs_to_combos'
+        end
+      end
       #combos
       resources :combos, only: [:index, :show]
       #users
@@ -76,15 +83,14 @@ Rails.application.routes.draw do
           post '/destroy', to: 'registrations#destroy'
         end
       end
-      #profile 
+      #profile
       post '/profile', to: 'profile#show'
       patch '/profile', to: 'profile#update'
       #carts
-      resources :carts, only: [:create, :destroy, :index] do 
-        collection do 
-          post '/addToCart', to: 'carts#add_to_cart'
-        end
-      end
+      post '/carts', to: 'carts#index'
+      post '/carts/add', to: 'carts#add_to_cart'
+      post '/carts/remove', to: 'carts#remove_from_cart'
+      post '/carts/destroy', to: 'carts#destroy'
       #delivery_addresses
       resources :delivery_addresses do 
         collection do 
