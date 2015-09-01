@@ -3,10 +3,10 @@ class Api::V1::DishTypesController < ApiApplicationController
 
  def index
  	dish_types = DishType.where(params.permit(:id, :name))
- 	if dish_types.present?
- 		render status: 200, json: dish_types.as_json
+ 	if dish_types
+ 		render status: 200, json: {success: true, data: dish_types.as_json}
  	else
- 		render status: 404, json: {error: "Could not load dish types!"}
+ 		render status: 404, json: {success: false, {error: "Could not load dish types!"}}
  	end
  end
 

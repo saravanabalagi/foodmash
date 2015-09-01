@@ -28,9 +28,9 @@ class Api::V1::RegistrationsController < ApiApplicationController
 
   def update
 	  if @current_user and @current_user.update_attributes update_params
-	    render status: 200, json: @current_user.as_json(only: :user_token)
+	    render status: 200, json: {success: true, data: @current_user.as_json(only: :user_token)}
 	  else
-	    render status: 422, json: {error: user.errors}
+	    render status: 422, json: {success: false, error: user.errors}
 	  end
   end
 
@@ -39,7 +39,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
   		@current_user.delete
   		head status: 200
   	else
-  		render status: 422, json: {error: "Unable to cancel registration!"}
+  		render status: 422, json: {success: false, error: "Unable to cancel registration!"}
   	end
   end
 

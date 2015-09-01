@@ -5,9 +5,9 @@ class Api::V1::ProfileController < ApiApplicationController
   def show
     if params[:auth_user_token] and params[:auth_session_token]
     	@user = User.find_by params[:auth_user_token] || User.find_by(mobile_authentication_token: params[:auth_session_token])
-      render status: 200, json: @user.as_json(except: [:authentication_token, :mobile_authentication_token])
+      render status: 200, json: {success: true, data: @user.as_json(except: [:authentication_token, :mobile_authentication_token])}
     else
-      render status: 404, json: "Could not find the user!"
+      render status: 404, json: {success: false, "Could not find the user!"}
     end
   end
 
