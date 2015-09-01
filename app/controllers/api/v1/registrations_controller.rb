@@ -6,9 +6,9 @@ class Api::V1::RegistrationsController < ApiApplicationController
   def create
   	# Create the user
 	  resource = User.new(sign_up_params)
-    session[:auth_session_token] = SecureRandom.hex(64)
-	  # Try to save them
-	  if resource.save! 
+    # Try to save them
+    if resource.save! 
+      session[:auth_session_token] = SecureRandom.hex(64)
 	    render status: 200,
 	    json: {
 	      success: true, 

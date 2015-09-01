@@ -6,25 +6,31 @@ angular.module('foodmashApp.services')
   
    var service = this;
    this._user = null;
+   this.auth_token = null;
    
-   this.setCurrentUser = function(u) {
+   this.setCurrentUser = function(u, auth_token) {
+     u.auth_token = auth_token;
      service._user = u;
      $cookieStore.put('user', u);
+     $cookieStore.put('auth_token', auth_token);
      $rootScope.$broadcast("user:set", u);
+     $rootScope.$broadcast("auth_token:set", auth_token);
    };
    
    this.removeCurrentUser = function() {
      service._user = null;
      $cookieStore.remove('user');
+     $cookieStore.remove('auth_token');
      $rootScope.$broadcast("user:unset");
+     $rootScope.$broadcast("auth_token:unset");
    };
    
    this.currentUser = function() {
      var d = $q.defer();
      if(service._user) {
        d.resolve(service._user);
-     } else if($cookieStore.get('user')) {
-       service.setCurrentUser($cookieStore.get('user'));
+     } else if($cookieStore.get('user') && $cookieStore.get('auth_token')) {
+       service.setCurrentUser($cookieStore.get('user'), $cookieStore.get('auth_token'));
        d.resolve(service._user);
      } else {
        d.resolve(null);

@@ -12,11 +12,12 @@ class RegistrationsController < Devise::RegistrationsController
 
 	  # Try to save them
 	  if resource.save 
+	  	session[:auth_token] = SecureRandom.hex(64)
 	    render status: 200,
 	    json: {
 	      success: true, info: "Registered", data: {
-	        user: resource.as_json(except: [:authentication_token, :mobile_authentication_token]),
-	        auth_token: resource.authentication_token
+	        user: resource.as_json,
+	        auth_token: session[:auth_token]
 	      }
 	    }
 	  else
@@ -32,7 +33,7 @@ class RegistrationsController < Devise::RegistrationsController
 
  def update
 	if @current_user and @current_user.update_attributes update_params
-  	render status: 200, json: @current_user.as_json(except: [:authentication_token, :mobile_authentication_token])
+  	render status: 200, json: @current_user.as_json
 	else
   	render status: 422, json: {error: user.errors}
 	end

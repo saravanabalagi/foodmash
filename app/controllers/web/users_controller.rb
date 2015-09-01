@@ -5,7 +5,7 @@ class Web::UsersController < ApplicationController
 	def index
 		@users = User.where(params.permit(:id, :email))
 		if @users
-			render status: 200, json: @users.as_json(except: [:authentication_token, :mobile_authentication_token])
+			render status: 200, json: @users.as_json(except: :user_token)
 		else
 			render status: 404, json: {error: "User not found!"}
 		end
@@ -13,7 +13,7 @@ class Web::UsersController < ApplicationController
 
 	def update
 		if @user and @user.update_attributes(user_update_params)
-			render status: 200, json: @user.as_json
+			render status: 200, json: @user.as_json(except: :user_token)
 		else
 			render status: 422, json: {error: @user.errors.as_json}
 		end

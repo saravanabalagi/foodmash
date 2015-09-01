@@ -48,8 +48,9 @@ class Web::CartsController < ApplicationController
 	end
 
 	def set_or_create_cart
-		@current_user = User.find_by(authentication_token: params[:auth_token])
-	  if @current_user
+		@current_user = User.find_by(user_token: params[:auth_user_token])
+		return permission_denied unless session[:auth_token] == params[:auth_token]
+	  if @current_user 
 	    @cart = @current_user.carts.where(aasm_state: 'not_started').first.presence || Cart.create(user_id: @current_user.id)
 	  end
 	end
