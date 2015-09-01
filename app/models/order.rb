@@ -4,6 +4,7 @@ class Order < ActiveRecord::Base
 	belongs_to :product, polymorphic: true
 	validates_presence_of :cart_id, :quantity
 	validates :product, presence: true
+	after_save :update_order_items
 	include AASM
 
 	aasm do
@@ -26,7 +27,7 @@ class Order < ActiveRecord::Base
 	end
 
 	def update_order_items
-		self.order_items.update_all(quantity: self.quantity)
+		self.order_items.update_all(quantity: self.quantity) if self.order_items.present?
 	end
 
 	def total_price

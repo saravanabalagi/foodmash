@@ -8,7 +8,7 @@ class Web::CartsController < ApplicationController
 		if @cart 
 			@cart.total = @cart.total_price
 			@cart.save! if @cart.total
-			render status: 200, json: @cart.as_json(:include => {:orders => {:include => [:order_items, :product]} } )
+			render status: 200, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [:item, :category]} } ,:product]  } })
 		else
 			render status: 422, json: {error: "Could not find cart!"}
 		end
@@ -16,7 +16,7 @@ class Web::CartsController < ApplicationController
 
 	def create
 		if @cart
-			render status: 201, json: @cart.as_json
+			render status: 201, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [:item, :category]} } ,:product]  } })
 		else
 			render status: 422, json: {error: @cart.errors.as_json}
 		end

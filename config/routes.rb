@@ -87,10 +87,14 @@ Rails.application.routes.draw do
       post '/profile', to: 'profile#show'
       patch '/profile', to: 'profile#update'
       #carts
-      post '/carts', to: 'carts#index'
-      post '/carts/add', to: 'carts#add_to_cart'
-      post '/carts/remove', to: 'carts#remove_from_cart'
-      post '/carts/destroy', to: 'carts#destroy'
+      resources :carts do 
+        collection do 
+          post '/', to: 'carts#index'
+          post '/add', to: 'carts#add_to_cart'
+          post '/remove', to: 'carts#remove_from_cart'
+          post '/destroy', to: 'carts#destroy'
+        end
+      end
       #delivery_addresses
       resources :delivery_addresses do 
         collection do 
@@ -102,6 +106,13 @@ Rails.application.routes.draw do
       end
       #check_connection
       post '/check_connection', to: 'check_connection#ping'
+      #orders
+      resources :orders do 
+        collection do 
+          patch '/', to: 'orders#update'
+          post '/destroy', to: 'orders#destroy'
+        end
+      end
     end
   end
 

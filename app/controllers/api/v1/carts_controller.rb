@@ -9,15 +9,15 @@ class Api::V1::CartsController < ApiApplicationController
 		if @cart 
 			@cart.total = @cart.total_price
 			@cart.save! if @cart.total
-			render status: 200, json: @cart.as_json(:include => {:orders => {:include => :order_items} } )
+			render status: 200, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [:item, :category]} } ,:product]  } }) }
 		else
-			render status: 404, json: {error: "Could not find cart!"}
+			render status: 404, json: {success: false, error: "Could not find cart!"}
 		end
 	end
 
 	def add_to_cart
 		if @cart and @cart.add_combo_from_mobile(params[:data])
-			render status: 200, json: {success: true, message: "Successfully added to cart!"}
+			render status: 200, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [:item, :category]} } ,:product]  } }) }
 		else
 			render status: 422, json: {success: false, error: "Could not add to cart!"}
 		end
@@ -25,7 +25,7 @@ class Api::V1::CartsController < ApiApplicationController
 
 	def remove_from_cart
 		if @cart and @cart.remove_combo_from_mobile(params[:data][:id])
-			render status :200, json: {success: true, message: "Successfully removed from cart!"}
+			render status: 200, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [:item, :category]} } ,:product]  } }) }
 		else
 			render status: 422, json: {success: false, error: "Could not remove from cart!"}
 		end
