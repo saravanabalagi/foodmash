@@ -100,6 +100,8 @@ Rails.application.routes.draw do
           post '/destroy', to: 'delivery_addresses#destroy'
         end
       end
+      #check_connection
+      post '/check_connection', to: 'check_connection#ping'
     end
   end
 
