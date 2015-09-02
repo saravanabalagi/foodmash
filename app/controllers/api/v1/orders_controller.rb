@@ -4,7 +4,7 @@ class Api::V1::OrdersController < ApiApplicationController
 
 	def update
 		if @order and @order.update_attributes! update_order_params
-			render status: 200, json: {success: true, data: @order.as_json(:include => [{:order_items => {:include => [:item, :category]} }, :product] ) }
+			render status: 200, json: {success: true}
 		else
 			render status: 404, json: {success: false, error: "Could not update the order!"}
 		end

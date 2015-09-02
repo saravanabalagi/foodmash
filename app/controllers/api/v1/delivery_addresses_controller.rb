@@ -15,7 +15,7 @@ class Api::V1::DeliveryAddressesController < ApiApplicationController
 	def create 
 		@delivery_address = parse_and_set(DeliveryAddress.new, params[:data])
 		if @delivery_address.save!
-			render status: 200, json: {success: true, data: jsonify_object(@delivery_address).as_json}
+			render status: 200, json: {success: true}
 		else
 			render status: 422, json: {success: false, error: @delivery_address.errors}
 		end
@@ -24,7 +24,7 @@ class Api::V1::DeliveryAddressesController < ApiApplicationController
 	def update
 		@delivery_address = parse_and_set(@delivery_address, params[:data])
 		if @delivery_address and @delivery_address.save!
-			render status: 200, json: {success: true, data: jsonify_object(@delivery_address).as_json}
+			render status: 200, json: {success: true}
 		else
 			render status: 422, json: {success: false, error: "Could not update delivery address!"}
 		end
@@ -32,7 +32,7 @@ class Api::V1::DeliveryAddressesController < ApiApplicationController
 
 	def destroy
 		if @delivery_address and @delivery_address.destroy!
-			head :ok
+			render status: 200, json: {success: true}
 		else
 			render status: 404, json: {success: false, error: "Delivery address could not be found!"}
 		end

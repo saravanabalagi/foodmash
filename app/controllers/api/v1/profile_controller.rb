@@ -12,7 +12,7 @@ class Api::V1::ProfileController < ApiApplicationController
 
   def update
     if @current_user and @current_user.update_attributes! profile_update_params
-      render status: 201, json: {success: true, data: @current_user.as_json(only: [:name, :dob, :mobile_no, :offers])}
+      render status: 201, json: {success: true}
     else
       render status: 422, json: {success: false, error: "Could not update profile!"}
     end

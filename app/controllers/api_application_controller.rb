@@ -14,7 +14,7 @@ class ApiApplicationController < ActionController::Base
     android_token = params[:auth_android_token]
     user_token = params[:auth_user_token].presence
     user = User.find_by(user_token: params[:auth_user_token])
-    if user and user_token and android_token and session[:auth_session_token] == params[:auth_session_token]
+    if user and user_token and android_token and Devise.secure_compare(session[:auth_session_token], params[:auth_session_token])
       @current_user = user
     else
       permission_denied
