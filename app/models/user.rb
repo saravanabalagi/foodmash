@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   end
 
   def set_otp
-    self.otp = rand(10**6).to_s
+    self.otp = rand_n(6)
     self.generate_otp_token(self.otp)
     self.save!
   end
@@ -45,4 +45,11 @@ class User < ActiveRecord::Base
     end while self.class.exists?(user_token: self.user_token)
   end
 
+  def rand_n(n, max=10)
+    randoms = Set.new
+    loop do
+        randoms << rand(max)
+        return randoms.to_a.join if randoms.size >= n
+    end
+  end
 end
