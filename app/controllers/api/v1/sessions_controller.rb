@@ -7,7 +7,7 @@ class Api::V1::SessionsController < ApiApplicationController
 	 def create
 	  resource = User.find_for_database_authentication(email: params[:data][:user][:email]) || User.find_for_database_authentication(mobile_no: params[:data][:user][:mobile_no])
 	  return failure unless resource
-	  return failure unless resource.valid_password?(params[:user][:password])
+	  return failure unless resource.valid_password?(params[:data][:user][:password])
 	  session_token = resource.generate_session_token
 	  resource.sessions.create! session_token: session_token
 	  render status: 200,
