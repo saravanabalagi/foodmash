@@ -18,7 +18,7 @@ class DeliveryAddress < ActiveRecord::Base
 
 	def make_primary_for_first_address
 		user = User.find self.user_id
-		self.primary = true if user.delivery_addresses.count == 0
+		self.primary = true if user.delivery_addresses.count == 0 || user.delivery_addresses.count == 1
 		return true
 	end
 end
