@@ -1,6 +1,6 @@
 class Api::V1::RegistrationsController < ApiApplicationController
 	before_filter :authenticate_user_from_token!, only: [:update, :destroy, :change_password]
-	before_filter :check_for_android_id!, [only: :create, :forgot_password, :check_otp, :reset_password_from_token]
+	before_filter :check_for_android_id!, only: [:create, :forgot_password, :check_otp, :reset_password_from_token]
 	respond_to :json
 
   def create
