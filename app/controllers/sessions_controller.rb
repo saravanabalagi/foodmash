@@ -11,13 +11,14 @@ class SessionsController < Devise::SessionsController
     return failure unless resource
     return failure unless resource.valid_password?(params[:user][:password])
     sign_in(resource)
-    session[:auth_token] = SecureRandom.hex(64)
+    session_token = resource.generate_session_token
+    resource.sessions.create! session_token: session_token
     render status: 200,
       json: {
         success: true, info: "Logged in", 
         data: {
           user: resource.as_json,
-          auth_token: session[:auth_token]
+          auth_token: session_token
         }
       }
   end
@@ -36,7 +37,7 @@ class SessionsController < Devise::SessionsController
 
     resource = User.find_for_database_authentication(user_token: params[:auth_user_token])
     return failure unless resource
-    session[:auth_token] = nil
+    resource.sessions.where(session_token: params[:auth_token]).first.destroy!
     sign_out(resource)
     render status: 200, json: {success: true, info: 'Logged Out'}
   end

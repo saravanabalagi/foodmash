@@ -8,12 +8,13 @@ class Api::V1::SessionsController < ApiApplicationController
 	  resource = User.find_for_database_authentication(email: params[:user][:email]) || User.find_for_database_authentication(mobile_no: params[:user][:mobile_no])
 	  return failure unless resource
 	  return failure unless resource.valid_password?(params[:user][:password])
-	  session[:auth_session_token] = SecureRandom.hex(64)
+	  session_token = resource.generate_session_token
+	  resource.sessions.create! session_token: session_token
 	  render status: 200,
 	    json: {
 	      success: true, 
         user_token: resource.user_token,
-        session_token: session[:auth_session_token]
+        session_token: session_token
 	    }
 	end
 
@@ -28,8 +29,7 @@ class Api::V1::SessionsController < ApiApplicationController
 	  return permission_denied unless params[:auth_user_token] == @current_user.user_token
 	  resource = User.find_for_database_authentication(user_token: params[:auth_user_token])
 	  return failure unless resource
-	  session[:auth_session_token] = nil
-	  session[:auth_android_id] = nil
+	  resource.sessions.where(session_token: params[:auth_session_token]).first.destroy!
 	  render status: 200, 
 	  json: {
 	  	success: true

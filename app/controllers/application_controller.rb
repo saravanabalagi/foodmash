@@ -18,7 +18,9 @@ class ApplicationController < ActionController::Base
   def authenticate_user_from_token!
     user_token = params[:auth_user_token].presence
     user = user_token && User.find_by(user_token: user_token)
-    if user and Devise.secure_compare(session[:auth_token], params[:auth_token]) and user_token
+    session = user.sessions.where(session_token: params[:auth_token]).first
+    permission_denied unless session
+    if user and user_token
       @current_user = user
     else
       permission_denied

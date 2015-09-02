@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   delegate :can?, :cannot?, to: :ability
 
   has_many :carts
+  has_many :sessions
   has_many :delivery_addresses, dependent: :destroy
   validates_presence_of :email, :mobile_no, :name, offers: {default: true}
   validates :name, length: {minimum: 2}
@@ -24,7 +25,16 @@ class User < ActiveRecord::Base
     self.save
   end
 
+  def generate_session_token
+    session_token = nil
+    begin 
+      session_token = SecureRandom.hex(64)
+    end while Session.exists?(session_token: session_token)
+    return session_token
+  end
+  
   private
+
 
   def generate_reset_password_token
     begin 

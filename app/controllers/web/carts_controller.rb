@@ -1,5 +1,6 @@
 class Web::CartsController < ApplicationController
 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
+	prepend_before_filter :authenticate_user_from_token!
 	before_filter :set_cart, only: :destroy
 	before_filter :set_or_create_cart, only: [:create, :add_to_cart, :index]
 	respond_to :json
@@ -48,8 +49,8 @@ class Web::CartsController < ApplicationController
 	end
 
 	def set_or_create_cart
-		@current_user = User.find_by(user_token: params[:auth_user_token])
-		return permission_denied unless session[:auth_token] == params[:auth_token]
+		session = @current_user.sessions.where(session_token: params[:auth_token]).first
+		return permission_denied unless session
 	  if @current_user 
 	    @cart = @current_user.carts.where(aasm_state: 'not_started').first.presence || Cart.create(user_id: @current_user.id)
 	  end

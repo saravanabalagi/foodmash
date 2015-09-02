@@ -6,7 +6,6 @@ class ApiApplicationController < ActionController::Base
 
   def check_for_android_id!
     android_id = params[:android_id]
-    session[:android_id] = params[:android_id] if params[:android_id]
     return android_denied unless android_id
   end
 
@@ -14,7 +13,9 @@ class ApiApplicationController < ActionController::Base
     android_token = params[:auth_android_token]
     user_token = params[:auth_user_token].presence
     user = User.find_by(user_token: params[:auth_user_token])
-    if user and user_token and android_token and Devise.secure_compare(session[:auth_session_token], params[:auth_session_token])
+    session = user.sessions.where(session_token: params[:auth_session_token]).first
+    permission_denied unless session
+    if user and user_token and android_token
       @current_user = user
     else
       permission_denied

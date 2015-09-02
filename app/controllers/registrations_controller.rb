@@ -12,12 +12,13 @@ class RegistrationsController < Devise::RegistrationsController
 
 	  # Try to save them
 	  if resource.save 
-	  	session[:auth_token] = SecureRandom.hex(64)
+	  	session_token = resource.generate_session_token
+      resource.sessions.create! session_token: session_token
 	    render status: 200,
 	    json: {
 	      success: true, info: "Registered", data: {
 	        user: resource.as_json,
-	        auth_token: session[:auth_token]
+	        auth_token: session_token
 	      }
 	    }
 	  else
