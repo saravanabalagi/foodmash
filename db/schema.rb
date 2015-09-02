@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150902091542) do
+ActiveRecord::Schema.define(version: 20150902112946) do
 
   create_table "cart_delivery_addresses", force: :cascade do |t|
     t.integer  "cart_id"
@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(version: 20150902091542) do
     t.string   "user_token"
     t.boolean  "offers",                 default: true
     t.string   "dob"
+    t.string   "otp"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

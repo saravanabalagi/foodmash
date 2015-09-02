@@ -20,9 +20,10 @@ class User < ActiveRecord::Base
     @ability ||= Ability.new(self)
   end
 
-  def reset_password_token
-    self.generate_reset_password_token
-    self.save
+  def set_otp
+    self.otp = rand(10**6).to_s
+    self.generate_otp_token(self.otp)
+    self.save!
   end
 
   def generate_session_token
@@ -33,15 +34,11 @@ class User < ActiveRecord::Base
     return session_token
   end
   
-  private
-
-
-  def generate_reset_password_token
-    begin 
-      self.reset_password_token = SecureRandom.hex(64)
-    end while self.class.exists?(reset_password_token: self.reset_password_token)
+  def generate_otp_token(otp)
+    self.reset_password_token = SecureRandom.hex(otp.to_i)[0..16]
   end
-
+  
+  private
   def generate_user_token
     begin
       self.user_token = SecureRandom.hex(64)

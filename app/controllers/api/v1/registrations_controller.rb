@@ -73,33 +73,35 @@ class Api::V1::RegistrationsController < ApiApplicationController
 
   def forgot_password
   	user = User.find_by(email: params[:user][:email])
-  	if user and user.set_reset_password_token
-  		render status: 200, json: {success: true, message: "Password reset token has been set!!"}
+  	if user and user.set_otp
+  		render status: 200, json: {success: true, otp: user.otp}
   	else
   		render status: 422, json: {success: false, error: "Could not reset password!"}
   	end
   end
 
-  def check_reset_password_token
-  	user = User.find_by(reset_password_token: params[:reset_password_token])
+  def check_otp
+  	user = User.find_by(otp: params[:otp])
   	if user
-  		render status: 200, json: {success: true, data: user.reset_password_token}
+  		render status: 200, json: {success: true, otp_token: user.reset_password_token}
   	else
   		render status: 422, json: {success: false, error: "Invalid password reset token!"}
   	end
   end
 
   def reset_password_from_token
-  	user = User.find_by(reset_password_token: params[:user][:reset_password_token])
+  	user = User.find_by(reset_password_token: params[:user][:otp_token])
   	user.password = params[:user][:password]
   	user.password_confirmation = params[:user][:password_confirmation]
     session_token = user.generate_session_token
     user.sessions.create! session_token: session_token
+    user.reset_password_token = nil
+    user.otp = nil
   	if user and user.save!
   		render status: 200, json: 
   		{
   			success: true, 
-  			user_token: resource.user_token,
+  			user_token: user.user_token,
         session_token: session_token
       }
   	else

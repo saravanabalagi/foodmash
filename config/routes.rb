@@ -83,7 +83,7 @@ Rails.application.routes.draw do
           post '/changePassword', to: 'registrations#change_password'
           #password reset
           post '/forgotPassword', to: 'registrations#forgot_password'
-          get '/checkResetPasswordToken', to: 'registrations#check_reset_password_token'
+          post '/checkOtp', to: 'registrations#check_otp'
           post '/resetPasswordFromToken', to: 'registrations#reset_password_from_token'
           #password reset ends
           post '/destroy', to: 'registrations#destroy'
