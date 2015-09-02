@@ -81,9 +81,9 @@ class Api::V1::RegistrationsController < ApiApplicationController
   end
 
   def check_otp
-  	user = User.find_by(otp: params[:otp])
+  	user = User.find_by(otp: params[:data][:otp])
   	if user
-  		render status: 200, json: {success: true, otp_token: user.reset_password_token}
+  		render status: 200, json: {success: true, data: {otp_token: user.reset_password_token} }
   	else
   		render status: 422, json: {success: false, error: "Invalid password reset token!"}
   	end
