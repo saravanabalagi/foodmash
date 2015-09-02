@@ -72,7 +72,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
   end
 
   def forgot_password
-  	user = User.find_by(email: params[:user][:email])
+  	user = User.find_by(email: params[:user][:email]) || User.find_by(mobile_no: params[:user][:mobile_no])
   	if user and user.set_otp
   		render status: 200, json: {success: true, otp: user.otp}
   	else
