@@ -5,7 +5,7 @@ class Api::V1::SessionsController < ApiApplicationController
 	respond_to :json
 
 	 def create
-	  resource = User.find_for_database_authentication(email: params[:user][:email]) || User.find_for_database_authentication(mobile_no: params[:user][:mobile_no])
+	  resource = User.find_for_database_authentication(email: params[:data][:user][:email]) || User.find_for_database_authentication(mobile_no: params[:data][:user][:mobile_no])
 	  return failure unless resource
 	  return failure unless resource.valid_password?(params[:user][:password])
 	  session_token = resource.generate_session_token
@@ -40,6 +40,6 @@ class Api::V1::SessionsController < ApiApplicationController
 
 	private
 	 def configure_sign_in_params
-	   params.require(:user).permit(:email, :password, :mobile_no)
+	   params[:data].require(:user).permit(:email, :password, :mobile_no)
 	 end
 end
