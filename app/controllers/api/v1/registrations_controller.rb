@@ -13,8 +13,10 @@ class Api::V1::RegistrationsController < ApiApplicationController
 	    render status: 200,
 	    json: {
 	      success: true, 
-        user_token: resource.user_token,
-        session_token: session_token
+        data: {
+          user_token: resource.user_token,
+          session_token: session_token
+        }
 	    }
 	  else
 	    # Otherwise fail
@@ -45,7 +47,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
   end
 
   def check_email
-  	if User.where(email: params[:email]).present?
+  	if User.where(email: params[:data][:email]).present?
   		render status: 200, json: {success: false}
   	else
   		render status: 200, json: {success: true}
@@ -53,7 +55,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
   end
 
   def check_mobile_no
-  	if User.where(mobile_no: params[:mobile_no]).present?
+  	if User.where(mobile_no: params[:data][:mobile_no]).present?
   		render status: 200, json: {success: false}
   	else
   		render status: 200, json: {success: true}
@@ -61,9 +63,9 @@ class Api::V1::RegistrationsController < ApiApplicationController
   end
 
   def change_password
-  	if @current_user and @current_user.valid_password? params[:user][:old_password]
-  		@current_user.password = params[:user][:password]
-  		@current_user.password_confirmation = params[:user][:password_confirmation]
+  	if @current_user and @current_user.valid_password? params[:data][:user][:old_password]
+  		@current_user.password = params[:data][:user][:password]
+  		@current_user.password_confirmation = params[:data][:user][:password_confirmation]
   		@current_user.save!
   		render status: 200, json: {success: true, message: "Password was successfully changed!"}
   	else
@@ -72,7 +74,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
   end
 
   def forgot_password
-  	user = User.find_by(email: params[:user][:email]) || User.find_by(mobile_no: params[:user][:mobile_no])
+  	user = User.find_by(email: params[:data][:user][:email]) || User.find_by(mobile_no: params[:data][:user][:mobile_no])
   	if user and user.set_otp
   		render status: 200, json: {success: true, otp: user.otp}
   	else
@@ -90,9 +92,9 @@ class Api::V1::RegistrationsController < ApiApplicationController
   end
 
   def reset_password_from_token
-  	user = User.find_by(reset_password_token: params[:user][:otp_token])
-  	user.password = params[:user][:password]
-  	user.password_confirmation = params[:user][:password_confirmation]
+  	user = User.find_by(reset_password_token: params[:data][:user][:otp_token])
+  	user.password = params[:data][:user][:password]
+  	user.password_confirmation = params[:data][:user][:password_confirmation]
     session_token = user.generate_session_token
     user.sessions.create! session_token: session_token
     user.reset_password_token = nil
@@ -101,8 +103,10 @@ class Api::V1::RegistrationsController < ApiApplicationController
   		render status: 200, json: 
   		{
   			success: true, 
-  			user_token: user.user_token,
-        session_token: session_token
+        data: {
+  			  user_token: user.user_token,
+          session_token: session_token
+        }
       }
   	else
   		render status: 422, json: {success: false, error: "Password was not reset!"}
@@ -111,14 +115,14 @@ class Api::V1::RegistrationsController < ApiApplicationController
 
 	private 
 		def change_password_params
-			params.require(:user).permit(:old_password, :password, :password_confirmation)
+			params[:data].require(:user).permit(:old_password, :password, :password_confirmation)
 		end
 
 		def sign_up_params
-			params.require(:user).permit(:name, :email, :password, :password_confirmation, :mobile_no)
+			params[:data].require(:user).permit(:name, :email, :password, :password_confirmation, :mobile_no)
 		end
 
 		def update_params
-			params.require(:user).permit(:name, :email, :mobile_no)
+			params[:data].require(:user).permit(:name, :email, :mobile_no)
 		end
 end

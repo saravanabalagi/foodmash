@@ -13,8 +13,10 @@ class Api::V1::SessionsController < ApiApplicationController
 	  render status: 200,
 	    json: {
 	      success: true, 
-        user_token: resource.user_token,
-        session_token: session_token
+	      data: {
+        	user_token: resource.user_token,
+        	session_token: session_token
+        }
 	    }
 	end
 

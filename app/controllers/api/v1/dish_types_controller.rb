@@ -6,7 +6,7 @@ class Api::V1::DishTypesController < ApiApplicationController
  	if dish_types
  		render status: 200, json: {success: true, data: dish_types.as_json}
  	else
- 		render status: 404, json: {success: false, {error: "Could not load dish types!"}}
+ 		render status: 404, json: {success: false, error: "Could not load dish types!"}
  	end
  end
 

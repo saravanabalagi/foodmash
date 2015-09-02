@@ -6,7 +6,7 @@ class Api::V1::RestaurantsController < ApiApplicationController
 		if restaurants
 			render status: 200, json: {success: true, data: restaurants.as_json(:include => :dishes)}
 		else
-			render status: 404, json: {success: false, {error: "Could not find all the restaurants!"}}
+			render status: 404, json: {success: false, error: "Could not find all the restaurants!"}
 		end
 	end
 
@@ -15,7 +15,7 @@ class Api::V1::RestaurantsController < ApiApplicationController
 		if restaurant
 			render status: 200, json: {success: true, data: restaurant.has_combos}
 		else
-			render status: 404, json: {success: false, {error: "Could not find the combos!"}}
+			render status: 404, json: {success: false, error: "Could not find the combos!"}
 		end
 	end
 end

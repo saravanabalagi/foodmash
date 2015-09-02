@@ -33,7 +33,7 @@ class Api::V1::CartsController < ApiApplicationController
 
 	def destroy
 		if @cart and @cart.orders.destroy_all
-			render status: 200, json: {success: true, message: "Cart was cleared of all orders!"}
+			render status: 200, json: {success: true,  message: "Cart was cleared of all orders!"}
 		else
 			render status: 422, json: {success: false, error: "Could not clear the cart!"}
 		end
