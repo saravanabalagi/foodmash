@@ -4,7 +4,7 @@ class Api::V1::ProfileController < ApiApplicationController
 
   def show
     if @current_user
-      render status: 200, json: {success: true, data: @current_user.as_json(only: [:name, :dob, :mobile_no, :offers])}
+      render status: 200, json: {success: true, user: @current_user.as_json(only: [:name, :dob, :mobile_no, :offers])}
     else
       render status: 404, json: {success: false, error: "Could not find the user!"}
     end
