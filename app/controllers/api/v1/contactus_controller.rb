@@ -8,14 +8,14 @@ class ContactUsController < ApiApplicationController
 		if @contact_us
 			render status: 200, json: {success: true, data: @contact_us.as_json}
 		else
-			render status: 200, json: {success: false, error: "Could not fetch contact_us!"}
+			render status: 404, json: {success: false, error: "Could not fetch contact_us!"}
 		end
 	end
 
 	def create
 		@contact_us = @current_user.contact_us.build contact_us_params
 		if @contact_us.save!
-			render status: 200, json: {success: true}
+			render status: 201, json: {success: true}
 		else
 			render status: 200, json: {success: false, error: @contact_us.errors}
 		end
@@ -23,7 +23,7 @@ class ContactUsController < ApiApplicationController
 
 	def update
 		if @contact_us and @contact_us.update_attributes! contact_us_params
-			render status: 200, json: {success: true}
+			render status: 201, json: {success: true}
 		else
 			render status: 200, json: {success: false, error: @contact_us.errors}
 		end
@@ -31,7 +31,7 @@ class ContactUsController < ApiApplicationController
 
 	def destroy
 		if @contact_us and @contact_us.destroy!
-			render status: 200, json: {success: true}
+			render status: 201, json: {success: true}
 		else
 			render status: 200, json: {success: false}
 		end

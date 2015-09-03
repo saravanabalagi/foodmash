@@ -10,7 +10,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
     if resource.save! 
       session_token = resource.generate_session_token
       resource.sessions.create! session_token: session_token
-	    render status: 200,
+	    render status: 201,
 	    json: {
 	      success: true, 
         data: {
@@ -20,7 +20,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
 	    }
 	  else
 	    # Otherwise fail
-	    render status: 422,
+	    render status: 200,
 	    json: {
 	      success: false,
 	      error: resource.errors
@@ -31,18 +31,18 @@ class Api::V1::RegistrationsController < ApiApplicationController
 
   def update
 	  if @current_user and @current_user.update_attributes update_params
-	    render status: 200, json: {success: true, data: @current_user.as_json(only: :user_token)}
+	    render status: 201, json: {success: true, data: @current_user.as_json(only: :user_token)}
 	  else
-	    render status: 422, json: {success: false, error: user.errors}
+	    render status: 200, json: {success: false, error: user.errors}
 	  end
   end
 
   def destroy
   	if @current_user
   		@current_user.delete
-  		head status: 200
+  		render status: 201, json: {success: false}
   	else
-  		render status: 422, json: {success: false, error: "Unable to cancel registration!"}
+  		render status: 200, json: {success: false, error: "Unable to cancel registration!"}
   	end
   end
 
@@ -67,18 +67,18 @@ class Api::V1::RegistrationsController < ApiApplicationController
   		@current_user.password = params[:data][:user][:password]
   		@current_user.password_confirmation = params[:data][:user][:password_confirmation]
   		@current_user.save!
-  		render status: 200, json: {success: true, message: "Password was successfully changed!"}
+  		render status: 201, json: {success: true, message: "Password was successfully changed!"}
   	else
-  		render status: 422, json: {success: false, error: "Could not change password!"}
+  		render status: 200, json: {success: false, error: "Could not change password!"}
   	end
   end
 
   def forgot_password
   	user = User.find_by(email: params[:data][:user][:email]) || User.find_by(mobile_no: params[:data][:user][:mobile_no])
   	if user and user.set_otp
-  		render status: 200, json: {success: true, otp: user.otp}
+  		render status: 201, json: {success: true, otp: user.otp}
   	else
-  		render status: 422, json: {success: false, error: "Could not reset password!"}
+  		render status: 200, json: {success: false, error: "Could not reset password!"}
   	end
   end
 
@@ -87,7 +87,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
   	if user
   		render status: 200, json: {success: true, data: {otp_token: user.reset_password_token} }
   	else
-  		render status: 422, json: {success: false, error: "Invalid password reset token!"}
+  		render status: 200, json: {success: false, error: "Invalid password reset token!"}
   	end
   end
 
@@ -100,7 +100,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
     user.reset_password_token = nil
     user.otp = nil
   	if user and user.save!
-  		render status: 200, json: 
+  		render status: 201, json: 
   		{
   			success: true, 
         data: {
@@ -109,7 +109,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
         }
       }
   	else
-  		render status: 422, json: {success: false, error: "Password was not reset!"}
+  		render status: 200, json: {success: false, error: "Password was not reset!"}
   	end
   end
 

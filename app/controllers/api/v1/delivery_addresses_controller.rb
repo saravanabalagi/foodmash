@@ -15,26 +15,26 @@ class Api::V1::DeliveryAddressesController < ApiApplicationController
 	def create 
 		@delivery_address = parse_and_set(DeliveryAddress.new, params[:data])
 		if @delivery_address.save!
-			render status: 200, json: {success: true}
+			render status: 201, json: {success: true}
 		else
-			render status: 422, json: {success: false, error: @delivery_address.errors}
+			render status: 200, json: {success: false, error: @delivery_address.errors}
 		end
 	end
 
 	def update
 		@delivery_address = parse_and_set(@delivery_address, params[:data])
 		if @delivery_address and @delivery_address.save!
-			render status: 200, json: {success: true}
+			render status: 201, json: {success: true}
 		else
-			render status: 422, json: {success: false, error: "Could not update delivery address!"}
+			render status: 200, json: {success: false, error: "Could not update delivery address!"}
 		end
 	end
 
 	def destroy
 		if @delivery_address and @delivery_address.destroy!
-			render status: 200, json: {success: true}
+			render status: 201, json: {success: true}
 		else
-			render status: 404, json: {success: false, error: "Delivery address could not be found!"}
+			render status: 200, json: {success: false, error: "Delivery address could not be found!"}
 		end
 	end
 

@@ -10,7 +10,7 @@ class Api::V1::SessionsController < ApiApplicationController
 	  return failure unless resource.valid_password?(params[:data][:user][:password])
 	  session_token = resource.generate_session_token
 	  resource.sessions.create! session_token: session_token
-	  render status: 200,
+	  render status: 201,
 	    json: {
 	      success: true, 
 	      data: {
@@ -32,7 +32,7 @@ class Api::V1::SessionsController < ApiApplicationController
 	  resource = User.find_for_database_authentication(user_token: params[:auth_user_token])
 	  return failure unless resource
 	  resource.sessions.where(session_token: params[:auth_session_token]).first.destroy!
-	  render status: 200, 
+	  render status: 201, 
 	  json: {
 	  	success: true
 	 }

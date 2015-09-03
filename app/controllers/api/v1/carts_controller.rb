@@ -17,31 +17,31 @@ class Api::V1::CartsController < ApiApplicationController
 
 	def add_to_cart
 		if @cart and @cart.add_combo_from_mobile(params[:data])
-			render status: 200, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [:item, :category]} } ,:product]  } }) }
+			render status: 201, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [:item, :category]} } ,:product]  } }) }
 		else
-			render status: 422, json: {success: false, error: "Could not add to cart!"}
+			render status: 200, json: {success: false, error: "Could not add to cart!"}
 		end
 	end
 
 	def remove_from_cart
 		if @cart and @cart.remove_combo_from_mobile(params[:data][:id])
-			render status: 200, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [:item, :category]} } ,:product]  } }) }
+			render status: 201, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [:item, :category]} } ,:product]  } }) }
 		else
-			render status: 422, json: {success: false, error: "Could not remove from cart!"}
+			render status: 200, json: {success: false, error: "Could not remove from cart!"}
 		end
 	end
 
 	def destroy
 		if @cart and @cart.orders.destroy_all
-			render status: 200, json: {success: true,  message: "Cart was cleared of all orders!"}
+			render status: 201, json: {success: true,  message: "Cart was cleared of all orders!"}
 		else
-			render status: 422, json: {success: false, error: "Could not clear the cart!"}
+			render status: 200, json: {success: false, error: "Could not clear the cart!"}
 		end
 	end
 
 	private 
 	def invalid_cart
-		render status: 422, json: {success: false, error: "Attempt to access invalid cart!"}
+		render status: 200, json: {success: false, error: "Attempt to access invalid cart!"}
 	end
 
 	def set_cart

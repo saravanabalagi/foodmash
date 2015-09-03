@@ -14,7 +14,7 @@ class Api::V1::ProfileController < ApiApplicationController
     if @current_user and @current_user.update_attributes! profile_update_params
       render status: 201, json: {success: true}
     else
-      render status: 422, json: {success: false, error: "Could not update profile!"}
+      render status: 200, json: {success: false, error: "Could not update profile!"}
     end
   end
 

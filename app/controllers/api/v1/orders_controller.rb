@@ -4,17 +4,17 @@ class Api::V1::OrdersController < ApiApplicationController
 
 	def update
 		if @order and @order.update_attributes! update_order_params
-			render status: 200, json: {success: true}
+			render status: 201, json: {success: true}
 		else
-			render status: 404, json: {success: false, error: "Could not update the order!"}
+			render status: 200, json: {success: false, error: "Could not update the order!"}
 		end
 	end
 
 	def destroy 
 		if @order and @order.destroy!
-			render status: 200, json: {success: true}
+			render status: 201, json: {success: true}
 		else
-			render status: 422, json: {success: false}
+			render status: 200, json: {success: false}
 		end
 	end
 
