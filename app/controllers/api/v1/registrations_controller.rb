@@ -10,7 +10,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
     # Try to save them
     if resource.save! 
       session_token = resource.generate_session_token
-      resource.sessions.create! session_token: session_token
+      resource.sessions.create! session_token: session_token, device_id: params[:android_id]
 	    render status: 201,
 	    json: {
 	      success: true, 
@@ -96,8 +96,12 @@ class Api::V1::RegistrationsController < ApiApplicationController
   	user = User.find_by(reset_password_token: params[:data][:user][:otp_token])
   	user.password = params[:data][:user][:password]
   	user.password_confirmation = params[:data][:user][:password_confirmation]
+    #destroy previous sessions with the same android_id
+    user.sessions.where(device_id: params[:android_id]).destroy_all
+    #generate a new session for the same android_id
     session_token = user.generate_session_token
-    user.sessions.create! session_token: session_token
+    user.sessions.create! session_token: session_token, device_id: params[:android_id]
+    #reset the tokens to nil
     user.reset_password_token = nil
     user.otp = nil
   	if user and user.save!

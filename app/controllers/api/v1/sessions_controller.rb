@@ -10,7 +10,7 @@ class Api::V1::SessionsController < ApiApplicationController
 	  return failure unless resource
 	  return failure unless resource.valid_password?(params[:data][:user][:password])
 	  session_token = resource.generate_session_token
-	  resource.sessions.create! session_token: session_token
+	  resource.sessions.create! session_token: session_token, device_id: params[:android_id]
 	  render status: 201,
 	    json: {
 	      success: true, 
