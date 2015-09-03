@@ -9,7 +9,7 @@ class Api::V1::CartsController < ApiApplicationController
 		if @cart 
 			@cart.total = @cart.total_price
 			@cart.save! if @cart.total
-			render status: 200, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [:item, :category]} } ,:product]  } }) }
+			render status: 200, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description]}], only: [:id, :quantity, :total]} }, only: [:id, :total]) }
 		else
 			render status: 404, json: {success: false, error: "Could not find cart!"}
 		end
@@ -17,7 +17,7 @@ class Api::V1::CartsController < ApiApplicationController
 
 	def add_to_cart
 		if @cart and @cart.add_combo_from_mobile(params[:data])
-			render status: 201, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [:item, :category]} } ,:product]  } }) }
+			render status: 201, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description]}], only: [:id, :quantity, :total]} }, only: [:id, :total]) }
 		else
 			render status: 200, json: {success: false, error: "Could not add to cart!"}
 		end
@@ -25,7 +25,7 @@ class Api::V1::CartsController < ApiApplicationController
 
 	def remove_from_cart
 		if @cart and @cart.remove_combo_from_mobile(params[:data][:id])
-			render status: 201, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [:item, :category]} } ,:product]  } }) }
+			render status: 201, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description]}], only: [:id, :quantity, :total]} }, only: [:id, :total]) }
 		else
 			render status: 200, json: {success: false, error: "Could not remove from cart!"}
 		end
