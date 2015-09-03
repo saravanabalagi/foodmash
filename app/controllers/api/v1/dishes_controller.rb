@@ -1,4 +1,5 @@
 class Api::V1::DishesController < ApiApplicationController
+	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
 	respond_to :json
 
 	def index

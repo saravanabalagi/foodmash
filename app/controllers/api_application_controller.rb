@@ -30,6 +30,10 @@ class ApiApplicationController < ActionController::Base
     render status: 401, json: {success: false, error: "Android Id is invalid or absent!"}
   end
 
+  def invalid_data
+    render status: 200, json: {success: false, error: "Invalid or expired data!"}
+  end
+
   def check_android_token
     if android_token
       aes = OpenSSL::Cipher::AES128.new(:CBC)

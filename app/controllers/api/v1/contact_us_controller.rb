@@ -1,5 +1,6 @@
-class ContactUsController < ApiApplicationController
-	before_filter :authenticate_user_from_token!
+class Api::V1::ContactUsController < ApiApplicationController
+	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
+	prepend_before_filter :authenticate_user_from_token!
 	before_filter :set_contact_us, only: [:update, :destroy]
 	respond_to :json
 
@@ -43,6 +44,6 @@ class ContactUsController < ApiApplicationController
 	end
 
 	def set_contact_us
-		@contact_us = ContactUs.find params[:data][:id]
+		@contact_us = ContactU.find params[:data][:id]
 	end
 end

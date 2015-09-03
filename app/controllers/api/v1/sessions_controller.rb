@@ -1,4 +1,5 @@
 class Api::V1::SessionsController < ApiApplicationController
+	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
 	before_filter :configure_sign_in_params, only: [:create]
 	before_filter :authenticate_user_from_token!, only: [:destroy]
 	before_filter :check_for_android_id!, only: :create

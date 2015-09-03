@@ -1,4 +1,5 @@
 class Api::V1::OrdersController < ApiApplicationController
+	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
 	before_filter :set_order, only: [:update, :destroy, :show]
 	respond_to :json
 

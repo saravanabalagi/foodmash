@@ -1,4 +1,5 @@
 class Api::V1::DeliveryAddressesController < ApiApplicationController
+	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
 	before_filter :authenticate_user_from_token!
 	before_filter :set_delivery_address, only: [:update, :destroy]
 	respond_to :json

@@ -1,4 +1,5 @@
 class Api::V1::ProfileController < ApiApplicationController
+  rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
 	before_filter :authenticate_user_from_token!
   respond_to :json
 
