@@ -8,6 +8,7 @@ class DeliveryAddress < ActiveRecord::Base
 	before_save :falsify_true_records
 	before_save :make_primary_for_first_address
 	after_save :choose_first_as_primary
+	after_destroy :choose_first_as_primary
 
 
 	private
