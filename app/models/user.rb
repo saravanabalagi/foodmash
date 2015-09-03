@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   delegate :can?, :cannot?, to: :ability
 
+  has_many :contact_us
   has_many :carts
   has_many :sessions
   has_many :delivery_addresses, dependent: :destroy

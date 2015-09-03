@@ -119,6 +119,15 @@ Rails.application.routes.draw do
           post '/destroy', to: 'orders#destroy'
         end
       end
+      #contact_us
+      resources :contact_us do 
+        collection do 
+          post '/', to: 'contact_us#index'
+          post '/create', to: 'contact_us#create'
+          patch '/', to: 'contact_us#update'
+          post '/destroy', to: 'contact_us#destroy'
+        end
+      end
     end
   end
 
