@@ -3,7 +3,6 @@ class ApiApplicationController < ActionController::Base
   require 'base64'
   
 	private 
-
   def check_for_android_id!
     android_id = params[:android_id]
     return android_denied unless android_id

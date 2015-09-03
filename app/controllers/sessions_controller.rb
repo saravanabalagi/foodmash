@@ -11,8 +11,12 @@ class SessionsController < Devise::SessionsController
     return failure unless resource
     return failure unless resource.valid_password?(params[:user][:password])
     sign_in(resource)
-    session_token = resource.generate_session_token
-    resource.sessions.create! session_token: session_token
+    session = resource.sessions.find_by(device_id: params[:android_id])
+    session_token = session.session_token
+    unless session.present?
+     session_token = resource.generate_session_token
+     resource.sessions.create! session_token: session_token
+    end
     render status: 200,
       json: {
         success: true, info: "Logged in", 

@@ -9,8 +9,12 @@ class Api::V1::SessionsController < ApiApplicationController
 	  resource = User.find_for_database_authentication(email: params[:data][:user][:email]) || User.find_for_database_authentication(mobile_no: params[:data][:user][:mobile_no])
 	  return failure unless resource
 	  return failure unless resource.valid_password?(params[:data][:user][:password])
-	  session_token = resource.generate_session_token
-	  resource.sessions.create! session_token: session_token, device_id: params[:android_id]
+	  session = resource.sessions.find_by(device_id: params[:android_id])
+    session_token = session.session_token if session.present?
+    unless session.present?
+	  	session_token = resource.generate_session_token
+	  	resource.sessions.create! session_token: session_token, device_id: params[:android_id]
+	  end
 	  render status: 201,
 	    json: {
 	      success: true, 
