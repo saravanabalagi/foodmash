@@ -73,6 +73,30 @@
                         </div>
                       </div>
 
+                       <div layout="row" ng-show="combo_1_clicked" class="combo-dishes">
+                          <div layout="column" layout-padding flex offset="10">
+                            <div layout="column">
+                                <md-content>
+                                  <md-list>
+
+                                    <md-list-item class="md-2-line" ng-repeat="combo_dish in combo.combo_dishes">
+                                      <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
+
+                                      <div class="md-list-item-text">
+                                        <label>{{combo_dish.dish.name}}</label>
+                                        <p>{{combo_dish.dish.description}}</p>
+                                      </div>
+
+                                    </md-list-item>
+                                    <md-divider md-inset></md-divider>
+                                  
+                                  </md-list>
+                                </md-content>
+                              </div>
+                            </div>
+                          <div flex="10"></div>
+                        </div>
+
                       <div layout="row" ng-show="combo_1_clicked" class="combo-options">
                           <div layout="column" layout-padding flex offset="10">
                             <div layout="column">
