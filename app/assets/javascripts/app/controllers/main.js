@@ -88,10 +88,11 @@ angular.module('foodmashApp.controllers')
 		checkAndPush(selectedDish)
 	};
 
-	$scope.addToCart = function(combo_id){
+	$scope.addToCart = function(combo){
 		var d = $q.defer();
 		if($scope.user){
-			Cart.addToCart(combo_id, $scope.selectedDishes).then(function(response){
+			pushAllComboDishes(combo);
+			Cart.addToCart(combo.id, $scope.selectedDishes).then(function(response){
 				toaster.pop('success' ,'Added to cart!');
 				d.resolve(response);
 			}, function(err){
@@ -113,9 +114,8 @@ angular.module('foodmashApp.controllers')
 				l++;
 			}
 		}
-		if(l == combo.combo_options.length && combo.combo_options.length !== 0)
+		if(l == combo.combo_options.length)
 		{
-			pushAllComboDishes(combo);
 			return false;
 		}else{
 			return true;
@@ -137,7 +137,7 @@ angular.module('foodmashApp.controllers')
 			var selectedDish = {};
 			selectedDish["combo_id"] = combo.id;
 			selectedDish["combo_dish_id"] = combo["combo_dishes"][i].id;
-			selectedDish["dish_id"] = combo["combo_dishes"][i].dish_id;
+			selectedDish["dish_id"] = combo["combo_dishes"][i].dish.id;
 			$scope.selectedDishes.push(selectedDish);
 		}
 	};
