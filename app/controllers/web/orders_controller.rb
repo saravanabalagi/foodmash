@@ -14,7 +14,7 @@ class Web::OrdersController < ApplicationController
 
 	def destroy
 		if @order and @order.delete
-			head status: 200
+			render status: 200
 		else
 			render status: 404, json: {error: "Could not find order with id #{params[:id]}"}
 		end

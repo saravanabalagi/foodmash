@@ -4,6 +4,7 @@ class Cart < ActiveRecord::Base
 	has_one :cart_delivery_address
 	has_many :order_items, through: :orders
 	has_many :orders, dependent: :destroy
+	before_save :update_total
 	include AASM
 
 	aasm do
@@ -136,8 +137,13 @@ class Cart < ActiveRecord::Base
 			current_orders.last.destroy!
 		end
 	end
+
+	def update_total
+		self.total = self.total_price
+		return true
+	end
 	
 	def total_price
-		self.orders.to_a.sum {|order| order.total_price}
+		self.orders.to_a.sum {|order| order.total}
 	end
 end

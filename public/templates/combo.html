@@ -90,6 +90,11 @@
                        <md-option ng-repeat="dish in dishes" value="{{dish.id}}">{{dish.name}}   ({{dish.restaurant.name}} : {{dish.restaurant.branch}})</md-option>
                      </md-select>
                    </md-input-container>
+                    <md-input-container flex>
+                     <label>Priority</label>
+                     <input type="text" ng-model="combo_dish.priority" />
+                   </md-input-container>
+
                    <div layout="row" layout-align="center center" layout-padding>
                      <md-button class="md-icon-button" layout-padding ng-click="comboDishesAddCross=false">
                        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
@@ -135,6 +140,10 @@
                            <md-option ng-repeat="dish in dishesForUpdate" value="{{dish.id}}">{{dish.name}}   ({{dish.restaurant.name}} : {{dish.restaurant.branch}})
                           </md-option>
                         </md-select>
+                       </md-input-container>
+                       <md-input-container flex>
+                         <label>Priority</label>
+                         <input type="text" ng-model="updatedComboDish.priority" />
                        </md-input-container>
                        <md-button class="md-icon-button" ng-click="comboDishUpdateShow = !comboDishUpdateShow; comboDishUpdateCross = false">
                          <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
@@ -182,6 +191,10 @@
                        <md-select ng-model="combo_option.dish_type_id">
                          <md-option ng-repeat="dish_type in dish_types" value="{{dish_type.id}}">{{dish_type.name}}</md-option>
                        </md-select>
+                     </md-input-container>
+                     <md-input-container flex>
+                       <label>Priority</label>
+                       <input type="text" ng-model="combo_option.priority" />
                      </md-input-container>
                      <div layout="row" layout-align="center center" layout-padding>
                        <md-button class="md-icon-button" layout-padding ng-click="comboOptionsAddCross=false">
@@ -231,6 +244,10 @@
                              <md-option ng-repeat="dish_type in dish_types" value="{{dish_type.id}}">{{dish_type.name}}</md-option>
                            </md-select>
                          </md-input-container>
+                         <md-input-container flex>
+                           <label>Priority</label>
+                           <input type="text" ng-model="updatedComboOption.priority" />
+                         </md-input-container>
                          <md-button class="md-icon-button" ng-click="comboOptionUpdateShow = !comboOptionUpdateShow; comboOptionUpdateCross = false">
                            <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
                          </md-button>
@@ -251,4 +268,4 @@
      
       <!-- Combo Option ends-->
 
-<!-- Combo ends
+<!-- Combo ends -->

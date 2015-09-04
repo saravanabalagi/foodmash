@@ -6,9 +6,7 @@ class Web::CartsController < ApplicationController
 	respond_to :json
 
 	def index
-		if @cart 
-			@cart.total = @cart.total_price
-			@cart.save! if @cart.total
+		if @cart and @cart.save!
 			render status: 200, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [:item, :category]} } ,:product]  } })
 		else
 			render status: 422, json: {error: "Could not find cart!"}

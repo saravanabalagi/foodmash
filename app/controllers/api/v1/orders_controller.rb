@@ -5,7 +5,8 @@ class Api::V1::OrdersController < ApiApplicationController
 
 	def update
 		if @order and @order.update_attributes! update_order_params
-			render status: 201, json: {success: true}
+			@cart = @order.cart
+			render status: 201, json: {success: true, data: {cart:{total: @cart.total, order: {quantity: @order.quantity, total: @order.total}}}
 		else
 			render status: 200, json: {success: false, error: "Could not update the order!"}
 		end

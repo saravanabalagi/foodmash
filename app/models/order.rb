@@ -5,6 +5,8 @@ class Order < ActiveRecord::Base
 	validates_presence_of :cart_id, :quantity
 	validates :product, presence: true
 	after_save :update_order_items
+	after_save :update_cart
+	before_save :total_price
 	include AASM
 
 	aasm do
@@ -26,11 +28,17 @@ class Order < ActiveRecord::Base
 	  end
 	end
 
+	def update_cart
+		self.cart.save!
+		return true
+	end
+
 	def update_order_items
 		self.order_items.update_all(quantity: self.quantity) if self.order_items.present?
 	end
 
 	def total_price
-		self.product.price * quantity
+		self.total = self.product.price * quantity
+		true
 	end
 end
