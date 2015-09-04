@@ -113,6 +113,7 @@
                    <div layout="row" layout-padding layout-align="center center" ng-init="comboDishUpdateShow=false" ng-hide="comboDishUpdateShow">
                      <md-content flex>{{combo_dish.dish_type.name}}</md-content>
                      <md-content flex>{{combo_dish.dish.name}}</md-content>
+                     <md-content flex>{{combo_dish.priority}}</md-content>
                      <div layout="row" layout-align="center center">
                        <md-button class="md-icon-button" ng-click="setUpdate(combo_dish); comboDishUpdateShow=!comboDishUpdateShow">
                          <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
@@ -215,6 +216,7 @@
                        <md-content flex ng-click="routeToComboOption(combo_option)">{{combo_option.name}}</md-content>
                        <md-content flex>{{combo_option.description}}</md-content>
                        <md-content flex>{{combo_option.dish_type.name}}</md-content>
+                       <md-content flex>{{combo_option.priority}}</md-content>
                        <div layout="row" layout-align="center center">
                          <md-button class="md-icon-button" ng-click="setUpdate(combo_option); comboOptionUpdateShow=!comboOptionUpdateShow">
                            <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
