@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150904042820) do
+ActiveRecord::Schema.define(version: 20150904132804) do
 
   create_table "cart_delivery_addresses", force: :cascade do |t|
     t.integer  "cart_id"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20150904042820) do
     t.integer  "dish_type_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.integer  "priority"
   end
 
   create_table "combo_option_dishes", force: :cascade do |t|
@@ -50,6 +51,7 @@ ActiveRecord::Schema.define(version: 20150904042820) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.text     "description"
+    t.integer  "priority"
   end
 
   create_table "combos", force: :cascade do |t|
