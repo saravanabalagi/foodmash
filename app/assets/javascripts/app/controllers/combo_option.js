@@ -38,7 +38,6 @@ angular.module('foodmashApp.controllers')
 		ComboOptionDish.query({combo_option_id: combo_option_id}).then(function(combo_option_dishes){
 			if(combo_option_dishes.length > 0){
 				$scope.combo_option_dishes = combo_option_dishes;
-				console.log(combo_option_dishes);
 			}else{
 				$scope.combo_option_dishes = new Array;
 			}

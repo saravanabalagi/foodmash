@@ -1,5 +1,6 @@
 class Combo < ActiveRecord::Base
 	belongs_to :packaging_centre
+	has_many :combo_dishes, dependent: :destroy
 	has_many :combo_options, dependent: :destroy
 	has_many :combo_option_dishes, through: :combo_options, dependent: :destroy
 	validates :price, presence: true, numericality: {greater_than: 0}
@@ -29,7 +30,7 @@ class Combo < ActiveRecord::Base
 		if orders.empty?
 			return true
 		else
-			errors.add(:base, "Order items present!")
+			errors.add(:base, "Orders present!")
 			return false
 		end
 	end

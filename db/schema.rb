@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150903093109) do
+ActiveRecord::Schema.define(version: 20150904042820) do
 
   create_table "cart_delivery_addresses", force: :cascade do |t|
     t.integer  "cart_id"
@@ -26,6 +26,14 @@ ActiveRecord::Schema.define(version: 20150903093109) do
     t.datetime "updated_at", null: false
     t.string   "aasm_state"
     t.float    "total"
+  end
+
+  create_table "combo_dishes", force: :cascade do |t|
+    t.integer  "combo_id"
+    t.integer  "dish_id"
+    t.integer  "dish_type_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "combo_option_dishes", force: :cascade do |t|
@@ -105,10 +113,10 @@ ActiveRecord::Schema.define(version: 20150903093109) do
     t.string   "item_type"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.integer  "category_id"
-    t.string   "category_type"
     t.string   "aasm_state"
     t.integer  "quantity",      default: 1
+    t.integer  "category_id"
+    t.string   "category_type"
   end
 
   create_table "orders", force: :cascade do |t|

@@ -24,6 +24,8 @@ Rails.application.routes.draw do
 
     resources :combo_options
 
+    resources :combo_dishes
+
     resources :combo_option_dishes
 
     resources :dish_types

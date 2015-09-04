@@ -17,7 +17,6 @@ angular.module('foodmashApp.services')
           if(response.success) {
             var user = response.data.user;
             var auth_token = response.data.auth_token; // talk about this
-            console.log(auth_token);
             AuthService.setCurrentUser(user, auth_token);
             d.resolve(user);
           } else {
@@ -54,7 +53,6 @@ angular.module('foodmashApp.services')
         }).success(function(response) { 
           var user = response.data.user;
           var auth_token = response.data.auth_token; // talk about this
-          console.log(auth_token);
           AuthService.setCurrentUser(user, auth_token);
           d.resolve(user);
         }).error(function(reason) { 

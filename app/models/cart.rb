@@ -52,7 +52,11 @@ class Cart < ActiveRecord::Base
 		future_order = self.orders.build(product_id: combo_id, product_type: "Combo", total: combo.price)
 		selected_dishes.each do |s_dish|
 			if s_dish[:combo_id] == combo_id
-				future_order_items = future_order.order_items.build(item_id: s_dish[:dish_id], item_type: "Dish", category_id: s_dish[:combo_option_id], category_type: "ComboOption")
+				if s_dish[:combo_option_id].present?
+					future_order_items = future_order.order_items.build(item_id: s_dish[:dish_id], item_type: "Dish", category_id: s_dish[:combo_option_id], category_type: "ComboOption")
+				elsif s_dish[:combo_dish_id].present?
+					future_order_items = future_order.order_items.build(item_id: s_dish[:dish_id], item_type: "Dish", category_id: s_dish[:combo_dish_id], category_type: "ComboDish")
+				end
 			end
 		end
 		return future_order if future_order.save!
@@ -63,7 +67,7 @@ class Cart < ActiveRecord::Base
 		counting_length = 0
 		selected_dishes.each do |s_dish|
 			current_order.order_items.each do |order_item|
-				if order_item[:item_id] == s_dish[:dish_id] and order_item[:category_id] == s_dish[:combo_option_id] and combo_id == s_dish[:combo_id]
+				if order_item[:item_id] == s_dish[:dish_id] and (order_item[:category_id] == s_dish[:combo_option_id] or order_item[:category_id] == s_dish[:combo_dish_id]) and combo_id == s_dish[:combo_id]
 					counting_length += 1
 					break
 				end

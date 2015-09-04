@@ -115,6 +115,7 @@ angular.module('foodmashApp.controllers')
 		}
 		if(l == combo.combo_options.length && combo.combo_options.length !== 0)
 		{
+			pushAllComboDishes(combo);
 			return false;
 		}else{
 			return true;
@@ -129,6 +130,16 @@ angular.module('foodmashApp.controllers')
 			}
 		}
 		$scope.selectedDishes.push(selectedDish);
+	};
+
+	function pushAllComboDishes(combo){
+		for(var i=0; i<combo.combo_dishes.length; i++){
+			var selectedDish = {};
+			selectedDish["combo_id"] = combo.id;
+			selectedDish["combo_dish_id"] = combo["combo_dishes"][i].id;
+			selectedDish["dish_id"] = combo["combo_dishes"][i].dish_id;
+			$scope.selectedDishes.push(selectedDish);
+		}
 	};
 
 }]);
