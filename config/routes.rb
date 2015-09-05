@@ -105,6 +105,7 @@ Rails.application.routes.draw do
       #carts
       resources :carts do 
         collection do 
+          post '/addAddress', to: 'carts#add_address'
           post '/history', to: 'carts#history'
           post '/', to: 'carts#index'
           post '/add', to: 'carts#add_to_cart'
