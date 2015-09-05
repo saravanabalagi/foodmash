@@ -115,10 +115,10 @@ ActiveRecord::Schema.define(version: 20150904132804) do
     t.string   "item_type"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.string   "aasm_state"
-    t.integer  "quantity",      default: 1
     t.integer  "category_id"
     t.string   "category_type"
+    t.string   "aasm_state"
+    t.integer  "quantity",      default: 1
   end
 
   create_table "orders", force: :cascade do |t|
@@ -188,6 +188,7 @@ ActiveRecord::Schema.define(version: 20150904132804) do
     t.datetime "updated_at",                            null: false
     t.string   "mobile_no"
     t.string   "user_token"
+    t.string   "android_id"
     t.boolean  "offers",                 default: true
     t.string   "dob"
     t.string   "otp"

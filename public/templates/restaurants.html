@@ -5,12 +5,7 @@
              <md-content flex class="md-display-1">Restaurants</md-content>
              <md-divider class="bottom-margin bottom-padding"></md-divider>
 
-
-  <md-button class="md-icon-button" ng-init="addShow = true" ng-click="addShow = !addShow">
-    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/add.svg"></md-icon>
-  </md-button>
-
-<form role="form" name="restaurantAddForm" ng-submit="addRestaurant(addCross)" ng-show="addShow" ng-init="addCross=false">
+<form role="form" name="restaurantAddForm" ng-submit="addRestaurant(addCross)" ng-init="addCross=false">
   <div layout="row" layout-padding layout-align="center center">
     <md-button class="md-icon-button">
       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg"></md-icon>
@@ -34,7 +29,7 @@
     <md-button class="md-icon-button" ng-click="addCross=false">
       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
     </md-button>
-    <md-button class="md-icon-button" ng-click="addShow = !addShow; addCross=true">
+    <md-button class="md-icon-button" ng-click="addCross=true">
       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cross.svg"></md-icon>
     </md-button>
   </div>
