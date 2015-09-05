@@ -14,8 +14,8 @@ class Api::V1::OrdersController < ApiApplicationController
 	end
 
 	def destroy
-		if @order and @order.destroy!
-			@cart = @order.cart
+		@cart = @order.cart
+		if @order and @order.destroy! and @cart.update_total
 			render status: 201, json: {success: true, data: {total: @cart.total}}
 		else
 			render status: 200, json: {success: false}
