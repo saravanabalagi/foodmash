@@ -118,7 +118,7 @@ class Cart < ActiveRecord::Base
 
 		combo_info[:combo_dishes].each do |combo_dish|
 			current_order.order_items.each do |order_item|
-				if order_item[:item_id] == combo_dish[:dish][:dish_id] and order_item[:category_id] == combo_dish[:id]
+				if order_item[:item_id] == combo_dish[:dish][:id] and order_item[:category_id] == combo_dish[:id]
 					counting_length += 1
 					break
 				end
