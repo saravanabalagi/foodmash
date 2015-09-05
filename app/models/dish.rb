@@ -1,6 +1,7 @@
 class Dish < ActiveRecord::Base
   belongs_to :restaurant
   belongs_to :dish_type
+  belongs_to :cuisine
   has_many :combos, through: :combo_dishes
   has_many :combo_options, through: :combo_option_dishes
   has_many :combo_option_dishes

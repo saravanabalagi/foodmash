@@ -1,0 +1,66 @@
+<!-- Cuisines -->
+
+        <div layout="row">
+          <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm></div>
+          <div layout="column" flex>
+              <div layout-padding layout-margin>
+                <md-content flex class="md-display-1">Cuisines</md-content>
+                <md-divider class="bottom-margin bottom-padding"></md-divider>
+              </div>
+              
+              <!-- add new -->
+               <form flex layout="row" name="addCuisineForm" ng-submit="addCuisine(addCross)" ng-init="addCross=false">
+                <md-input-container flex>
+                    <label>Cuisine</label>
+                    <input ng-model="cuisine.name" type="text" />
+                </md-input-container>
+                <div layout="row" layout-align="center center" layout-padding>
+                  <md-button class="md-icon-button" layout-padding ng-click="addCross=false">
+                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
+                  </md-button>
+                  <md-button class="md-icon-button" layout-padding ng-click="addCross=true">
+                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cross.svg"></md-icon>
+                  </md-button>
+                </div>
+               </form>
+              <!-- add new ends -->
+
+              <!-- for loop for listing -->
+
+              <!-- item  -->
+              <div ng-repeat="cuisine in cuisines">
+              <div layout="row" layout-padding layout-align="center center" ng-hide="updateShow">
+                <md-content flex>{{cuisine.name}}</md-content>
+                <div layout="row" layout-align="center center">
+                  <md-button class="md-icon-button" ng-click="updateShow = !updateShow; setUpdate(cuisine)">
+                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
+                  </md-button>
+                  <md-button class="md-icon-button" ng-click="deleteCuisine(cuisine)">
+                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
+                  </md-button>
+                </div>
+              </div>
+
+              <form layout="row" name="updateCuisineForm" ng-submit="updateCuisine(cuisine, updateCross)" ng-init="updateShow=false; updateCross=false" ng-show="updateShow">
+               <md-input-container flex>
+                   <label>Cuisine</label>
+                   <input ng-model="updatedCuisine.name" type="text" />
+               </md-input-container>
+               <div layout="row" layout-align="center center" layout-padding>
+                 <md-button class="md-icon-button" layout-padding ng-click="updateShow = !updateShow; updateCross=false">
+                   <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
+                 </md-button>
+                 <md-button class="md-icon-button" layout-padding ng-click="updateShow = !updateShow; updateCross = true">
+                   <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cross.svg"></md-icon>
+                 </md-button>
+               </div>
+              </form>
+
+            </div>
+              <!-- item ends -->
+              <!-- for loop ends -->
+              
+          </div>
+          <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm> </div>
+        </div>
+  <!--  Cuisines ends-->

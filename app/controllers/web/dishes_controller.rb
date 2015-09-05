@@ -3,9 +3,9 @@ class Web::DishesController < ApplicationController
 	before_action :get_dish, only: [:update, :destroy, :belongs_to_combos]
 
 	def index
-		@dishes = Dish.where(params.permit(:id, :restaurant_id, :name, :dish_type_id))
+		@dishes = Dish.where(params.permit(:id, :restaurant_id, :name, :dish_type_id, :cuisine_id))
 		if @dishes 
-			render status: 200, json: @dishes.as_json(:include => [:restaurant, :dish_type])
+			render status: 200, json: @dishes.as_json(:include => [:restaurant, :dish_type, :cuisine])
 		else
 			render status: 404, json: {error: 'Dishes not found!'}
 		end
@@ -14,7 +14,7 @@ class Web::DishesController < ApplicationController
 	def create
 		@dish = Dish.new dish_params
 		if @dish.save! 
-			render status: 201, json: @dish.as_json(:include => :dish_type)
+			render status: 201, json: @dish.as_json(:include => [:dish_type, :cuisine])
 		else
 			render status: 422, json: @dish.errors.as_json
 		end
@@ -22,7 +22,7 @@ class Web::DishesController < ApplicationController
 
 	def update
 		if @dish && @dish.update_attributes(dish_update_params)
-			render status: 200, json: @dish.as_json(:include => :dish_type)
+			render status: 200, json: @dish.as_json(:include => [:dish_type, :cuisine])
 		else
 			render status: 422, json: @dish.errors.as_json
 		end
@@ -51,10 +51,10 @@ class Web::DishesController < ApplicationController
 	end
 
 	def dish_params
-		params.require(:dish).permit(:name, :price, :dish_type_id, :restaurant_id, :no_of_purchases, :picture_url, :available, :description)
+		params.require(:dish).permit(:name, :price, :dish_type_id, :restaurant_id, :no_of_purchases, :picture_url, :available, :description, :cuisine_id)
 	end
 
 	def dish_update_params
-		params.require(:dish).permit(:name, :price, :dish_type_id, :restaurant_id, :no_of_purchases,:picture_url, :available, :description)
+		params.require(:dish).permit(:name, :price, :dish_type_id, :restaurant_id, :no_of_purchases,:picture_url, :available, :description, :cuisine_id)
 	end
 end

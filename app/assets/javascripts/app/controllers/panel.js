@@ -21,4 +21,8 @@ angular.module('foodmashApp.controllers')
   	$location.path("/user_roles");
   };
 
+  $scope.routeToCuisines = function(){
+    $location.path("/cuisines");
+  };
+
 }]);

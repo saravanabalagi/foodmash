@@ -175,6 +175,12 @@
                     <md-option ng-repeat="dish_type in dish_types" value="{{dish_type.id}}">{{dish_type.name}}</md-option>
                   </md-select>
                 </md-input-container>
+                <md-input-container flex>
+                  <label>Cuisine</label>
+                  <md-select ng-model="dish.cuisine_id">
+                    <md-option ng-repeat="cuisine in cuisines" value="{{cuisine.id}}">{{cuisine.name}}</md-option>
+                  </md-select>
+                </md-input-container>
                 <div layout="row" layout-align="center center" layout-padding>
                   <md-button class="md-icon-button" layout-padding ng-click="dishesAddCross=false">
                     <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
@@ -195,6 +201,7 @@
                   <md-content flex>{{dish.price}}</md-content>
                   <md-content flex>{{dish.description}}</md-content>
                   <md-content flex>{{dish.dish_type.name}}</md-content>
+                   <md-content flex>{{dish.cuisine.name}}</md-content>
                   <div layout="row" layout-align="center center">
                     <md-button class="md-icon-button" ng-click="setUpdate(dish); dishUpdateShow=!dishUpdateShow">
                       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
@@ -226,6 +233,12 @@
                       <label>Type</label>
                       <md-select ng-model="updatedDish.dish_type_id">
                         <md-option ng-repeat="dish_type in dish_types" value="{{dish_type.id}}">{{dish_type.name}}</md-option>
+                      </md-select>
+                    </md-input-container>
+                    <md-input-container flex>
+                      <label>Cuisine</label>
+                      <md-select ng-model="updatedDish.cuisine_id">
+                        <md-option ng-repeat="cuisine in cuisines" value="{{cuisine.id}}">{{cuisine.name}}</md-option>
                       </md-select>
                     </md-input-container>
                     <md-button class="md-icon-button" ng-click="dishUpdateShow = !dishUpdateShow; dishUpdateCross = false">

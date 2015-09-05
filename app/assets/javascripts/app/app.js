@@ -58,6 +58,10 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			controller: 'DishTypesController',
 			templateUrl: '/templates/dish_types.html'
 		})
+		.when('/cuisines', {
+			controller: 'CuisinesController',
+			templateUrl: '/templates/cuisines.html'
+		})
 		.when('/restaurants', {
 			controller: 'RestaurantsController',
 			templateUrl: '/templates/restaurants.html'

@@ -2,10 +2,11 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('DishesController', ['$scope', 'Dish','$q', 'toaster','DishType', function($scope, Dish, $q, toaster, DishType){
+.controller('DishesController', ['$scope', 'Dish','$q', 'toaster','DishType','Cuisine', function($scope, Dish, $q, toaster, DishType, Cuisine){
 
 	$scope.dishes = {};
 	$scope.dish_types = {};
+	$scope.cuisines = {};
 	$scope.dish = new Dish;
 	$scope.updatedDish = new Dish;
 
@@ -17,6 +18,16 @@ angular.module('foodmashApp.controllers')
 		}
 	}, function(err){
 		$scope.dish_types = null;
+	});
+
+	Cuisine.query().then(function(cuisines){
+		if(cuisines.length > 0){
+		  $scope.cuisines = cuisines;		
+		}else{
+		  $scope.cuisines = null;
+		}
+	}, function(err){
+		$scope.cuisines = null;
 	});
 
 	$scope.loadDishes = function(restaurant_id){

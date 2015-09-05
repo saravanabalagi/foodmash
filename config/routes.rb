@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     resources :combo_option_dishes
 
     resources :dish_types
+
+    resources :cuisines
     
     resources :dishes do 
       collection do 
@@ -67,7 +69,11 @@ Rails.application.routes.draw do
         end
       end
       #combos
-      resources :combos, only: [:index, :show]
+      resources :combos do 
+        collection do 
+          post '/', to: 'combos#index'
+        end
+      end
       #users
       resources :users, only: [:index, :show]
       #dishes_types
