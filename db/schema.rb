@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150904132804) do
+ActiveRecord::Schema.define(version: 20150905050056) do
 
   create_table "cart_delivery_addresses", force: :cascade do |t|
     t.integer  "cart_id"
@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(version: 20150904132804) do
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
     t.boolean  "available",       default: true
+    t.text     "description"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -115,10 +116,10 @@ ActiveRecord::Schema.define(version: 20150904132804) do
     t.string   "item_type"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.integer  "category_id"
-    t.string   "category_type"
     t.string   "aasm_state"
     t.integer  "quantity",      default: 1
+    t.integer  "category_id"
+    t.string   "category_type"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -188,7 +189,6 @@ ActiveRecord::Schema.define(version: 20150904132804) do
     t.datetime "updated_at",                            null: false
     t.string   "mobile_no"
     t.string   "user_token"
-    t.string   "android_id"
     t.boolean  "offers",                 default: true
     t.string   "dob"
     t.string   "otp"

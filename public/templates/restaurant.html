@@ -165,6 +165,10 @@
                   <label>Price</label>
                   <input type="text" ng-model="dish.price" />
                 </md-input-container>
+                 <md-input-container flex>
+                  <label>Description</label>
+                  <input type="text" ng-model="dish.description" />
+                </md-input-container>
                 <md-input-container flex>
                   <label>Type</label>
                   <md-select ng-model="dish.dish_type_id">
@@ -189,6 +193,7 @@
                 <div layout="row" layout-padding layout-align="center center" ng-hide="dishUpdateShow">
                   <md-content flex>{{dish.name}}</md-content>
                   <md-content flex>{{dish.price}}</md-content>
+                  <md-content flex>{{dish.description}}</md-content>
                   <md-content flex>{{dish.dish_type.name}}</md-content>
                   <div layout="row" layout-align="center center">
                     <md-button class="md-icon-button" ng-click="setUpdate(dish); dishUpdateShow=!dishUpdateShow">
@@ -212,6 +217,10 @@
                     <md-input-container flex>
                       <label>Price</label>
                       <input ng-model="updatedDish.price" />
+                    </md-input-container>
+                     <md-input-container flex>
+                      <label>Description</label>
+                      <input type="text" ng-model="updatedDish.description" />
                     </md-input-container>
                     <md-input-container flex>
                       <label>Type</label>

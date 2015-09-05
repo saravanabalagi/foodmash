@@ -45,6 +45,22 @@ angular.module('foodmashApp.controllers')
 		return d.promise;
 	};
 
+	$scope.updateActiveState = function(combo, active){
+		var d = $q.defer();
+		combo.update({active: active}).then(function(response){
+			toaster.pop('success', 'Combo was updated!');
+			var index = $scope.combos.indexOf(combo);
+			if(angular.isNumber(index)){
+				$scope.combos[index] = combo;
+			}
+			d.resolve(response);
+		}, function(err){
+			toaster.pop('error', 'Combo was not updated!');
+			d.reject(err);
+		});
+		return d.promise;
+	};
+
 	$scope.setUpdate = function(combo){
 		$scope.updatedCombo = angular.copy(combo);
 	};

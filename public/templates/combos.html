@@ -30,6 +30,10 @@
       <label>description</label>
       <input ng-model="combo.description" />
     </md-input-container>
+    <md-input-container flex>
+      <md-switch ng-model="combo.active">
+      </md-switch>
+    </md-input-container>
     <md-button class="md-icon-button" ng-click="addCross=false">
       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
     </md-button>
@@ -48,6 +52,7 @@
       <md-content flex class="rupee">{{combo.price}}</md-content>
       <md-content flex>{{combo.group_size}}</md-content>
       <md-content flex>{{combo.description}}</md-content>
+      <md-content flex><md-switch ng-model="combo.active" ng-change="updateActiveState(combo, combo.active)"></md-switch></md-content>
       <md-button class="md-icon-button" ng-click="updateShow = !updateShow; setUpdate(combo)">
         <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
       </md-button>
@@ -76,6 +81,10 @@
       <md-input-container flex>
         <label>description</label>
         <input ng-model="updatedCombo.description" />
+      </md-input-container>
+      <md-input-container flex>
+        <md-switch ng-model="updatedCombo.active">
+      </md-switch>
       </md-input-container>
       <md-button class="md-icon-button" ng-click="updateShow = !updateShow; updateCross = false">
         <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
