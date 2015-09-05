@@ -33,6 +33,11 @@ angular.module('foodmashApp.controllers')
 			$scope.order.update().then(function(r){
 				toaster.pop('success', "Order was updated");
 				$scope.cart.total = $scope.order.cart.total;
+				var index = $scope.cart.orders.indexOf($scope.order);
+				console.log(index);
+				if(angular.isNumber(index)){
+					$scope.cart.orders[index] = $scope.order.quantity;
+				}
 				d.resolve(r);
 			}, function(err){
 				toaster.pop('error', 'Order was not updated!');
