@@ -13,7 +13,7 @@ class Api::V1::OrdersController < ApiApplicationController
 		end
 	end
 
-	def destroy 
+	def destroy
 		if @order and @order.destroy!
 			render status: 201, json: {success: true}
 		else
@@ -23,7 +23,7 @@ class Api::V1::OrdersController < ApiApplicationController
 
 	private
 	def set_order
-		@order = Order.find params[:data][:id]		
+		@order = Order.find params[:data][:order][:id]
 	end
 
 	def update_order_params
