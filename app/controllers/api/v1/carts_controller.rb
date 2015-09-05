@@ -5,6 +5,15 @@ class Api::V1::CartsController < ApiApplicationController
 	before_filter :set_or_create_cart, only: [:index, :add_to_cart]
 	respond_to :json
 
+	def history
+		@carts = @current_user.carts if @current_user
+		if @carts
+			render status: 200, json: {success: true, data: @carts.as_json(only: [:total, :id, :aasm_state])}
+		else
+			render status: 404, json: {success: false, error: "Could not fetch carts history!"}
+		end
+	end
+
 	def index
 		if @cart and @cart.save!
 			render status: 200, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description]}], only: [:id, :quantity, :total]} }, only: [:id, :total]) }

@@ -97,6 +97,7 @@ Rails.application.routes.draw do
       #carts
       resources :carts do 
         collection do 
+          post '/history', to: 'carts#history'
           post '/', to: 'carts#index'
           post '/add', to: 'carts#add_to_cart'
           post '/remove', to: 'carts#remove_from_cart'

@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   validates :email, format: {with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/}
   validates :mobile_no, presence: true, length: {is: 10}, numericality: {only_integer: true}, uniqueness: true
   before_create :generate_user_token
-  
+
   def ability
     @ability ||= Ability.new(self)
   end

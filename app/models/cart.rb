@@ -10,6 +10,7 @@ class Cart < ActiveRecord::Base
 	aasm do
 	  state :not_started, :initial => true
 	  state :submitted
+	  state :cancelled
 	  state :purchased
 	  state :ordered
 	  state :dispatched
@@ -20,7 +21,7 @@ class Cart < ActiveRecord::Base
 	  end
 
 	  event :cancel do
-	    transitions :from => :submitted, :to => :not_started
+	    transitions :from => :all, :to => :cancelled
 	  end
 
 	  event :purchase do
