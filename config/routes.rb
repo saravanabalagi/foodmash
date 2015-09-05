@@ -42,6 +42,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :orders
+
     get 'users', to: 'users#index'
     put 'users/:id',to: 'users#update' 
   end

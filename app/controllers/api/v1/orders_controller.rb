@@ -1,7 +1,7 @@
 class Api::V1::OrdersController < ApiApplicationController
 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
 	prepend_before_filter :authenticate_user_from_token!
-	before_filter :set_order, only: [:update, :destroy, :show]
+	before_filter :set_order, only: [:update, :destroy]
 	respond_to :json
 
 	def update
