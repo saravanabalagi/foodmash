@@ -5,7 +5,7 @@ class Web::CombosController < ApplicationController
 	def index
 		@combos = Combo.where(params.permit(:id, :name))
 		if @combos 
-			render status: 200, json: @combos.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name]} } , only: :id} }, only: [:id, :name, :description, :priority]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :description] } }, only: :id } } ], only: [:name, :price, :id, :no_of_purchases, :description, :group_size])
+			render status: 200, json: @combos.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name]} } , only: :id} }, only: [:id, :name, :description, :priority]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :description] } }, only: [:id, :priority] } } ], only: [:name, :price, :id, :no_of_purchases, :description, :group_size])
 		else
 			render status: 404, json: {error: 'Combos not found!'}
 		end
