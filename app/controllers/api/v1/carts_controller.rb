@@ -1,8 +1,7 @@
 class Api::V1::CartsController < ApiApplicationController
 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 	prepend_before_filter :authenticate_user_from_token!
-	before_filter :set_cart, only: [:remove_from_cart, :destroy]
-	before_filter :set_or_create_cart, only: [:index, :add_to_cart]
+	before_filter :set_or_create_cart, only: [:index, :add_to_cart, :remove_from_cart, :destroy]
 	respond_to :json
 
 	def history

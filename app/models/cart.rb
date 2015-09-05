@@ -10,7 +10,6 @@ class Cart < ActiveRecord::Base
 	aasm do
 	  state :not_started, :initial => true
 	  state :submitted
-	  state :cancelled
 	  state :purchased
 	  state :ordered
 	  state :dispatched
@@ -21,7 +20,7 @@ class Cart < ActiveRecord::Base
 	  end
 
 	  event :cancel do
-	    transitions :from => :all, :to => :cancelled
+	    transitions :from => :submitted, :to => :not_started
 	  end
 
 	  event :purchase do
@@ -133,7 +132,7 @@ class Cart < ActiveRecord::Base
 	end
 
 	def remove_combo_from_mobile(combo_id)
-		current_orders = Combo.find(combo_id).orders
+		current_orders = self.orders.where(product_id: combo_id)
 		if current_orders.present?
 			current_orders.last.destroy!
 		end

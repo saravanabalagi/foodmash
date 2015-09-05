@@ -15,7 +15,7 @@ class ApiApplicationController < ActionController::Base
     return user_token_denied unless user_token
     user = User.find_by(user_token: params[:auth_user_token])
     return user_denied unless user
-    session = user.sessions.where(session_token: params[:auth_session_token]).first
+    session = user.sessions.find_by(session_token: params[:auth_session_token])
     permission_denied unless session
     if user and user_token and android_token
       @current_user = user
