@@ -34,6 +34,7 @@ angular.module('foodmashApp.directives')
          .then(function(){
          	 $scope.currentUser = null;
            toaster.pop('error', 'Signed Out!');
+           $location.path("/");
         });
       };
 
