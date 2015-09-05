@@ -31,13 +31,10 @@ angular.module('foodmashApp.controllers')
 			$scope.order = response[0];
 			$scope.order.quantity = quantity;
 			$scope.order.update().then(function(r){
-				toaster.pop('success', "Order was updated");
 				$scope.cart.total = $scope.order.cart.total;
-				var index = $scope.cart.orders.indexOf($scope.order);
-				console.log(index);
-				if(angular.isNumber(index)){
-					$scope.cart.orders[index] = $scope.order.quantity;
-				}
+				var index = findIndexOfOrder();
+				$scope.cart.orders[index].quantity = $scope.order.quantity;
+				toaster.pop('success', "Order was updated");
 				d.resolve(r);
 			}, function(err){
 				toaster.pop('error', 'Order was not updated!');
@@ -48,6 +45,15 @@ angular.module('foodmashApp.controllers')
 			d.reject(err);
 		});
 		return d.promise;
+	};
+
+	function findIndexOfOrder(){
+		for(var i=0;i<$scope.cart.orders.length; i++){
+			if($scope.order.id == $scope.cart.orders[i].id){
+				return i;
+			}
+		}
+		return null;
 	};
 
 }]);
