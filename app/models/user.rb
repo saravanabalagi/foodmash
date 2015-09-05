@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
     end while Session.exists?(session_token: session_token)
     return session_token
   end
-  
+
   def generate_otp
     otp = nil
     begin 
@@ -52,7 +52,6 @@ class User < ActiveRecord::Base
   end
   
   private
-
 
   def generate_user_token
     begin
