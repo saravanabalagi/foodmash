@@ -48,7 +48,6 @@ gem 'aws-sdk', '~> 2'
 gem 'tzinfo-data'
 
 group :production do
-  gem 'therubyracer'
   gem 'execjs'
   gem 'pg'
   gem 'rails_12factor'

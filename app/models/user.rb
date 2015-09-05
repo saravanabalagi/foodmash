@@ -34,8 +34,15 @@ class User < ActiveRecord::Base
     end while Session.exists?(session_token: session_token)
     return session_token
   end
-  
-  
+
+  def generate_otp_token(otp)
+    reset_password_token = nil
+    begin
+      reset_password_token = SecureRandom.hex(otp.to_i)[0..16]
+    end while self.class.exists?(reset_password_token: reset_password_token)
+    return reset_password_token
+  end
+
   private
 
   def generate_otp
@@ -46,14 +53,6 @@ class User < ActiveRecord::Base
     return otp
   end
   
-  def generate_otp_token(otp)
-    reset_password_token = nil
-    begin 
-      reset_password_token = SecureRandom.hex(otp.to_i)[0..16]
-    end while self.class.exists?(reset_password_token: reset_password_token)
-    return reset_password_token
-  end
-
   def generate_user_token
     begin
       self.user_token = SecureRandom.hex(64)
