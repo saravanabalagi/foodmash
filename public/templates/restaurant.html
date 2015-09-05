@@ -181,6 +181,10 @@
                     <md-option ng-repeat="cuisine in cuisines" value="{{cuisine.id}}">{{cuisine.name}}</md-option>
                   </md-select>
                 </md-input-container>
+                <md-input-container flex>
+                  <label>Label</label>
+                  <input type="text" ng-model="dish.label" />
+                </md-input-container>
                 <div layout="row" layout-align="center center" layout-padding>
                   <md-button class="md-icon-button" layout-padding ng-click="dishesAddCross=false">
                     <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
@@ -202,6 +206,8 @@
                   <md-content flex>{{dish.description}}</md-content>
                   <md-content flex>{{dish.dish_type.name}}</md-content>
                    <md-content flex>{{dish.cuisine.name}}</md-content>
+                   <md-content flex>{{dish.label}}</md-content>
+
                   <div layout="row" layout-align="center center">
                     <md-button class="md-icon-button" ng-click="setUpdate(dish); dishUpdateShow=!dishUpdateShow">
                       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
@@ -240,6 +246,10 @@
                       <md-select ng-model="updatedDish.cuisine_id">
                         <md-option ng-repeat="cuisine in cuisines" value="{{cuisine.id}}">{{cuisine.name}}</md-option>
                       </md-select>
+                    </md-input-container>
+                    <md-input-container flex>
+                      <label>Label</label>
+                      <input type="text" ng-model="updatedDish.label" />
                     </md-input-container>
                     <md-button class="md-icon-button" ng-click="dishUpdateShow = !dishUpdateShow; dishUpdateCross = false">
                       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
