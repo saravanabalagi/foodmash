@@ -32,7 +32,7 @@ class Combo < ActiveRecord::Base
 		self.combo_options.each { |combo_option| dishes << combo_option.dishes }
 		labels = dishes.flatten.map(&:label)
 		if labels.include? "non-veg"
-			self.label = "non_veg"
+			self.label = "non-veg"
 		elsif labels.include? "egg"
 			self.label =  "egg"
 		else

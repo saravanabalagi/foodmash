@@ -93,6 +93,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
   end
 
   def reset_password_from_token
+    return invalid_data unless params[:data][:user][:otp_token]
   	user = User.find_by(reset_password_token: params[:data][:user][:otp_token])
   	user.password = params[:data][:user][:password]
   	user.password_confirmation = params[:data][:user][:password_confirmation]

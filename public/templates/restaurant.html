@@ -181,10 +181,14 @@
                     <md-option ng-repeat="cuisine in cuisines" value="{{cuisine.id}}">{{cuisine.name}}</md-option>
                   </md-select>
                 </md-input-container>
-                <md-input-container flex>
-                  <label>Label</label>
-                  <input type="text" ng-model="dish.label" />
-                </md-input-container>
+                 <md-input-container flex>
+                      <label>Label</label>
+                      <md-select ng-model="dish.label">
+                        <md-option value="veg">Veg</md-option>
+                        <md-option value="non-veg">Non Veg</md-option>
+                        <md-option value="egg">Egg</md-option>
+                      </md-select>
+                    </md-input-container>
                 <div layout="row" layout-align="center center" layout-padding>
                   <md-button class="md-icon-button" layout-padding ng-click="dishesAddCross=false">
                     <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
@@ -249,7 +253,11 @@
                     </md-input-container>
                     <md-input-container flex>
                       <label>Label</label>
-                      <input type="text" ng-model="updatedDish.label" />
+                      <md-select ng-model="updatedDish.label">
+                        <md-option value="veg">Veg</md-option>
+                        <md-option value="non-veg">Non Veg</md-option>
+                        <md-option value="egg">Egg</md-option>
+                      </md-select>
                     </md-input-container>
                     <md-button class="md-icon-button" ng-click="dishUpdateShow = !dishUpdateShow; dishUpdateCross = false">
                       <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
