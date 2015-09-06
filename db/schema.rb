@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150905131735) do
+ActiveRecord::Schema.define(version: 20150906112700) do
 
   create_table "cart_delivery_addresses", force: :cascade do |t|
     t.integer  "cart_id"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20150905131735) do
     t.integer  "packaging_centre_id"
     t.boolean  "active",              default: false
     t.boolean  "available"
+    t.string   "label"
   end
 
   create_table "contact_us", force: :cascade do |t|
@@ -124,10 +125,10 @@ ActiveRecord::Schema.define(version: 20150905131735) do
     t.string   "item_type"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.integer  "category_id"
-    t.string   "category_type"
     t.string   "aasm_state"
     t.integer  "quantity",      default: 1
+    t.integer  "category_id"
+    t.string   "category_type"
   end
 
   create_table "orders", force: :cascade do |t|

@@ -7,6 +7,7 @@ class Combo < ActiveRecord::Base
 	has_many :orders, as: :product
 	before_destroy :ensure_combo_not_referenced
 	before_save :check_for_availability
+	before_save :update_label
 
 	def check_for_availability
 		if self.combo_options.count > 0
@@ -25,17 +26,17 @@ class Combo < ActiveRecord::Base
 		return true
 	end
 
-	def label
+	def update_label
 		dishes = []
 		self.combo_dishes.each {|combo_dish| dishes << combo_dish.dish}
 		self.combo_options.each { |combo_option| dishes << combo_option.dishes }
 		labels = dishes.flatten.map(&:label)
 		if labels.include? "non-veg"
-			return "non-veg"
+			self.label = "non_veg"
 		elsif labels.include? "egg"
-			return "egg"
+			self.label =  "egg"
 		else
-			return "veg"
+			self.label =  "veg"
 		end
 	end
 
