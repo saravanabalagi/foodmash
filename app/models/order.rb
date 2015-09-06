@@ -7,6 +7,7 @@ class Order < ActiveRecord::Base
 	validates :product, presence: true
 	after_save :update_order_items
 	after_save :update_cart
+	after_destroy :update_cart
 	before_save :total_price
 	include AASM
 
@@ -31,7 +32,6 @@ class Order < ActiveRecord::Base
 
 	def update_cart
 		self.cart.save!
-		return true
 	end
 
 	def update_order_items
@@ -40,6 +40,6 @@ class Order < ActiveRecord::Base
 
 	def total_price
 		self.total = self.product.price * quantity
-		true
+		return true
 	end
 end
