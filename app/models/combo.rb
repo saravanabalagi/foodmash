@@ -38,6 +38,7 @@ class Combo < ActiveRecord::Base
 		else
 			self.label =  "veg"
 		end
+		return true
 	end
 
 	private
