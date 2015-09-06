@@ -9,6 +9,7 @@ class Dish < ActiveRecord::Base
   validates :restaurant_id, presence: true
   validates :dish_type_id, presence: true
   validates :label, presence: true
+  after_save :update_combos_on_save
 
   def belongs_to_combos
 	 combos_from_cos = Combo.find_by_sql("select * from Combos where Combos.id in 
@@ -20,4 +21,18 @@ class Dish < ActiveRecord::Base
 
    return (combos_from_cds + combos_from_cos).uniq
   end
+
+  def update_combos_on_save
+    if self.label_changed?
+     combos_from_cos = Combo.find_by_sql("select * from Combos where Combos.id in 
+        (select Combo_Options.combo_id from Combo_Options where Combo_Options.id in  
+        (select Combo_Option_Dishes.combo_option_id from Dishes inner join Combo_Option_Dishes where 
+        #{self.id} = Combo_Option_Dishes.dish_id))")
+
+     combos_from_cds = self.combos
+
+    (combos_from_cds + combos_from_cos).uniq.each {|c| c.save!}
+    end
+  end
+
 end
