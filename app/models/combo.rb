@@ -25,6 +25,20 @@ class Combo < ActiveRecord::Base
 		return true
 	end
 
+	def label
+		dishes = []
+		self.combo_dishes.each {|combo_dish| dishes << combo_dish.dish}
+		self.combo_options.each { |combo_option| dishes << combo_option.dishes }
+		labels = dishes.flatten.map(&:label)
+		if labels.include? "non-veg"
+			return "non-veg"
+		elsif labels.include? "egg"
+			return "egg"
+		else
+			return "veg"
+		end
+	end
+
 	private
 	def ensure_combo_not_referenced
 		if orders.empty?

@@ -8,6 +8,7 @@ class Dish < ActiveRecord::Base
   has_many :combo_dishes
   validates :restaurant_id, presence: true
   validates :dish_type_id, presence: true
+  validates :label, presence: true
 
   def belongs_to_combos
 	 combos_from_cos = Combo.find_by_sql("select * from Combos where Combos.id in 
