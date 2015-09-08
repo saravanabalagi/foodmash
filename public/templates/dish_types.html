@@ -28,35 +28,7 @@
               <!-- for loop for listing -->
 
               <!-- item  -->
-              <div ng-repeat="dish_type in dish_types">
-              <div layout="row" layout-padding layout-align="center center" ng-hide="updateShow">
-                <md-content flex>{{dish_type.name}}</md-content>
-                <div layout="row" layout-align="center center">
-                  <md-button class="md-icon-button" ng-click="updateShow = !updateShow; setUpdate(dish_type)">
-                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
-                  </md-button>
-                  <md-button class="md-icon-button" ng-click="deleteDishType(dish_type)">
-                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
-                  </md-button>
-                </div>
-              </div>
-
-              <form layout="row" name="updateDishTypeForm" ng-submit="updateDishType(dish_type, updateCross)" ng-init="updateShow=false; updateCross=false" ng-show="updateShow">
-               <md-input-container flex>
-                   <label>Dish Type</label>
-                   <input ng-model="updatedDishType.name" type="text" />
-               </md-input-container>
-               <div layout="row" layout-align="center center" layout-padding>
-                 <md-button class="md-icon-button" layout-padding ng-click="updateShow = !updateShow; updateCross=false">
-                   <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
-                 </md-button>
-                 <md-button class="md-icon-button" layout-padding ng-click="updateShow = !updateShow; updateCross = true">
-                   <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cross.svg"></md-icon>
-                 </md-button>
-               </div>
-              </form>
-
-            </div>
+              <dish-type ng-repeat="dish_type in dish_types"> </dish-type>
               <!-- item ends -->
               <!-- for loop ends -->
               

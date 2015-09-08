@@ -125,10 +125,10 @@ ActiveRecord::Schema.define(version: 20150906112700) do
     t.string   "item_type"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.string   "aasm_state"
-    t.integer  "quantity",      default: 1
     t.integer  "category_id"
     t.string   "category_type"
+    t.string   "aasm_state"
+    t.integer  "quantity",      default: 1
   end
 
   create_table "orders", force: :cascade do |t|
