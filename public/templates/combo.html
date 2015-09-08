@@ -109,54 +109,7 @@
                  <!-- for loop for listing -->
 
                  <!-- item 1 -->
-                 <div ng-repeat="combo_dish in combo_dishes">
-                   <div layout="row" layout-padding layout-align="center center" ng-init="comboDishUpdateShow=false" ng-hide="comboDishUpdateShow">
-                     <md-content flex>{{combo_dish.dish_type.name}}</md-content>
-                     <md-content flex>{{combo_dish.dish.name}}</md-content>
-                     <md-content flex>{{combo_dish.priority}}</md-content>
-                     <div layout="row" layout-align="center center">
-                       <md-button class="md-icon-button" ng-click="setUpdate(combo_dish); comboDishUpdateShow=!comboDishUpdateShow">
-                         <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
-                       </md-button>
-                       <md-button class="md-icon-button" ng-click="deleteComboDish(combo_dish)">
-                         <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
-                       </md-button>
-                     </div>
-                   </div>
-
-                   <form role="form" name="comboDishUpdateForm" ng-submit="updateComboDish(combo_dish, comboDishUpdateCross)" ng-init="comboDishUpdateCross = false" ng-show="comboDishUpdateShow">
-                     <div layout="row" layout-padding layout-align="center center">
-                       <md-button class="md-icon-button">
-                         <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg"></md-icon>
-                       </md-button>
-                       <md-input-container flex>
-                         <label>Type</label>
-                         <md-select ng-model="updatedComboDish.dish_type_id" ng-change="loadDishesForUpdate(updatedComboDish.dish_type_id)">
-                           <md-option ng-repeat="dish_type in dish_types" value="{{dish_type.id}}">{{dish_type.name}}</md-option>
-                         </md-select>
-                       </md-input-container>
-                       <md-input-container flex>
-                         <label>Dish</label>
-                         <md-select ng-model="updatedComboDish.dish_id">
-                           <md-option ng-repeat="dish in dishesForUpdate" value="{{dish.id}}">{{dish.name}}   ({{dish.restaurant.name}} : {{dish.restaurant.branch}})
-                          </md-option>
-                        </md-select>
-                       </md-input-container>
-                       <md-input-container flex>
-                         <label>Priority</label>
-                         <input type="text" ng-model="updatedComboDish.priority" />
-                       </md-input-container>
-                       <md-button class="md-icon-button" ng-click="comboDishUpdateShow = !comboDishUpdateShow; comboDishUpdateCross = false">
-                         <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
-                       </md-button>
-                       <md-button class="md-icon-button" ng-click="comboDishUpdateShow = !comboDishUpdateShow; comboDishUpdateCross = true">
-                         <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cross.svg"></md-icon>
-                       </md-button>
-                     </div>
-                   </form>
-
-
-                 </div>
+                  <combo-dish ng-repeat="combo_dish in combo_dishes"> </combo-dish>
                  <!-- for loop ends -->
                  
          </div>
