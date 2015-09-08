@@ -14,9 +14,15 @@ class Dish < ActiveRecord::Base
   def belongs_to_combos
 	  combos = []
 
-    self.combo_options.each {|combo_option| combos << combo_option.combo if combo_option.combo.present?} if self.combo_options.present?
+    if self.combo_options.present?
+      self.combo_options.each {|combo_option| 
+        if combo_option.combo.present?
+          combos << combo_option.combo 
+        end 
+    } 
+    end
 
-    combos << self.combos if self.combos.present?
+    (combos << self.combos) if self.combos.present?
 
     combos = combos.uniq
 
@@ -27,9 +33,15 @@ class Dish < ActiveRecord::Base
     if self.label_changed?
       combos = []
 
-      self.combo_options.each {|combo_option| combos << combo_option.combo if combo_option.combo.present?} if self.combo_options.present?
+      if self.combo_options.present?
+        self.combo_options.each {|combo_option| 
+          if combo_option.combo.present?
+            combos << combo_option.combo 
+          end
+        }
+      end
 
-      combos << self.combos if self.combos.present?
+      (combos << self.combos) if self.combos.present?
 
      combos = combos.uniq
 
