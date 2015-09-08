@@ -29,7 +29,7 @@ gem 'cancan'
 # for change of states of resources
 gem 'aasm'
 # a lightweight alternative to Webrick server
-gem 'thin'
+gem 'passenger'
 # used for pretty printing of console objects
 gem 'awesome_print'
 # bootstrap css in sass
