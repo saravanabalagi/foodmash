@@ -5,26 +5,22 @@ class Cart < ActiveRecord::Base
 	has_many :order_items, through: :orders
 	has_many :orders, dependent: :destroy
 	before_save :update_total
+	after_save :update_orders
 	include AASM
 
 	aasm do
 	  state :not_started, :initial => true
-	  state :submitted
 	  state :purchased
 	  state :ordered
 	  state :dispatched
 	  state :delivered
 
-	  event :submit do
-	    transitions :from => :not_started, :to => :submitted
-	  end
-
 	  event :cancel do
-	    transitions :from => :submitted, :to => :not_started
+	    transitions :from => :purchased, :to => :not_started
 	  end
 
 	  event :purchase do
-	    transitions :from => :submitted, :to => :purchased
+	    transitions :from => :not_started, :to => :purchased
 	  end
 
 	  event :order do 
@@ -153,5 +149,17 @@ class Cart < ActiveRecord::Base
 	
 	def total_price
 		self.orders.to_a.sum {|order| order.total}
+	end
+
+	def update_orders
+		if self.purchased?	
+			self.orders.each {|order| order.product.update_attributes! no_of_purchases: order.quantity; order.order_items.each{|order_item| order_item.item.update_attributes! no_of_purchases: order_item.quantity} }
+		end
+		return true
+	end
+
+	def generate_order_id
+		self.order_id = "OD" + Digest::SHA1.hexdigest(Time.now.to_s)[0..9]
+		self.save!
 	end
 end

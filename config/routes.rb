@@ -111,6 +111,8 @@ Rails.application.routes.draw do
           post '/add', to: 'carts#add_to_cart'
           post '/remove', to: 'carts#remove_from_cart'
           post '/destroy', to: 'carts#destroy'
+          post '/purchase', to: 'carts#purchase'
+          post '/show', to: 'carts#show'
         end
       end
       #delivery_addresses
