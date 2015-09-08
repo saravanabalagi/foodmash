@@ -7,8 +7,6 @@ angular.module('foodmashApp.controllers')
 	$scope.dishes = {};
 	$scope.combo_option_dishes = {};
 	$scope.combo_option = {};
-	// $scope.selectedRestaurant = {};
-	// $scope.restaurantSelected = false;
 	$scope.combo_option_dish = new ComboOptionDish;
 
 	$scope.$on('$viewContentLoaded', function(){
