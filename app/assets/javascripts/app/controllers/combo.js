@@ -28,10 +28,6 @@ angular.module('foodmashApp.controllers')
 		}
 	});
 
-	$scope.routeToComboOption = function(combo_option){
-		$location.path("/combo_options/" + combo_option.id);
-	};
-
 	$scope.setUpdate = function(combo){
 		$scope.updatedCombo = angular.copy(combo);
 	};
