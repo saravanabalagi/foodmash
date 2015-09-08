@@ -8,7 +8,6 @@ angular.module('foodmashApp.controllers')
 	$scope.dish_types = {};
 	$scope.cuisines = {};
 	$scope.dish = new Dish;
-	$scope.updatedDish = new Dish;
 
 	DishType.query().then(function(dish_types){
 		if(dish_types.length > 0){
@@ -67,44 +66,6 @@ angular.module('foodmashApp.controllers')
 			$scope.dish = new Dish;
 			d.resolve(null);
 		}
-		return d.promise;
-	};
-
-	$scope.setUpdate = function(dish){
-		$scope.updatedDish = angular.copy(dish);
-	};
-
-	$scope.updateDish = function(dish, dishUpdateCross){
-		var d = $q.defer();
-		if(!dishUpdateCross){
-			$scope.updatedDish.update().then(function(response){
-				toaster.pop('success', 'Dish was updated!');
-				var index = $scope.dishes.indexOf(dish);
-				if(angular.isNumber(index)){
-					$scope.dishes[index] = $scope.updatedDish;
-				}
-				d.resolve(response);
-			}, function(err){
-				toaster.pop('error', 'Dish was not updated!');
-				d.reject(err);
-			});
-		}else{
-			$scope.updatedDish = new Dish;
-			d.resolve(null);
-		}
-		return d.promise;
-	};
-
-	$scope.deleteDish = function(dish){
-		var d = $q.defer();
-		dish.delete().then(function(response){
-			toaster.pop('success', 'Dish was deleted!');
-			$scope.dishes.splice($scope.dishes.indexOf(dish), 1);
-			d.resolve(response);
-		}, function(err){
-			toaster.pop('error', 'Dish was not deleted!');
-			d.reject(err);
-		});
 		return d.promise;
 	};
 
