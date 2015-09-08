@@ -12,28 +12,26 @@ class Dish < ActiveRecord::Base
   after_save :update_combos_on_save
 
   def belongs_to_combos
-	 combos_from_cos = Combo.find_by_sql("select * from Combos where Combos.id in 
-	  	(select Combo_Options.combo_id from Combo_Options where Combo_Options.id in  
-	  	(select Combo_Option_Dishes.combo_option_id from Dishes inner join Combo_Option_Dishes where 
-	  	#{self.id} = Combo_Option_Dishes.dish_id))")
+	  combos = []
 
-   combos_from_cds = self.combos
+    self.combo_options.each {|combo_option| combos << combo_option.combo} if self.combo_options.present?
 
-   combos = (combos_from_cds + combos_from_cos).uniq
+    combos << self.combos if self.combos.present?
 
-   return combos
+    combos = combos.uniq
+
+    return combos
   end
 
   def update_combos_on_save
     if self.label_changed?
-     combos_from_cos = Combo.find_by_sql("select * from Combos where Combos.id in 
-        (select Combo_Options.combo_id from Combo_Options where Combo_Options.id in  
-        (select Combo_Option_Dishes.combo_option_id from Dishes inner join Combo_Option_Dishes where 
-        #{self.id} = Combo_Option_Dishes.dish_id))")
+      combos = []
 
-     combos_from_cds = self.combos
+      self.combo_options.each {|combo_option| combos << combo_option.combo} if self.combo_options.present?
 
-     combos = (combos_from_cds + combos_from_cos).uniq
+      combos << self.combos if self.combos.present?
+
+     combos = combos.uniq
 
      combos.each {|c| c.save!} if combos.present?
     end
