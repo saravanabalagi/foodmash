@@ -93,11 +93,15 @@ class Cart < ActiveRecord::Base
 		end
 
 		future_order = self.orders.build(product_id: combo.id, product_type: "Combo", total: combo.price)
-		combo_info[:combo_options].each do |combo_option|
-			future_order.order_items.build(item_id: combo_option[:dish][:id], item_type: "Dish", category_id: combo_option[:id], category_type: "ComboOption")
+		if combo_info[:combo_options].present?
+			combo_info[:combo_options].each do |combo_option|
+				future_order.order_items.build(item_id: combo_option[:dish][:id], item_type: "Dish", category_id: combo_option[:id], category_type: "ComboOption")
+			end
 		end
-		combo_info[:combo_dishes].each do |combo_dish|
-			future_order.order_items.build(item_id: combo_dish[:dish][:id], item_type: "Dish", category_id: combo_dish[:id], category_type: "ComboDish")
+		if combo_info[:combo_dishes].present?
+			combo_info[:combo_dishes].each do |combo_dish|
+				future_order.order_items.build(item_id: combo_dish[:dish][:id], item_type: "Dish", category_id: combo_dish[:id], category_type: "ComboDish")
+			end
 		end
 		return future_order if future_order.save!
 	end
@@ -106,20 +110,24 @@ class Cart < ActiveRecord::Base
 		current_order_items_length = current_order.order_items.length
 		counting_length = 0
 
-		combo_info[:combo_options].each do |combo_option|
-			current_order.order_items.each do |order_item|
-				if order_item[:item_id] == combo_option[:dish][:id] and order_item[:category_id] == combo_option[:id]
-					counting_length += 1
-					break
+		if combo_info[:combo_options].present?
+			combo_info[:combo_options].each do |combo_option|
+				current_order.order_items.each do |order_item|
+					if order_item[:item_id] == combo_option[:dish][:id] and order_item[:category_id] == combo_option[:id]
+						counting_length += 1
+						break
+					end
 				end
 			end
 		end
-
-		combo_info[:combo_dishes].each do |combo_dish|
-			current_order.order_items.each do |order_item|
-				if order_item[:item_id] == combo_dish[:dish][:id] and order_item[:category_id] == combo_dish[:id]
-					counting_length += 1
-					break
+		
+		if combo_info[:combo_dishes].present?
+			combo_info[:combo_dishes].each do |combo_dish|
+				current_order.order_items.each do |order_item|
+					if order_item[:item_id] == combo_dish[:dish][:id] and order_item[:category_id] == combo_dish[:id]
+						counting_length += 1
+						break
+					end
 				end
 			end
 		end

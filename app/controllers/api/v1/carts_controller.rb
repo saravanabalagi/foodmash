@@ -1,7 +1,7 @@
 class Api::V1::CartsController < ApiApplicationController
 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 	prepend_before_filter :authenticate_user_from_token!
-	before_filter :set_or_create_cart, only: [:index, :add_to_cart, :remove_from_cart, :destroy]
+	before_filter :set_or_create_cart, only: [:index, :add_to_cart, :remove_from_cart, :destroy, :add_address]
 	respond_to :json
 
 	def history
@@ -14,7 +14,6 @@ class Api::V1::CartsController < ApiApplicationController
 	end
 
 	def add_address
-		@cart = Cart.find params[:data][:id]
 		@cartDelAdd = CartDeliveryAddress.new cart_id: @cart.id, delivery_address_id: params[:data][:delivery_address_id] if @cart
 		if @cartDelAdd and @cartDelAdd.save!
 			render status: 201, json: {success: true, message: "Added del address to cart!"}
