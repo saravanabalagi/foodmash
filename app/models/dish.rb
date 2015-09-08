@@ -45,7 +45,9 @@ class Dish < ActiveRecord::Base
 
      combos = combos.uniq
 
-     combos.each {|c| c.save!} if combos.present?
+      if combos.present?
+        combos.each {|c| c.save!} 
+      end
     end
     return true
   end
