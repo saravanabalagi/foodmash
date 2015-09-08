@@ -8,7 +8,7 @@ class Api::V1::CartsController < ApiApplicationController
 	def history
 		@carts = @current_user.carts if @current_user
 		if @carts
-			render status: 200, json: {success: true, data: @carts.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description]}], only: [:id, :quantity, :total]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state]) }
+			render status: 200, json: {success: true, data: @carts.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description]}], only: [:id, :quantity, :total]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at]) }
 		else
 			render status: 404, json: {success: false, error: "Could not fetch carts history!"}
 		end
@@ -16,7 +16,7 @@ class Api::V1::CartsController < ApiApplicationController
 
 	def show 
 		if @cart
-			render status: 200, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description]}], only: [:id, :quantity, :total]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state]) }
+			render status: 200, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description]}], only: [:id, :quantity, :total]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at]) }
 		else
 			render status: 404, json: {success: false, error: "Could not fetch order!"}
 		end
@@ -32,6 +32,7 @@ class Api::V1::CartsController < ApiApplicationController
 	end
 
 	def add_address
+		puts params[:data]
 		@cartDelAdd = CartDeliveryAddress.new cart_id: @cart.id, delivery_address_id: params[:data][:delivery_address_id] if @cart
 		if @cartDelAdd and @cartDelAdd.save!
 			render status: 201, json: {success: true, message: "Added del address to cart!"}
@@ -86,8 +87,8 @@ class Api::V1::CartsController < ApiApplicationController
 	end
 
 	def set_or_create_cart
-	  if @current_user
-	    @cart = @current_user.carts.where(aasm_state: 'not_started').first.presence || Cart.create(user_id: @current_user.id)
-	  end
+		if @current_user
+			@cart = @current_user.carts.where(aasm_state: 'not_started').first.presence || Cart.create(user_id: @current_user.id)
+	   end
 	end
 end
