@@ -1,0 +1,61 @@
+'use strict';
+
+angular.module('foodmashApp.directives')
+
+.directive('cuisine', ['toaster', 'Cuisine', '$q', function(toaster, Cuisine, $q){
+
+	return {
+
+		restrict: 'E',
+
+		templateUrl: '/templates/cuisine.html',
+
+		controller: ['$scope', 'toaster', 'Cuisine', '$q', function($scope, toaster, Cuisine, $q){
+
+			$scope.updatedCuisine = new Cuisine;
+
+			$scope.setUpdate = function(cuisine){
+				$scope.updatedCuisine = angular.copy(cuisine);
+			};
+
+			$scope.updateCuisine = function(cuisine, updateCross){
+				var d = $q.defer();
+				if(!updateCross){
+					if(!$scope.updateCuisineForm.$pristine){
+						$scope.updatedCuisine.update().then(function(response){
+							toaster.pop('success', 'Cuisine was successfully updated!');
+							var index = $scope.cuisines.indexOf(cuisine);
+							if(angular.isNumber(index)){
+								$scope.cuisines[index] = $scope.updatedCuisine;
+							}
+							d.resolve(response);
+						}, function(err){
+							toaster.pop('error', 'Cuisine was not updated!');
+							d.reject(err);
+						});
+					}else{
+						$scope.updatedCuisine = new Cuisine;
+						d.resolve(null);
+					}
+				}
+				return d.promise;
+			};
+
+			$scope.deleteCuisine= function(cuisine){
+				var d = $q.defer();
+				cuisine.delete().then(function(response){
+					$scope.cuisines.splice($scope.cuisines.indexOf(cuisine), 1);
+					toaster.pop('success', 'Cuisine was succussfully deleted!');
+					d.resolve(response);
+				}, function(err){
+					toaster.pop('error', 'Cuisine was not deleted!');
+					d.reject(err);
+				});
+				return d.promise;
+			};
+
+		}]
+
+	};
+
+}]);

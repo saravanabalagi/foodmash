@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('dishType', ['toaster', '$location', 'DishType', '$q', function(toaster, $location, DishType, $q){
+.directive('dishType', ['toaster', 'DishType', '$q', function(toaster, DishType, $q){
 
 	return {
 
@@ -10,7 +10,7 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/dish_type.html',
 
-		controller: ['$scope', 'toaster', '$location', 'DishType', '$q', function($scope, toaster,$location, DishType, $q){
+		controller: ['$scope', 'toaster', 'DishType', '$q', function($scope, toaster, DishType, $q){
 
 			$scope.updateDishType = new DishType;
 
