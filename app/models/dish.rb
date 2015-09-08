@@ -19,7 +19,9 @@ class Dish < ActiveRecord::Base
 
    combos_from_cds = self.combos
 
-   return (combos_from_cds + combos_from_cos).uniq
+   combos = (combos_from_cds + combos_from_cos).uniq
+
+   return combos
   end
 
   def update_combos_on_save
@@ -31,7 +33,9 @@ class Dish < ActiveRecord::Base
 
      combos_from_cds = self.combos
 
-    (combos_from_cds + combos_from_cos).uniq.each {|c| c.save!}
+     combos = (combos_from_cds + combos_from_cos).uniq
+
+     combos.each {|c| c.save!} if combos.present?
     end
   end
 

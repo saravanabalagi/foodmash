@@ -14,6 +14,7 @@ class Api::V1::CartsController < ApiApplicationController
 	end
 
 	def add_address
+		@cart = Cart.find params[:data][:id]
 		@cartDelAdd = CartDeliveryAddress.new cart_id: @cart.id, delivery_address_id: params[:data][:delivery_address_id] if @cart
 		if @cartDelAdd and @cartDelAdd.save!
 			render status: 201, json: {success: true, message: "Added del address to cart!"}
