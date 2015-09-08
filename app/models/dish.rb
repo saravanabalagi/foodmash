@@ -22,11 +22,11 @@ class Dish < ActiveRecord::Base
     } 
     end
 
-    (combos << self.combos) if self.combos.present?
+    if self.combos.present?
+      combos << self.combos
+    end
 
-    combos = combos.uniq
-
-    return combos
+    return combos.flatten.uniq
   end
 
   def update_combos_on_save
@@ -41,10 +41,12 @@ class Dish < ActiveRecord::Base
         }
       end
 
-      (combos << self.combos) if self.combos.present?
+      if self.combos.present?
+        combos << self.combos
+      end
 
-     combos = combos.uniq
-
+     combos = combos.flatten.uniq
+     
       if combos.present?
         combos.each {|c| c.save!} 
       end

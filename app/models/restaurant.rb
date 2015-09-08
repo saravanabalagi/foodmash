@@ -26,6 +26,6 @@ class Restaurant < ActiveRecord::Base
 	  	} 
 	  end
 
-	  return combos.uniq
+	  return combos.flatten.uniq
   end
 end
