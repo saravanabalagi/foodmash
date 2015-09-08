@@ -2,10 +2,9 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('RestaurantsController', ['$scope','Restaurant','$q','toaster','$location', function($scope, Restaurant, $q, toaster, $location){
+.controller('RestaurantsController', ['$scope','Restaurant','$q','toaster', function($scope, Restaurant, $q, toaster){
 	$scope.restaurant = new Restaurant;
 	$scope.restaurants = {};
-	$scope.updatedRestaurant = new Restaurant;
 
 	Restaurant.query().then(function(restaurants){
 		if(restaurants.length > 0){
@@ -16,10 +15,6 @@ angular.module('foodmashApp.controllers')
 	}, function(err){
 		$scope.restaurants = null;
 	});
-
-	$scope.routeToRestaurant = function(restaurant){
-		$location.path("/restaurants/" + restaurant.id);
-	};
 
 	$scope.addRestaurant = function(addCross){
 		var d = $q.defer();
@@ -41,41 +36,6 @@ angular.module('foodmashApp.controllers')
 			$scope.restaurant = new Restaurant;
 			d.resolve(null);
 		}
-		return d.promise;
-	};
-
-	$scope.setUpdate = function(restaurant){
-		$scope.updatedRestaurant = angular.copy(restaurant);
-	};
-
-	$scope.updateRestaurant = function(restaurant, updateCross){
-		var d = $q.defer();
-		if(!updateCross){
-			$scope.updatedRestaurant.update().then(function(response){
-				toaster.pop('success', 'Restaurant was updated!');
-				var index = $scope.restaurants.indexOf(restaurant);
-				if(angular.isNumber(index)){
-					$scope.restaurants[index] = $scope.updatedRestaurant;
-				}
-				d.resolve(response);
-			}, function(err){
-				toaster.pop('error', 'Restaurant failed to update!');
-				d.reject(err);
-			});
-		}
-		return d.promise;
-	};
-
-	$scope.deleteRestaurant = function(restaurant){
-		var d = $q.defer();
-		restaurant.delete().then(function(response){
-			$scope.restaurants.splice($scope.restaurants.indexOf(restaurant), 1);
-			toaster.pop('success', 'Restaurant was deleted!');
-			d.resolve(response);
-		}, function(err){
-			toaster.pop('alert', 'Restaurant was not deleted!');
-			d.reject(err);
-		});
 		return d.promise;
 	};
 
