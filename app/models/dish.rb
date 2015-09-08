@@ -37,6 +37,7 @@ class Dish < ActiveRecord::Base
 
      combos.each {|c| c.save!} if combos.present?
     end
+    return true
   end
 
 end
