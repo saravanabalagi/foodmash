@@ -33,7 +33,6 @@ class Api::V1::CartsController < ApiApplicationController
 	end
 
 	def add_address
-		return invalid_data unless params[:data][:delivery_address_id]
 		if @cartDelAdd and @cartDelAdd.save!
 			render status: 201, json: {success: true, message: "Added del address to cart!"}
 		else
@@ -87,12 +86,13 @@ class Api::V1::CartsController < ApiApplicationController
 	end
 
 	def set_cart_delivery_address
+		return invalid_data unless params[:data][:delivery_address_id]
 		@cartDelAdd = CartDeliveryAddress.find_by(cart_id: @cart.id) || CartDeliveryAddress.new(cart_id: @cart.id, delivery_address_id: params[:data][:delivery_address_id]) if @cart
 	end
 
 	def set_or_create_cart
-	  if @current_user
-	    @cart = @current_user.carts.where(aasm_state: 'not_started').first.presence || Cart.create(user_id: @current_user.id)
-	  end
+		if @current_user
+			@cart = @current_user.carts.where(aasm_state: 'not_started').first.presence || Cart.create(user_id: @current_user.id)
+	   end
 	end
 end
