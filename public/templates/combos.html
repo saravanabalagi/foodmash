@@ -43,59 +43,7 @@
   </div>
 </form>
 
-  <div ng-repeat="combo in combos">
-    <div layout="row" layout-padding layout-align="center center" ng-show="!updateShow">
-      <md-button class="md-icon-button">
-          <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg"></md-icon>
-        </md-button>
-      <md-content flex ng-click="routeToCombo(combo)">{{combo.name}}</md-content>
-      <md-content flex class="rupee">{{combo.price}}</md-content>
-      <md-content flex>{{combo.group_size}}</md-content>
-      <md-content flex>{{combo.description}}</md-content>
-      <md-content flex><md-switch ng-model="combo.active" ng-change="updateActiveState(combo, combo.active)"></md-switch></md-content>
-      <md-button class="md-icon-button" ng-click="updateShow = !updateShow; setUpdate(combo)">
-        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
-      </md-button>
-      <md-button class="md-icon-button" ng-click="deleteCombo(combo)">
-        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
-      </md-button>
-    </div>
-
-  <form role="form" name="comboUpdateForm" ng-submit="updateCombo(combo, updateCross)" ng-init="updateShow=false; updateCross = false" ng-show="updateShow">
-    <div layout="row" layout-padding layout-align="center center">
-      <md-button class="md-icon-button">
-        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg"></md-icon>
-      </md-button>
-      <md-input-container flex>
-        <label>name</label>
-        <input type="text" ng-model="updatedCombo.name" />
-      </md-input-container>
-      <md-input-container flex>
-        <label>price</label>
-        <input ng-model="updatedCombo.price" />
-      </md-input-container>
-       <md-input-container flex>
-        <label>group size</label>
-        <input type="text" ng-model="updatedCombo.group_size">
-      </md-input-container>
-      <md-input-container flex>
-        <label>description</label>
-        <input ng-model="updatedCombo.description" />
-      </md-input-container>
-      <md-input-container flex>
-        <md-switch ng-model="updatedCombo.active">
-      </md-switch>
-      </md-input-container>
-      <md-button class="md-icon-button" ng-click="updateShow = !updateShow; updateCross = false">
-        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
-      </md-button>
-      <md-button class="md-icon-button" ng-click="updateShow = !updateShow; updateCross = true">
-        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cross.svg"></md-icon>
-      </md-button>
-    </div>
-  </form>
-
-  </div>
+      <combo-list ng-repeat="combo in combos"> </combo-list>
         <!-- Combo ends -->
 
     </div>
