@@ -35,6 +35,7 @@ angular.module('foodmashApp.controllers')
 				var index = findIndexOfOrder();
 				if(angular.isNumber(index)){
 					$scope.cart.orders[index].quantity = $scope.order.quantity;
+					$scope.cart.orders[index].total = $scope.order.total;
 				}
 				toaster.pop('success', "Order was updated");
 				d.resolve(r);
