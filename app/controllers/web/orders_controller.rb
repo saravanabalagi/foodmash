@@ -21,7 +21,7 @@ class Web::OrdersController < ApplicationController
 
 	def destroy
 		if @order and @order.destroy!
-			render status: 200
+			render status: 200, json: @order.as_json(:include => :cart)
 		else
 			render status: 404, json: {error: "Could not find order with id #{params[:id]}"}
 		end

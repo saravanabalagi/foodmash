@@ -80,6 +80,7 @@ class Cart < ActiveRecord::Base
 	def add_combo_from_mobile(combo_info)
 		combo = Combo.find combo_info[:id]
 		current_orders = self.orders.where(product_id: combo.id)
+		
 		current_orders.each do |current_order|
 			if current_order and check_with_incoming_order_for_mobile(current_order, combo_info)
 				current_order.quantity += 1
@@ -89,16 +90,19 @@ class Cart < ActiveRecord::Base
 		end
 
 		future_order = self.orders.build(product_id: combo.id, product_type: "Combo", total: combo.price)
+
 		if combo_info[:combo_options].present?
 			combo_info[:combo_options].each do |combo_option|
 				future_order.order_items.build(item_id: combo_option[:dish][:id], item_type: "Dish", category_id: combo_option[:id], category_type: "ComboOption")
 			end
 		end
+
 		if combo_info[:combo_dishes].present?
 			combo_info[:combo_dishes].each do |combo_dish|
 				future_order.order_items.build(item_id: combo_dish[:dish][:id], item_type: "Dish", category_id: combo_dish[:id], category_type: "ComboDish")
 			end
 		end
+
 		return future_order if future_order.save!
 	end
 

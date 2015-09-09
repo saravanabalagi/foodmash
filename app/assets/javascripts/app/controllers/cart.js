@@ -33,7 +33,9 @@ angular.module('foodmashApp.controllers')
 			$scope.order.update().then(function(r){
 				$scope.cart.total = $scope.order.cart.total;
 				var index = findIndexOfOrder();
-				$scope.cart.orders[index].quantity = $scope.order.quantity;
+				if(angular.isNumber(index)){
+					$scope.cart.orders[index].quantity = $scope.order.quantity;
+				}
 				toaster.pop('success', "Order was updated");
 				d.resolve(r);
 			}, function(err){
@@ -42,6 +44,29 @@ angular.module('foodmashApp.controllers')
 			});
 		}, function(err){
 			toaster.pop('error', "Order was not found!");
+			d.reject(err);
+		});
+		return d.promise;
+	};
+
+	$scope.deleteOrder = function(order){
+		var d = $q.defer();
+		Order.query({id: order.id, cart_id: $scope.cart.id}).then(function(response){
+			$scope.order = response[0];
+			$scope.order.delete().then(function(response){
+				$scope.cart.total = $scope.order.cart.total;
+				var index = findIndexOfOrder();
+				if(angular.isNumber(index)){
+					$scope.cart.orders.splice(index, 1);
+				}
+				toaster.pop('success', 'Order has been removed from cart!');
+				d.resolve(response);
+			}, function(err){
+				toaster.pop('error', 'Order was not removed from cart!');
+				d.reject(err);
+			});
+		}, function(err){
+			toaster.pop('error', 'Order was not found!');
 			d.reject(err);
 		});
 		return d.promise;
