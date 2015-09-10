@@ -1,4 +1,5 @@
 class Order < ActiveRecord::Base
+	resourcify
 	has_many :order_items, dependent: :destroy
 	belongs_to :cart
 	belongs_to :product, polymorphic: true

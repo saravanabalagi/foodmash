@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable
 
   delegate :can?, :cannot?, to: :ability
 
@@ -11,11 +11,12 @@ class User < ActiveRecord::Base
   has_many :carts
   has_many :sessions
   has_many :delivery_addresses, dependent: :destroy
-  validates_presence_of :email, :mobile_no, :name, offers: {default: true}
-  validates :name, length: {minimum: 2}
-  validates :email, format: {with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/}
-  validates :mobile_no, presence: true, length: {is: 10}, numericality: {only_integer: true}, uniqueness: true
+  validates_presence_of :email, :mobile_no, :name, offers: {default: true}, unless: :guest?
+  validates :name, length: {minimum: 2}, unless: :guest?
+  validates :email, format: {with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/}, uniqueness: true, unless: :guest?
+  validates :mobile_no, presence: true, length: {is: 10}, numericality: {only_integer: true}, uniqueness: true, unless: :guest?
   before_create :generate_user_token
+  after_create :assign_default_role
 
   def ability
     @ability ||= Ability.new(self)
@@ -49,6 +50,10 @@ class User < ActiveRecord::Base
       reset_password_token = SecureRandom.hex(otp.to_i)[0..16]
     end while self.class.exists?(reset_password_token: reset_password_token)
     return reset_password_token
+  end
+
+  def assign_default_role
+    self.add_role(:customer)
   end
   
   private

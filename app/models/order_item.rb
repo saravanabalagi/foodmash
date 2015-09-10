@@ -1,4 +1,5 @@
 class OrderItem < ActiveRecord::Base
+	resourcify
 	belongs_to :order
 	delegate :restaurant, to: :item
 	belongs_to :item, polymorphic: true
