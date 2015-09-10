@@ -11,6 +11,7 @@ angular.module('foodmashApp.controllers')
   .then(function(users) {
     if(users.length > 0){
       $scope.user = users[0];
+      console.log($scope.user);
     }
   });
 

@@ -1,15 +1,5 @@
 
 
-<!-- <div ng-if="currentUser">
-	<div ng-click="logout()" layout-margin layout="row">
-	  <md-button class="menu md-icon-button" aria-label="Show User List">
-	    <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/user.svg"></md-icon>
-	  </md-button>
-
-	  <a href="/user/{{currentUser.id}}"><div class="username-title">{{currentUser.email}}</div></a>
-	</div>
-</div> -->
-
 <div layout-margin layout="row">
 	<div ng-if="currentUser">
 	  <md-menu>
@@ -22,7 +12,7 @@
             Profile
           </md-button>
         </md-menu-item>
-        <md-menu-item>
+        <md-menu-item >
           <md-button ng-click="routeToPanel()">
              Panel
           </md-button>

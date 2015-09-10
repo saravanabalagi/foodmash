@@ -10,6 +10,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 	railsSerializerProvider.underscore(angular.identity).camelize(angular.identity);
 
 	$routeProvider
+	
 	.when('/users/:user_id', {
 	    controller: 'ProfileController',
 	    templateUrl: '/templates/profile.html', 
@@ -33,6 +34,10 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 		.when('/checkout', {
 			controller: 'CheckoutController', 
 			templateUrl: '/templates/checkout.html'
+		})
+		.when('/user_roles', {
+			controller: 'UserRolesController',
+			templateUrl: '/templates/user_roles.html'
 		})
 		.when('/cart', {
 			controller: 'CartController',
