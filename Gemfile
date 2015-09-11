@@ -65,8 +65,12 @@ end
 group :development, :test do
 	# Use sqlite3 as the database for Active Record
 	gem 'sqlite3'
+
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+
+  # Show graphical debugging interface in RubyMine
+  gem 'debugger-xml'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
