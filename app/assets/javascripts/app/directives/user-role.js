@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('userRole', ['UserRole', '$q', 'toaster', function(UserRole, $q, toaster){
+.directive('userRole', ['$q', 'toaster', function($q, toaster){
 
 	return {
 

@@ -17,7 +17,7 @@ class SessionsController < Devise::SessionsController
       json: {
         success: true, info: "Logged in", 
         data: {
-          user: resource.as_json,
+          user: resource.as_json(:include => {:roles => {:include => :resource}}),
           auth_token: session_token
         }
       }

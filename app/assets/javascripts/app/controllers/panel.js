@@ -2,15 +2,11 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('PanelController', ['$scope','AuthService','$location','toaster', function($scope, AuthService, $location, toaster){
+.controller('PanelController', ['$scope','$location','toaster','$rootScope', function($scope, $location, toaster, $rootScope){
 
   $scope.routeToCombos = function(){
     $location.path("/combos");
   };
-
-  AuthService.getCurrentUser().then(function(user){
-    console.log(user);
-  });
 
   $scope.routeToRestaurants = function(){
     $location.path("/restaurants");

@@ -40,24 +40,4 @@ angular.module('foodmashApp.services')
      return d.promise;
    };
 
-   this.getCurrentUser = function(){
-      var d = $q.defer();
-      var user = {};
-      if(service._user){
-        User.query({id: service._user.id}).then(function(users){
-          if(user.length > 0){
-            user = users[0];
-          }else{
-            user = null;
-          }
-          d.resolve(user);
-        }, function(err){
-          d.reject(err);
-        });
-      }else{
-        d.resolve(null);
-      }
-      return d.promise;
-   };
-
  }]);

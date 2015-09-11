@@ -4,10 +4,9 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 	'foodmashApp.services', 'ngCookies', 'foodmashApp.directives', 'foodmashApp.controllers', 
 	'foodmashApp.interceptors', 'ngMaterial', 'ngAnimate', 'toaster', 'ngSanitize'])
 
-.config(['$routeProvider', '$locationProvider', '$httpProvider','railsSerializerProvider', function($routeProvider, $locationProvider, $httpProvider, railsSerializerProvider){
+.config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider){
+	
 	$httpProvider.interceptors.push('UserAuthInterceptor');
-
-	railsSerializerProvider.underscore(angular.identity).camelize(angular.identity);
 
 	$routeProvider
 	
@@ -37,7 +36,32 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 		})
 		.when('/user_roles', {
 			controller: 'UserRolesController',
-			templateUrl: '/templates/user_roles.html'
+			templateUrl: '/templates/user_roles.html',
+			resolve: {
+				user_roles: 
+					function($q, toaster, $rootScope, $location){
+						var d = $q.defer();
+						var check = false;
+						if($rootScope.currentUser && $rootScope.currentUser.roles){
+							$rootScope.currentUser.roles.filter(function(role){
+								if(role.name == "super_admin"){
+									check = true;
+									d.resolve();
+								}
+							});
+							if(!check){
+								toaster.pop('error', "Unauthorized!");
+								$location.path("/");
+								d.reject(null);
+							}
+						}else{
+							toaster.pop('error', "Not logged in!");
+							$location.path("/login");
+							d.reject(null);
+						}
+						return d.promise;
+					}
+				}
 		})
 		.when('/cart', {
 			controller: 'CartController',
@@ -45,35 +69,235 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 		})
 		.when('/combo_options/:id', {
 			controller: 'ComboOptionController',
-			templateUrl: '/templates/combo_option.html'
+			templateUrl: '/templates/combo_option.html',
+			resolve: {
+				combo_option: 
+				function($q, toaster, $rootScope, $location){
+					var d = $q.defer();
+					var check = false;
+					if($rootScope.currentUser && $rootScope.currentUser.roles){
+						$rootScope.currentUser.roles.filter(function(role){
+							if(role.name == "super_admin"){
+								check = true;
+								d.resolve();
+							}
+						});
+						if(!check){
+							toaster.pop('error', "Unauthorized!");
+							$location.path("/");
+							d.reject(null);
+						}
+					}else{
+						toaster.pop('error', "Not logged in!");
+						$location.path("/login");
+						d.reject(null);
+					}
+					return d.promise;
+				}
+			}
 		})
 		.when('/combos', {
 			controller: 'CombosController',
-			templateUrl: '/templates/combos.html'
+			templateUrl: '/templates/combos.html',
+			resolve: {
+				combos: 
+				function($q, toaster, $rootScope, $location){
+					var d = $q.defer();
+					var check = false;
+					if($rootScope.currentUser && $rootScope.currentUser.roles){
+						$rootScope.currentUser.roles.filter(function(role){
+							if(role.name == "super_admin"){
+								check = true;
+								d.resolve();
+							}
+						});
+						if(!check){
+							toaster.pop('error', "Unauthorized!");
+							$location.path("/");
+							d.reject(null);
+						}
+					}else{
+						toaster.pop('error', "Not logged in!");
+						$location.path("/login");
+						d.reject(null);
+					}
+					return d.promise;
+				}
+			}
 		})
 		.when('/combos/:id', {
 			controller: 'ComboController',
-			templateUrl: '/templates/combo.html'
+			templateUrl: '/templates/combo.html',
+			resolve: {
+				combo: 
+				function($q, toaster, $rootScope, $location){
+					var d = $q.defer();
+					var check = false;
+					if($rootScope.currentUser && $rootScope.currentUser.roles){
+						$rootScope.currentUser.roles.filter(function(role){
+							if(role.name == "super_admin"){
+								check = true;
+								d.resolve();
+							}
+						});
+						if(!check){
+							toaster.pop('error', "Unauthorized!");
+							$location.path("/");
+							d.reject(null);
+						}
+					}else{
+						toaster.pop('error', "Not logged in!");
+						$location.path("/login");
+						d.reject(null);
+					}
+					return d.promise;
+				}
+			}
 		})
 		.when('/panel', {
 			controller: 'PanelController',
-			templateUrl: '/templates/panel.html'
+			templateUrl: '/templates/panel.html',
+			resolve: {
+				panel: 
+				function($q, toaster, $rootScope, $location){
+					var d = $q.defer();
+					var check = false;
+					if($rootScope.currentUser && $rootScope.currentUser.roles){
+						$rootScope.currentUser.roles.filter(function(role){
+							if(role.name == "super_admin"){
+								check = true;
+								d.resolve();
+							}
+						});
+						if(!check){
+							toaster.pop('error', "Unauthorized!");
+							$location.path("/");
+							d.reject(null);
+						}
+					}else{
+						toaster.pop('error', "Not logged in!");
+						$location.path("/login");
+						d.reject(null);
+					}
+					return d.promise;
+				}
+			}
 		})
 		.when('/dish_types', {
 			controller: 'DishTypesController',
-			templateUrl: '/templates/dish_types.html'
+			templateUrl: '/templates/dish_types.html',
+			resolve: {
+				dish_types: 
+				function($q, toaster, $rootScope, $location){
+					var d = $q.defer();
+					var check = false;
+					if($rootScope.currentUser && $rootScope.currentUser.roles){
+						$rootScope.currentUser.roles.filter(function(role){
+							if(role.name == "super_admin"){
+								check = true;
+								d.resolve();
+							}
+						});
+						if(!check){
+							toaster.pop('error', "Unauthorized!");
+							$location.path("/");
+							d.reject(null);
+						}
+					}else{
+						toaster.pop('error', "Not logged in!");
+						$location.path("/login");
+						d.reject(null);
+					}
+					return d.promise;
+				}
+			}
 		})
 		.when('/cuisines', {
 			controller: 'CuisinesController',
-			templateUrl: '/templates/cuisines.html'
+			templateUrl: '/templates/cuisines.html',
+			resolve: {
+				cuisines: 
+				function($q, toaster, $rootScope, $location){
+					var d = $q.defer();
+					var check = false;
+					if($rootScope.currentUser && $rootScope.currentUser.roles){
+						$rootScope.currentUser.roles.filter(function(role){
+							if(role.name == "super_admin"){
+								check = true;
+								d.resolve();
+							}
+						});
+						if(!check){
+							toaster.pop('error', "Unauthorized!");
+							$location.path("/");
+							d.reject(null);
+						}
+					}else{
+						toaster.pop('error', "Not logged in!");
+						$location.path("/login");
+						d.reject(null);
+					}
+					return d.promise;
+				}
+			}
 		})
 		.when('/restaurants', {
 			controller: 'RestaurantsController',
-			templateUrl: '/templates/restaurants.html'
+			templateUrl: '/templates/restaurants.html',
+			resolve: {
+				restaurants: 
+				function($q, toaster, $rootScope, $location){
+					var d = $q.defer();
+					var check = false;
+					if($rootScope.currentUser && $rootScope.currentUser.roles){
+						$rootScope.currentUser.roles.filter(function(role){
+							if(role.name == "super_admin"){
+								check = true;
+								d.resolve();
+							}
+						});
+						if(!check){
+							toaster.pop('error', "Unauthorized!");
+							$location.path("/");
+							d.reject(null);
+						}
+					}else{
+						toaster.pop('error', "Not logged in!");
+						$location.path("/login");
+						d.reject(null);
+					}
+					return d.promise;
+				}
+			}
 		})
 		.when('/restaurants/:id', {
 			controller: 'RestaurantController', 
-			templateUrl: '/templates/restaurant.html'
+			templateUrl: '/templates/restaurant.html',
+			resolve: {
+				restaurant: 
+				function($q, toaster, $rootScope, $location){
+					var d = $q.defer();
+					var check = false;
+					if($rootScope.currentUser && $rootScope.currentUser.roles){
+						$rootScope.currentUser.roles.filter(function(role){
+							if(role.name == "super_admin"){
+								check = true;
+								d.resolve();
+							}
+						});
+						if(!check){
+							toaster.pop('error', "Unauthorized!");
+							$location.path("/");
+							d.reject(null);
+						}
+					}else{
+						toaster.pop('error', "Not logged in!");
+						$location.path("/login");
+						d.reject(null);
+					}
+					return d.promise;
+				}
+			}
 		})
 		.when('/login', 
 		{

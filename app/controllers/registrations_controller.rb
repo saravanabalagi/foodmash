@@ -17,7 +17,7 @@ class RegistrationsController < Devise::RegistrationsController
 	    render status: 200,
 	    json: {
 	      success: true, info: "Registered", data: {
-	        user: resource.as_json,
+	        user: resource.as_json(:include => {:roles => {:include => :resource}}),
 	        auth_token: session_token
 	      }
 	    }
