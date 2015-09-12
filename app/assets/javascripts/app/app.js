@@ -39,28 +39,9 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			templateUrl: '/templates/user_roles.html',
 			resolve: {
 				user_roles: 
-					function($q, toaster, $rootScope, $location){
-						var d = $q.defer();
-						var check = false;
-						if($rootScope.currentUser && $rootScope.currentUser.roles){
-							$rootScope.currentUser.roles.filter(function(role){
-								if(role.name == "super_admin"){
-									check = true;
-									d.resolve();
-								}
-							});
-							if(!check){
-								toaster.pop('error', "Unauthorized!");
-								$location.path("/");
-								d.reject(null);
-							}
-						}else{
-							toaster.pop('error', "Not logged in!");
-							$location.path("/login");
-							d.reject(null);
-						}
-						return d.promise;
-					}
+				function(AuthorizeService){
+					AuthorizeService.authorizeRoute();
+				}
 				}
 		})
 		.when('/cart', {
@@ -72,27 +53,8 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			templateUrl: '/templates/combo_option.html',
 			resolve: {
 				combo_option: 
-				function($q, toaster, $rootScope, $location){
-					var d = $q.defer();
-					var check = false;
-					if($rootScope.currentUser && $rootScope.currentUser.roles){
-						$rootScope.currentUser.roles.filter(function(role){
-							if(role.name == "super_admin"){
-								check = true;
-								d.resolve();
-							}
-						});
-						if(!check){
-							toaster.pop('error', "Unauthorized!");
-							$location.path("/");
-							d.reject(null);
-						}
-					}else{
-						toaster.pop('error', "Not logged in!");
-						$location.path("/login");
-						d.reject(null);
-					}
-					return d.promise;
+				function(AuthorizeService){
+					AuthorizeService.authorizeRoute();
 				}
 			}
 		})
@@ -101,27 +63,8 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			templateUrl: '/templates/combos.html',
 			resolve: {
 				combos: 
-				function($q, toaster, $rootScope, $location){
-					var d = $q.defer();
-					var check = false;
-					if($rootScope.currentUser && $rootScope.currentUser.roles){
-						$rootScope.currentUser.roles.filter(function(role){
-							if(role.name == "super_admin"){
-								check = true;
-								d.resolve();
-							}
-						});
-						if(!check){
-							toaster.pop('error', "Unauthorized!");
-							$location.path("/");
-							d.reject(null);
-						}
-					}else{
-						toaster.pop('error', "Not logged in!");
-						$location.path("/login");
-						d.reject(null);
-					}
-					return d.promise;
+				function(AuthorizeService){
+					AuthorizeService.authorizeRoute();
 				}
 			}
 		})
@@ -130,27 +73,8 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			templateUrl: '/templates/combo.html',
 			resolve: {
 				combo: 
-				function($q, toaster, $rootScope, $location){
-					var d = $q.defer();
-					var check = false;
-					if($rootScope.currentUser && $rootScope.currentUser.roles){
-						$rootScope.currentUser.roles.filter(function(role){
-							if(role.name == "super_admin"){
-								check = true;
-								d.resolve();
-							}
-						});
-						if(!check){
-							toaster.pop('error', "Unauthorized!");
-							$location.path("/");
-							d.reject(null);
-						}
-					}else{
-						toaster.pop('error', "Not logged in!");
-						$location.path("/login");
-						d.reject(null);
-					}
-					return d.promise;
+				function(AuthorizeService){
+					AuthorizeService.authorizeRoute();
 				}
 			}
 		})
@@ -159,27 +83,8 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			templateUrl: '/templates/panel.html',
 			resolve: {
 				panel: 
-				function($q, toaster, $rootScope, $location){
-					var d = $q.defer();
-					var check = false;
-					if($rootScope.currentUser && $rootScope.currentUser.roles){
-						$rootScope.currentUser.roles.filter(function(role){
-							if(role.name == "super_admin"){
-								check = true;
-								d.resolve();
-							}
-						});
-						if(!check){
-							toaster.pop('error', "Unauthorized!");
-							$location.path("/");
-							d.reject(null);
-						}
-					}else{
-						toaster.pop('error', "Not logged in!");
-						$location.path("/login");
-						d.reject(null);
-					}
-					return d.promise;
+				function(AuthorizeService){
+					AuthorizeService.authorizeRoute();
 				}
 			}
 		})
@@ -188,27 +93,8 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			templateUrl: '/templates/dish_types.html',
 			resolve: {
 				dish_types: 
-				function($q, toaster, $rootScope, $location){
-					var d = $q.defer();
-					var check = false;
-					if($rootScope.currentUser && $rootScope.currentUser.roles){
-						$rootScope.currentUser.roles.filter(function(role){
-							if(role.name == "super_admin"){
-								check = true;
-								d.resolve();
-							}
-						});
-						if(!check){
-							toaster.pop('error', "Unauthorized!");
-							$location.path("/");
-							d.reject(null);
-						}
-					}else{
-						toaster.pop('error', "Not logged in!");
-						$location.path("/login");
-						d.reject(null);
-					}
-					return d.promise;
+				function(AuthorizeService){
+					AuthorizeService.authorizeRoute();
 				}
 			}
 		})
@@ -217,27 +103,8 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			templateUrl: '/templates/cuisines.html',
 			resolve: {
 				cuisines: 
-				function($q, toaster, $rootScope, $location){
-					var d = $q.defer();
-					var check = false;
-					if($rootScope.currentUser && $rootScope.currentUser.roles){
-						$rootScope.currentUser.roles.filter(function(role){
-							if(role.name == "super_admin"){
-								check = true;
-								d.resolve();
-							}
-						});
-						if(!check){
-							toaster.pop('error', "Unauthorized!");
-							$location.path("/");
-							d.reject(null);
-						}
-					}else{
-						toaster.pop('error', "Not logged in!");
-						$location.path("/login");
-						d.reject(null);
-					}
-					return d.promise;
+				function(AuthorizeService){
+					AuthorizeService.authorizeRoute();
 				}
 			}
 		})
@@ -246,27 +113,8 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			templateUrl: '/templates/restaurants.html',
 			resolve: {
 				restaurants: 
-				function($q, toaster, $rootScope, $location){
-					var d = $q.defer();
-					var check = false;
-					if($rootScope.currentUser && $rootScope.currentUser.roles){
-						$rootScope.currentUser.roles.filter(function(role){
-							if(role.name == "super_admin"){
-								check = true;
-								d.resolve();
-							}
-						});
-						if(!check){
-							toaster.pop('error', "Unauthorized!");
-							$location.path("/");
-							d.reject(null);
-						}
-					}else{
-						toaster.pop('error', "Not logged in!");
-						$location.path("/login");
-						d.reject(null);
-					}
-					return d.promise;
+				function(AuthorizeService){
+					AuthorizeService.authorizeRoute();
 				}
 			}
 		})
@@ -275,27 +123,8 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			templateUrl: '/templates/restaurant.html',
 			resolve: {
 				restaurant: 
-				function($q, toaster, $rootScope, $location){
-					var d = $q.defer();
-					var check = false;
-					if($rootScope.currentUser && $rootScope.currentUser.roles){
-						$rootScope.currentUser.roles.filter(function(role){
-							if(role.name == "super_admin"){
-								check = true;
-								d.resolve();
-							}
-						});
-						if(!check){
-							toaster.pop('error', "Unauthorized!");
-							$location.path("/");
-							d.reject(null);
-						}
-					}else{
-						toaster.pop('error', "Not logged in!");
-						$location.path("/login");
-						d.reject(null);
-					}
-					return d.promise;
+				function(AuthorizeService){
+					AuthorizeService.authorizeRoute();
 				}
 			}
 		})
