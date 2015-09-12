@@ -42,7 +42,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 				function(AuthorizeService){
 					AuthorizeService.authorizeRoute();
 				}
-				}
+			}
 		})
 		.when('/cart', {
 			controller: 'CartController',
