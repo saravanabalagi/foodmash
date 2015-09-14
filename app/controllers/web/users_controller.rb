@@ -1,6 +1,7 @@
 class Web::UsersController < ApplicationController
-	before_filter :set_user, on: :update
 	respond_to :json
+	before_filter :set_user, on: :update
+	load_and_authorize_resource skip_load_resource
 
 	def index
 		@users = User.where(params.permit(:id, :email))

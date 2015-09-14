@@ -4,9 +4,11 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 	'foodmashApp.services', 'ngCookies', 'foodmashApp.directives', 'foodmashApp.controllers', 
 	'foodmashApp.interceptors', 'ngMaterial', 'ngAnimate', 'toaster', 'ngSanitize'])
 
-.config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider){
+.config(['$routeProvider', '$locationProvider', '$httpProvider','railsSerializerProvider', function($routeProvider, $locationProvider, $httpProvider, railsSerializerProvider){
 	
 	$httpProvider.interceptors.push('UserAuthInterceptor');
+
+	railsSerializerProvider.underscore(angular.identity).camelize(angular.identity);
 
 	$routeProvider
 	

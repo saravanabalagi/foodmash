@@ -1,11 +1,12 @@
 class Web::CombosController < ApplicationController
 	respond_to :json
 	before_action :get_combo, only: [:update, :destroy]
+	load_and_authorize_resource skip_load_resource except: [:get_offer_combos, :get_micro_combos, :get_medium_combos, :get_mega_combos]
 
 	def index
 		@combos = Combo.where(params.permit(:id, :name))
 		if @combos 
-			render status: 200, json: @combos.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name]} } , only: :id} }, only: [:id, :name, :description, :priority]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :description] } }, only: [:id, :priority] } } ], only: [:name, :price, :id, :no_of_purchases, :description, :group_size, :active])
+			render status: 200, json: @combos.as_json
 		else
 			render status: 404, json: {error: 'Combos not found!'}
 		end

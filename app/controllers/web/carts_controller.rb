@@ -1,9 +1,9 @@
 class Web::CartsController < ApplicationController
+	respond_to :json
 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 	prepend_before_filter :authenticate_user_from_token!
 	before_filter :set_cart, only: :destroy
 	before_filter :set_or_create_cart, only: [:create, :add_to_cart, :index]
-	respond_to :json
 
 	def index
 		if @cart and @cart.save!

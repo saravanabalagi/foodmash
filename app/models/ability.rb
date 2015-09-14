@@ -17,7 +17,7 @@ class Ability
         Restaurant.with_role(:restaurant_admin, user).pluck(:id).include? dish.restaurant_id
       end
 
-      can :[:read, :update], OrderItem do |order_item|
+      can [:read, :update], OrderItem do |order_item|
         Restaurant.with_role(:restaurant_admin, user).pluck(:id).include? order_item.item.restaurant_id
       end
 
@@ -27,17 +27,23 @@ class Ability
         PackagingCentre.with_role(:packaging_centre_admin, user).pluck(:id).include? order.product.packaging_centre_id
       end
 
-      can [:read, :update], OrderItem do |order_item| do 
+      can [:read, :update], OrderItem do |order_item|
         PackagingCentre.with_role(:packaging_centre_admin, user).pluck(:id).include? order_item.order.product.packaging_centre_id
       end
 
       #abilities for customer
+      can :read, Combo if user.has_role? :customer
+
       can :manage, Order do |order|
-        user.pluck(:id).include? order.cart.user_id
+        user.id == order.cart.user_id and user.has_role? :customer
       end
 
       can [:read, :update], Cart do |cart|
-        user.pluck(:id).include? cart.user_id
+        user.id == cart.user_id and user.has_role? :customer
+      end
+
+      can :manage, User do |u|
+        user.id == u.id
       end
 
     # The first argument to `can` is the action you are giving the user 

@@ -1,6 +1,7 @@
 class Web::DishesController < ApplicationController
 	respond_to :json
 	before_action :get_dish, only: [:update, :destroy, :belongs_to_combos]
+	load_and_authorize_resource skip_load_resource
 
 	def index
 		@dishes = Dish.where(params.permit(:id, :restaurant_id, :name, :dish_type_id, :cuisine_id))

@@ -29,6 +29,7 @@ angular.module('foodmashApp.directives')
 					d.resolve(response);
 				}, function(err){
 					toaster.pop('error', 'Combo was not updated!');
+					combo.active = !combo.active;
 					d.reject(err);
 				});
 				return d.promise;

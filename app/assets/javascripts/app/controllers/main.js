@@ -114,11 +114,14 @@ angular.module('foodmashApp.controllers')
 				l++;
 			}
 		}
-		if(l == combo.combo_options.length)
-		{
-			return false;
+		if(combo.combo_options){
+			if(l == combo.combo_options.length){
+				return false;
+			}else{
+				return true;
+			}
 		}else{
-			return true;
+			return false;
 		}
 	};
 

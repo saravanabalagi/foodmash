@@ -1,6 +1,7 @@
 class Web::RestaurantsController < ApplicationController
 	respond_to :json
 	before_action :get_restaurant, only: [:update, :destroy, :has_combos]
+	load_and_authorize_resource skip_load_resource except: [:has_combos, :has_dish_type]
 
 	def index
 		@restaurants = Restaurant.where(params.permit(:id))

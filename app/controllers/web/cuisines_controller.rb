@@ -1,6 +1,7 @@
 class Web::CuisinesController < ApplicationController
 	respond_to :json
 	before_filter :get_cuisine, only: [:update, :destroy]
+	load_and_authorize_resource skip_load_resource
 
 	def index
 		@cuisines = Cuisine.where(params.permit(:id, :name))
