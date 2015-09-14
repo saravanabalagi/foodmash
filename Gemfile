@@ -46,6 +46,8 @@ gem 'twilio-ruby', '>= 4.2.1'
 gem 'aws-sdk', '~> 2'
 
 gem 'tzinfo-data'
+# for payment gateway by PayU
+gem 'payu'
 
 group :production do
   gem 'execjs'

@@ -47,6 +47,10 @@ Rails.application.routes.draw do
     resources :orders
 
     resources :users, only: [:index, :update]
+
+    get '/payu/ok', to: 'payu#ok'
+    get '/payu/error', to: 'payu#error'
+    get '/payu/report', to: 'payu#report'
   end
   
   #routes for API calls
