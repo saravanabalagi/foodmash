@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('MainController', ['$scope', 'CombosService','AuthService','$location','toaster' ,'Cart','Combo' ,'$q', function($scope, CombosService, AuthService, $location, toaster, Cart, Combo, $q){
+.controller('MainController', ['$scope', 'CombosService','AuthService','$location','toaster' ,'CartService','Combo' ,'$q', function($scope, CombosService, AuthService, $location, toaster, CartService, Combo, $q){
 	$scope.combos = {};
 	$scope.selected = null;
 	$scope.selectedDishes = [];
@@ -80,31 +80,21 @@ angular.module('foodmashApp.controllers')
 		});
 	};
 
-	$scope.selectDish = function(combo_id, combo_option_id, dish_id){
+	$scope.selectDish = function(combo, combo_option_id, dish_id){
 		var selectedDish = {};
-		selectedDish["combo_id"] = combo_id;
+		selectedDish["combo_id"] = combo.id;
 		selectedDish["combo_option_id"] = combo_option_id;
 		selectedDish["dish_id"] = parseInt(dish_id, 10);
+		selectedDish["added_at"] = Date.now();
+		selectedDish["quantity"] = 1;
 		checkAndPush(selectedDish)
 	};
 
 	$scope.addToCart = function(combo){
-		var d = $q.defer();
-		if($scope.user){
-			pushAllComboDishes(combo);
-			Cart.addToCart(combo.id, $scope.selectedDishes).then(function(response){
-				toaster.pop('success' ,'Added to cart!');
-				d.resolve(response);
-			}, function(err){
-				toaster.pop('error', 'Failed to add to cart!');
-				d.reject(err);
-			});
-		}else{
-			toaster.pop('error', 'Need to login first!');
-			$location.path('/login');
-			d.resolve(null);
-		}
-		return d.promise;
+		pushAllComboDishes(combo);
+		CartService.addToCart(combo, $scope.selectedDishes).then(function(){
+			toaster.pop('success' ,'Added to cart!');
+		});
 	};
 
 	$scope.checkComboSelection = function(combo){
@@ -140,7 +130,9 @@ angular.module('foodmashApp.controllers')
 			var selectedDish = {};
 			selectedDish["combo_id"] = combo.id;
 			selectedDish["combo_dish_id"] = combo["combo_dishes"][i].id;
-			selectedDish["dish_id"] = combo["combo_dishes"][i].dish.id;
+			selectedDish["dish_id"] = parseInt(combo["combo_dishes"][i].dish.id, 10);
+			selectedDish["added_at"] = Date.now();
+			selectedDish["quantity"] = 1;
 			$scope.selectedDishes.push(selectedDish);
 		}
 	};
