@@ -35,12 +35,11 @@ angular.module('foodmashApp.controllers')
 				toaster.pop('success', 'Order was updated!');
 			}if(quantity === null){
 				$scope.filling = true;
-				toaster.pop('warning', 'Invalid quantity for order!');
 			}if(quantity === undefined){
 				order.quantity = 1;
 				updateCartInfo();
 				$scope.filling = false;
-				toaster.pop('error', 'Order did not have a valid quantity!');
+				toaster.pop('error', 'Order quantity was reset due to invalidity!');
 			}
 		}else{
 			toaster.pop('error', 'Order was not updated!');
