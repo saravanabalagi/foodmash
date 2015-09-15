@@ -5,6 +5,7 @@ angular.module('foodmashApp.controllers')
 .controller('CartController', ['$scope', '$q', 'toaster','$location','CartService','$timeout', function($scope, $q, toaster, $location, CartService, $timeout){
 
 	$scope.cart = {};
+	$scope.filling = false;
 
 	$scope.routeToRoot = function(){
 		$location.path("/");
@@ -20,9 +21,42 @@ angular.module('foodmashApp.controllers')
 
 	CartService.getCartInfo().then(function(cart){
 		$scope.cart = cart;
+		validateCart();
 	}, function(cart){
 		$scope.cart = cart;
 	});
+
+	$scope.updateOrder = function(order, quantity){
+		var index = $scope.cart.orders.indexOf(order);
+		if(angular.isNumber(index)){
+			if(quantity >= 1 && quantity <=500){
+				updateCartInfo();
+				$scope.filling = false;
+				toaster.pop('success', 'Order was updated!');
+			}if(quantity === null){
+				$scope.filling = true;
+				toaster.pop('warning', 'Invalid quantity for order!');
+			}if(quantity === undefined){
+				order.quantity = 1;
+				updateCartInfo();
+				$scope.filling = false;
+				toaster.pop('error', 'Order did not have a valid quantity!');
+			}
+		}else{
+			toaster.pop('error', 'Order was not updated!');
+		}
+	};
+
+	$scope.deleteOrder = function(order){
+		var index = $scope.cart.orders.indexOf(order);
+		if(angular.isNumber(index)){		
+			$scope.cart.orders.splice(index, 1);
+			updateCartInfo();
+			toaster.pop('success', 'Order was removed from cart!');
+		}else{
+			toaster.pop('error', 'Order was not removed from cart!');
+		}
+	};
 
 	function updateCartInfo(){
 		var total = 0;
@@ -32,6 +66,15 @@ angular.module('foodmashApp.controllers')
 			order.total = currTotal;
 		});
 		$scope.cart.total = total;
+	};
+
+	function validateCart(){
+		$scope.cart.orders.filter(function(order){
+			if(order.quantity === null){
+				order.quantity = 1;
+				updateCartInfo();
+			}
+		});
 	};
 
 }]);

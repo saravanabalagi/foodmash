@@ -39,7 +39,7 @@
             </div>
             <div layout="row" layout-align="center center">
               <md-button class="md-raised" ng-click="routeToRoot()">Shop</md-button>
-              <md-button class="md-raised md-primary" ng-disabled="cart.total == 0" ng-click="routeToCheckout()">Deliver</md-button>
+              <md-button class="md-raised md-primary" ng-disabled="cart.total == 0 || filling" ng-click="routeToCheckout()">Deliver</md-button>
             </div>
 
           </div>  
