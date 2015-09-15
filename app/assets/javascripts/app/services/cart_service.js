@@ -10,11 +10,9 @@ angular.module('foodmashApp.services')
 	service.cart.total = 0;
 
 	this.addToCart = function(combo, selected_dishes){
-		console.log(selected_dishes);
 		for(var i = 0;i<service.cart.orders.length;i++){
 			if(service.cart.orders[i]["combo_id"] == combo.id){
 				if(checkWithIncomingOrder(service.cart.orders[i], selected_dishes)){
-					console.log("matched with prev order!");
 					service.cart.orders[i]["quantity"] += 1;
 					for(var o=0;o<service.cart.orders[i]["order_items"].length;o++){
 						service.cart.orders[i]["order_items"][o]["quantity"] += 1;
