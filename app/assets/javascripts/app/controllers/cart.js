@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('CartController', ['$scope', '$q', 'toaster','$location','CartService','$timeout', function($scope, $q, toaster, $location, CartService, $timeout){
+.controller('CartController', ['$scope', '$q', 'toaster','$location','CartService','$timeout','$rootScope', function($scope, $q, toaster, $location, CartService, $timeout, $rootScope){
 
 	$scope.cart = {};
 	$scope.filling = false;
@@ -12,7 +12,13 @@ angular.module('foodmashApp.controllers')
 	};
 
 	$scope.routeToCheckout = function(){
-		$location.path("/checkout");
+		if($rootScope.currentUser){
+			$location.path("/checkout");
+		}else{
+			$rootScope.storeLocation = "/checkout";
+			toaster.pop('warning', 'Need to login first!');
+			$location.path("/login");
+		}
 	};
 
 	$scope.checkForOrders = function(){

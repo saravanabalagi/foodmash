@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-	.controller('LoginController', ['$scope', '$location', 'AuthService', 'UserService','toaster', function($scope, $location, AuthService, UserService, toaster){
+	.controller('LoginController', ['$scope', '$location', 'AuthService', 'UserService','toaster','$rootScope', function($scope, $location, AuthService, UserService, toaster, $rootScope){
 		$scope.signup = {};
 		$scope.login = {};
 
@@ -14,8 +14,8 @@ angular.module('foodmashApp.controllers')
 
 			UserService.signup($scope.signup)
 			.then(function(user){
-				$location.path('/');
 				toaster.pop('success', 'Registered successfully!');
+				routToCorrectPath();
 			}, function(reason){
 				$scope.signup.errors = reason;
 			});
@@ -25,11 +25,19 @@ angular.module('foodmashApp.controllers')
 		$scope.submitLogin = function(){
 			UserService.login($scope.login)
 			.then(function(user){
-				$location.path('/');
 				toaster.pop('success', 'Signed In!');
+				routToCorrectPath();
 			}, function(reason){
 				$scope.login.errors = reason;
 			});			
+		};
+
+		function routToCorrectPath(){
+			if($rootScope.storeLocation && $rootScope.storeLocation == "/checkout"){
+				$location.path($rootScope.storeLocation);
+			}else{
+				$location.path('/');
+			}
 		};
 
 	}]);
