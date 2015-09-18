@@ -1,0 +1,65 @@
+
+<div layout="row" layout-align="center center">
+  <md-radio-button value="{{delivery_address.id}}" class="md-primary address-radio" ng-hide="updateShow">
+    <div layout="column" layout-padding>
+      <h1 class="md-title">{{delivery_address.name}}</h1>
+      <div>{{delivery_address.line1}}</div>
+      <div>{{delivery_address.line2}}</div>
+      <div>{{delivery_address.city}}</div>
+      <div>{{delivery_address.pincode}}</div>
+      <div>{{delivery_address.area}}</div>
+      <h1 class="md-subhead">{{delivery_address.contact_no}}</h1>
+    </div>
+  </md-radio-button>
+  <div layout="row" layout-padding ng-hide="updateShow">
+	  <md-button class="md-icon-button md-primary" layout-padding ng-click="updateShow = !updateShow; setUpdate(delivery_address)">
+	    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
+	  </md-button>
+	  <md-button class="md-icon-button md-primary" layout-padding ng-click="deleteDeliveryAddress(delivery_address)">
+	    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
+	  </md-button>
+	</div>
+
+	  <form role="form" name="deliveryAddressUpdateForm" ng-submit="updateDeliveryAddress(delivery_address, updateCross)" ng-init="updateShow=false; updateCross = false" ng-show="updateShow">
+	    <div layout="row" layout-padding layout-align="center center">
+	      <md-input-container flex>
+	        <label>name</label>
+	        <input type="text" ng-model="updatedDeliveryAddress.name" />
+	      </md-input-container>
+	       <md-input-container flex>
+	        <label>address line 1</label>
+	        <input ng-model="updatedDeliveryAddress.line1" />
+	      </md-input-container>
+	      <md-input-container flex>
+	        <label>address line 2</label>
+	        <input ng-model="updatedDeliveryAddress.line2" />
+	      </md-input-container>
+	      <md-input-container flex>
+	        <label>city</label>
+	        <input ng-model="updatedDeliveryAddress.city" />
+	      </md-input-container>
+	      <md-input-container flex>
+	        <label>pincode</label>
+	        <input ng-model="updatedDeliveryAddress.pincode" />
+	      </md-input-container>
+	      <md-input-container flex>
+	        <label>area</label>
+	        <input ng-model="updatedDeliveryAddress.area" />
+	      </md-input-container>
+	      <md-input-container flex>
+	        <label>contact no</label>
+	        <input ng-model="updatedDeliveryAddress.contact_no" />
+	      </md-input-container>
+	      <md-input-container flex>
+	        <md-switch ng-model="updatedDeliveryAddress.primary">
+	      </md-switch>
+	      </md-input-container>
+	      <md-button class="md-icon-button" ng-click="updateShow = !updateShow; updateCross = false">
+	        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
+	      </md-button>
+	      <md-button class="md-icon-button" ng-click="updateShow = !updateShow; updateCross = true">
+	        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cross.svg"></md-icon>
+	      </md-button>
+	    </div>
+	  </form>
+</div>

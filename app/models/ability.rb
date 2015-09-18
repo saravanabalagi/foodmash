@@ -46,6 +46,10 @@ class Ability
         user.id == u.id
       end
 
+      can :manage, DeliveryAddress do |delivery_address|
+        DeliveryAddress.pluck(:user_id).include? user.id
+      end
+
     # The first argument to `can` is the action you are giving the user 
     # permission to do.
     # If you pass :manage it will apply to every action. Other common actions

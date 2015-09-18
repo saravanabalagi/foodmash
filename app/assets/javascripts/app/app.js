@@ -34,7 +34,13 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 	  })
 		.when('/checkout', {
 			controller: 'CheckoutController', 
-			templateUrl: '/templates/checkout.html'
+			templateUrl: '/templates/checkout.html',
+			resolve: {
+				checkout: 
+				function(AuthorizeService, CartService){
+					AuthorizeService.checkForLogin();
+				}
+			}
 		})
 		.when('/user_roles', {
 			controller: 'UserRolesController',
@@ -42,7 +48,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			resolve: {
 				user_roles: 
 				function(AuthorizeService){
-					AuthorizeService.authorizeRoute();
+					AuthorizeService.authorizeRouteForSuperAdmin();
 				}
 			}
 		})
@@ -56,7 +62,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			resolve: {
 				combo_option: 
 				function(AuthorizeService){
-					AuthorizeService.authorizeRoute();
+					AuthorizeService.authorizeRouteForSuperAdmin();
 				}
 			}
 		})
@@ -66,7 +72,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			resolve: {
 				combos: 
 				function(AuthorizeService){
-					AuthorizeService.authorizeRoute();
+					AuthorizeService.authorizeRouteForSuperAdmin();
 				}
 			}
 		})
@@ -76,7 +82,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			resolve: {
 				combo: 
 				function(AuthorizeService){
-					AuthorizeService.authorizeRoute();
+					AuthorizeService.authorizeRouteForSuperAdmin();
 				}
 			}
 		})
@@ -86,7 +92,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			resolve: {
 				panel: 
 				function(AuthorizeService){
-					AuthorizeService.authorizeRoute();
+					AuthorizeService.authorizeRouteForSuperAdmin();
 				}
 			}
 		})
@@ -96,7 +102,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			resolve: {
 				dish_types: 
 				function(AuthorizeService){
-					AuthorizeService.authorizeRoute();
+					AuthorizeService.authorizeRouteForSuperAdmin();
 				}
 			}
 		})
@@ -106,7 +112,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			resolve: {
 				cuisines: 
 				function(AuthorizeService){
-					AuthorizeService.authorizeRoute();
+					AuthorizeService.authorizeRouteForSuperAdmin();
 				}
 			}
 		})
@@ -116,7 +122,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			resolve: {
 				restaurants: 
 				function(AuthorizeService){
-					AuthorizeService.authorizeRoute();
+					AuthorizeService.authorizeRouteForSuperAdmin();
 				}
 			}
 		})
@@ -126,7 +132,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			resolve: {
 				restaurant: 
 				function(AuthorizeService){
-					AuthorizeService.authorizeRoute();
+					AuthorizeService.authorizeRouteForSuperAdmin();
 				}
 			}
 		})

@@ -31,6 +31,8 @@ Rails.application.routes.draw do
     resources :dish_types
 
     resources :cuisines
+
+    resources :delivery_addresses
     
     resources :dishes do 
       collection do 

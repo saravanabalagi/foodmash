@@ -4,7 +4,7 @@ class DeliveryAddress < ActiveRecord::Base
 	has_many :carts, through: :cart_delivery_addresses
 	validates :user_id, presence: true
 	validates :contact_no, presence: true, numericality: {only_integer: true}
-	validates_presence_of :latitude, :longitude, :pincode, :city, :area, :line1, primary: {default: false}
+	validates_presence_of :pincode, :city, :area, :line1, primary: {default: false}
 	before_save :falsify_true_records
 	before_save :make_primary_for_first_address
 	before_destroy :choose_first_as_primary

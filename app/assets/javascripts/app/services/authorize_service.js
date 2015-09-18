@@ -6,7 +6,7 @@ angular.module('foodmashApp.services')
 
 	var service = this;
 
-	this.authorizeRoute = function(){
+	this.authorizeRouteForSuperAdmin = function(){
 		var d = $q.defer();
 		var check = false;
 		if($rootScope.currentUser && $rootScope.currentUser.roles){
@@ -24,6 +24,16 @@ angular.module('foodmashApp.services')
 		}else{
 			toaster.pop('error', "Not logged in!");
 			$location.path("/login");
+			d.reject(null);
+		}
+		return d.promise;
+	};
+
+	this.checkForLogin = function(){
+		var d = $q.defer();
+		if($rootScope.currentUser){
+			d.resolve(null);
+		}else{
 			d.reject(null);
 		}
 		return d.promise;

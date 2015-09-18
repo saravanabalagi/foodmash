@@ -17,6 +17,7 @@ angular.module('foodmashApp.controllers')
 				toaster.pop('success', 'Registered successfully!');
 				routToCorrectPath();
 			}, function(reason){
+				toaster.pop('error', 'Was not able to Register!');
 				$scope.signup.errors = reason;
 			});
 
@@ -28,6 +29,7 @@ angular.module('foodmashApp.controllers')
 				toaster.pop('success', 'Signed In!');
 				routToCorrectPath();
 			}, function(reason){
+				toaster.pop('error', 'Failed to sign in!');
 				$scope.login.errors = reason;
 			});			
 		};
