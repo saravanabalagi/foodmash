@@ -26,7 +26,6 @@ angular.module('foodmashApp.directives')
 
 			$scope.addToCart = function(combo){
 				pushAllComboDishes(combo);
-				console.log($scope.selectedDishes);
 				CartService.addToCart(combo, $scope.selectedDishes);
 				toaster.pop('success' ,'Added to cart!');
 			};

@@ -11,12 +11,10 @@ angular.module('foodmashApp.services')
 
 	this.addToCart = function(combo, selected_dishes){
 		for(var i = 0;i<service.cart.orders.length;i++){
-			if(service.cart.orders[i]["combo_id"] == combo.id){
-				if(checkWithIncomingOrder(service.cart.orders[i], selected_dishes)){
-					service.cart.orders[i]["quantity"] += 1;
-					for(var o=0;o<service.cart.orders[i]["order_items"].length;o++){
-						service.cart.orders[i]["order_items"][o]["quantity"] += 1;
-					}
+			if(service.cart.orders[i]["combo_id"] == combo.id && checkWithIncomingOrder(service.cart.orders[i], selected_dishes)){
+				service.cart.orders[i]["quantity"] += 1;
+				for(var o=0;o<service.cart.orders[i]["order_items"].length;o++){
+					service.cart.orders[i]["order_items"][o]["quantity"] += 1;
 				}
 				updateCartInfo();
 				return ;
@@ -55,7 +53,7 @@ angular.module('foodmashApp.services')
 		 			}
 		 		}
 		 }
-		 if(counting_length == current_order_items_length && current_order_items_length != 0){
+		 if(counting_length == current_order_items_length){
 		 	return true;
 		 }else{
 		 	return false;
