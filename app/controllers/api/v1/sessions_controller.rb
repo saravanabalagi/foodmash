@@ -17,12 +17,16 @@ class Api::V1::SessionsController < ApiApplicationController
 	  end
 	  render status: 201,
 	    json: {
-	      success: true, 
+	      success: true,
 	      data: {
         	user_token: resource.user_token,
-        	session_token: session_token
+        	session_token: session_token,
+					user: {
+							email: resource.email,
+							mobile_no: resource.mobile_no
+					}
         }
-	    }
+			}
 	end
 
 	def failure 
