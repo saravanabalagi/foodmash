@@ -39,7 +39,7 @@ angular.module('foodmashApp.controllers')
 			if(!$scope.deliveryAddressAddForm.$pristine){
 				$scope.delivery_address.save().then(function(response){
 					toaster.pop('success', 'Delivery Address was created!');
-					$scope.delivery_addresses.unshift($scope.delivery_address);
+					$scope.delivery_addresses.push($scope.delivery_address);
 					$scope.delivery_address = new DeliveryAddress;
 					d.resolve(response);
 				}, function(err){

@@ -1,6 +1,6 @@
 
 <div layout="row" layout-align="center center">
-  <md-radio-button value="{{delivery_address.id}}" class="md-primary address-radio" ng-hide="updateShow" ng-checked="delivery_address.primary">
+  <md-radio-button value="{{delivery_address.id}}" class="md-primary address-radio" ng-hide="updateShow" ng-class="{'md-checked' : delivery_address.primary == 1}">
     <div layout="column" layout-padding>
       <h1 class="md-title">{{delivery_address.name}}</h1>
       <div>{{delivery_address.line1}}</div>
