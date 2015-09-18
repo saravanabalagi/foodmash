@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('MainController', ['$scope', 'CombosService','AuthService','$location','toaster' ,'CartService','Combo' ,'$q','Cart', function($scope, CombosService, AuthService, $location, toaster, CartService, Combo, $q, Cart){
+.controller('MainController', ['$scope', 'CombosService','AuthService','$location','toaster', '$q','Combo', function($scope, CombosService, AuthService, $location, toaster, $q, Combo){
 	$scope.combos = {};
 	$scope.selected = null;
 

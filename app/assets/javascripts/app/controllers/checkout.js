@@ -2,10 +2,22 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('CheckoutController', ['$scope', '$q', 'toaster','$location','$rootScope','DeliveryAddress', function($scope, $q, toaster, $location, $rootScope, DeliveryAddress){
+.controller('CheckoutController', ['$scope', '$q', 'toaster','$location','$rootScope','DeliveryAddress','CartService', function($scope, $q, toaster, $location, $rootScope, DeliveryAddress, CartService){
 
 	$scope.delivery_addresses = {};
 	$scope.delivery_address = new DeliveryAddress;
+	$scope.cart = {};
+
+	CartService.getCartInfo().then(function(cart){
+		if(cart.orders.length == 0){
+			toaster.pop('warning', 'Cart is empty!');
+			$location.path("/cart");
+		}else{
+			$scope.cart = cart;
+		}
+	}, function(cart){
+		$scope.cart = cart;
+	});
 
 	DeliveryAddress.query({user_id: $rootScope.currentUser.id}).then(function(delivery_addresses){
 		if(delivery_addresses.length > 0){
@@ -41,6 +53,23 @@ angular.module('foodmashApp.controllers')
 			$scope.delivery_address = new DeliveryAddress;
 			d.resolve(null);
 		}
+		return d.promise;
+	};
+
+	$scope.reload = function(){
+		var d = $q.defer();
+		DeliveryAddress.query({user_id: $rootScope.currentUser.id}).then(function(delivery_addresses){
+		if(delivery_addresses.length > 0){
+			$scope.delivery_addresses = delivery_addresses;
+			d.resolve(null);
+		}else{
+			$scope.delivery_addresses = new Array;
+			d.resolve(null);
+		}
+	}, function(err){
+		$scope.delivery_addresses = null;
+		d.reject(err);
+	});
 		return d.promise;
 	};
 

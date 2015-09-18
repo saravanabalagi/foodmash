@@ -4,8 +4,7 @@
     <div flex offset="20" layout="column" layout-align="center center">
       
       <div layout="column" layout-align="center center">
-        <md-radio-group layout="column">
-
+        <md-radio-group layout="column" ng-model="cart_delivery_address_id">
           <!-- Repeatable Saved Address -->
           <delivery-address-list ng-repeat="delivery_address in delivery_addresses"> </delivery-address-list>
           <!-- Repeatable Saved Address ends-->

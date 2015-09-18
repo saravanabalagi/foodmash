@@ -26,7 +26,7 @@ angular.module('foodmashApp.directives')
 							toaster.pop('success', 'Delivery Address was updated!');
 							var index = $scope.delivery_addresses.indexOf(delivery_address);
 							if(angular.isNumber(index)){
-								refreshDeliveryAddresses();
+								$scope.reload();
 							}
 							d.resolve(response);
 						}, function(err){
@@ -46,7 +46,7 @@ angular.module('foodmashApp.directives')
 				delivery_address.delete().then(function(response){
 					toaster.pop('success', 'Delivery Address was deleted!');
 					$scope.delivery_addresses.splice($scope.delivery_addresses.indexOf(delivery_address), 1);
-					refreshDeliveryAddresses();
+					$scope.reload();
 					d.resolve(response);
 				}, function(err){
 					toaster.pop('error', 'Delivery Address was not deleted!');
@@ -54,17 +54,6 @@ angular.module('foodmashApp.directives')
 				});
 			};
 
-			function refreshDeliveryAddresses(){
-				DeliveryAddress.query({user_id: $rootScope.currentUser.id}).then(function(delivery_addresses){
-					if(delivery_addresses.length > 0){
-						$scope.delivery_addresses = delivery_addresses;
-					}else{
-						$scope.delivery_addresses = null;
-					}
-				}, function(err){
-					$scope.delivery_addresses = null;
-				});
-			};
 		}]
 	};
 }]);
