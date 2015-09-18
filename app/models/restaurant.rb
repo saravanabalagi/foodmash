@@ -6,11 +6,26 @@ class Restaurant < ActiveRecord::Base
 
 	def has_combos
 		combos = []
+		if self.dishes.present?
+	  	self.dishes.each {|dish|
+	  	if dish.combo_options.present?
+	  		 dish.combo_options.each {|combo_option|
+	  		 	if combo_option.combo.present?
+	  		 		combos << combo_option.combo 
+	  		 	end
+	  		 }
+	  	end
+	  	} 
+	  end
+	  
+	  if self.dishes.present?
+	  	self.dishes.each {|dish|
+	  	if dish.combos.present?  
+	  		combos << dish.combos
+	  	end
+	  	} 
+	  end
 
-	  self.dishes.each {|dish| dish.combo_options.each {|combo_option| combos << combo_option.combo if combo_option.combo.present?} if dish.combo_options.present? } if self.dishes.present?
-
-	  self.dishes.each {|dish| combos << dish.combos if dish.combos.present? } if self.dishes.present?
-
-	  return combos.uniq
+	  return combos.flatten.uniq
   end
 end

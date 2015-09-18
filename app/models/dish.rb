@@ -14,26 +14,42 @@ class Dish < ActiveRecord::Base
   def belongs_to_combos
 	  combos = []
 
-    self.combo_options.each {|combo_option| combos << combo_option.combo if combo_option.combo.present?} if self.combo_options.present?
+    if self.combo_options.present?
+      self.combo_options.each {|combo_option| 
+        if combo_option.combo.present?
+          combos << combo_option.combo 
+        end 
+    } 
+    end
 
-    combos << self.combos if self.combos.present?
+    if self.combos.present?
+      combos << self.combos
+    end
 
-    combos = combos.uniq
-
-    return combos
+    return combos.flatten.uniq
   end
 
   def update_combos_on_save
     if self.label_changed?
       combos = []
 
-      self.combo_options.each {|combo_option| combos << combo_option.combo if combo_option.combo.present?} if self.combo_options.present?
+      if self.combo_options.present?
+        self.combo_options.each {|combo_option| 
+          if combo_option.combo.present?
+            combos << combo_option.combo 
+          end
+        }
+      end
 
-      combos << self.combos if self.combos.present?
+      if self.combos.present?
+        combos << self.combos
+      end
 
-     combos = combos.uniq
-
-     combos.each {|c| c.save!} if combos.present?
+     combos = combos.flatten.uniq
+     
+      if combos.present?
+        combos.each {|c| c.save!} 
+      end
     end
     return true
   end

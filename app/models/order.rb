@@ -2,7 +2,7 @@ class Order < ActiveRecord::Base
 	has_many :order_items, dependent: :destroy
 	belongs_to :cart
 	belongs_to :product, polymorphic: true
-	validates :quantity, numericality: {greater_than: 0}
+	validates :quantity, numericality: {greater_than: 0, lesser_than: 500}
 	validates_presence_of :cart_id, :quantity
 	validates :product, presence: true
 	after_save :update_order_items

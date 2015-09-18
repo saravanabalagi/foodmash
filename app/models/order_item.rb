@@ -2,6 +2,7 @@ class OrderItem < ActiveRecord::Base
 	belongs_to :order
 	delegate :restaurant, to: :item
 	belongs_to :item, polymorphic: true
+	validates :quantity, numericality: {greater_than: 0, lesser_than: 500}
 	belongs_to :category, polymorphic: true
 	validates :item, presence: true
 	validates :category, presence: true
