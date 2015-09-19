@@ -26,7 +26,7 @@ angular.module('foodmashApp.directives')
 			});
 
 			$scope.routeToComboOption = function(combo_option){
-				$location.path("/combo_options/" + combo_option.id);
+				$location.path("/comboOptions/" + combo_option.id);
 			};
 
 			$scope.setUpdate = function(combo_option){

@@ -22,7 +22,31 @@ angular.module('foodmashApp.directives')
       };
 
       $scope.routeToPanel = function(){
+        if(hasRole("super_admin")){
+          $scope.routeToSuperAdminPanel();
+        }else if(hasRole("packaging_centre_admin")){
+          $scope.routeToPackagingCentrePanel();
+        }else if(hasRole("restaurant_admin")){
+          $scope.routeToRestaurantAdminPanel();
+        }else if(hasRole("customer")){
+          $scope.routeToCustomerPanel();
+        }
+      };
+
+      $scope.routeToSuperAdminPanel = function(){
         $location.path("/panel");
+      };
+
+      $scope.routeToPackagingCentrePanel = function(){
+        $location.path("/packagingCentrePanel");
+      };
+
+       $scope.routeToRestaurantAdminPanel = function(){
+        $location.path("/restaurantPanel");
+      };
+
+      $scope.routeToCustomerPanel = function(){
+        $location.path("/customerPanel");
       };
 
       $scope.routToProfile = function(){
@@ -40,6 +64,16 @@ angular.module('foodmashApp.directives')
 
       $scope.routeToLogin = function(){
         $location.path("/login");
+      };
+
+      function hasRole(name){
+        var check = false;
+        $scope.currentUser.roles.filter(function(role){
+          if(role.name == name){
+            check = true;
+          }
+        });
+        return check;
       };
 
     }]

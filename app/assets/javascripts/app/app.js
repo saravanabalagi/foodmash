@@ -24,6 +24,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 	          if(user && user.id == $route.current.params.user_id) {
 	            d.resolve();
 	          } else {
+	          	toaster.pop('error', 'Unauthorized!');
 	            $location.path('/');
 	          }
 	        });
@@ -42,7 +43,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 				}
 			}
 		})
-		.when('/user_roles', {
+		.when('/userRoles', {
 			controller: 'UserRolesController',
 			templateUrl: '/templates/user_roles.html',
 			resolve: {
@@ -56,7 +57,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			controller: 'CartController',
 			templateUrl: '/templates/cart.html'
 		})
-		.when('/combo_options/:id', {
+		.when('/comboOptions/:id', {
 			controller: 'ComboOptionController',
 			templateUrl: '/templates/combo_option.html',
 			resolve: {
@@ -96,7 +97,37 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 				}
 			}
 		})
-		.when('/dish_types', {
+		.when('/packagingCentrePanel', {
+			controller: 'PackagingCentrePanelController',
+			templateUrl: '/templates/packaging_centre_panel.html',
+			resolve: {
+				panel: 
+				function(AuthorizeService){
+					AuthorizeService.authorizeRouteForPackagingCentreAdmin();
+				}
+			}
+		})
+		.when('/restaurantPanel', {
+			controller: 'RestaurantPanelController',
+			templateUrl: '/templates/restaurant_panel.html',
+			resolve: {
+				panel: 
+				function(AuthorizeService){
+					AuthorizeService.authorizeRouteForRestaurantAdmin();
+				}
+			}
+		})
+		.when('/customerPanel', {
+			controller: 'CustomerPanelController',
+			templateUrl: '/templates/customer_panel.html',
+			resolve: {
+				panel: 
+				function(AuthorizeService){
+					AuthorizeService.authorizeRouteForCustomer();
+				}
+			}
+		})
+		.when('/dishTypes', {
 			controller: 'DishTypesController',
 			templateUrl: '/templates/dish_types.html',
 			resolve: {
