@@ -6,24 +6,47 @@
       <md-divider class="bottom-margin bottom-padding"></md-divider>
       
       <!-- add new -->
-      <div layout="row">
-        <md-input-container flex>
-            <label>User ID</label>
-            <input>
-        </md-input-container>
-        <md-input-container flex>
-            <label>Role ID</label>
-            <input>
-        </md-input-container>
-        <div layout="row" layout-align="center center" layout-padding>
-          <md-button class="md-icon-button" layout-padding>
-            <md-icon md-svg-src="assets/svg/add.svg"></md-icon>
-          </md-button>
-          <md-button class="md-icon-button" layout-padding>
-            <md-icon md-svg-src="assets/svg/bin.svg"></md-icon>
-          </md-button>
+      <form role="form" name="userRoleAddForm" ng-submit="addUserRole(addCross)" ng-init="addCross=false">
+        <div layout="row">
+           <md-autocomplete flex required
+              md-selected-item="user_id"
+              md-search-text="email"
+              md-search-text-change="null"
+              md-selected-item-change="null"
+              md-items="user in searchUsers(email)"
+              md-item-text="user.email"
+              md-floating-label="Users">
+            <md-item-template>
+              <span md-highlight-text="email">{{user.email}}</span>
+            </md-item-template>
+          </md-autocomplete>
+          <md-input-container flex>
+             <label>Roles</label>
+             <md-select ng-model="role_name" ng-change="loadResources(role_name)">
+               <md-option ng-repeat="role in role_names" value="{{role}}">{{role}}</md-option>
+             </md-select>
+          </md-input-container>
+          <md-autocomplete flex required ng-show="role_name == 'restaurant_admin' || role_name == 'packaging_centre_admin'"
+             md-selected-item="resource_id"
+             md-search-text-change="null"
+             md-selected-item-change="null"
+             md-items="resource in resources"
+             md-item-text="resource.name"
+             md-floating-label="Resources">
+          <md-item-template>
+              <span md-highlight-text="ctrl.searchText">{{resource.name}} : {{resource.branch}}</span>
+            </md-item-template>
+          </md-autocomplete>
+          <div layout="row" layout-align="center center" layout-padding>
+            <md-button class="md-icon-button" layout-padding ng-click="addCross=false">
+              <md-icon  md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/add.svg"></md-icon>
+            </md-button>
+            <md-button class="md-icon-button" layout-padding ng-click="addCross=true">
+              <md-icon  md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cross.svg"></md-icon>
+            </md-button>
+          </div>
         </div>
-      </div>
+      </form>
       <!-- add new ends -->
 
       <!-- for loop for listing -->

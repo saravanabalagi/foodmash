@@ -48,7 +48,12 @@ Rails.application.routes.draw do
 
     resources :orders
 
-    resources :users, only: [:index, :update]
+    resources :users, only: [:index, :update] do
+      collection do
+        post '/addRole', to: 'users#add_role'
+        get '/findByEmail', to: 'users#find_by_email'
+      end
+    end
 
     get '/payu/ok', to: 'payu#ok'
     get '/payu/error', to: 'payu#error'
