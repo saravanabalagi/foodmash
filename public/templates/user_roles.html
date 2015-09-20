@@ -9,7 +9,7 @@
       <form role="form" name="userRoleAddForm" ng-submit="addUserRole(addCross)" ng-init="addCross=false">
         <div layout="row">
            <md-autocomplete flex required
-              md-selected-item="user_id"
+              md-selected-item="user"
               md-search-text="email"
               md-search-text-change="null"
               md-selected-item-change="null"
@@ -27,7 +27,7 @@
              </md-select>
           </md-input-container>
           <md-autocomplete flex required ng-show="role_name == 'restaurant_admin' || role_name == 'packaging_centre_admin'"
-             md-selected-item="resource_id"
+             md-selected-item="resource"
              md-search-text-change="null"
              md-selected-item-change="null"
              md-items="resource in resources"
@@ -50,9 +50,7 @@
       <!-- add new ends -->
 
       <!-- for loop for listing -->
-
-      <user-role ng-repeat="user in users"> </user-role>
-
+        <user-role ng-repeat="user in users"> </user-role>
       <!-- for loop ends -->
       
   </div>

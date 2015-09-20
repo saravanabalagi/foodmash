@@ -22,6 +22,11 @@ angular.module('foodmashApp.controllers')
 	DeliveryAddress.query({user_id: $rootScope.currentUser.id}).then(function(delivery_addresses){
 		if(delivery_addresses.length > 0){
 			$scope.delivery_addresses = delivery_addresses;
+			$scope.delivery_addresses.filter(function(delivery_address){
+				if(delivery_address.primary == true){
+					$scope.cart_delivery_address_id = delivery_address.id
+				}
+			});
 		}else{
 			$scope.delivery_addresses = new Array;
 		}
@@ -31,6 +36,10 @@ angular.module('foodmashApp.controllers')
 
 	$scope.routeToCart = function(){
 		$location.path("/cart");
+	};
+
+	$scope.processCart = function(){
+		$scope.cart.delivery_address_id = parseInt($scope.cart_delivery_address_id, 10);
 	};
 
 	$scope.addDeliveryAddress = function(addCross){

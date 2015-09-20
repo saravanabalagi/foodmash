@@ -1,0 +1,12 @@
+
+<div layout="row" layout-padding layout-align="center center">
+  <div layout="column" layout-padding layout-align="center center">
+    <md-content flex><h3>{{user.email}}</h3></md-content>
+    <md-chips ng-model="user.roles">
+      <md-chip-template>
+        <strong>{{$chip.name}}</strong>
+        <em ng-if="$chip.resource">({{$chip.resource.name}} : {{$chip.resource.branch}})</em>
+      </md-chip-template>
+    </md-chips>
+  </div>
+</div>

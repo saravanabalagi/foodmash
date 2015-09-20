@@ -7,14 +7,31 @@ angular.module('foodmashApp.controllers')
 	$scope.users = {};
 	$scope.role_names = ["super_admin", "packaging_centre_admin", "restaurant_admin"];
 	$scope.resources = {};
+	$scope.resource = {};
+	$scope.user = {};
+	$scope.role_name = "";
+
+	User.query().then(function(users){
+		if(users.length > 0){
+			$scope.users = users;
+		}else{
+			$scope.users = new Array;
+		}
+	}, function(err){
+		$scope.users = null;
+	});
 
 	$scope.addUserRole = function(addCross){
 		var d = $q.defer();
 		if(!addCross){
 			if(!$scope.userRoleAddForm.$pristine){
-				User.addRole({id: $scope.user_id, role_name: $scope.role_name, resource_id: $scope.resource_id}).then(function(response){
+				User.addRole($scope.user.id, $scope.role_name, $scope.resource.id).then(function(user){
 					toaster.pop('success', 'User was assigned a new role!');
-					d.resolve(response);
+					var index = findUser($scope.user);
+					if(angular.isNumber(index) && index >= 0){
+						$scope.users[index] = user;
+					}
+					d.resolve(user);
 				}, function(err){
 					toaster.pop('error', 'User was not assigned a new role!');
 					d.reject(err);
@@ -23,7 +40,7 @@ angular.module('foodmashApp.controllers')
 				d.resolve(null);
 			}
 		}else{
-			$scope.email = ""; $scope.role_name = {}; $scope.resource_id = {};
+			$scope.user = {}; $scope.role_name = ""; $scope.resource = {};
 			d.resolve(null);
 		}
 		return d.promise;
@@ -81,6 +98,15 @@ angular.module('foodmashApp.controllers')
 			d.reject(err);
 		});
 		return d.promise;
+	};
+
+	function findUser(user){
+		for(var i=0;i<$scope.users.length;i++){
+			if($scope.users[i].id == user.id){
+				return i;
+			}
+		};
+		return -1;
 	};
 
 }]);
