@@ -29,6 +29,8 @@ class Dish < ActiveRecord::Base
     return combos.flatten.uniq
   end
 
+  private
+
   def update_combos_on_save
     if self.label_changed?
       combos = []

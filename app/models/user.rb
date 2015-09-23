@@ -56,12 +56,13 @@ class User < ActiveRecord::Base
     return reset_password_token
   end
 
+  
+  private
+
   def assign_default_role
     self.add_role(:customer)
   end
   
-  private
-
   def generate_user_token
     begin
       self.user_token = SecureRandom.hex(64)

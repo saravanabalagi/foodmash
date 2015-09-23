@@ -5,6 +5,8 @@ class ComboDish < ActiveRecord::Base
 	validates_presence_of :combo_id, :dish_id, :dish_type_id
 	after_save :call_label_on_combo
 
+	private
+	
 	def call_label_on_combo
 		self.combo.save!
 	end

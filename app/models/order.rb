@@ -31,6 +31,8 @@ class Order < ActiveRecord::Base
 	  end
 	end
 
+	private
+
 	def update_cart
 		self.cart.save!
 	end

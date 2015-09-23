@@ -50,14 +50,16 @@ class Cart < ActiveRecord::Base
 		return self if self.save!
 	end
 
-	def update_total
-		self.total = self.total_price
-		return true
-	end
-	
 	def total_price
 		self.orders.to_a.sum {|order| order.total}
 	end
+
+	def generate_order_id
+		self.order_id = "OD" + Digest::SHA1.hexdigest(Time.now.to_s)[0..9]
+		self.save!
+	end
+
+	private
 
 	def update_orders
 		if self.purchased?	
@@ -66,8 +68,8 @@ class Cart < ActiveRecord::Base
 		return true
 	end
 
-	def generate_order_id
-		self.order_id = "OD" + Digest::SHA1.hexdigest(Time.now.to_s)[0..9]
-		self.save!
+	def update_total
+		self.total = self.total_price
+		return true
 	end
 end
