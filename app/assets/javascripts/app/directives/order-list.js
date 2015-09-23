@@ -63,10 +63,10 @@ angular.module('foodmashApp.directives')
 			};
 
 			function refreshOrderProduct(){
-				Combo.query({id: $scope.order.product.id}).then(function(combo){
-					if(combo.length > 0){
-						$scope.order.product.available = combo.available;
-						$scope.order.product.active = combo.active;
+				Combo.loadComboAvailability($scope.order.product.id).then(function(combos){
+					if(combos.length > 0){
+						$scope.order.product.available = combos[0].available;
+						$scope.order.product.active = combos[0].active;
 					}
 				});
 			};

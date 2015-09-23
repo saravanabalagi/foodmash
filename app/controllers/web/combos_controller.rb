@@ -12,6 +12,15 @@ class Web::CombosController < ApplicationController
 		end
 	end
 
+	def get_combo_availability
+		@combo = Combo.find params[:combo][:id]
+		if @combo
+			render status: 200, json: @combo.as_json(only: [:id, :available, :active])
+		else
+			render status: 404, json: {error: 'Combo not found!'}
+		end
+	end
+
 	def create
 		@combo = Combo.new combo_params
 		if @combo.save! 
