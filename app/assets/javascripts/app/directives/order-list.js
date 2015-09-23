@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('orderList', ['toaster','Combo', function(toaster, Combo){
+.directive('orderList', ['toaster','Combo','$q', function(toaster, Combo, $q){
 
 	return {
 
@@ -10,7 +10,7 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/order-list.html',
 
-		controller: ['$scope', 'toaster', function($scope, toaster){
+		controller: ['$scope', 'toaster', 'Combo', '$q', function($scope, toaster, Combo, $q){
 
 			validateOrder();
 			
@@ -51,24 +51,32 @@ angular.module('foodmashApp.directives')
 			};
 
 			function validateOrder(){
-				refreshOrderProduct();
-				if(!$scope.order.product.active || !$scope.order.product.available){
-					var index = findOrderInCart($scope.order.id);
-					if(angular.isNumber(index) && index >= 0){
-						$scope.cart.orders.splice(index, 1);
-						$scope.updateCartInfo();
-						toaster.pop('error', 'An unavailable combo was removed from the cart!');
+				refreshOrderProduct().then(function(){
+					if(!$scope.order.product.active || !$scope.order.product.available){
+						var index = findOrderInCart($scope.order.id);
+						if(angular.isNumber(index) && index >= 0){
+							$scope.cart.orders.splice(index, 1);
+							$scope.updateCartInfo();
+							toaster.pop('error', 'An unavailable combo was removed from the cart!');
+						}
 					}
-				}
+				});
 			};
 
 			function refreshOrderProduct(){
-				Combo.loadComboAvailability($scope.order.product.id).then(function(combos){
-					if(combos.length > 0){
-						$scope.order.product.available = combos[0].available;
-						$scope.order.product.active = combos[0].active;
+				var d = $q.defer();
+				Combo.loadComboAvailability($scope.order.product.id).then(function(combo){
+					if(combo){
+						console.log(combo);
+						$scope.order.product.available = combo.available;
+						$scope.order.product.active = combo.active;
+						d.resolve(null);
 					}
+				}, function(err){
+					d.reject(err);
 				});
+				console.log($scope.order);
+				return d.promise;
 			};
 
 			function findOrderInCart(order_id){
