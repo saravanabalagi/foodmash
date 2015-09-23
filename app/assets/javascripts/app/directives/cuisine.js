@@ -25,7 +25,7 @@ angular.module('foodmashApp.directives')
 						$scope.updatedCuisine.update().then(function(response){
 							toaster.pop('success', 'Cuisine was successfully updated!');
 							var index = $scope.cuisines.indexOf(cuisine);
-							if(angular.isNumber(index)){
+							if(angular.isNumber(index) && index >= 0){
 								$scope.cuisines[index] = $scope.updatedCuisine;
 							}
 							d.resolve(response);

@@ -33,12 +33,22 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 	      }
 	    }
 	  })
+		.when('/cartPayment', {
+			controller: 'CartPaymentController',
+			templateUrl: '/templates/cart_payment.html',
+			resolve: {
+				cart_payment: 
+				function(AuthorizeService){
+					AuthorizeService.checkForLogin();
+				}
+			}
+		})
 		.when('/checkout', {
 			controller: 'CheckoutController', 
 			templateUrl: '/templates/checkout.html',
 			resolve: {
 				checkout: 
-				function(AuthorizeService, CartService){
+				function(AuthorizeService){
 					AuthorizeService.checkForLogin();
 				}
 			}

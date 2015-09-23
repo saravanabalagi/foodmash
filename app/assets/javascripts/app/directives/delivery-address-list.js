@@ -25,7 +25,7 @@ angular.module('foodmashApp.directives')
 						$scope.updatedDeliveryAddress.update().then(function(response){
 							toaster.pop('success', 'Delivery Address was updated!');
 							var index = $scope.delivery_addresses.indexOf(delivery_address);
-							if(angular.isNumber(index)){
+							if(angular.isNumber(index) && index >= 0){
 								$scope.reload();
 							}
 							d.resolve(response);

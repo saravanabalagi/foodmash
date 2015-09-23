@@ -14,11 +14,14 @@ angular.module('foodmashApp.directives')
 
 			$scope.selectedDishes = [];
 
+			setQuantityForComboItems();
+
 			$scope.selectDish = function(combo, combo_option_id, dish_id){
-				var selectedDish = {};
-				selectedDish["combo_id"] = combo.id;
-				selectedDish["combo_option_id"] = combo_option_id;
-				selectedDish["dish_id"] = parseInt(dish_id, 10);
+				var selectedDish = {"product": {}, "category": {}, "item": {}};
+				selectedDish["product"]["id"] = combo.id;
+				selectedDish["category"]["id"] = combo_option_id;
+				selectedDish["category"]["type"] = "ComboOption";
+				selectedDish["item"]["id"] = parseInt(dish_id, 10);
 				selectedDish["added_at"] = Date.now();
 				selectedDish["quantity"] = 1;
 				checkAndPush(selectedDish)
@@ -33,7 +36,7 @@ angular.module('foodmashApp.directives')
 			$scope.checkComboSelection = function(combo){
 				var l = 0;
 				for(var i=0;i<$scope.selectedDishes.length; i++){
-					if($scope.selectedDishes[i].combo_id == combo.id){
+					if($scope.selectedDishes[i]["product"]["id"] == combo.id){
 						l++;
 					}
 				}
@@ -50,7 +53,7 @@ angular.module('foodmashApp.directives')
 
 			function checkAndPush(selectedDish){
 				for(var i = 0; i<$scope.selectedDishes.length; i++){
-					if(selectedDish.combo_id == $scope.selectedDishes[i].combo_id && selectedDish.combo_option_id == $scope.selectedDishes[i].combo_option_id){
+					if(selectedDish["product"].id == $scope.selectedDishes[i]["product"].id && selectedDish["category"].id == $scope.selectedDishes[i]["category"].id && selectedDish["category"].type == $scope.selectedDishes[i]["category"].type){
 						$scope.selectedDishes[i] = selectedDish;
 						return ;
 					}
@@ -61,13 +64,28 @@ angular.module('foodmashApp.directives')
 			function pushAllComboDishes(combo){
 				if(combo.combo_dishes){
 					for(var i=0; i<combo.combo_dishes.length; i++){
-						var selectedDish = {};
-						selectedDish["combo_id"] = combo.id;
-						selectedDish["combo_dish_id"] = combo["combo_dishes"][i].id;
-						selectedDish["dish_id"] = parseInt(combo["combo_dishes"][i].dish.id, 10);
+						var selectedDish = {"product": {}, "category": {}, "item": {}};
+						selectedDish["product"]["id"] = combo.id;
+						selectedDish["category"]["id"] = combo["combo_dishes"][i].id;
+						selectedDish["category"]["type"] = "ComboDish";
+						selectedDish["item"]["id"] = parseInt(combo["combo_dishes"][i].dish.id, 10);
 						selectedDish["added_at"] = Date.now();
 						selectedDish["quantity"] = 1;
 						$scope.selectedDishes.push(selectedDish);
+					}
+				}
+			};
+
+			function setQuantityForComboItems(){
+				if($scope.combo.combo_dishes && $scope.combo.combo_dishes.length > 0){
+					for(var i=0;i<$scope.combo.combo_dishes.length;i++){
+						$scope.combo.combo_dishes[i].quantity = 1;
+					}
+				}
+
+					if($scope.combo.combo_options && $scope.combo.combo_options.length > 0){
+					for(var i=0;i<$scope.combo.combo_options.length;i++){
+						$scope.combo.combo_options[i].quantity = 1;
 					}
 				}
 			};

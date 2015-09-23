@@ -2,16 +2,18 @@
 
 angular.module('foodmashApp.services')
 
-.service('CartService', ['$q', function($q){
+.service('CartService', ['$q','Cart', function($q, Cart){
 
 	var service = this;
 	service.cart = {};
 	service.cart.orders = [];
 	service.cart.total = 0;
 
+	refurbishCartFromServer();
+
 	this.addToCart = function(combo, selected_dishes){
 		for(var i = 0;i<service.cart.orders.length;i++){
-			if(service.cart.orders[i]["combo_id"] == combo.id && checkWithIncomingOrder(service.cart.orders[i], selected_dishes)){
+			if(service.cart.orders[i]["product"]["id"] == combo.id && checkWithIncomingOrder(service.cart.orders[i], selected_dishes)){
 				service.cart.orders[i]["quantity"] += 1;
 				for(var o=0;o<service.cart.orders[i]["order_items"].length;o++){
 					service.cart.orders[i]["order_items"][o]["quantity"] += 1;
@@ -21,10 +23,12 @@ angular.module('foodmashApp.services')
 			}
 		}
 
-			var future_order = {"added_at": Date.now(), "order_items": [], "price": combo.price, "description": combo.description, "name": combo.name, "total": combo.price, "quantity": 1, "combo_id": combo.id};
+			var future_order = {"added_at": Date.now(), "order_items": [], "product": {"id": combo.id, "price": combo.price, "description": combo.description, "name": combo.name, "available": combo.available, "active": combo.active}, "total": combo.price, "quantity": 1};
 			for(var i=0;i<selected_dishes.length;i++){
-				if(selected_dishes[i]["combo_id"] == combo.id){
-					future_order["order_items"].push(selected_dishes[i]);
+				if(selected_dishes[i]["product"]["id"] == combo.id){
+					var order_item = angular.copy(selected_dishes[i]);
+					delete order_item["product"];
+					future_order["order_items"].push(order_item);
 				}
 			}
 			service.cart.orders.push(future_order);
@@ -42,12 +46,19 @@ angular.module('foodmashApp.services')
 		return d.promise;
 	};
 
+	function refurbishCartFromServer(){
+		Cart.show().then(function(cart){
+			service.cart = cart;
+		}, function(err){
+		});
+	};
+
 	function checkWithIncomingOrder(current_order, selected_dishes){
 		 var current_order_items_length = current_order["order_items"].length;
 		 var counting_length = 0;
 		 for(var i=0;i<current_order["order_items"].length;i++){
 		 		for(var j=0;j<selected_dishes.length;j++){
-		 			if(current_order["order_items"][i]["dish_id"] == selected_dishes[j]["dish_id"] && (selected_dishes[j]["combo_option_id"] == current_order["order_items"][i]["combo_option_id"] || selected_dishes[j]["combo_dish_id"] == current_order["order_items"][i]["combo_dish_id"]) && selected_dishes[j]["combo_id"] == current_order["order_items"][i]["combo_id"]){
+		 			if(current_order["order_items"][i]["item"]["id"] == selected_dishes[j]["item"]["id"] && selected_dishes[j]["category"]["id"] == current_order["order_items"][i]["category_id"] && selected_dishes[j]["category"]["type"] == current_order["order_items"][i]["category_type"] && selected_dishes[j]["product"]["id"] == current_order["product"]["id"]){
 		 				counting_length += 1;
 		 				break;
 		 			}
@@ -63,7 +74,7 @@ angular.module('foodmashApp.services')
 	function updateCartInfo(){
 		var total = 0;
 		service.cart.orders.filter(function(order){ 
-			var currTotal = order.price * order.quantity;
+			var currTotal = order["product"].price * order.quantity;
 			total += currTotal;
 			order.total = currTotal;
 		});

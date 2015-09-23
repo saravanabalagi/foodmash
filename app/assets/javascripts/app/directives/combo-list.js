@@ -23,7 +23,7 @@ angular.module('foodmashApp.directives')
 				combo.update({active: active}).then(function(response){
 					toaster.pop('success', 'Combo was updated!');
 					var index = $scope.combos.indexOf(combo);
-					if(angular.isNumber(index)){
+					if(angular.isNumber(index) && index >= 0){
 						$scope.combos[index] = combo;
 					}
 					d.resolve(response);
@@ -46,7 +46,7 @@ angular.module('foodmashApp.directives')
 						$scope.updatedCombo.update().then(function(response){
 							toaster.pop('success', 'Combo was updated!');
 							var index = $scope.combos.indexOf(combo);
-							if(angular.isNumber(index)){
+							if(angular.isNumber(index) && index >= 0){
 								$scope.combos[index] = $scope.updatedCombo;
 							}
 							d.resolve(response);

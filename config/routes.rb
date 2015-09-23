@@ -43,6 +43,7 @@ Rails.application.routes.draw do
     resources :carts, only: [:create, :destroy, :index] do 
       collection do 
         post '/addToCart', to: 'carts#add_to_cart'
+        get '/show', to: 'carts#show'
       end
     end
 

@@ -34,6 +34,10 @@
                       <div class="md-list-item-text">
                         <label>{{combo_dish.dish.name}}</label>
                         <p>{{combo_dish.dish.description}}</p>
+                        <md-input-container>
+                          <label>quantity</label>
+                          <input type="number" min="1" max="500" ng-model="combo_dish.quantity" />
+                        </md-input-container>
                       </div>
 
                     </md-list-item>
@@ -62,6 +66,10 @@
                           <md-option ng-repeat="combo_option_dish in combo_option.combo_option_dishes" value="{{combo_option_dish.dish.id}}">{{combo_option_dish.dish.name}} -> {{combo_option_dish.dish.restaurant.name}}
                           </md-option>
                         </md-select>
+                        <md-input-container>
+                          <label>quantity</label>
+                          <input type="number" min="1" max="500" ng-model="combo_option.quantity" />
+                        </md-input-container>
                       </div>
 
                     </md-list-item>

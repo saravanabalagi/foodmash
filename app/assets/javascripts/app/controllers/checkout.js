@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('CheckoutController', ['$scope', '$q', 'toaster','$location','$rootScope','DeliveryAddress','CartService', function($scope, $q, toaster, $location, $rootScope, DeliveryAddress, CartService){
+.controller('CheckoutController', ['$scope', '$q', 'toaster','$location','$rootScope','DeliveryAddress','CartService','Cart', function($scope, $q, toaster, $location, $rootScope, DeliveryAddress, CartService, Cart){
 
 	$scope.delivery_addresses = {};
 	$scope.delivery_address = new DeliveryAddress;
@@ -40,6 +40,16 @@ angular.module('foodmashApp.controllers')
 
 	$scope.processCart = function(){
 		$scope.cart.delivery_address_id = parseInt($scope.cart_delivery_address_id, 10);
+		var d = $q.defer();
+		Cart.addToCart($scope.cart).then(function(response){
+			toaster.pop('success', 'Cart was submitted!');
+			$location.path("/cartPayment");
+			d.resolve(response);
+		}, function(err){
+			toaster.pop('error', 'Cart was not submitted!');
+			d.reject(err);
+		});
+		return d.promise;
 	};
 
 	$scope.addDeliveryAddress = function(addCross){

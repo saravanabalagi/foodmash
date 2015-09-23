@@ -3,34 +3,7 @@
         <div flex layout="row">
           <div flex offset="20" layout="column" layout-align="center center">
             <!-- Combo in cart -->
-            <div class="md-whiteframe-z2" layout-margin ng-repeat="order in cart.orders">
-              <div layout="row" layout-align="space-between center">
-                <md-content flex>
-                  <md-list>
-                    <md-list-item class="md-2-line">
-                      <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="combo"></md-icon>
-                      <div class="md-list-item-text">
-                          <h3>{{order.name}}</h3>
-                          <p>{{order.description}}</p>
-                      </div>
-                    </md-list-item>
-                  </md-list>
-                </md-content>
-                <div layout-padding layout-margin>
-                  <md-input-container>
-                    <label>quantity</label>
-                    <input type="number" ng-change="updateOrder(order ,order.quantity)" min="1" max="500" ng-model="order.quantity" />
-                  </md-input-container>
-                </div>
-                X
-                <div layout-padding layout-margin class="rupee">{{order.price}}</div>
-                <div layout-padding layout-margin>
-                <md-button class="md-icon-button md-primary" ng-click="deleteOrder(order)">
-                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/wrong.svg"></md-icon>
-                </md-button>
-                </div>
-              </div>
-            </div>
+              <order-list ng-repeat="order in cart.orders"></order-list>
             <!-- Combo in cart ends -->
 
             <div layout="row" layout-padding layout-align="center center">

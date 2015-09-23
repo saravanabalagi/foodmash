@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('MainController', ['$scope', 'CombosService','AuthService','$location','toaster', '$q','Combo', function($scope, CombosService, AuthService, $location, toaster, $q, Combo){
+.controller('MainController', ['$scope', 'CombosService','AuthService','$location','toaster', '$q','Combo','CartService', function($scope, CombosService, AuthService, $location, toaster, $q, Combo, CartService){
 	$scope.combos = {};
 	$scope.selected = null;
 
@@ -20,14 +20,13 @@ angular.module('foodmashApp.controllers')
   		$scope.user = null;
    });
 
+	$scope.routeToCart = function(){
+		$location.path("/cart");
+	};
+
  	$scope.routeToRoot = function(){
  	 	$location.path("/");
  	};
-
- 	$scope.routeToCart = function(){
- 		$location.path("/cart");
- 	};
-
 
 	$scope.selectOption = function(option){
 		$scope.selected = angular.isNumber(option)? $scope.sideNavOptions[option] : option;

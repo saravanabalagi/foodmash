@@ -36,7 +36,19 @@ class Cart < ActiveRecord::Base
 	  end
 	end
 
-	
+	def add_items_to_cart(cart)
+		cart[:orders].each do |order|
+			future_order = self.orders.build(product_id: order[:combo_id], product_type: "Combo", quantity: order[:quantity])
+			order[:order_items].each do |order_item|
+				if order_item[:combo_option_id].present?
+					future_order.order_items.build(category_id: order_item[:combo_option_id], category_type: "ComboOption", item_id: order_item[:dish_id], item_type: "Dish", quantity: order_item[:quantity])
+				elsif order_item[:combo_dish_id].present?
+					future_order.order_items.build(category_id: order_item[:combo_dish_id], category_type: "ComboDish", item_id: order_item[:dish_id], item_type: "Dish", quantity: order_item[:quantity])
+				end
+			end
+		end
+		return self if self.save!
+	end
 
 	def update_total
 		self.total = self.total_price
