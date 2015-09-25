@@ -67,7 +67,6 @@ angular.module('foodmashApp.directives')
 				var d = $q.defer();
 				Combo.loadComboAvailability($scope.order.product.id).then(function(combo){
 					if(combo){
-						console.log(combo);
 						$scope.order.product.available = combo.available;
 						$scope.order.product.active = combo.active;
 						d.resolve(null);
@@ -75,7 +74,6 @@ angular.module('foodmashApp.directives')
 				}, function(err){
 					d.reject(err);
 				});
-				console.log($scope.order);
 				return d.promise;
 			};
 

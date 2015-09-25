@@ -19,8 +19,8 @@ angular.module('foodmashApp.directives')
 			$scope.selectDish = function(combo, combo_option_id, dish_id){
 				var selectedDish = {"product": {}, "category": {}, "item": {}};
 				selectedDish["product"]["id"] = combo.id;
-				selectedDish["category"]["id"] = combo_option_id;
-				selectedDish["category"]["type"] = "ComboOption";
+				selectedDish["category_id"] = combo_option_id;
+				selectedDish["category_type"] = "ComboOption";
 				selectedDish["item"]["id"] = parseInt(dish_id, 10);
 				selectedDish["added_at"] = Date.now();
 				selectedDish["quantity"] = 1;
@@ -66,8 +66,8 @@ angular.module('foodmashApp.directives')
 					for(var i=0; i<combo.combo_dishes.length; i++){
 						var selectedDish = {"product": {}, "category": {}, "item": {}};
 						selectedDish["product"]["id"] = combo.id;
-						selectedDish["category"]["id"] = combo["combo_dishes"][i].id;
-						selectedDish["category"]["type"] = "ComboDish";
+						selectedDish["category_id"] = combo["combo_dishes"][i].id;
+						selectedDish["category_type"] = "ComboDish";
 						selectedDish["item"]["id"] = parseInt(combo["combo_dishes"][i].dish.id, 10);
 						selectedDish["added_at"] = Date.now();
 						selectedDish["quantity"] = 1;

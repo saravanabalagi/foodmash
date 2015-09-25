@@ -1,22 +1,22 @@
 <!-- Shopping cart -->
     
-        <div flex layout="row">
-          <div flex offset="20" layout="column" layout-align="center center">
-            <!-- Combo in cart -->
-              <order-list ng-repeat="order in cart.orders"></order-list>
-            <!-- Combo in cart ends -->
+<div flex layout="row">
+  <div flex offset="20" layout="column" layout-align="center center">
+    <!-- Combo in cart -->
+      <order-list ng-repeat="order in cart.orders"></order-list>
+    <!-- Combo in cart ends -->
 
-            <div layout="row" layout-padding layout-align="center center">
-              <h2 class="md-title" layout-padding layout-margin>Total Amount</h2>
-              <h2 class="md-display-1 rupee" layout-padding layout-margin>{{cart.total}}</h2>
-            </div>
-            <div layout="row" layout-align="center center">
-              <md-button class="md-raised" ng-click="routeToRoot()">Shop</md-button>
-              <md-button class="md-raised md-primary" ng-disabled="cart.total == 0 || filling" ng-click="routeToCheckout()">Deliver</md-button>
-            </div>
+    <div layout="row" layout-padding layout-align="center center">
+      <h2 class="md-title" layout-padding layout-margin>Total Amount</h2>
+      <h2 class="md-display-1 rupee" layout-padding layout-margin>{{cart.total}}</h2>
+    </div>
+    <div layout="row" layout-align="center center">
+      <md-button class="md-raised" ng-click="routeToRoot()">Shop</md-button>
+      <md-button class="md-raised md-primary" ng-disabled="cart.total == 0 || filling" ng-click="routeToCheckout()">Deliver</md-button>
+    </div>
 
-          </div>  
-          <div flex="20"></div>        
-        </div>
+  </div>  
+  <div flex="20"></div>        
+</div>
 
-        <!-- Shopping cart ends
+<!-- Shopping cart ends -->

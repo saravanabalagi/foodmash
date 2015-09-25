@@ -58,7 +58,7 @@ angular.module('foodmashApp.services')
 		 var counting_length = 0;
 		 for(var i=0;i<current_order["order_items"].length;i++){
 		 		for(var j=0;j<selected_dishes.length;j++){
-		 			if(current_order["order_items"][i]["item"]["id"] == selected_dishes[j]["item"]["id"] && selected_dishes[j]["category"]["id"] == current_order["order_items"][i]["category_id"] && selected_dishes[j]["category"]["type"] == current_order["order_items"][i]["category_type"] && selected_dishes[j]["product"]["id"] == current_order["product"]["id"]){
+		 			if(current_order["order_items"][i]["item"].id == selected_dishes[j]["item"].id && selected_dishes[j].category_id == current_order["order_items"][i].category_id && selected_dishes[j].category_type == current_order["order_items"][i].category_type && selected_dishes[j]["product"].id == current_order["product"].id){
 		 				counting_length += 1;
 		 				break;
 		 			}
