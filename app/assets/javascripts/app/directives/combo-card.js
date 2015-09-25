@@ -13,17 +13,18 @@ angular.module('foodmashApp.directives')
 		controller: ['$scope', 'toaster','CartService', function($scope, toaster, CartService){
 
 			$scope.selectedDishes = [];
+			$scope.filling = false;
 
 			setQuantityForComboItems();
 
-			$scope.selectDish = function(combo, combo_option_id, dish_id){
+			$scope.selectDish = function(combo, combo_option, dish_id){
 				var selectedDish = {"product": {}, "category": {}, "item": {}};
 				selectedDish["product"]["id"] = combo.id;
-				selectedDish["category_id"] = combo_option_id;
+				selectedDish["category_id"] = combo_option.id;
 				selectedDish["category_type"] = "ComboOption";
 				selectedDish["item"]["id"] = parseInt(dish_id, 10);
 				selectedDish["added_at"] = Date.now();
-				selectedDish["quantity"] = 1;
+				selectedDish["quantity"] = combo_option.quantity;
 				checkAndPush(selectedDish)
 			};
 
@@ -31,6 +32,19 @@ angular.module('foodmashApp.directives')
 				pushAllComboDishes(combo);
 				CartService.addToCart(combo, $scope.selectedDishes);
 				toaster.pop('success' ,'Added to cart!');
+			};
+
+			$scope.validateQuantity = function(combo_item){
+				console.log(combo_item);
+				if(combo_item.quantity >= 1 && combo_item.quantity <=50){
+					$scope.filling = false;
+				}else if(combo_item.quantity === null){
+					$scope.filling = true;
+				}else if(combo_item.quantity === undefined){
+					combo_item.quantity = 1;
+					$scope.filling = false;
+				}
+				console.log($scope.filling);
 			};
 
 			$scope.checkComboSelection = function(combo){
@@ -70,7 +84,7 @@ angular.module('foodmashApp.directives')
 						selectedDish["category_type"] = "ComboDish";
 						selectedDish["item"]["id"] = parseInt(combo["combo_dishes"][i].dish.id, 10);
 						selectedDish["added_at"] = Date.now();
-						selectedDish["quantity"] = 1;
+						selectedDish["quantity"] = combo["combo_dishes"][i].quantity;
 						$scope.selectedDishes.push(selectedDish);
 					}
 				}

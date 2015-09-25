@@ -21,7 +21,7 @@ angular.module('foodmashApp.directives')
 			$scope.updateOrder = function(order){
 				var index = findOrderInCart(order.id);
 				if(angular.isNumber(index) && index >= 0){
-					if(order.quantity >= 1 && order.quantity <=500){
+					if(order.quantity >= 1 && order.quantity <=50){
 						$scope.updateCartInfo();
 						$scope.filling = false;
 						toaster.pop('success', 'Order was updated!');

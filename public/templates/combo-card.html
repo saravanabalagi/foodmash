@@ -16,7 +16,7 @@
         </md-content>
         <div layout-padding layout-margin class="rupee">{{combo.price}}</div>
         <div layout-padding layout-margin ng-show="combo_1_clicked" class="cart">
-        <md-button class="md-icon-button md-primary" aria-label="Eat cake" ng-click="addToCart(combo)" ng-disabled="checkComboSelection(combo)">
+        <md-button class="md-icon-button md-primary" aria-label="Eat cake" ng-click="addToCart(combo)" ng-disabled="checkComboSelection(combo) && filling">
               <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cart.svg"></md-icon>
         </md-button>
         </div>
@@ -36,7 +36,7 @@
                         <p>{{combo_dish.dish.description}}</p>
                         <md-input-container>
                           <label>quantity</label>
-                          <input type="number" min="1" max="500" ng-model="combo_dish.quantity" />
+                          <input type="number" min="1" max="50" ng-model="combo_dish.quantity" ng-change="validateQuantity(combo_dish)" />
                         </md-input-container>
                       </div>
 
