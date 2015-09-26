@@ -8,8 +8,30 @@ class Combo < ActiveRecord::Base
 	before_destroy :ensure_combo_not_referenced
 	before_save :check_for_availability
 	before_save :update_label
+	before_save :calculate_price
 
 	private
+
+	def calculate_price
+		price = 0
+		if self.combo_dishes.present?
+			self.combo_dishes.each do |combo_dish|
+				price += combo_dish.dish.price
+			end
+		end
+
+		combo_option_price_list = []
+		if self.combo_options.present?
+			self.combo_options.each do |combo_option|
+				combo_option.dishes.each do |dish|
+					combo_option_price_list.append dish.price
+				end
+			end
+			price += combo_option_price_list.min
+		end
+		self.price = price
+		return true
+	end
 
 	def check_for_availability
 		if self.combo_options or self.combo_dishes	

@@ -13,7 +13,8 @@ angular.module('foodmashApp.directives')
 		controller: ['$scope', 'toaster', 'Combo', '$q', function($scope, toaster, Combo, $q){
 
 			validateOrder();
-			
+			$scope.fillingOrder = false;
+
 			$scope.$watch('order', function(newValue, oldValue) {
 			  $scope.old_quantity = oldValue.quantity;
 			});
@@ -39,6 +40,27 @@ angular.module('foodmashApp.directives')
 				}
 			};
 
+			$scope.updateOrderItem = function(order_item){
+				var index = findOrderItemInOrder(order_item.id);
+				if(angular.isNumber(index) && index >= 0){
+					if(order_item.quantity >= 1 && order_item.quantity <=50){
+						updateOrderInfo();
+						$scope.fillingOrder = false;
+						toaster.pop('success', 'Order Item was updated!');
+					}if(order_item.quantity === null){
+						$scope.fillingOrder = true;
+					}if(order_item.quantity === undefined){
+						order_item.quantity = 1;
+						updateOrderInfo();
+						$scope.fillingOrder = false;
+						toaster.pop('error', 'Order Item quantity was reset due to invalidity!');
+					}
+				}else{
+					toaster.pop('error', 'Order was not updated!');
+					order_item.quantity = 1;
+				}
+			};
+
 			$scope.deleteOrder = function(order){
 				var index = findOrderInCart(order.id);
 				if(angular.isNumber(index) && index >= 0){		
@@ -61,6 +83,17 @@ angular.module('foodmashApp.directives')
 						}
 					}
 				});
+				var touched = false;
+				for(var i=0;i<$scope.order.order_items.length;i++){
+					console.log("inside for");
+					if($scope.order.order_items[i].quantity === null){
+						$scope.order.order_items[i].quantity = 1;
+						touched = true;
+					}
+				}
+				if(touched){
+					updateOrderInfo();
+				}
 			};
 
 			function refreshOrderProduct(){
@@ -80,6 +113,25 @@ angular.module('foodmashApp.directives')
 			function findOrderInCart(order_id){
 				for(var i=0;i<$scope.cart.orders.length;i++){
 					if($scope.cart.orders[i].id === order_id){
+						return i;
+					}
+				}
+				return -1;
+			};
+
+			function updateOrderInfo(){
+				var total = 0;
+				$scope.order.order_items.filter(function(order_item){ 
+					var currTotal = order_item["item"].price * order_item.quantity;
+					total += currTotal;
+				});
+				$scope.order.total = total;
+				$scope.updateCartInfo();
+			};
+
+			function findOrderItemInOrder(order_item_id){
+				for(var i=0;i<$scope.order.order_items.length;i++){
+					if($scope.order.order_items[i].id === order_item_id){
 						return i;
 					}
 				}

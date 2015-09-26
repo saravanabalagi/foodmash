@@ -4,7 +4,6 @@
         <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg"></md-icon>
       </md-button>
     <md-content flex ng-click="routeToCombo(combo)">{{combo.name}}</md-content>
-    <md-content flex class="rupee">{{combo.price}}</md-content>
     <md-content flex>{{combo.group_size}}</md-content>
     <md-content flex>{{combo.description}}</md-content>
     <md-content flex><md-switch ng-model="combo.active" ng-change="updateActiveState(combo, combo.active)"></md-switch></md-content>
@@ -24,10 +23,6 @@
     <md-input-container flex>
       <label>name</label>
       <input type="text" ng-model="updatedCombo.name" />
-    </md-input-container>
-    <md-input-container flex>
-      <label>price</label>
-      <input ng-model="updatedCombo.price" />
     </md-input-container>
      <md-input-container flex>
       <label>group size</label>

@@ -15,9 +15,6 @@ angular.module('foodmashApp.services')
 		for(var i = 0;i<service.cart.orders.length;i++){
 			if(service.cart.orders[i]["product"]["id"] == combo.id && checkWithIncomingOrder(service.cart.orders[i], selected_dishes)){
 				service.cart.orders[i]["quantity"] += 1;
-				for(var o=0;o<service.cart.orders[i]["order_items"].length;o++){
-					service.cart.orders[i]["order_items"][o]["quantity"] += 1;
-				}
 				updateCartInfo();
 				return ;
 			}
@@ -74,9 +71,7 @@ angular.module('foodmashApp.services')
 	function updateCartInfo(){
 		var total = 0;
 		service.cart.orders.filter(function(order){ 
-			var currTotal = order["product"].price * order.quantity;
-			total += currTotal;
-			order.total = currTotal;
+			total += order.total * order.quantity;
 		});
 		service.cart.total = total;
 	};

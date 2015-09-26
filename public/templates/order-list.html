@@ -1,5 +1,5 @@
 <div class="md-whiteframe-z2" layout-margin>
-  <div layout="row" layout-align="space-between center">
+  <div layout="row" layout-align="space-between center" ng-click="combo_1_clicked=!combo_1_clicked">
     <md-content flex>
       <md-list>
         <md-list-item class="md-2-line">
@@ -25,4 +25,33 @@
     </md-button>
     </div>
   </div>
+
+  <div layout="row" ng-show="combo_1_clicked" class="combo-dishes">
+     <div layout="column" layout-padding flex offset="10">
+       <div layout="column">
+           <md-content>
+             <md-list>
+
+               <md-list-item class="md-2-line" ng-repeat="order_item in order.order_items">
+                 <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
+
+                 <div class="md-list-item-text">
+                   <label>{{order_item.item.name}}</label>
+                   <p>{{order_item.item.description}}</p>
+                   <md-input-container>
+                     <label>quantity</label>
+                     <input type="number" min="1" max="50" ng-model="order_item.quantity" ng-change="updateOrderItem(order_item)" />
+                   </md-input-container>
+                 </div>
+
+               </md-list-item>
+               <!-- <md-divider md-inset></md-divider> -->
+             
+             </md-list>
+           </md-content>
+         </div>
+       </div>
+     <div flex="10"></div>
+   </div>
+
 </div>

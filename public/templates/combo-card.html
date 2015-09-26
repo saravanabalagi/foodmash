@@ -62,8 +62,8 @@
                       <div class="md-list-item-text">
                         <label>{{combo_option.name}}</label>
                         <p>{{combo_option.description}}</p>
-                        <md-select ng-model="dish_id" ng-change="selectDish(combo, combo_option.id, dish_id)" placeholder="choose from the options">
-                          <md-option ng-repeat="combo_option_dish in combo_option.combo_option_dishes" value="{{combo_option_dish.dish.id}}">{{combo_option_dish.dish.name}} -> {{combo_option_dish.dish.restaurant.name}}
+                        <md-select ng-model="dish" ng-change="selectDish(combo, combo_option.id, dish)" placeholder="choose from the options">
+                          <md-option ng-repeat="combo_option_dish in combo_option.combo_option_dishes" value="{{combo_option_dish.dish}}">{{combo_option_dish.dish.name}} -> {{combo_option_dish.dish.restaurant.name}}
                           </md-option>
                         </md-select>
                         <md-input-container>

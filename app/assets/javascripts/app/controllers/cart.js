@@ -35,9 +35,7 @@ angular.module('foodmashApp.controllers')
 	$scope.updateCartInfo = function(){
 		var total = 0;
 		$scope.cart.orders.filter(function(order){ 
-			var currTotal = order["product"].price * order.quantity;
-			total += currTotal;
-			order.total = currTotal;
+			total += order.total * order.quantity;
 		});
 		$scope.cart.total = total;
 	};
