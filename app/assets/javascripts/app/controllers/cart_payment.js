@@ -2,14 +2,14 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('CartPaymentController', ['$scope', '$q', 'toaster','$location','Cart','$timeout','$rootScope', function($scope, $q, toaster, $location, Cart, $timeout, $rootScope){
+.controller('CartPaymentController', ['$scope', '$q', 'toaster','$location','Cart','CartService', function($scope, $q, toaster, $location, Cart, CartService){
 
 	$scope.cart = {};
-	
-	Cart.show().then(function(cart){
+
+	CartService.getCartForPayment().then(function(cart){
 		$scope.cart = cart;
-	}, function(err){
-		$scope.cart = null;
+	}, function(cart){
+		$scope.cart = cart;
 	});
 
 }]);

@@ -1,7 +1,7 @@
 class Web::CombosController < ApplicationController
 	respond_to :json
 	before_action :get_combo, only: [:update, :destroy]
-	load_and_authorize_resource skip_load_resource except: [:get_offer_combos, :get_micro_combos, :get_medium_combos, :get_mega_combos]
+	load_and_authorize_resource skip_load_resource except: [:get_offer_combos, :get_micro_combos, :get_medium_combos, :get_mega_combos, :get_combo_availability]
 
 	def index
 		@combos = Combo.where(params.permit(:id, :name))

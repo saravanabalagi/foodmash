@@ -21,6 +21,7 @@ angular.module('foodmashApp.directives')
 
 			$scope.updateOrder = function(order){
 				var index = findOrderInCart(order.id);
+				console.log($scope.cart);
 				if(angular.isNumber(index) && index >= 0){
 					if(order.quantity >= 1 && order.quantity <=50){
 						$scope.updateCartInfo();
@@ -42,6 +43,7 @@ angular.module('foodmashApp.directives')
 
 			$scope.updateOrderItem = function(order_item){
 				var index = findOrderItemInOrder(order_item.id);
+				console.log($scope.cart);
 				if(angular.isNumber(index) && index >= 0){
 					if(order_item.quantity >= 1 && order_item.quantity <=50){
 						updateOrderInfo();
@@ -85,7 +87,6 @@ angular.module('foodmashApp.directives')
 				});
 				var touched = false;
 				for(var i=0;i<$scope.order.order_items.length;i++){
-					console.log("inside for");
 					if($scope.order.order_items[i].quantity === null){
 						$scope.order.order_items[i].quantity = 1;
 						touched = true;

@@ -8,6 +8,8 @@ class OrderItem < ActiveRecord::Base
 	validates :item, presence: true
 	validates :category, presence: true
 	validates :order, presence: true
+	after_save :update_order
+
 	include AASM
 
 	aasm do
@@ -27,5 +29,10 @@ class OrderItem < ActiveRecord::Base
 	  event :collect do
 	    transitions :from => :cooked, :to => :collected
 	  end
+	end
+
+	private
+	def update_order
+		self.order.save!
 	end
 end

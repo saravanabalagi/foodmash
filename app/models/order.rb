@@ -6,7 +6,6 @@ class Order < ActiveRecord::Base
 	validates :quantity, numericality: {greater_than: 0, lesser_than: 500}
 	validates_presence_of :cart_id, :quantity
 	validates :product, presence: true
-	after_save :update_order_items
 	after_save :update_cart
 	after_destroy :update_cart
 	before_save :total_price
@@ -37,12 +36,12 @@ class Order < ActiveRecord::Base
 		self.cart.save!
 	end
 
-	def update_order_items
-		self.order_items.update_all(quantity: self.quantity) if self.order_items.present?
-	end
-
 	def total_price
-		self.total = self.product.price * quantity
+		total = 0
+		self.order_items.each do |order_item|
+			total += order_item.quantity * order_item.item.price
+		end
+		self.total = total
 		return true
 	end
 end
