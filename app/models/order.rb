@@ -6,9 +6,9 @@ class Order < ActiveRecord::Base
 	validates :quantity, numericality: {greater_than: 0, lesser_than: 500}
 	validates_presence_of :cart_id, :quantity
 	validates :product, presence: true
+	before_save :calculate_total
 	after_save :update_cart
 	after_destroy :update_cart
-	before_save :total_price
 	include AASM
 
 	aasm do
@@ -31,17 +31,11 @@ class Order < ActiveRecord::Base
 	end
 
 	private
-
-	def update_cart
-		self.cart.save!
+	def calculate_total
+		self.total = order_items.to_a.sum{|o| (o.item.price * o.quantity) || 0}
 	end
 
-	def total_price
-		total = 0
-		self.order_items.each do |order_item|
-			total += self.quantity * order_item.quantity * order_item.item.price
-		end
-		self.total = total
-		return true
+	def update_cart
+		cart.save!
 	end
 end

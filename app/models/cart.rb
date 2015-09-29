@@ -4,7 +4,7 @@ class Cart < ActiveRecord::Base
 	has_one :delivery_address
 	has_many :order_items, through: :orders
 	has_many :orders, dependent: :destroy
-	before_save :update_total
+	before_save :calculate_total
 	after_save :update_orders
 	include AASM
 
@@ -79,30 +79,20 @@ class Cart < ActiveRecord::Base
 			self.save!
 	end
 
-	def total_price
-		if self.orders.present?
-			return self.orders.to_a.sum {|order| order.total || 0}
-		else
-			return 0.0
-		end
-	end
-
 	def generate_order_id
 		self.order_id = "OD" + Digest::SHA1.hexdigest(Time.now.to_s)[0..9]
 		self.save!
 	end
 
 	private
+	def calculate_total
+		self.total = orders.to_a.sum{|o| (o.order_items.to_a.sum{|oi| (oi.item.price * oi.quantity) || 0} * o.quantity) || 0}
+	end
 
 	def update_orders
 		if self.purchased?	
-			self.orders.each {|order| order.product.update_attributes! no_of_purchases: order.quantity; order.order_items.each{|order_item| order_item.item.update_attributes! no_of_purchases: order_item.quantity} }
+			orders.each {|order| order.product.update_attributes! no_of_purchases: order.quantity; order.order_items.each{|order_item| order_item.item.update_attributes! no_of_purchases: (order_item.quantity*order_item.order.quantity)} }
 		end
-		return true
-	end
-
-	def update_total
-		self.total = self.total_price
 		return true
 	end
 end

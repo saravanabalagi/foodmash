@@ -9,6 +9,7 @@ class OrderItem < ActiveRecord::Base
 	validates :category, presence: true
 	validates :order, presence: true
 	after_save :update_order
+	after_destroy :update_order
 
 	include AASM
 
@@ -33,6 +34,6 @@ class OrderItem < ActiveRecord::Base
 
 	private
 	def update_order
-		self.order.save!
+		order.save!
 	end
 end

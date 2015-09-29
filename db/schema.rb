@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150920005953) do
+ActiveRecord::Schema.define(version: 20150929110320) do
 
   create_table "cart_delivery_addresses", force: :cascade do |t|
     t.integer  "cart_id"
@@ -22,10 +22,10 @@ ActiveRecord::Schema.define(version: 20150920005953) do
 
   create_table "carts", force: :cascade do |t|
     t.integer  "user_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "aasm_state"
-    t.float    "total"
+    t.float    "total",               default: 0.0, null: false
     t.string   "payment_method"
     t.string   "order_id"
     t.integer  "delivery_address_id"
@@ -131,17 +131,17 @@ ActiveRecord::Schema.define(version: 20150920005953) do
     t.integer  "category_id"
     t.string   "category_type"
     t.string   "aasm_state"
-    t.integer  "quantity",      default: 1
+    t.integer  "quantity",      default: 1, null: false
   end
 
   create_table "orders", force: :cascade do |t|
     t.integer  "product_id"
     t.string   "product_type"
-    t.integer  "quantity",     default: 1
-    t.float    "total"
+    t.integer  "quantity",     default: 1,   null: false
+    t.float    "total",        default: 0.0, null: false
     t.integer  "cart_id"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.string   "aasm_state"
   end
 
@@ -186,24 +186,25 @@ ActiveRecord::Schema.define(version: 20150920005953) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",                                  null: false
-    t.string   "email",                  default: "",   null: false
-    t.string   "encrypted_password",     default: "",   null: false
+    t.string   "name",                   default: "",    null: false
+    t.string   "email"
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,    null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.string   "mobile_no"
     t.string   "user_token"
     t.boolean  "offers",                 default: true
     t.string   "dob"
     t.string   "otp"
+    t.boolean  "guest",                  default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
