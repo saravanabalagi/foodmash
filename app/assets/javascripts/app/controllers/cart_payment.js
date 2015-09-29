@@ -6,7 +6,7 @@ angular.module('foodmashApp.controllers')
 
 	$scope.cart = {};
 
-	CartService.getCartForPayment().then(function(cart){
+	CartService.getCartInfo().then(function(cart){
 		$scope.cart = cart;
 	}, function(cart){
 		$scope.cart = cart;

@@ -40,12 +40,12 @@ angular.module('foodmashApp.controllers')
 
 	$scope.processCart = function(){
 		$scope.cart.delivery_address_id = parseInt($scope.cart_delivery_address_id, 10);
-		console.log($scope.cart);
 		var d = $q.defer();
-		Cart.addToCart($scope.cart).then(function(response){
+		Cart.addToCart($scope.cart).then(function(cart){
 			toaster.pop('success', 'Cart was submitted!');
+			CartService.setCartInfo(cart);
 			$location.path("/cartPayment");
-			d.resolve(response);
+			d.resolve(cart);
 		}, function(err){
 			toaster.pop('error', 'Cart was not submitted!');
 			d.reject(err);

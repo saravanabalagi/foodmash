@@ -43,24 +43,14 @@ angular.module('foodmashApp.services')
 		return d.promise;
 	};
 
-	this.getCartForPayment = function(){
-		var d = $q.defer();
-		Cart.show().then(function(cart){
-			if(cart.orders){
-				service.cart = cart;
-				d.resolve(service.cart);
-			}else{
-				d.reject(service.cart);
-			}
-		}, function(err){
-			d.resolve(err);
-		});
-		return d.promise;
+	this.setCartInfo = function(cart){
+		if(cart){
+			service.cart = cart;
+		}
 	};
 
 	function refurbishCartFromServer(){
 		Cart.show().then(function(cart){
-			console.log(cart);
 			service.cart = cart;
 		}, function(err){
 

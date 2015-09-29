@@ -37,40 +37,54 @@ class Cart < ActiveRecord::Base
 	end
 
 	def add_items_to_cart(cart)
-		cart[:orders].each do |order|
-			if order[:id].present?
-				current_order = self.orders.find(order[:id]) if order[:id]
-				if current_order
-					current_order.update_attributes!(quantity: order[:quantity])
-					if cart[:order_items].present? 
-						current_order[:order_items].each do |order_item|
-							order[:order_items].each do |cart_order_item|
-								if order_item[:id] == cart_order_item[:id]
-									order_item.update_attributes!(quantity: cart_order_item[:quantity]) unless order_item[:quantity] == cart_order_item[:quantity]
+		if self.orders.present?
+			self.orders.each do |order|
+				unless cart[:orders].collect{|o| o[:id]}.compact.include? order.id
+					order.destroy!
+				end
+			end
+		end
+		self.reload
+		if cart[:orders].present?
+			cart[:orders].each do |cart_order|
+				if cart_order[:id].present?
+					current_order = self.orders.find(cart_order[:id]) if cart_order[:id]
+					if current_order
+						current_order.update_attributes!(quantity: cart_order[:quantity]) unless cart_order[:quantity] == current_order[:quantity]
+						if cart_order[:order_items].present?
+							current_order.order_items.each do |order_item|
+								cart_order[:order_items].each do |cart_order_item|
+									if cart_order_item[:id] and order_item.id == cart_order_item[:id]
+										order_item.update_attributes!(quantity: cart_order_item[:quantity]) unless order_item.quantity == cart_order_item[:quantity]
+									end
 								end
 							end
 						end
 					end
-				end
-			else
-				future_order = self.orders.build(product_id: order[:product][:id], product_type: "Combo", quantity: order[:quantity])
-				if order[:order_items].present?
-					order[:order_items].each do |order_item|
-						if order_item[:category_type].present? and order_item[:category_type] == 'ComboOption'
-							future_order.order_items.build(category_id: order_item[:category_id], category_type: order_item[:category_type], item_id: order_item[:item][:id], item_type: "Dish", quantity: order_item[:quantity])
-						elsif order_item[:category_type].present? and order_item[:category_type] == 'ComboDish'
-							future_order.order_items.build(category_id: order_item[:category_id], category_type: order_item[:category_type], item_id: order_item[:item][:id], item_type: "Dish", quantity: order_item[:quantity])
+				else
+					future_order = self.orders.build(product_id: cart_order[:product][:id], product_type: "Combo", quantity: cart_order[:quantity])
+					if cart_order[:order_items].present?
+						cart_order[:order_items].each do |cart_order_item|
+							if cart_order_item[:category_type].present? and cart_order_item[:category_type] == 'ComboOption'
+								future_order.order_items.build(category_id: cart_order_item[:category_id], category_type: cart_order_item[:category_type], item_id: cart_order_item[:item][:id], item_type: "Dish", quantity: cart_order_item[:quantity])
+							elsif cart_order_item[:category_type].present? and cart_order_item[:category_type] == 'ComboDish'
+								future_order.order_items.build(category_id: cart_order_item[:category_id], category_type: cart_order_item[:category_type], item_id: cart_order_item[:item][:id], item_type: "Dish", quantity: cart_order_item[:quantity])
+							end
 						end
 					end
 				end
 			end
 		end
-		self.delivery_address_id = cart[:delivery_address_id] if cart[:delivery_address_id]
-		return self if self.save!
+			self.delivery_address_id = cart[:delivery_address_id] if cart[:delivery_address_id]
+			self.save!
 	end
 
 	def total_price
-		self.orders.to_a.sum {|order| order.total}
+		if self.orders.present?
+			return self.orders.to_a.sum {|order| order.total || 0}
+		else
+			return 0.0
+		end
 	end
 
 	def generate_order_id
