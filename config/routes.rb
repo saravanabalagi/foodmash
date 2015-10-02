@@ -55,6 +55,7 @@ Rails.application.routes.draw do
       collection do
         post '/addRole', to: 'users#add_role'
         get '/findByEmail', to: 'users#find_by_email'
+        post '/removeRole', to: 'users#remove_role'
       end
     end
 

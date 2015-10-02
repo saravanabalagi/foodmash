@@ -9,9 +9,8 @@ class RegistrationsController < Devise::RegistrationsController
   def create
   	# Create the user
 	  build_resource(sign_up_params)
-
 	  # Try to save them
-	  if resource.save 
+	  if resource.save!
 	  	session_token = resource.generate_session_token
       resource.sessions.create! session_token: session_token
 	    render status: 200,

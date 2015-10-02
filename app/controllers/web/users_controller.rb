@@ -38,6 +38,16 @@ class Web::UsersController < ApplicationController
 			render status: 422, json: {error: "Failed to add role"}
 		end
 	end
+
+	def remove_role
+		@user = User.find params[:user][:id]
+		resource = fetch_resource
+		if @user and @user.remove_role(params[:user][:role_name], resource)
+			render status: 200, json: @user.as_json(:include => {:roles => {:include => :resource}}, only: [:name, :email, :mobile_no, :id])
+		else
+			render status: 422, json: {error: "Failed to remove role!"}
+		end
+	end
 	
 
 	private 
@@ -48,7 +58,7 @@ class Web::UsersController < ApplicationController
 		elsif params[:user][:role_name] == "packaging_centre_admin"
 			resource = PackagingCentre.find params[:user][:resource_id] if params[:user][:resource_id]
 			return resource
-		elsif params[:user][:role_name] == "super_admin"
+		elsif params[:user][:role_name] == "super_admin" or params[:user][:role_name] == "customer"
 			return nil
 		end
 	end

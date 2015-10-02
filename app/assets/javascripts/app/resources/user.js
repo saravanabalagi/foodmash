@@ -19,6 +19,17 @@ angular.module('foodmashApp.resources')
 		return d.promise;
 	};
 
+	resource.removeRole = function(user_id, role_name, resource_id){
+		var self = this;
+		var d = $q.defer();
+		resource.$post(self.$url('removeRole'), {id: user_id, role_name: role_name, resource_id: resource_id}).then(function(response){
+			d.resolve(response);
+		}, function(err){
+			d.reject(err);
+		});
+		return d.promise;
+	};
+
 	resource.findByEmail = function(email){
 		var self = this;
 		var d = $q.defer();
