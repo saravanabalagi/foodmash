@@ -3,7 +3,7 @@ class Combo < ActiveRecord::Base
 	has_many :combo_dishes, dependent: :destroy
 	has_many :combo_options, dependent: :destroy
 	has_many :combo_option_dishes, through: :combo_options, dependent: :destroy
-	validates :price, presence: true, numericality: {greater_than: 0}
+	validates :price, presence: true, numericality: {greater_than: -1}
 	has_many :orders, as: :product
 	before_destroy :ensure_combo_not_referenced
 	before_save :check_for_availability

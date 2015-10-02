@@ -11,14 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150929110320) do
-
-  create_table "cart_delivery_addresses", force: :cascade do |t|
-    t.integer  "cart_id"
-    t.integer  "delivery_address_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-  end
+ActiveRecord::Schema.define(version: 20151001233443) do
 
   create_table "carts", force: :cascade do |t|
     t.integer  "user_id"
@@ -41,10 +34,8 @@ ActiveRecord::Schema.define(version: 20150929110320) do
   end
 
   create_table "combo_option_dishes", force: :cascade do |t|
-    t.integer  "combo_option_id"
-    t.integer  "dish_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.integer "combo_option_id"
+    t.integer "dish_id"
   end
 
   create_table "combo_options", force: :cascade do |t|
@@ -59,7 +50,7 @@ ActiveRecord::Schema.define(version: 20150929110320) do
 
   create_table "combos", force: :cascade do |t|
     t.string   "name"
-    t.float    "price"
+    t.float    "price",               default: 0.0
     t.integer  "group_size"
     t.integer  "no_of_purchases",     default: 0
     t.datetime "created_at",                          null: false
@@ -186,25 +177,24 @@ ActiveRecord::Schema.define(version: 20150929110320) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",                   default: "",    null: false
+    t.string   "name",                   default: "",   null: false
     t.string   "email"
-    t.string   "encrypted_password",     default: "",    null: false
+    t.string   "encrypted_password",     default: "",   null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,     null: false
+    t.integer  "sign_in_count",          default: 0,    null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.string   "mobile_no"
     t.string   "user_token"
     t.boolean  "offers",                 default: true
     t.string   "dob"
     t.string   "otp"
-    t.boolean  "guest",                  default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
