@@ -5,7 +5,7 @@ angular.module('foodmashApp.controllers')
 .controller('UserRolesController', ['$scope', 'toaster', '$q', 'User','Restaurant', function($scope, toaster, $q, User, Restaurant){
 
 	$scope.users = {};
-	$scope.role_names = ["super_admin", "packaging_centre_admin", "restaurant_admin"];
+	$scope.role_names = ["super_admin", "packaging_centre_admin", "restaurant_admin", "customer"];
 	$scope.resources = {};
 	$scope.resource = {};
 	$scope.user = {};
