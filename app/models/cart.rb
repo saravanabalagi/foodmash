@@ -36,6 +36,21 @@ class Cart < ActiveRecord::Base
 	  end
 	end
 
+	def change_status(status)
+		case status
+			when 'purchase' 
+				purchase!
+			when 'cancel' 
+				cancel!
+			when 'order' 
+				order!
+			when 'dispatched' 
+				dispatch!
+			when 'delivered' 
+				deliver!
+		end
+	end
+
 	def add_items_to_cart(cart)
 		if self.orders.present?
 			self.orders.each do |order|

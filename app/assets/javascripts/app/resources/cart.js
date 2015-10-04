@@ -41,5 +41,16 @@ angular.module('foodmashApp.resources')
 		return d.promise;
 	};
 
+	resource.changeStatus = function(status, cart_id){
+		var self = this;
+		var d = $q.defer();
+		resource.$post(self.$url('changeStatus'), {status: status, id: cart_id}).then(function(response){
+			d.resolve(response);
+		}, function(err){
+			d.reject(err);
+		})
+		return d.promise;
+	};
+
 	return resource;
 }]);

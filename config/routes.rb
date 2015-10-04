@@ -46,6 +46,7 @@ Rails.application.routes.draw do
         post '/addToCart', to: 'carts#add_to_cart'
         get '/clear', to: 'carts#clear'
         get '/show', to: 'carts#show'
+        post '/changeStatus', to: 'carts#change_status'
       end
     end
 

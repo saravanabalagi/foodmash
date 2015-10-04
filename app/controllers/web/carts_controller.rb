@@ -3,7 +3,7 @@ class Web::CartsController < ApplicationController
 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 	prepend_before_filter :authenticate_user_from_token!
 	before_filter :set_cart, only: :destroy
-	before_filter :set_or_create_cart, only: [:add_to_cart, :clear, :show]
+	before_filter :set_or_create_cart, only: [:add_to_cart, :clear, :show, :change_status]
 
 	def index
 		@carts = Cart.where(params.permit(:user_id, :id, :aasm_state))
@@ -16,9 +16,17 @@ class Web::CartsController < ApplicationController
 
 	def show
 		if @cart
-			render status: 201, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name, :description, :price]}}], only: [:id, :quantity, :category_id, :category_type]} } ,:product => {only: [:id, :name, :price, :description]}], only: [:id, :quantity, :total, :updated_at]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at])
+			render status: 200, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name, :description, :price]}}], only: [:id, :quantity, :category_id, :category_type]} } ,:product => {only: [:id, :name, :price, :description]}], only: [:id, :quantity, :total, :updated_at]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at])
 		else
 			render status: 200, json: {error: "Could not fetch cart!"}
+		end
+	end
+
+	def change_status
+		if @cart and @cart.change_status(params[:cart][:status])
+			render status: 201, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name, :description, :price]}}], only: [:id, :quantity, :category_id, :category_type]} } ,:product => {only: [:id, :name, :price, :description]}], only: [:id, :quantity, :total, :updated_at]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at])
+		else
+			render status: 422, json: {erro: "Could change status of cart!"}
 		end
 	end
 

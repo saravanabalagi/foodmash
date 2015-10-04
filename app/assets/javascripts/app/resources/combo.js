@@ -25,7 +25,6 @@ angular.module('foodmashApp.resources')
 			d.resolve(offerCombos);
 		}, 
 		function(err){ d.reject(err); });
-
 		return d.promise;
 	};
 
@@ -36,7 +35,6 @@ angular.module('foodmashApp.resources')
 			d.resolve(offerCombos);
 		}, 
 		function(err){ d.reject(err); });
-
 		return d.promise;
 	};
 
@@ -47,7 +45,6 @@ angular.module('foodmashApp.resources')
 			d.resolve(offerCombos);
 		}, 
 		function(err){ d.reject(err); });
-
 		return d.promise;
 	};
 
@@ -58,7 +55,6 @@ angular.module('foodmashApp.resources')
 			d.resolve(offerCombos);
 		}, 
 		function(err){ d.reject(err); });
-
 		return d.promise;
 	};
 

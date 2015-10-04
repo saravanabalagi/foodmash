@@ -49,6 +49,10 @@ angular.module('foodmashApp.services')
 		}
 	};
 
+	this.refreshCart = function(){
+		refurbishCartFromServer();
+	};
+
 	function refurbishCartFromServer(){
 		Cart.show().then(function(cart){
 			service.cart = cart;
