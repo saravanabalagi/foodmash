@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       collection do 
         get '/:id/hasCombos', to: 'restaurants#has_combos'
         get '/hasDishType', to: 'restaurants#has_dish_type'
+        get '/:id/getCartsForRestaurant', to: 'restaurants#get_carts_for_restaurant'
       end
     end
 

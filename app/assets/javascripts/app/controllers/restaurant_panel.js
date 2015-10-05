@@ -12,6 +12,17 @@ angular.module('foodmashApp.controllers')
 			Restaurant.query({id: role.resource.id}).then(function(restaurants){
 				if(restaurants.length > 0){
 					$scope.restaurant = restaurants[0];
+
+					$scope.restaurant.getCartsForRestaurant().then(function(carts){
+						if(carts.length > 0){
+							$scope.carts = carts;
+						}else{
+							$scope.carts = null;
+						}
+					}, function(err){
+						$scope.carts = null;
+					});
+
 				}else{
 					$scope.restaurant = null;
 				}

@@ -6,6 +6,7 @@ class Dish < ActiveRecord::Base
   has_many :combo_options, through: :combo_option_dishes
   has_many :combo_option_dishes
   has_many :combo_dishes
+  has_many :order_items, as: :item
   validates :restaurant_id, presence: true
   validates :dish_type_id, presence: true
   validates :label, presence: true

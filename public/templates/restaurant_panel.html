@@ -1,10 +1,18 @@
 <div flex layout="column" layout-gt-lg="row">
   <div flex layout="column" layout-padding>
     
-      <div layout="row" layout-align="center center">
+      <div layout="column" layout-align="center center">
         <h1 class="md-title" layout-padding>
            {{restaurant.name}}  ({{restaurant.branch}})
         </h1>
+        	<div flex layout="row">
+        	  <div flex offset="20" layout="column" layout-align="center center" ng-repeat="cart in carts">
+        	    <!-- Combo in cart -->
+        	      <order-list ng-repeat="order in cart.orders"></order-list>
+        	    <!-- Combo in cart ends -->
+        	  </div>  
+        	  <div flex="20"></div>        
+        	</div>
       </div>
 
   </div>
