@@ -40,14 +40,14 @@ angular.module('foodmashApp.directives')
 				$scope.updatedDish = angular.copy(dish);
 			};
 
-			$scope.uploadFiles = function(file, errFiles){
+			$scope.uploadFiles = function(file, errFiles, dish){
 				if(file){
 					Aws.loadAWS().then(function(aws){
 						Upload.upload({
 						    url: 'https://foodmash.s3.amazonaws.com/', //S3 upload url including bucket name
 						    method: 'POST',
 						    data: {
-						        key: 'images/dishes/' + file.name, // the key to store the file on S3, could be file name or customized
+						        key: 'images/dishes/' + Date.now() + '/' + file.name, // the key to store the file on S3, could be file name or customized
 						        AWSAccessKeyId: aws.key,
 						        acl: 'public-read', // sets the access to the uploaded file in the bucket: private, public-read, ...
 						        policy: aws.policy, // base64-encoded json policy (see article below)
@@ -55,6 +55,17 @@ angular.module('foodmashApp.directives')
 						        "Content-Type": file.type != '' ? file.type : 'application/octet-stream', // content type of the file (NotEmpty)
 						        file: file
 						    }
+						}).then(function(response){
+							$scope.updatedDish.picture = 'https://foodmash.s3.amazonaws.com/' + response.config.data.key;
+							$scope.updatedDish.update().then(function(response){
+								toaster.pop('success', 'Dish was updated!');
+								var index = $scope.dishes.indexOf(dish);
+								if(angular.isNumber(index) && index >= 0){
+									$scope.dishes[index] = $scope.updatedDish;
+								}
+							}, function(err){
+								toaster.pop('error', 'Dish was not updated!');
+							});
 						});
 					});
 				}
