@@ -36,6 +36,10 @@ Rails.application.configure do
   # yet still be able to expire them through the digest params.
   config.assets.digest = true
 
+  ENV['BUCKET_NAME'] = 'foodmash'
+  ENV['ACCESS_KEY_ID'] = 'AKIAJLG73JKZDN45IN4Q'
+  ENV['SECRET_ACCESS_KEY'] = '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'
+
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Specifies the header that your server uses for sending files.

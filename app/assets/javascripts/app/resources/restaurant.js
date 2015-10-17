@@ -12,7 +12,7 @@ angular.module('foodmashApp.resources')
 		var self = this;
 		var d = $q.defer();
 		resource.$get(self.$url('hasCombos')).then(function(response){
-			d.resolve(combos);
+			d.resolve(response);
 		 }, function(err){
 		 	d.reject(err);
 		 });

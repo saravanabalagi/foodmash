@@ -24,6 +24,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :aws, only: :index
+
     resources :combo_options
 
     resources :combo_dishes

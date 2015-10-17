@@ -23,9 +23,9 @@ Rails.application.configure do
   config.assets.compress = false
   # config.assets.js_compressor = :uglifier
 
-  ENV['BUCKET_NAME'] = 'cshare1'
-  ENV['ACCESS_KEY_ID'] = 'AKIAJI5DG4DQQV5GEFAQ'
-  ENV['SECRET_ACCESS_KEY'] = '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'
+  ENV['BUCKET_NAME'] = 'foodmash'
+  ENV['ACCESS_KEY_ID'] = 'AKIAJLG73JKZDN45IN4Q'
+  ENV['SECRET_ACCESS_KEY'] = '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'
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load

@@ -58,5 +58,14 @@ angular.module('foodmashApp.resources')
 		return d.promise;
 	};
 
+	resource.loadAWS = function(){
+		var self = this;
+		var d = $q.defer();
+		resource.$get(self.$url('loadAWS')).then(function(response){
+			d.resolve(response);
+		}, function(err){ d.reject(err); })
+		return d.promise;
+	};
+
 	return resource;
 }]);

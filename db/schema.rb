@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151001233443) do
+ActiveRecord::Schema.define(version: 20151016111257) do
 
   create_table "carts", force: :cascade do |t|
     t.integer  "user_id"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20151001233443) do
     t.boolean  "active",              default: false
     t.boolean  "available"
     t.string   "label"
+    t.string   "picture"
   end
 
   create_table "contact_us", force: :cascade do |t|
@@ -100,7 +101,7 @@ ActiveRecord::Schema.define(version: 20151001233443) do
 
   create_table "dishes", force: :cascade do |t|
     t.string   "name"
-    t.string   "picture_url"
+    t.string   "picture"
     t.float    "price"
     t.integer  "dish_type_id"
     t.integer  "restaurant_id"
@@ -148,13 +149,14 @@ ActiveRecord::Schema.define(version: 20151001233443) do
   create_table "restaurants", force: :cascade do |t|
     t.string   "name"
     t.text     "address"
-    t.string   "picture_url"
+    t.string   "picture"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.decimal  "latitude",    precision: 10, scale: 6
     t.decimal  "longitude",   precision: 10, scale: 6
     t.string   "branch"
     t.text     "description"
+    t.string   "logo"
   end
 
   create_table "roles", force: :cascade do |t|

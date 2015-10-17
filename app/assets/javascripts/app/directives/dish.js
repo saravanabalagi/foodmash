@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('dish', ['Dish', '$q', 'toaster', 'DishType', 'Cuisine', function(Dish, $q, toaster, DishType, Cuisine){
+.directive('dish', ['Dish', '$q', 'toaster', 'DishType', 'Cuisine', 'Upload', 'Aws', function(Dish, $q, toaster, DishType, Cuisine, Upload, Aws){
 
 	return {
 
@@ -10,7 +10,7 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/dish.html',
 
-		controller: ['$scope', 'Dish', '$q', 'toaster', 'DishType', 'Cuisine', function($scope, Dish, $q, toaster, DishType, Cuisine){
+		controller: ['$scope', 'Dish', '$q', 'toaster', 'DishType', 'Cuisine','Upload', 'Aws', function($scope, Dish, $q, toaster, DishType, Cuisine, Upload, Aws){
 
 			$scope.cuisines = {};
 			$scope.dish_types = {};
@@ -38,6 +38,26 @@ angular.module('foodmashApp.directives')
 
 			$scope.setUpdate = function(dish){
 				$scope.updatedDish = angular.copy(dish);
+			};
+
+			$scope.uploadFiles = function(file, errFiles){
+				if(file){
+					Aws.loadAWS().then(function(aws){
+						Upload.upload({
+						    url: 'https://foodmash.s3.amazonaws.com/', //S3 upload url including bucket name
+						    method: 'POST',
+						    data: {
+						        key: 'images/dishes/' + file.name, // the key to store the file on S3, could be file name or customized
+						        AWSAccessKeyId: aws.key,
+						        acl: 'public-read', // sets the access to the uploaded file in the bucket: private, public-read, ...
+						        policy: aws.policy, // base64-encoded json policy (see article below)
+						        signature: aws.signature, // base64-encoded signature based on policy string (see article below)
+						        "Content-Type": file.type != '' ? file.type : 'application/octet-stream', // content type of the file (NotEmpty)
+						        file: file
+						    }
+						});
+					});
+				}
 			};
 
 			$scope.updateDish = function(dish, dishUpdateCross){
