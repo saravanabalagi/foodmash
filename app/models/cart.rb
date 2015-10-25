@@ -23,8 +23,8 @@ class Cart < ActiveRecord::Base
 	    transitions :from => :purchased, :to => :not_started
 	  end
 
-	  event :order do 
-			transitions :from => :purchased, :to => :ordered
+	  event :order_cart do 
+		transitions :from => :purchased, :to => :ordered
 	  end
 
 	  event :dispatch do 
