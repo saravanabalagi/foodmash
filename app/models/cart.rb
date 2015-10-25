@@ -42,8 +42,8 @@ class Cart < ActiveRecord::Base
 				purchase!
 			when 'cancel' 
 				cancel!
-			when 'order' 
-				order!
+			when 'order_cart' 
+				order_cart!
 			when 'dispatched' 
 				dispatch!
 			when 'delivered' 
@@ -108,8 +108,8 @@ class Cart < ActiveRecord::Base
 				self.orders.each do |order|
 					if check_for_similarity(order, cart_item)
 						order.update_attributes!(quantity: cart_item["quantity"]) unless cart_item["quantity"] == order.quantity
-						if self.order.order_items.present?
-							self.order.order_items.each do |order_item|
+						if order.order_items.present?
+							order.order_items.each do |order_item|
 								if cart_item["comboDishes"].present?
 									cart_item["comboDishes"].each do |combo_dish| 
 										if combo_dish["dish"]["id"] == order_item.item.id and (combo_dish["id"] == order_item.category_id and order_item.category_type == 'ComboDish')
