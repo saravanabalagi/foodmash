@@ -21,7 +21,7 @@
     <div layout="row" layout-padding layout-align="center center">
       <md-button class="md-icon-button" type="file" ngf-select="uploadFiles($file, $invalidFiles, dish)"
           accept="image/*" ngf-max-size="40MB">
-        <md-icon md-svg-src="updatedDish.picture"></md-icon>
+        <img ng-src="{{updatedDish.picture}}" alt="dish pic" />
       </md-button>
       <md-input-container flex>
         <label>Name</label>

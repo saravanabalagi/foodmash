@@ -54,9 +54,7 @@ class Cart < ActiveRecord::Base
 	def add_items_to_cart(cart)
 		if self.orders.present?
 			self.orders.each do |order|
-				unless cart[:orders].collect{|o| o[:id]}.compact.include? order.id
-					order.destroy!
-				end
+				order.destroy! unless cart[:orders].collect{|o| o[:id]}.compact.include? order.id
 			end
 		end
 		self.reload
@@ -92,6 +90,103 @@ class Cart < ActiveRecord::Base
 		end
 			self.delivery_address_id = cart[:delivery_address_id] if cart[:delivery_address_id]
 			self.save!
+	end
+
+	def add_cart(cart_items, delivery_address_id)
+		byebug
+		if self.orders.present?
+			self.orders.each do |order|
+				if cart_items.present?
+					order.destroy! unless cart_items.collect{|i| i["id"]}.include? order.product.id
+				end 
+			end
+		end
+		self.reload
+
+		if cart_items.present?
+			cart_items.each do |cart_item|
+				sim = false
+				self.orders.each do |order|
+					if check_for_similarity(order, cart_item)
+						order.update_attributes!(quantity: cart_item["quantity"]) unless cart_item["quantity"] == order.quantity
+						if self.order.order_items.present?
+							self.order.order_items.each do |order_item|
+								if cart_item["comboDishes"].present?
+									cart_item["comboDishes"].each do |combo_dish| 
+										if combo_dish["dish"]["id"] == order_item.item.id and (combo_dish["id"] == order_item.category_id and order_item.category_type == 'ComboDish')
+											order_item.update_attributes!(quantity: combo_dish["quantity"]) unless combo_dish["quantity"] == order_item.quantity
+										end
+									end							
+								end
+								if cart_item["comboOptions"].present?
+									cart_item["comboOptions"].each do |combo_option|
+										if (combo_option["id"] == order_item.category_id and order_item.category_type == 'ComboOption')
+											if combo_option["comboOptionDishes"].present?
+												combo_option["comboOptionDishes"].each do |combo_option_dish|
+													if combo_option_dish["dish"]["id"] == order_item.item.id
+														order_item.update_attributes!(quantity: combo_option_dish["quantity"]) unless combo_option_dish["quantity"] == order_item.quantity
+													end
+												end
+											end
+										end
+									end
+								end
+							end
+						end
+						sim = true
+						break
+					end
+				end
+				unless sim
+					future_order = self.orders.build(product_id: cart_item["id"], product_type: 'Combo', quantity: cart_item["quantity"])
+					if cart_item["comboDishes"].present?
+						cart_item["comboDishes"].each do |combo_dish| 
+							future_order.order_items.build(category_id: combo_dish["id"], category_type: 'ComboDish', item_id: combo_dish["dish"]["id"], item_type: "Dish", quantity: combo_dish["quantity"])
+						end							
+					end
+					if cart_item["comboOptions"].present?
+						cart_item["comboOptions"].each do |combo_option|
+							if combo_option["comboOptionDishes"].present?
+								combo_option["comboOptionDishes"].each do |combo_option_dish|
+									future_order.order_items.build(category_id: combo_option["id"], category_type: 'ComboOption', item_id: combo_option_dish["dish"]["id"], item_type: "Dish", quantity: combo_option_dish["quantity"])
+								end
+							end
+						end
+					end	
+				end
+			end
+		end
+		self.delivery_address_id = delivery_address_id
+		self.save!
+	end
+
+	def check_for_similarity(order, cart_item)
+		order_item_count = order.order_items.count
+		cart_order_item_count = 0
+		if order.product.id == cart_item["id"]
+			order.order_items.each do |order_item|
+				if order_item.category.type == "ComboDish"
+					cart_item["comboDishes"].each do |combo_dish|
+						if order_item.category_id == combo_dish["id"] and order_item.item.id == combo_dish["dish"]["id"]
+							cart_order_item_count += 1
+						end
+					end 
+				end
+				if order_item.category_type == "ComboOption"
+					cart_item["comboOptions"].each do |combo_option|
+						if order_item.category_id == combo_option["id"] and order_item.item.id == combo_option["dish"]["id"]
+							cart_order_item_count += 1
+						end
+					end
+				end
+			end
+		end
+
+		if order_item_count == cart_order_item_count
+			return true
+		else
+			return false
+		end
 	end
 
 	def generate_order_id

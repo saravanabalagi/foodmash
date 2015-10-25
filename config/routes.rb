@@ -126,7 +126,7 @@ Rails.application.routes.draw do
           post '/addAddress', to: 'carts#add_address'
           post '/history', to: 'carts#history'
           post '/', to: 'carts#index'
-          post '/add', to: 'carts#add_to_cart'
+          post '/addCart', to: 'carts#add_cart'
           post '/remove', to: 'carts#remove_from_cart'
           post '/destroy', to: 'carts#destroy'
           post '/purchase', to: 'carts#purchase'

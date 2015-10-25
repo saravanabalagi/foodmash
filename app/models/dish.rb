@@ -33,25 +33,33 @@ class Dish < ActiveRecord::Base
   private
 
   def update_combos_on_save
-    if self.label_changed?
-      combos = []
+    combos = []
 
-      if self.combo_options.present?
-        self.combo_options.each {|combo_option| 
-          if combo_option.combo.present?
-            combos << combo_option.combo 
-          end
-        }
-      end
+    if self.combo_options.present?
+      self.combo_options.each {|combo_option| 
+        if combo_option.combo.present?
+          combos << combo_option.combo 
+        end
+      }
+    end
 
-      if self.combos.present?
-        combos << self.combos
-      end
+    if self.combos.present?
+      combos << self.combos
+    end
 
-     combos = combos.flatten.uniq
-     
+    combos = combos.flatten.uniq
+
+    if self.price_changed? and self.label_changed?
       if combos.present?
         combos.each {|c| c.save!} 
+      end
+    elsif self.price_changed?
+      if combos.present?
+        combos.each {|c| c.save!}
+      end
+    elsif self.label_changed?
+      if combos.present?
+        combos.each {|c| c.save!}
       end
     end
     return true

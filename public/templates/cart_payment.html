@@ -62,8 +62,28 @@
       <h2 class="md-display-1 rupee" layout-padding layout-margin>{{cart.total}}</h2>
     </div>
 
+    <!-- <div layout="column" layout-padding layout-align="center center">
+       <md-input-container flex>
+         <label>card no</label>
+         <input type="text" ng-model="payment.card_no" />
+       </md-input-container>
+        <md-input-container flex>
+         <label>expiry year</label>
+         <input ng-model="payment.expiry_year" />
+       </md-input-container>
+       <md-input-container flex>
+         <label>expiry month</label>
+         <input ng-model="payment.expiry_month" />
+       </md-input-container>
+       <md-input-container flex>
+         <label>ccv</label>
+         <input ng-model="payment.ccv" />
+       </md-input-container>
+    </div> -->
+   <div class="pm-button"><a href="https://www.payumoney.com/paybypayumoney/#/48EFA1A9A5C3B2151D2D2EC4F4FCDFB9"><img src="https://www.payumoney.com//media/images/payby_payumoney/buttons/132.png" /></a></div>
+
     <div layout="row" layout-align="center center">
-      <md-button class="md-raised md-primary" ng-click="payCart('purchase')">Pay</md-button>
+      <md-button class="md-raised md-primary" ng-click="submitToPayu()">Pay</md-button>
     </div>
 
   </div>  
