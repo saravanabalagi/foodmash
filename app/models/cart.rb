@@ -93,7 +93,6 @@ class Cart < ActiveRecord::Base
 	end
 
 	def add_cart(cart_items, delivery_address_id)
-		byebug
 		if self.orders.present?
 			self.orders.each do |order|
 				if cart_items.present?
@@ -165,7 +164,7 @@ class Cart < ActiveRecord::Base
 		cart_order_item_count = 0
 		if order.product.id == cart_item["id"]
 			order.order_items.each do |order_item|
-				if order_item.category.type == "ComboDish"
+				if order_item.category_type == "ComboDish"
 					cart_item["comboDishes"].each do |combo_dish|
 						if order_item.category_id == combo_dish["id"] and order_item.item.id == combo_dish["dish"]["id"]
 							cart_order_item_count += 1
