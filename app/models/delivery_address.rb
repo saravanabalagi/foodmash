@@ -6,7 +6,7 @@ class DeliveryAddress < ActiveRecord::Base
 	validates_presence_of :pincode, :city, :area, :line1, primary: {default: false}
 	before_save :falsify_true_records
 	before_save :make_primary_for_first_address
-	before_destroy :choose_first_as_primary
+	before_destroy :make_primary_for_first_address
 
 
 	private
@@ -18,13 +18,11 @@ class DeliveryAddress < ActiveRecord::Base
 
 	def make_primary_for_first_address
 		user = User.find self.user_id
-		self.primary = true if user.delivery_addresses.count == 0
-		return true
-	end
-
-	def choose_first_as_primary
-		user = User.find self.user_id
-		user.delivery_addresses.where("id != ?", self.id).first.update_attributes(primary: true) if user.delivery_addresses.where("id != ?", self.id).pluck(:primary).uniq == [false]
+		if user.delivery_addresses.count == 0
+			self.primary = true 
+		else
+			user.delivery_addresses.where("id != ?", self.id).first.update_column(:primary, true) if (!self.primary and user.delivery_addresses.where("id != ?", self.id).pluck(:primary).uniq == [false])
+		end
 		return true
 	end
 end
