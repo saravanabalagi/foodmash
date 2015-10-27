@@ -2,10 +2,23 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('CartPaymentController', ['$scope', '$q', 'toaster','$location','Cart','CartService', function($scope, $q, toaster, $location, Cart, CartService){
+.controller('CartPaymentController', ['$scope', '$q', 'toaster','$location','Cart','CartService','$http', function($scope, $q, toaster, $location, Cart, CartService, $http){
 
 	$scope.cart = {};
-	$scope.payment = {};
+	$scope.payment = { 
+		"key": 'fB7m8s',
+		"txnid": '1234',
+		"amount": 5,
+		"productinfo": 'a bunch of combos from Foodmash',
+		"firstname": 'praveen',
+		"email": 'praveen.beatle@gmail.com',
+		"phone": '9789002515',
+		"surl": '/cartSuccess',
+		"furl": '/cartFailure',
+		"salt": 'eRis5Chv',
+		"hash": '',
+		"service_provider": 'payu_paisa'
+	};
 
 	CartService.getCartInfo().then(function(cart){
 		$scope.cart = cart;
@@ -14,7 +27,16 @@ angular.module('foodmashApp.controllers')
 	});
 
 	$scope.submitToPayu = function(){
-		console.log($scope.payment);
+		$http.post({
+			url: 'https://test.payu.in/_payment',
+			data: $scope.payment
+		}).success(function(data){
+			console.log('success!!');
+			console.log(data);
+		}).error(function(data){
+			console.log('error!!');
+			console.log(data);
+		});
 	};
 
 	$scope.payCart = function(status){

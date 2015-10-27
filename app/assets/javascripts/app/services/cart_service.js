@@ -57,7 +57,6 @@ angular.module('foodmashApp.services')
 		Cart.show().then(function(cart){
 			service.cart = cart;
 		}, function(err){
-
 		});
 	};
 
