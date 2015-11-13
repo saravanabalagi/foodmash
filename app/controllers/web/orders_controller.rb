@@ -1,6 +1,7 @@
 class Web::OrdersController < ApplicationController
-	before_filter :set_order, only: [:update, :destroy]
 	respond_to :json
+	before_filter :set_order, only: [:update, :destroy]
+	load_and_authorize_resource skip_load_resource
 
 	def index
 		@orders = Order.where(params.permit(:id, :cart_id))

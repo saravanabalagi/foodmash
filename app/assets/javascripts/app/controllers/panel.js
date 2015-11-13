@@ -2,23 +2,22 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('PanelController', ['$scope','AuthService','$location', function($scope, AuthService, $location){
-
+.controller('PanelController', ['$scope','$location','toaster','$rootScope', function($scope, $location, toaster, $rootScope){
 
   $scope.routeToCombos = function(){
-  	$location.path("/combos");
+    $location.path("/combos");
   };
 
   $scope.routeToRestaurants = function(){
-  	$location.path("/restaurants");
+    $location.path("/restaurants");
   };
 
   $scope.routeToDishTypes = function(){
-  	$location.path("/dish_types");
+    $location.path("/dishTypes");
   };
 
   $scope.routeToUserRoles = function(){
-  	$location.path("/user_roles");
+    $location.path("/userRoles");
   };
 
   $scope.routeToCuisines = function(){

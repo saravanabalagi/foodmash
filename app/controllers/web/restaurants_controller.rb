@@ -1,6 +1,7 @@
 class Web::RestaurantsController < ApplicationController
 	respond_to :json
-	before_action :get_restaurant, only: [:update, :destroy, :has_combos]
+	before_action :get_restaurant, only: [:update, :destroy, :has_combos, :get_carts_for_restaurant]
+	load_and_authorize_resource skip_load_resource except: [:has_combos, :has_dish_type, :get_carts_for_restaurant]
 
 	def index
 		@restaurants = Restaurant.where(params.permit(:id))
@@ -55,6 +56,15 @@ class Web::RestaurantsController < ApplicationController
 			render status: 200, json: @restaurants.as_json(:include => :dishes)
 		else
 			render status: 404, json: {error: 'Restaurants not found!'}
+		end
+	end
+
+	def get_carts_for_restaurant
+		@carts = @restaurant.get_carts_for_restaurant
+		if @carts
+			render status: 200, json: @carts.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name, :description]}}], only: [:id, :quantity, :category_id, :category_type]} } ,:product => {only: [:id, :name, :price, :description]}], only: [:id, :quantity, :total, :updated_at]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at])
+		else
+			render status: 422, json: {error: "Could not fetch carts!"}
 		end
 	end
 

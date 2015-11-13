@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable
 
   delegate :can?, :cannot?, to: :ability
 
@@ -13,12 +13,17 @@ class User < ActiveRecord::Base
   has_many :delivery_addresses, dependent: :destroy
   validates_presence_of :email, :mobile_no, :name, offers: {default: true}
   validates :name, length: {minimum: 2}
-  validates :email, format: {with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/}
+  validates :email, format: {with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/}, uniqueness: true
   validates :mobile_no, presence: true, length: {is: 10}, numericality: {only_integer: true}, uniqueness: true
   before_create :generate_user_token
+  after_create :assign_default_role
 
   def ability
     @ability ||= Ability.new(self)
+  end
+
+  def self.search_by_email(email)
+    where("email like ?", "%#{email}%")
   end
 
   def set_otp
@@ -50,9 +55,14 @@ class User < ActiveRecord::Base
     end while self.class.exists?(reset_password_token: reset_password_token)
     return reset_password_token
   end
+
   
   private
 
+  def assign_default_role
+    self.add_role(:customer)
+  end
+  
   def generate_user_token
     begin
       self.user_token = SecureRandom.hex(64)

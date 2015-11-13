@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   after_filter :set_csrf_cookie_for_ng
   before_filter :allow_iframe_requests
+
+  rescue_from CanCan::AccessDenied do |exception|
+    forbidden_request
+  end
   
   def allow_iframe_requests
     response.headers.delete('X-Frame-Options')
@@ -27,6 +31,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def forbidden_request
+    render status: 403, json: {error: "Not allowed to make that request!"}    
+  end
 
   def permission_denied
     render status: 401, json: {error: "Permission denied!"}

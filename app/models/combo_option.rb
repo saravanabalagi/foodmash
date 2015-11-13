@@ -9,6 +9,7 @@ class ComboOption < ActiveRecord::Base
 	before_destroy :ensure_combo_option_not_referenced
 
 	private
+	
 	def ensure_combo_option_not_referenced
 		if order_items.empty?
 			return true

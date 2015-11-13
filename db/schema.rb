@@ -11,23 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150908120342) do
+ActiveRecord::Schema.define(version: 20151026111857) do
 
-  create_table "cart_delivery_addresses", force: :cascade do |t|
-    t.integer  "cart_id"
-    t.integer  "delivery_address_id"
+  create_table "areas", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "city_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.integer  "packaging_centre_id"
   end
 
   create_table "carts", force: :cascade do |t|
     t.integer  "user_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "aasm_state"
-    t.float    "total"
+    t.float    "total",               default: 0.0, null: false
     t.string   "payment_method"
     t.string   "order_id"
+    t.integer  "delivery_address_id"
+  end
+
+  create_table "cities", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "combo_dishes", force: :cascade do |t|
@@ -40,10 +48,8 @@ ActiveRecord::Schema.define(version: 20150908120342) do
   end
 
   create_table "combo_option_dishes", force: :cascade do |t|
-    t.integer  "combo_option_id"
-    t.integer  "dish_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.integer "combo_option_id"
+    t.integer "dish_id"
   end
 
   create_table "combo_options", force: :cascade do |t|
@@ -58,7 +64,7 @@ ActiveRecord::Schema.define(version: 20150908120342) do
 
   create_table "combos", force: :cascade do |t|
     t.string   "name"
-    t.float    "price"
+    t.float    "price",               default: 0.0
     t.integer  "group_size"
     t.integer  "no_of_purchases",     default: 0
     t.datetime "created_at",                          null: false
@@ -68,6 +74,7 @@ ActiveRecord::Schema.define(version: 20150908120342) do
     t.boolean  "active",              default: false
     t.boolean  "available"
     t.string   "label"
+    t.string   "picture"
   end
 
   create_table "contact_us", force: :cascade do |t|
@@ -108,7 +115,7 @@ ActiveRecord::Schema.define(version: 20150908120342) do
 
   create_table "dishes", force: :cascade do |t|
     t.string   "name"
-    t.string   "picture_url"
+    t.string   "picture"
     t.float    "price"
     t.integer  "dish_type_id"
     t.integer  "restaurant_id"
@@ -130,17 +137,17 @@ ActiveRecord::Schema.define(version: 20150908120342) do
     t.integer  "category_id"
     t.string   "category_type"
     t.string   "aasm_state"
-    t.integer  "quantity",      default: 1
+    t.integer  "quantity",      default: 1, null: false
   end
 
   create_table "orders", force: :cascade do |t|
     t.integer  "product_id"
     t.string   "product_type"
-    t.integer  "quantity",     default: 1
-    t.float    "total"
+    t.integer  "quantity",     default: 1,   null: false
+    t.float    "total",        default: 0.0, null: false
     t.integer  "cart_id"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.string   "aasm_state"
   end
 
@@ -156,13 +163,14 @@ ActiveRecord::Schema.define(version: 20150908120342) do
   create_table "restaurants", force: :cascade do |t|
     t.string   "name"
     t.text     "address"
-    t.string   "picture_url"
+    t.string   "picture"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.decimal  "latitude",    precision: 10, scale: 6
     t.decimal  "longitude",   precision: 10, scale: 6
     t.string   "branch"
     t.text     "description"
+    t.string   "logo"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -185,8 +193,8 @@ ActiveRecord::Schema.define(version: 20150908120342) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",                                  null: false
-    t.string   "email",                  default: "",   null: false
+    t.string   "name",                   default: "",   null: false
+    t.string   "email"
     t.string   "encrypted_password",     default: "",   null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -206,7 +214,9 @@ ActiveRecord::Schema.define(version: 20150908120342) do
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["mobile_no"], name: "index_users_on_mobile_no", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["user_token"], name: "index_users_on_user_token", unique: true
 
   create_table "users_roles", id: false, force: :cascade do |t|
     t.integer "user_id"

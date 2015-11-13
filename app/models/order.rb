@@ -1,14 +1,14 @@
 class Order < ActiveRecord::Base
+	resourcify
 	has_many :order_items, dependent: :destroy
 	belongs_to :cart
 	belongs_to :product, polymorphic: true
 	validates :quantity, numericality: {greater_than: 0, lesser_than: 500}
 	validates_presence_of :cart_id, :quantity
 	validates :product, presence: true
-	after_save :update_order_items
+	before_save :calculate_total
 	after_save :update_cart
 	after_destroy :update_cart
-	before_save :total_price
 	include AASM
 
 	aasm do
@@ -30,16 +30,12 @@ class Order < ActiveRecord::Base
 	  end
 	end
 
+	private
+	def calculate_total
+		self.total = order_items.to_a.sum{|o| (o.item.price * o.quantity) || 0}
+	end
+
 	def update_cart
-		self.cart.save!
-	end
-
-	def update_order_items
-		self.order_items.update_all(quantity: self.quantity) if self.order_items.present?
-	end
-
-	def total_price
-		self.total = self.product.price * quantity
-		return true
+		cart.save!
 	end
 end

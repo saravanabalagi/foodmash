@@ -8,14 +8,47 @@ angular.module('foodmashApp.resources')
 		name: 'cart'
 	});
 
-	resource.addToCart = function(combo_id, selected_dishes){
+	resource.addToCart = function(cart){
 		var self = this;
 		var d = $q.defer();
-		resource.$post(self.$url('addToCart'), {combo_id: combo_id, selected_dishes: selected_dishes}).then(function(response){
+		resource.$post(self.$url('addToCart'), {orders: cart.orders, delivery_address_id: cart.delivery_address_id}).then(function(response){
 			d.resolve(response);
 		}, function(err){
 			d.reject(err);
 		});
+		return d.promise;
+	};
+
+	resource.clear = function(){
+		var self = this;
+		var d = $q.defer();
+		resource.$get(self.$url('clear')).then(function(response){
+			d.resolve(response);
+		}, function(err){
+			d.reject(err);
+		});
+		return d.promise;
+	};
+
+	resource.show = function(){
+		var self = this;
+		var d = $q.defer();
+		resource.$get(self.$url('show')).then(function(response){
+			d.resolve(response);
+		}, function(err){
+			d.reject(err);
+		});
+		return d.promise;
+	};
+
+	resource.changeStatus = function(status, cart_id){
+		var self = this;
+		var d = $q.defer();
+		resource.$post(self.$url('changeStatus'), {status: status, id: cart_id}).then(function(response){
+			d.resolve(response);
+		}, function(err){
+			d.reject(err);
+		})
 		return d.promise;
 	};
 

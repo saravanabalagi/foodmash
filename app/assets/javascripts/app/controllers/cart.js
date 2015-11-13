@@ -2,84 +2,51 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('CartController', ['$scope', '$q', 'toaster','$location','Cart','$timeout','Order', function($scope, $q, toaster, $location, Cart, $timeout, Order){
+.controller('CartController', ['$scope', '$q', 'toaster','$location','CartService','$timeout','$rootScope', function($scope, $q, toaster, $location, CartService, $timeout, $rootScope){
 
 	$scope.cart = {};
-	$scope.order = {};
+	$scope.filling = false;
+
+	CartService.getCartInfo().then(function(cart){
+		$scope.cart = cart;
+		validateCart();
+	}, function(cart){
+		$scope.cart = cart;
+	});
 
 	$scope.routeToRoot = function(){
 		$location.path("/");
 	};
 
 	$scope.routeToCheckout = function(){
-		$location.path("/checkout");
+		if($rootScope.currentUser){
+			$location.path("/checkout");
+		}else{
+			$rootScope.storeLocation = "/checkout";
+			toaster.pop('warning', 'Need to login first!');
+			$location.path("/login");
+		}
 	};
 
 	$scope.checkForOrders = function(){
 		return $scope.cart.orders.length == 0;
 	};
 
-	Cart.query().then(function(cart){
-		$scope.cart = cart;
-	}, function(err){
-		$scope.cart = null;
-	});
-
-	$scope.updateOrder = function(order, quantity){
-		var d = $q.defer();
-		Order.query({id: order.id, cart_id: $scope.cart.id}).then(function(response){
-			$scope.order = response[0];
-			$scope.order.quantity = quantity;
-			$scope.order.update().then(function(r){
-				$scope.cart.total = $scope.order.cart.total;
-				var index = findIndexOfOrder();
-				if(angular.isNumber(index)){
-					$scope.cart.orders[index].quantity = $scope.order.quantity;
-					$scope.cart.orders[index].total = $scope.order.total;
-				}
-				toaster.pop('success', "Order was updated");
-				d.resolve(r);
-			}, function(err){
-				toaster.pop('error', 'Order was not updated!');
-				d.reject(err);
-			});
-		}, function(err){
-			toaster.pop('error', "Order was not found!");
-			d.reject(err);
+	$scope.updateCartInfo = function(){
+		var total = 0;
+		$scope.cart.orders.filter(function(order){ 
+			total += order.total * order.quantity;
 		});
-		return d.promise;
+		$scope.cart.total = total;
 	};
 
-	$scope.deleteOrder = function(order){
-		var d = $q.defer();
-		Order.query({id: order.id, cart_id: $scope.cart.id}).then(function(response){
-			$scope.order = response[0];
-			$scope.order.delete().then(function(response){
-				$scope.cart.total = $scope.order.cart.total;
-				var index = findIndexOfOrder();
-				if(angular.isNumber(index)){
-					$scope.cart.orders.splice(index, 1);
-				}
-				toaster.pop('success', 'Order has been removed from cart!');
-				d.resolve(response);
-			}, function(err){
-				toaster.pop('error', 'Order was not removed from cart!');
-				d.reject(err);
-			});
-		}, function(err){
-			toaster.pop('error', 'Order was not found!');
-			d.reject(err);
-		});
-		return d.promise;
-	};
-
-	function findIndexOfOrder(){
-		for(var i=0;i<$scope.cart.orders.length; i++){
-			if($scope.order.id == $scope.cart.orders[i].id){
-				return i;
+	function validateCart(){
+		$scope.cart.orders.filter(function(order){
+			if(order.quantity === null){
+				order.quantity = 1;
+				$scope.updateCartInfo();
 			}
-		}
-		return null;
+		});
 	};
 
 }]);

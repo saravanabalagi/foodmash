@@ -1,0 +1,86 @@
+
+<div layout="row" flex layout-margin class="md-whiteframe-z2 combo-card" ng-init="combo_1_clicked">
+  <div flex layout="column">
+
+      <div layout="row" layout-align="space-between center" ng-click="combo_1_clicked=!combo_1_clicked">
+        <md-content flex>
+          <md-list>
+            <md-list-item class="md-3-line">
+              <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="combo"></md-icon>
+              <div class="md-list-item-text">
+                  <h3>{{combo.name}}</h3>
+                  <p>{{combo.description}}</p>
+              </div>
+            </md-list-item>
+          </md-list>
+        </md-content>
+        <div layout-padding layout-margin class="rupee">{{combo.price}}</div>
+        <div layout-padding layout-margin ng-show="combo_1_clicked" class="cart">
+        <md-button class="md-icon-button md-primary" aria-label="Eat cake" ng-click="addToCart(combo)" ng-disabled="checkComboSelection(combo) && filling">
+              <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cart.svg"></md-icon>
+        </md-button>
+        </div>
+      </div>
+
+       <div layout="row" ng-show="combo_1_clicked" class="combo-dishes">
+          <div layout="column" layout-padding flex offset="10">
+            <div layout="column">
+                <md-content>
+                  <md-list>
+
+                    <md-list-item class="md-2-line" ng-repeat="combo_dish in combo.combo_dishes">
+                      <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
+
+                      <div class="md-list-item-text">
+                        <label>{{combo_dish.dish.name}}</label>
+                        <p>{{combo_dish.dish.description}}</p>
+                        <md-input-container>
+                          <label>quantity</label>
+                          <input type="number" min="1" max="50" ng-model="combo_dish.quantity" ng-change="validateQuantity(combo_dish)" />
+                        </md-input-container>
+                      </div>
+
+                    </md-list-item>
+                    <!-- <md-divider md-inset></md-divider> -->
+                  
+                  </md-list>
+                </md-content>
+              </div>
+            </div>
+          <div flex="10"></div>
+        </div>
+
+      <div layout="row" ng-show="combo_1_clicked" class="combo-options">
+          <div layout="column" layout-padding flex offset="10">
+            <div layout="column">
+                <md-content>
+                  <md-list>
+
+                    <md-list-item class="md-2-line" ng-repeat="combo_option in combo.combo_options">
+                      <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
+
+                      <div class="md-list-item-text">
+                        <label>{{combo_option.name}}</label>
+                        <p>{{combo_option.description}}</p>
+                        <md-select ng-model="dish" ng-change="selectDish(combo, combo_option.id, dish)" placeholder="choose from the options">
+                          <md-option ng-repeat="combo_option_dish in combo_option.combo_option_dishes" value="{{combo_option_dish.dish}}">{{combo_option_dish.dish.name}} -> {{combo_option_dish.dish.restaurant.name}}
+                          </md-option>
+                        </md-select>
+                        <md-input-container>
+                          <label>quantity</label>
+                          <input type="number" min="1" max="500" ng-model="combo_option.quantity" />
+                        </md-input-container>
+                      </div>
+
+                    </md-list-item>
+                    <!-- <md-divider md-inset></md-divider> -->
+                  
+                  </md-list>
+                </md-content>
+              </div>
+            </div>
+          <div flex="10"></div>
+        </div>
+
+  </div>
+</div>

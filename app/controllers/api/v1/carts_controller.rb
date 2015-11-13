@@ -1,13 +1,13 @@
 class Api::V1::CartsController < ApiApplicationController
 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 	prepend_before_filter :authenticate_user_from_token!
-	before_filter :set_or_create_cart, only: [:index, :add_to_cart, :remove_from_cart, :destroy, :add_address, :purchase]
+	before_filter :set_or_create_cart, only: [:index, :add_cart, :destroy, :add_address, :purchase]
 	before_filter :set_order, only: :show
 	before_filter :set_cart_delivery_address, only: :add_address
 	respond_to :json
 
 	def history
-		@carts = @current_user.carts if @current_user
+		@carts = @current_user.carts.where("aasm_state != ?", 'not_started') if @current_user
 		if @carts
 			render status: 200, json: {success: true, data: @carts.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description]}], only: [:id, :quantity, :total]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at]) }
 		else
@@ -17,7 +17,7 @@ class Api::V1::CartsController < ApiApplicationController
 
 	def show 
 		if @cart
-			render status: 200, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description]}], only: [:id, :quantity, :total]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at]) }
+			render status: 200, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description, :label]}], only: [:id, :quantity, :total]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at]) }
 		else
 			render status: 404, json: {success: false, error: "Could not fetch order!"}
 		end
@@ -32,14 +32,6 @@ class Api::V1::CartsController < ApiApplicationController
 		end
 	end
 
-	def add_address
-		if @cartDelAdd and @cartDelAdd.save!
-			render status: 201, json: {success: true, message: "Added del address to cart!"}
-		else
-			render status: 200, json: {success: false, error: "Failed to add del address to cart!"}
-		end
-	end
-
 	def index
 		if @cart and @cart.save!
 			render status: 200, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description]}], only: [:id, :quantity, :total]} }, only: [:id, :total]) }
@@ -48,19 +40,11 @@ class Api::V1::CartsController < ApiApplicationController
 		end
 	end
 
-	def add_to_cart
-		if @cart and @cart.add_combo_from_mobile(params[:data][:combo])
+	def add_cart
+		if @cart and @cart.add_cart(params[:data][:cart], params[:data][:delivery_address_id])
 			render status: 201, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description]}], only: [:id, :quantity, :total]} }, only: [:id, :total]) }
 		else
 			render status: 200, json: {success: false, error: "Could not add to cart!"}
-		end
-	end
-
-	def remove_from_cart
-		if @cart and @cart.remove_combo_from_mobile(params[:data][:combo][:id])
-			render status: 201, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description]}], only: [:id, :quantity, :total]} }, only: [:id, :total]) }
-		else
-			render status: 200, json: {success: false, error: "Could not remove from cart!"}
 		end
 	end
 

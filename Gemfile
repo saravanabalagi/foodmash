@@ -10,7 +10,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -46,6 +46,7 @@ gem 'twilio-ruby', '>= 4.2.1'
 gem 'aws-sdk', '~> 2'
 
 gem 'tzinfo-data'
+#for payment gateway integration
 
 group :production do
   gem 'execjs'
@@ -65,12 +66,10 @@ end
 group :development, :test do
 	# Use sqlite3 as the database for Active Record
 	gem 'sqlite3'
-
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
-  # Show graphical debugging interface in RubyMine
-  gem 'debugger-xml'
+  gem 'thin'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'

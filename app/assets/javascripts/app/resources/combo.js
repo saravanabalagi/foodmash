@@ -9,6 +9,15 @@ angular.module('foodmashApp.resources')
 		name: 'combo'
 	});
 
+	resource.loadComboAvailability = function(combo_id){
+		var self = this;
+		var d = $q.defer();
+		resource.$post(self.$url('getComboAvailability'), {id: combo_id}).then(function(combo){
+			d.resolve(combo);
+		}, function(err){ d.reject(err); })
+		return d.promise;
+	};
+
 	resource.loadOfferCombos = function(){
 		var self = this;
 		var d = $q.defer();
@@ -16,7 +25,6 @@ angular.module('foodmashApp.resources')
 			d.resolve(offerCombos);
 		}, 
 		function(err){ d.reject(err); });
-
 		return d.promise;
 	};
 
@@ -27,7 +35,6 @@ angular.module('foodmashApp.resources')
 			d.resolve(offerCombos);
 		}, 
 		function(err){ d.reject(err); });
-
 		return d.promise;
 	};
 
@@ -38,7 +45,6 @@ angular.module('foodmashApp.resources')
 			d.resolve(offerCombos);
 		}, 
 		function(err){ d.reject(err); });
-
 		return d.promise;
 	};
 
@@ -49,7 +55,15 @@ angular.module('foodmashApp.resources')
 			d.resolve(offerCombos);
 		}, 
 		function(err){ d.reject(err); });
+		return d.promise;
+	};
 
+	resource.loadAWS = function(){
+		var self = this;
+		var d = $q.defer();
+		resource.$get(self.$url('loadAWS')).then(function(response){
+			d.resolve(response);
+		}, function(err){ d.reject(err); })
 		return d.promise;
 	};
 

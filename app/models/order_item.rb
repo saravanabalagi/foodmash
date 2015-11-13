@@ -1,4 +1,5 @@
 class OrderItem < ActiveRecord::Base
+	resourcify
 	belongs_to :order
 	delegate :restaurant, to: :item
 	belongs_to :item, polymorphic: true
@@ -7,6 +8,9 @@ class OrderItem < ActiveRecord::Base
 	validates :item, presence: true
 	validates :category, presence: true
 	validates :order, presence: true
+	after_save :update_order
+	after_destroy :update_order
+
 	include AASM
 
 	aasm do
@@ -26,5 +30,10 @@ class OrderItem < ActiveRecord::Base
 	  event :collect do
 	    transitions :from => :cooked, :to => :collected
 	  end
+	end
+
+	private
+	def update_order
+		order.save!
 	end
 end

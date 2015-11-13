@@ -2,14 +2,16 @@
 
 angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources', 
 	'foodmashApp.services', 'ngCookies', 'foodmashApp.directives', 'foodmashApp.controllers', 
-	'foodmashApp.interceptors', 'ngMaterial', 'ngAnimate', 'toaster', 'ngSanitize'])
+	'foodmashApp.interceptors', 'ngMaterial', 'ngAnimate', 'toaster', 'ngFileUpload', 'ngSanitize'])
 
 .config(['$routeProvider', '$locationProvider', '$httpProvider','railsSerializerProvider', function($routeProvider, $locationProvider, $httpProvider, railsSerializerProvider){
+	
 	$httpProvider.interceptors.push('UserAuthInterceptor');
 
 	railsSerializerProvider.underscore(angular.identity).camelize(angular.identity);
 
 	$routeProvider
+	
 	.when('/users/:user_id', {
 	    controller: 'ProfileController',
 	    templateUrl: '/templates/profile.html', 
@@ -22,6 +24,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 	          if(user && user.id == $route.current.params.user_id) {
 	            d.resolve();
 	          } else {
+	          	toaster.pop('error', 'Unauthorized!');
 	            $location.path('/');
 	          }
 	        });
@@ -30,45 +33,149 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 	      }
 	    }
 	  })
+		.when('/cartPayment', {
+			controller: 'CartPaymentController',
+			templateUrl: '/templates/cart_payment.html',
+			resolve: {
+				cart_payment: 
+				function(AuthorizeService){
+					AuthorizeService.checkForLogin();
+				}
+			}
+		})
 		.when('/checkout', {
 			controller: 'CheckoutController', 
-			templateUrl: '/templates/checkout.html'
+			templateUrl: '/templates/checkout.html',
+			resolve: {
+				checkout: 
+				function(AuthorizeService){
+					AuthorizeService.checkForLogin();
+				}
+			}
+		})
+		.when('/userRoles', {
+			controller: 'UserRolesController',
+			templateUrl: '/templates/user_roles.html',
+			resolve: {
+				user_roles: 
+				function(AuthorizeService){
+					AuthorizeService.authorizeRouteForSuperAdmin();
+				}
+			}
 		})
 		.when('/cart', {
 			controller: 'CartController',
 			templateUrl: '/templates/cart.html'
 		})
-		.when('/combo_options/:id', {
+		.when('/comboOptions/:id', {
 			controller: 'ComboOptionController',
-			templateUrl: '/templates/combo_option.html'
+			templateUrl: '/templates/combo_option.html',
+			resolve: {
+				combo_option: 
+				function(AuthorizeService){
+					AuthorizeService.authorizeRouteForSuperAdmin();
+				}
+			}
 		})
 		.when('/combos', {
 			controller: 'CombosController',
-			templateUrl: '/templates/combos.html'
+			templateUrl: '/templates/combos.html',
+			resolve: {
+				combos: 
+				function(AuthorizeService){
+					AuthorizeService.authorizeRouteForSuperAdmin();
+				}
+			}
 		})
 		.when('/combos/:id', {
 			controller: 'ComboController',
-			templateUrl: '/templates/combo.html'
+			templateUrl: '/templates/combo.html',
+			resolve: {
+				combo: 
+				function(AuthorizeService){
+					AuthorizeService.authorizeRouteForSuperAdmin();
+				}
+			}
 		})
 		.when('/panel', {
 			controller: 'PanelController',
-			templateUrl: '/templates/panel.html'
+			templateUrl: '/templates/panel.html',
+			resolve: {
+				panel: 
+				function(AuthorizeService){
+					AuthorizeService.authorizeRouteForSuperAdmin();
+				}
+			}
 		})
-		.when('/dish_types', {
+		.when('/packagingCentrePanel', {
+			controller: 'PackagingCentrePanelController',
+			templateUrl: '/templates/packaging_centre_panel.html',
+			resolve: {
+				panel: 
+				function(AuthorizeService){
+					AuthorizeService.authorizeRouteForPackagingCentreAdmin();
+				}
+			}
+		})
+		.when('/restaurantPanel', {
+			controller: 'RestaurantPanelController',
+			templateUrl: '/templates/restaurant_panel.html',
+			resolve: {
+				panel: 
+				function(AuthorizeService){
+					AuthorizeService.authorizeRouteForRestaurantAdmin();
+				}
+			}
+		})
+		.when('/customerPanel', {
+			controller: 'CustomerPanelController',
+			templateUrl: '/templates/customer_panel.html',
+			resolve: {
+				panel: 
+				function(AuthorizeService){
+					AuthorizeService.authorizeRouteForCustomer();
+				}
+			}
+		})
+		.when('/dishTypes', {
 			controller: 'DishTypesController',
-			templateUrl: '/templates/dish_types.html'
+			templateUrl: '/templates/dish_types.html',
+			resolve: {
+				dish_types: 
+				function(AuthorizeService){
+					AuthorizeService.authorizeRouteForSuperAdmin();
+				}
+			}
 		})
 		.when('/cuisines', {
 			controller: 'CuisinesController',
-			templateUrl: '/templates/cuisines.html'
+			templateUrl: '/templates/cuisines.html',
+			resolve: {
+				cuisines: 
+				function(AuthorizeService){
+					AuthorizeService.authorizeRouteForSuperAdmin();
+				}
+			}
 		})
 		.when('/restaurants', {
 			controller: 'RestaurantsController',
-			templateUrl: '/templates/restaurants.html'
+			templateUrl: '/templates/restaurants.html',
+			resolve: {
+				restaurants: 
+				function(AuthorizeService){
+					AuthorizeService.authorizeRouteForSuperAdmin();
+				}
+			}
 		})
 		.when('/restaurants/:id', {
 			controller: 'RestaurantController', 
-			templateUrl: '/templates/restaurant.html'
+			templateUrl: '/templates/restaurant.html',
+			resolve: {
+				restaurant: 
+				function(AuthorizeService){
+					AuthorizeService.authorizeRouteForSuperAdmin();
+				}
+			}
 		})
 		.when('/login', 
 		{

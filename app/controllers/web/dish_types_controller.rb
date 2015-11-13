@@ -1,6 +1,7 @@
 class Web::DishTypesController < ApplicationController
 	respond_to :json
 	before_filter :get_dish_type, only: [:update, :destroy]
+	load_and_authorize_resource skip_load_resource
 
 	def index
 		@dish_types = DishType.where(params.permit(:id, :name))

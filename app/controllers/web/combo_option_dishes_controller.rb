@@ -1,6 +1,7 @@
 class Web::ComboOptionDishesController < ApplicationController
 	respond_to :json
 	before_action :get_combo_option_dish, only: [:update, :destroy]
+	load_and_authorize_resource skip_load_resource
 
 	def index
 		@combo_option_dishes = ComboOptionDish.where(params.permit(:combo_option_id, :dish_id))

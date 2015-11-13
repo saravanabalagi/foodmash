@@ -29,7 +29,7 @@ angular.module('foodmashApp.directives')
 						$scope.updatedRestaurant.update().then(function(response){
 							toaster.pop('success', 'Restaurant was updated!');
 							var index = $scope.restaurants.indexOf(restaurant);
-							if(angular.isNumber(index)){
+							if(angular.isNumber(index) && index >= 0){
 								$scope.restaurants[index] = $scope.updatedRestaurant;
 							}
 							d.resolve(response);

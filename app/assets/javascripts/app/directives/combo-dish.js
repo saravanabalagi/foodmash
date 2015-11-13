@@ -45,7 +45,7 @@ angular.module('foodmashApp.directives')
 						$scope.updatedComboDish.update().then(function(response){
 							toaster.pop('success', 'Combo Dish was updated!');
 							var index = $scope.combo_dishes.indexOf(combo_dish);
-							if(angular.isNumber(index)){
+							if(angular.isNumber(index) && index >= 0){
 								$scope.combo_dishes[index] = $scope.updatedComboDish;
 							}
 							d.resolve(response);

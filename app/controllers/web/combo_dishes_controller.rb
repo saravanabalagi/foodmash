@@ -1,6 +1,7 @@
 class Web::ComboDishesController < ApplicationController
-	before_filter :get_combo_dish, only: [:update, :destroy]
 	respond_to :json
+	before_filter :get_combo_dish, only: [:update, :destroy]
+	load_and_authorize_resource skip_load_resource
 
 	def index 
 		@combo_dishes = ComboDish.where(params.permit(:id, :combo_id, :dish_type_id))

@@ -1,57 +1,83 @@
 <!-- Checkout_delivery -->
 
-        <div flex layout="row">
-          <div flex offset="20" layout="column" layout-align="center center">
-            
-            <div layout="column" layout-align="center center">
-              <md-radio-group layout="column">
+  <div flex layout="row">
+    <div flex offset="20" layout="column" layout-align="center center">
+      
+      <div layout="column" layout-align="center center">
+        <md-radio-group layout="column" ng-model="cart_delivery_address_id">
+          <!-- Repeatable Saved Address -->
+          <delivery-address-list ng-repeat="delivery_address in delivery_addresses"> </delivery-address-list>
+          <!-- Repeatable Saved Address ends-->
 
-                <!-- Repeatable Saved Address -->
-                <div layout="row" layout-align="center center">
-                  <md-radio-button value="address_1" class="md-primary address-radio">
-                    <div layout="column" layout-padding>
-                      <h1 class="md-title">Alexandra Jason</h1>
-                      <div>#2E, First Floor, Regency Residency</div>
-                      <div>Lake View Street, Kotturpuram,</div>
-                      <div>Chennai, 600025</div>
-                      <h1 class="md-subhead">+91 9876 543210</h1>
-                    </div>
-                  </md-radio-button>
-                  <md-button class="md-icon-button md-primary" layout-padding>
-                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
-                  </md-button>
-                  <md-button class="md-icon-button md-primary" layout-padding>
-                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
-                  </md-button>
-                </div>
-                <!-- Repeatable Saved Address ends-->
+        </md-radio-group>
+      </div>
 
-              </md-radio-group>
-            </div>
+      <div layout="column" layout-align="center center" layout-margin layout-padding>
+        <md-button class="md-primary" layout-padding ng-click="addShow=!addShow">
+          <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/add.svg"></md-icon>
+          <span class="md-subhead" layout-padding>
+            NEW ADDRESS
+          </span>
+        </md-button>
 
-            <div layout="row" layout-align="center center" layout-margin layout-padding>
-              <md-button class="md-primary" layout-padding>
-                <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/add.svg"></md-icon>
-                <span class="md-subhead" layout-padding>
-                  NEW ADDRESS
-                </span>
-              </md-button>
-              
-            </div>
-
-            <md-divider></md-divider>
-
+          <form role="form" name="deliveryAddressAddForm" ng-submit="addDeliveryAddress(addCross)" ng-init="addShow=false; addCross = false" ng-show="addShow">
             <div layout="row" layout-padding layout-align="center center">
-              <h2 class="md-title" layout-padding layout-margin>Delivery Charges</h2>
-              <h2 class="md-display-1 rupee" layout-padding layout-margin>30</h2>
+              <md-input-container flex>
+                <label>name</label>
+                <input type="text" ng-model="delivery_address.name" />
+              </md-input-container>
+               <md-input-container flex>
+                <label>address line 1</label>
+                <input ng-model="delivery_address.line1" />
+              </md-input-container>
+              <md-input-container flex>
+                <label>address line 2</label>
+                <input ng-model="delivery_address.line2" />
+              </md-input-container>
+              <md-input-container flex>
+                <label>city</label>
+                <input ng-model="delivery_address.city" />
+              </md-input-container>
+              <md-input-container flex>
+                <label>pincode</label>
+                <input ng-model="delivery_address.pincode" />
+              </md-input-container>
+              <md-input-container flex>
+                <label>area</label>
+                <input ng-model="delivery_address.area" />
+              </md-input-container>
+              <md-input-container flex>
+                <label>contact no</label>
+                <input ng-model="delivery_address.contact_no" />
+              </md-input-container>
+              <md-input-container flex>
+                <md-switch ng-model="delivery_address.primary">
+              </md-switch>
+              </md-input-container>
+              <md-button class="md-icon-button" ng-click="addShow = !addShow; addCross = false">
+                <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
+              </md-button>
+              <md-button class="md-icon-button" ng-click="addShow = !addShow; addCross = true">
+                <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cross.svg"></md-icon>
+              </md-button>
             </div>
-            <div layout="row" layout-align="center center">
-              <md-button class="md-raised" ng-click="routeToCart()">Cart</md-button>
-              <md-button class="md-raised md-primary">Pay</md-button>
-            </div>
+          </form>
+        
+      </div>
 
-          </div>
-          <div flex="20"></div>
-        </div> 
+      <md-divider></md-divider>
 
-        <!-- Checkout_delivery ends -->
+      <div layout="row" layout-padding layout-align="center center">
+        <h2 class="md-title" layout-padding layout-margin>Delivery Charges</h2>
+        <h2 class="md-display-1 rupee" layout-padding layout-margin>42</h2>
+      </div>
+      <div layout="row" layout-align="center center">
+        <md-button class="md-raised" ng-click="routeToCart()">Cart</md-button>
+        <md-button class="md-raised md-primary" ng-click="processCart()">Submit</md-button>
+      </div>
+
+    </div>
+    <div flex="20"></div>
+  </div> 
+
+<!-- Checkout_delivery ends -->

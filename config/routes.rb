@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       collection do 
         get '/:id/hasCombos', to: 'restaurants#has_combos'
         get '/hasDishType', to: 'restaurants#has_dish_type'
+        get '/:id/getCartsForRestaurant', to: 'restaurants#get_carts_for_restaurant'
       end
     end
 
@@ -19,8 +20,11 @@ Rails.application.routes.draw do
         get 'getMicroCombos', to: 'combos#get_micro_combos'
         get 'getMediumCombos', to: 'combos#get_medium_combos'
         get 'getMegaCombos', to: 'combos#get_mega_combos'
+        post 'getComboAvailability', to: 'combos#get_combo_availability'
       end
     end
+
+    resources :aws, only: :index
 
     resources :combo_options
 
@@ -31,6 +35,8 @@ Rails.application.routes.draw do
     resources :dish_types
 
     resources :cuisines
+
+    resources :delivery_addresses
     
     resources :dishes do 
       collection do 
@@ -41,13 +47,25 @@ Rails.application.routes.draw do
     resources :carts, only: [:create, :destroy, :index] do 
       collection do 
         post '/addToCart', to: 'carts#add_to_cart'
+        get '/clear', to: 'carts#clear'
+        get '/show', to: 'carts#show'
+        post '/changeStatus', to: 'carts#change_status'
       end
     end
 
     resources :orders
 
-    get 'users', to: 'users#index'
-    put 'users/:id',to: 'users#update' 
+    resources :users, only: [:index, :update] do
+      collection do
+        post '/addRole', to: 'users#add_role'
+        get '/findByEmail', to: 'users#find_by_email'
+        post '/removeRole', to: 'users#remove_role'
+      end
+    end
+
+    get '/payu/ok', to: 'payu#ok'
+    get '/payu/error', to: 'payu#error'
+    get '/payu/report', to: 'payu#report'
   end
   
   #routes for API calls
@@ -108,7 +126,7 @@ Rails.application.routes.draw do
           post '/addAddress', to: 'carts#add_address'
           post '/history', to: 'carts#history'
           post '/', to: 'carts#index'
-          post '/add', to: 'carts#add_to_cart'
+          post '/addCart', to: 'carts#add_cart'
           post '/remove', to: 'carts#remove_from_cart'
           post '/destroy', to: 'carts#destroy'
           post '/purchase', to: 'carts#purchase'

@@ -19,8 +19,9 @@
 
   <form role="form" name="dishUpdateForm" ng-submit="updateDish(dish, dishUpdateCross)" ng-init="dishUpdateShow=false; dishUpdateCross = false" ng-show="dishUpdateShow">
     <div layout="row" layout-padding layout-align="center center">
-      <md-button class="md-icon-button">
-        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg"></md-icon>
+      <md-button class="md-icon-button" type="file" ngf-select="uploadFiles($file, $invalidFiles, dish)"
+          accept="image/*" ngf-max-size="40MB">
+        <img ng-src="{{updatedDish.picture}}" alt="dish pic" />
       </md-button>
       <md-input-container flex>
         <label>Name</label>

@@ -1,29 +1,46 @@
 class Web::CartsController < ApplicationController
+	respond_to :json
 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 	prepend_before_filter :authenticate_user_from_token!
 	before_filter :set_cart, only: :destroy
-	before_filter :set_or_create_cart, only: [:create, :add_to_cart, :index]
-	respond_to :json
+	before_filter :set_or_create_cart, only: [:add_to_cart, :clear, :show, :change_status]
 
 	def index
-		if @cart and @cart.save!
-			render status: 200, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [:item, :category]} } ,:product]  } })
+		@carts = Cart.where(params.permit(:user_id, :id, :aasm_state))
+		if @carts
+			render status: 200, json: @carts.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name, :description]}}], only: [:id, :quantity, :category_id, :category_type]} } ,:product => {only: [:id, :name, :price, :description]}], only: [:id, :quantity, :total, :updated_at]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at])
 		else
-			render status: 422, json: {error: "Could not find cart!"}
+			render status: 422, json: {error: "Could not fetch carts!"}
 		end
 	end
 
-	def create
+	def show
 		if @cart
-			render status: 201, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [:item, :category]} } ,:product]  } })
+			render status: 200, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name, :description, :price]}}], only: [:id, :quantity, :category_id, :category_type]} } ,:product => {only: [:id, :name, :price, :description]}], only: [:id, :quantity, :total, :updated_at]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at])
 		else
-			render status: 422, json: {error: @cart.errors.as_json}
+			render status: 200, json: {error: "Could not fetch cart!"}
+		end
+	end
+
+	def change_status
+		if @cart and @cart.change_status(params[:cart][:status])
+			render status: 201, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name, :description, :price]}}], only: [:id, :quantity, :category_id, :category_type]} } ,:product => {only: [:id, :name, :price, :description]}], only: [:id, :quantity, :total, :updated_at]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at])
+		else
+			render status: 422, json: {erro: "Could change status of cart!"}
+		end
+	end
+
+	def clear
+		if @cart and @cart.orders.present? and @cart.orders.destroy_all
+			render status: 201, json: {message: "Cart was cleared!"}
+		else
+			render status: 200, json: {error: "Could not fetch cart!"}
 		end
 	end
 
 	def add_to_cart
-		if @cart and @cart.add_combo(params[:cart][:combo_id], params[:cart][:selected_dishes])
-			render status: 200, json: {message: "successfully added to cart!"}
+		if @cart.add_items_to_cart(params[:cart])
+			render status: 200, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name, :description, :price]}}], only: [:id, :quantity, :category_id, :category_type]} } ,:product => {only: [:id, :name, :price, :description]}], only: [:id, :quantity, :total, :updated_at]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at])
 		else
 			render status: 422, json: {error: "Could not add to cart!"}
 		end

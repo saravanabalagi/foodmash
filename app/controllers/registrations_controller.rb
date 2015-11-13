@@ -9,15 +9,14 @@ class RegistrationsController < Devise::RegistrationsController
   def create
   	# Create the user
 	  build_resource(sign_up_params)
-
 	  # Try to save them
-	  if resource.save 
+	  if resource.save!
 	  	session_token = resource.generate_session_token
       resource.sessions.create! session_token: session_token
 	    render status: 200,
 	    json: {
 	      success: true, info: "Registered", data: {
-	        user: resource.as_json,
+	        user: resource.as_json(:include => {:roles => {:include => :resource}}),
 	        auth_token: session_token
 	      }
 	    }

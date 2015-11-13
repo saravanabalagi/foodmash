@@ -5,6 +5,8 @@ class ComboOptionDish < ActiveRecord::Base
 	validates :combo_option_id, presence: true
 	after_save :call_label_on_combo
 
+	private
+	
 	def call_label_on_combo
 		self.combo_option.combo.save!
 	end

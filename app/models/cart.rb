@@ -1,10 +1,10 @@
 class Cart < ActiveRecord::Base
+	resourcify
 	belongs_to :user
-	has_one :delivery_address, through: :cart_delivery_address
-	has_one :cart_delivery_address
+	has_one :delivery_address
 	has_many :order_items, through: :orders
 	has_many :orders, dependent: :destroy
-	before_save :update_total
+	before_save :calculate_total
 	after_save :update_orders
 	include AASM
 
@@ -15,16 +15,16 @@ class Cart < ActiveRecord::Base
 	  state :dispatched
 	  state :delivered
 
-	  event :cancel do
-	    transitions :from => :purchased, :to => :not_started
-	  end
-
 	  event :purchase do
 	    transitions :from => :not_started, :to => :purchased
 	  end
 
-	  event :order do 
-			transitions :from => :purchased, :to => :ordered
+	  event :cancel do
+	    transitions :from => :purchased, :to => :not_started
+	  end
+
+	  event :order_cart do 
+		transitions :from => :purchased, :to => :ordered
 	  end
 
 	  event :dispatch do 
@@ -36,134 +36,172 @@ class Cart < ActiveRecord::Base
 	  end
 	end
 
-	def add_combo(combo_id, selected_dishes)
-		combo = Combo.find combo_id
-		current_orders = self.orders.where(product_id: combo_id)
-		current_orders.each do |current_order|
-			if current_order and check_with_incoming_order(current_order, selected_dishes, combo_id)
-				current_order.quantity += 1
-				return current_order if current_order.save!
-			end
-		end
-
-		future_order = self.orders.build(product_id: combo_id, product_type: "Combo", total: combo.price)
-		selected_dishes.each do |s_dish|
-			if s_dish[:combo_id] == combo_id
-				if s_dish[:combo_option_id].present?
-					future_order.order_items.build(item_id: s_dish[:dish_id], item_type: "Dish", category_id: s_dish[:combo_option_id], category_type: "ComboOption")
-				elsif s_dish[:combo_dish_id].present?
-					future_order.order_items.build(item_id: s_dish[:dish_id], item_type: "Dish", category_id: s_dish[:combo_dish_id], category_type: "ComboDish")
-				end
-			end
-		end
-		return future_order if future_order.save!
-	end
-
-	def check_with_incoming_order(current_order, selected_dishes, combo_id)
-		current_order_items_length = current_order.order_items.length
-		counting_length = 0
-		selected_dishes.each do |s_dish|
-			current_order.order_items.each do |order_item|
-				if order_item[:item_id] == s_dish[:dish_id] and (order_item[:category_id] == s_dish[:combo_option_id] or order_item[:category_id] == s_dish[:combo_dish_id]) and combo_id == s_dish[:combo_id]
-					counting_length += 1
-					break
-				end
-		  end
-		end
-		if counting_length == current_order_items_length
-			return true
-		else
-			return false
+	def change_status(status)
+		case status
+			when 'purchase' 
+				purchase!
+			when 'cancel' 
+				cancel!
+			when 'order_cart' 
+				order_cart!
+			when 'dispatched' 
+				dispatch!
+			when 'delivered' 
+				deliver!
 		end
 	end
 
-	def add_combo_from_mobile(combo_info)
-		combo = Combo.find combo_info[:id]
-		current_orders = self.orders.where(product_id: combo.id)
-		
-		current_orders.each do |current_order|
-			if current_order and check_with_incoming_order_for_mobile(current_order, combo_info)
-				current_order.quantity += 1
-				current_order.update_order_items
-				return current_order if current_order.save!
+	def add_items_to_cart(cart)
+		if self.orders.present?
+			self.orders.each do |order|
+				order.destroy! unless cart[:orders].collect{|o| o[:id]}.compact.include? order.id
 			end
 		end
-
-		future_order = self.orders.build(product_id: combo.id, product_type: "Combo", total: combo.price)
-
-		if combo_info[:combo_options].present?
-			combo_info[:combo_options].each do |combo_option|
-				future_order.order_items.build(item_id: combo_option[:dish][:id], item_type: "Dish", category_id: combo_option[:id], category_type: "ComboOption")
-			end
-		end
-
-		if combo_info[:combo_dishes].present?
-			combo_info[:combo_dishes].each do |combo_dish|
-				future_order.order_items.build(item_id: combo_dish[:dish][:id], item_type: "Dish", category_id: combo_dish[:id], category_type: "ComboDish")
-			end
-		end
-
-		return future_order if future_order.save!
-	end
-
-	def check_with_incoming_order_for_mobile(current_order, combo_info)
-		current_order_items_length = current_order.order_items.length
-		counting_length = 0
-
-		if combo_info[:combo_options].present?
-			combo_info[:combo_options].each do |combo_option|
-				current_order.order_items.each do |order_item|
-					if order_item[:item_id] == combo_option[:dish][:id] and order_item[:category_id] == combo_option[:id]
-						counting_length += 1
-						break
+		self.reload
+		if cart[:orders].present?
+			cart[:orders].each do |cart_order|
+				if cart_order[:id].present?
+					current_order = self.orders.find(cart_order[:id]) if cart_order[:id]
+					if current_order
+						current_order.update_attributes!(quantity: cart_order[:quantity]) unless cart_order[:quantity] == current_order[:quantity]
+						if cart_order[:order_items].present?
+							current_order.order_items.each do |order_item|
+								cart_order[:order_items].each do |cart_order_item|
+									if cart_order_item[:id] and order_item.id == cart_order_item[:id]
+										order_item.update_attributes!(quantity: cart_order_item[:quantity]) unless order_item.quantity == cart_order_item[:quantity]
+									end
+								end
+							end
+						end
+					end
+				else
+					future_order = self.orders.build(product_id: cart_order[:product][:id], product_type: "Combo", quantity: cart_order[:quantity])
+					if cart_order[:order_items].present?
+						cart_order[:order_items].each do |cart_order_item|
+							if cart_order_item[:category_type].present? and cart_order_item[:category_type] == 'ComboOption'
+								future_order.order_items.build(category_id: cart_order_item[:category_id], category_type: cart_order_item[:category_type], item_id: cart_order_item[:item][:id], item_type: "Dish", quantity: cart_order_item[:quantity])
+							elsif cart_order_item[:category_type].present? and cart_order_item[:category_type] == 'ComboDish'
+								future_order.order_items.build(category_id: cart_order_item[:category_id], category_type: cart_order_item[:category_type], item_id: cart_order_item[:item][:id], item_type: "Dish", quantity: cart_order_item[:quantity])
+							end
+						end
 					end
 				end
 			end
 		end
-		
-		if combo_info[:combo_dishes].present?
-			combo_info[:combo_dishes].each do |combo_dish|
-				current_order.order_items.each do |order_item|
-					if order_item[:item_id] == combo_dish[:dish][:id] and order_item[:category_id] == combo_dish[:id]
-						counting_length += 1
+			self.delivery_address_id = cart[:delivery_address_id] if cart[:delivery_address_id]
+			self.save!
+	end
+
+	def add_cart(cart_items, delivery_address_id)
+		if self.orders.present?
+			self.orders.each do |order|
+				if cart_items.present?
+					order.destroy! unless cart_items.collect{|i| i["id"]}.include? order.product.id
+				end 
+			end
+		end
+		self.reload
+
+		if cart_items.present?
+			cart_items.each do |cart_item|
+				sim = false
+				self.orders.each do |order|
+					if check_for_similarity(order, cart_item)
+						order.update_attributes!(quantity: cart_item["quantity"]) unless cart_item["quantity"] == order.quantity
+						if order.order_items.present?
+							order.order_items.each do |order_item|
+								if cart_item["comboDishes"].present?
+									cart_item["comboDishes"].each do |combo_dish| 
+										if combo_dish["dish"]["id"] == order_item.item.id and (combo_dish["id"] == order_item.category_id and order_item.category_type == 'ComboDish')
+											order_item.update_attributes!(quantity: combo_dish["quantity"]) unless combo_dish["quantity"] == order_item.quantity
+										end
+									end							
+								end
+								if cart_item["comboOptions"].present?
+									cart_item["comboOptions"].each do |combo_option|
+										if (combo_option["id"] == order_item.category_id and order_item.category_type == 'ComboOption')
+											if combo_option["comboOptionDishes"].present?
+												combo_option["comboOptionDishes"].each do |combo_option_dish|
+													if combo_option_dish["dish"]["id"] == order_item.item.id
+														order_item.update_attributes!(quantity: combo_option_dish["quantity"]) unless combo_option_dish["quantity"] == order_item.quantity
+													end
+												end
+											end
+										end
+									end
+								end
+							end
+						end
+						sim = true
 						break
+					end
+				end
+				unless sim
+					future_order = self.orders.build(product_id: cart_item["id"], product_type: 'Combo', quantity: cart_item["quantity"])
+					if cart_item["comboDishes"].present?
+						cart_item["comboDishes"].each do |combo_dish| 
+							future_order.order_items.build(category_id: combo_dish["id"], category_type: 'ComboDish', item_id: combo_dish["dish"]["id"], item_type: "Dish", quantity: combo_dish["quantity"])
+						end							
+					end
+					if cart_item["comboOptions"].present?
+						cart_item["comboOptions"].each do |combo_option|
+							if combo_option["comboOptionDishes"].present?
+								combo_option["comboOptionDishes"].each do |combo_option_dish|
+									future_order.order_items.build(category_id: combo_option["id"], category_type: 'ComboOption', item_id: combo_option_dish["dish"]["id"], item_type: "Dish", quantity: combo_option_dish["quantity"])
+								end
+							end
+						end
+					end	
+				end
+			end
+		end
+		self.delivery_address_id = delivery_address_id
+		self.save!
+	end
+
+	def check_for_similarity(order, cart_item)
+		order_item_count = order.order_items.count
+		cart_order_item_count = 0
+		if order.product.id == cart_item["id"]
+			order.order_items.each do |order_item|
+				if order_item.category_type == "ComboDish"
+					cart_item["comboDishes"].each do |combo_dish|
+						if order_item.category_id == combo_dish["id"] and order_item.item.id == combo_dish["dish"]["id"]
+							cart_order_item_count += 1
+						end
+					end 
+				end
+				if order_item.category_type == "ComboOption"
+					cart_item["comboOptions"].each do |combo_option|
+						if order_item.category_id == combo_option["id"] and order_item.item.id == combo_option["dish"]["id"]
+							cart_order_item_count += 1
+						end
 					end
 				end
 			end
 		end
 
-		if counting_length == current_order_items_length
+		if order_item_count == cart_order_item_count
 			return true
 		else
 			return false
 		end
-	end
-
-	def remove_combo_from_mobile(combo_id)
-		current_orders = self.orders.where(product_id: combo_id)
-		if current_orders.present?
-			current_orders.last.destroy!
-		end
-	end
-
-	def update_total
-		self.total = self.total_price
-		return true
-	end
-	
-	def total_price
-		self.orders.to_a.sum {|order| order.total}
-	end
-
-	def update_orders
-		if self.purchased?	
-			self.orders.each {|order| order.product.update_attributes! no_of_purchases: order.quantity; order.order_items.each{|order_item| order_item.item.update_attributes! no_of_purchases: order_item.quantity} }
-		end
-		return true
 	end
 
 	def generate_order_id
 		self.order_id = "OD" + Digest::SHA1.hexdigest(Time.now.to_s)[0..9]
 		self.save!
+	end
+
+	private
+	def calculate_total
+		self.total = orders.to_a.sum{|o| (o.order_items.to_a.sum{|oi| (oi.item.price * oi.quantity) || 0} * o.quantity) || 0}
+	end
+
+	def update_orders
+		if self.purchased?	
+			orders.each {|order| order.product.update_attributes! no_of_purchases: order.quantity; order.order_items.each{|order_item| order_item.item.update_attributes! no_of_purchases: (order_item.quantity*order_item.order.quantity)} }
+		end
+		return true
 	end
 end

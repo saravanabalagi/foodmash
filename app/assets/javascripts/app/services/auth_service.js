@@ -13,6 +13,7 @@ angular.module('foodmashApp.services')
      service._user = u;
      $cookieStore.put('user', u);
      $cookieStore.put('auth_token', auth_token);
+     $rootScope.currentUser = u;
      $rootScope.$broadcast("user:set", u);
      $rootScope.$broadcast("auth_token:set", auth_token);
    };
@@ -21,6 +22,7 @@ angular.module('foodmashApp.services')
      service._user = null;
      $cookieStore.remove('user');
      $cookieStore.remove('auth_token');
+     $rootScope.currentUser = null;
      $rootScope.$broadcast("user:unset");
      $rootScope.$broadcast("auth_token:unset");
    };
