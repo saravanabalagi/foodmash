@@ -1,50 +1,10 @@
-<!-- Main page -->
-
 <div layout="row" flex>
-
-    <md-sidenav flex layout="column" class="md-sidenav-left md-whiteframe-z2 sidebar" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
-      <div flex layout="column">
-
-        <div flex layout-align="center center" layout="row" class="nav-btn-parent" ng-repeat="option in sideNavOptions">
-
-          <md-button class="nav-btn" 
-          ng-click="selectOption(option)" ng-class="{'selected' : option === selected}">
-            <md-icon md-svg-src="{{option.pic_url}}" class="nav-icon"></md-icon>
-            <span class="nav-description">{{option.name}}</span>
-          </md-button>
-
-        </div>
-
-      </div>
-    </md-sidenav>
-
-    <div layout="column" layout-gt-sm="row" flex class="auto-scroll">
-      <div flex="50">
-
-        <!-- offer card -->
-        <md-card flex>
-          <img ng-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/offer.jpg" class="md-card-image" alt="Washed Out">
-          <md-card-content>
-            <h2 class="md-title">5% off on Budget Combos</h2>
-            <p>
-              The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-              two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-            </p>
-          </md-card-content>
-        </md-card>  
-        <!-- offer card ends -->
-
-      </div>
-      <div flex="50">
-
-        <!-- for loop -->
-            <combo-card ng-repeat="combo in combos"></combo-card>
-        <!-- for loop ends -->
-      
-      </div>
-    </div>
-  
-
+  <md-sidenav layout="column" class="md-sidenav-left" md-component-id="sidenav" md-is-locked-open="$mdMedia('gt-md')">
+  </md-sidenav>
+  <div class="main-pane" layout="column" flex layout-fill ng-cloak>
+    <md-tabs flex md-border-bottom class="combo-layout">
+      <md-tab ng-repeat="option in sideNavOptions" label="{{option.name}}" ng-click="selectOption(option)">
+        <combo-card ng-repeat="combo in combos"></combo-card>
+      </md-tab>
+  </div>
 </div>
-
-<!-- Main page ends -->

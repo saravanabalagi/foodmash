@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('MainController', ['$scope', 'CombosService','AuthService','$location','toaster', '$q','Combo','CartService', function($scope, CombosService, AuthService, $location, toaster, $q, Combo, CartService){
+.controller('MainController', ['$scope', '$mdSidenav', '$mdDialog','CombosService','AuthService','$location','toaster', '$q','Combo','CartService', function($scope, $mdSidenav, $mdDialog, CombosService, AuthService, $location, toaster, $q, Combo, CartService){
 	$scope.combos = {};
 	$scope.selected = null;
 
@@ -19,6 +19,12 @@ angular.module('foodmashApp.controllers')
 	$scope.$on('user:unset', function(event){
   		$scope.user = null;
    });
+
+    //Doesn't work
+    $scope.toggleSideNav = function(){
+        $mdSidenav('sidenav').toggle();
+    };
+    //Doesn't work
 
 	$scope.routeToCart = function(){
 		$location.path("/cart");
@@ -70,4 +76,25 @@ angular.module('foodmashApp.controllers')
 		});
 	};
 
+    $scope.showDescriptionDialog = function(ev) {
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: 'combo-description.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose:true
+        });
+    };
+
 }]);
+function DialogController($scope, $mdDialog) {
+    $scope.hide = function() {
+        $mdDialog.hide();
+    };
+    $scope.cancel = function() {
+        $mdDialog.cancel();
+    };
+    $scope.answer = function(answer) {
+        $mdDialog.hide(answer);
+    };
+}

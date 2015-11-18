@@ -9,35 +9,31 @@
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag "application", :media => "all" %>
   </head>
-  <md-progress-linear class="md-warn" id="progress-bar" md-mode="indeterminate" ng-show="loading"></md-progress-linear>
   <body ng-controller="MainController" layout="column" ng-cloak>
 
-    <md-toolbar layout="row" class="md-whiteframe-z3">
-      <div layout-margin>
-        <md-button class="menu md-icon-button" ng-click="toggleList()" aria-label="Show User List">
-          <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/menu.svg"></md-icon>
+    <md-toolbar layout="row" style="z-index:50">
+      <div class="md-toolbar-tools">
+        <span>
+            <md-icon class="title-logo" ng-click="routeToRoot()" md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/logo_hybrid.svg"></md-icon>
+            <md-icon aria-hidden="true" md-svg-src="img/icons/ic_chevron_right_24px.svg"></md-icon>
+            <span>Page Title</span>
+        </span>
+        <span flex></span>
+        <span user-panel></span>
+        <md-button class="menu md-icon-button" hide-gt-md ng-click="toggleSidenav()" aria-label="Filter">
+          <md-icon md-svg-icon="/assets/filter.svg"></md-icon>
         </md-button>
-      </div>
-      
-      <md-icon class="title-logo" ng-click="routeToRoot()" md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/logo_hybrid.svg"></md-icon>
-
-      <div layout-margin>
-        <md-button class="menu md-icon-button" aria-label="Show User List" ng-click="routeToCart()">
+        <md-button class="menu md-icon-button" aria-label="Cart" ng-click="routeToCart()">
           <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cart.svg"></md-icon>
         </md-button>
       </div>
-
-      <div user-panel></div>
-
     </md-toolbar>
 
     <toaster-container toaster-options="{'close-button': true, 'position-class': 'toast-bottom-right'}"></toaster-container>
 
-    
     <div id="primary" flex layout="column">
       <div id="main" ng-view flex layout="column"></div>
-    </div> <!-- 'primary' view -->
-
+    </div>
 
     <%= javascript_include_tag "application" %>
   </body>

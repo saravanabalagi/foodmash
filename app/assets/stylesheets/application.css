@@ -20,7 +20,9 @@
  html, body {
   font-family: 'Roboto', sans-serif;
   font-size:14px;
+  color: #666;
   height:100%;
+  position: relative;
   margin: 0px;
   padding: 0px;
   user-select:none;
@@ -30,7 +32,6 @@
 }
 
 /*Used everywhere*/
-
 *:focus { outline: none; }
 
 .accent { color: #d70d00; }
@@ -41,6 +42,8 @@
 .no-margin { margin:0 !important; }
 .top-margin { margin-top: 10px; }
 .bottom-margin { margin-bottom: 10px; }
+.left-margin { margin-left: 10px; }
+.right-margin { margin-right: 10px; }
 
 .no-padding { padding:0 !important; }
 .top-padding { padding-top: 10px; }
@@ -53,93 +56,87 @@
   display: inline-block;
   padding-right: 2px;
 }
-
 /*Used everywhere ends*/
 
 /*Toolbar*/
-
-md-toolbar { background-color: #111; }
+md-toolbar { background-color: #333; }
 md-icon.title-logo { height: 60px; width: auto; }
 md-toolbar .username-title { margin-top: 14px; font-size: 16px; cursor: pointer; }
-
 /*Toolbar ends*/
 
+/*Combo Card*/
+.combo { margin: 15px; background-color: #FFF; border: 1px solid rgba(0,0,0,0.03); max-width: 500px; border-radius: 5px; }
+.combo-container { padding: 0 10px; }
+.combo-img-container { position: relative; }
+.combo-img { width: 200px; height: 200px; margin: 0; }
+.combo-img-overlay { position: absolute; left:0; right: 0; top: 0; bottom: 20px; z-index: 1; background-color: rgba(0,0,0,0.2); }
+.combo-img-popup { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; height: 40px; width: 100%; }
+.combo-price { display: inline-table; background-color: #666; color: #FFF; padding: 5px 15px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; }
+.combo-label { margin: 3px 10px; }
+.combo-name { font-size: 15px; padding: 5px 0; }
+.combo-contents { padding-left: 15px; font-size: 12px; }
+.combo-buy { padding: 10px 0 20px; }
+.combo-buy > button { padding: 0px 20px; }
+.combo-buy > button > span { text-transform: uppercase; font-size: 12px; margin-left: 5px; }
+.combo-quantity-container { padding: 10px 10px 20px 10px; }
+.combo-quantity { padding: 0 15px; font-size: 20px; }
+/*Combo Card ends*/
+
+/*Combo Description*/
+.combo-description-buy { padding: 10px 0 20px; margin: auto; }
+.combo-description-buy > .combo-description-price { margin: 6px; padding: 10px 20px; border-radius: 4px; background-color: #666; color: #FFF; }
+.combo-description-buy > button { padding: 0px 20px; }
+.combo-description-buy > button > span { text-transform: uppercase; font-size: 12px; margin-left: 5px; }
+
+.combo-dish { margin: 15px auto; background-color: #FFF; border: 1px solid rgba(0,0,0,0.03); width: 500px; max-width: 500px; border-radius: 5px; }
+.combo-dish-container { padding: 0 10px; }
+.combo-dish-img-container { position: relative; }
+.combo-dish-img { width: 200px; height: 200px; margin: 0; }
+.combo-dish-img-overlay { position: absolute; left:0; right: 0; top: 0; bottom: 0; z-index: 1; background: rgba(0,0,0,0.2); background: -moz-linear-gradient(top, rgba(0,0,0,0) 60%, rgba(0,0,0,0.2) 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(60%, rgba(0,0,0,0)), color-stop(100%, rgba(0,0,0,0.2))); background: -webkit-linear-gradient(top, rgba(0,0,0,0) 60%, rgba(0,0,0,0.2) 100%); background: -o-linear-gradient(top, rgba(0,0,0,0) 60%, rgba(0,0,0,0.2) 100%); background: -ms-linear-gradient(top, rgba(0,0,0,0) 60%, rgba(0,0,0,0.2) 100%); background: linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.2) 100%); }
+.combo-dish-restaurant-img { position: absolute; left: 0; right: 0; bottom: 20px; z-index: 2; height: 40px; width: 100%; }
+.combo-dish-price { display: inline-table; background-color: #666; color: #FFF; padding: 5px 15px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; }
+.combo-dish-label { margin: 3px 10px; }
+.combo-dish-name { font-size: 15px; padding: 5px 0; }
+.combo-dish-description { font-size: 12px; }
+.combo-dish-quantity-container { padding: 10px 10px 20px 10px; }
+.combo-dish-quantity { padding: 0 15px; font-size: 20px; }
+
+.combo-option-dish { margin: 15px 5px; background-color: #FFF; border: 1px solid rgba(0,0,0,0.03); border-radius: 5px; }
+.combo-option-dish-container { padding: 0 10px; }
+.combo-option-dish-img-container { position: relative; }
+.combo-option-dish-img { width: 200px; height: 200px; margin: 0; }
+.combo-option-dish-img-overlay { position: absolute; left:0; right: 0; top: 0; bottom: 0; z-index: 1; background: rgba(0,0,0,0.2); background: -moz-linear-gradient(top, rgba(0,0,0,0) 60%, rgba(0,0,0,0.2) 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(60%, rgba(0,0,0,0)), color-stop(100%, rgba(0,0,0,0.2))); background: -webkit-linear-gradient(top, rgba(0,0,0,0) 60%, rgba(0,0,0,0.2) 100%); background: -o-linear-gradient(top, rgba(0,0,0,0) 60%, rgba(0,0,0,0.2) 100%); background: -ms-linear-gradient(top, rgba(0,0,0,0) 60%, rgba(0,0,0,0.2) 100%); background: linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.2) 100%); }
+.combo-option-dish-restaurant-img { position: absolute; left: 0; right: 0; bottom: 20px; z-index: 2; height: 40px; width: 100%; }
+.combo-option-dish-price-label { padding: 0 20px; position: absolute; left: 0; right: 0; top: 0; z-index: 2; width: 100%; }
+.combo-option-dish-price { display: inline-table; background-color: #666; color: #FFF; padding: 5px 15px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; }
+.combo-option-dish-label { margin: 3px 10px; }
+.combo-option-dish-selected { margin-right: -10px; }
+.combo-option-dish-name { font-size: 15px; padding: 5px 0; }
+.combo-option-dish-description { font-size: 12px; }
+.combo-option-dish-add-extra { padding: 10px 0 20px; }
+.combo-option-dish-add-extra > button { padding: 0px 20px; margin: auto; display: block; }
+.combo-option-dish-add-extra > button > span { text-transform: uppercase; font-size: 12px; margin-left: 5px; }
+.combo-option-dish-quantity-container { padding: 10px 10px 20px 10px; }
+.combo-option-dish-quantity { padding: 0 15px; font-size: 20px; }
+/*Combo Description*/
+
 /*Sidebar*/
-
-
-
-.nav-btn-parent { position: relative; }
-.nav-btn {
-  margin:0;
-  width: 100%;
-  text-align: left;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  border-radius: 0px;
-  background-color: #111;
-  color: #FFF;
-  font-weight: 100;
-}
-
-md-icon.nav-icon { color:#EEEEEE; }
-.nav-btn.selected > md-icon.nav-icon { color:#d70d00 !important; }
-
-.nav-btn.selected, 
-.nav-btn.md-focused { background-color: #444 !important; color: #EEE; }
-.nav-btn.selected:hover,
-.nav-btn.md-focused { background-color: #666 !important; }
-.nav-btn:hover { background-color: #666 !important; }
-
-@media(max-width:1119px){
-  .nav-icon { width: 100%; }
-  .nav-description { display: none; }
-  .sidebar {
-    min-width: 100px !important;
-    max-width: 200px !important;
-  }
-}
-
+md-sidenav.md-sidenav-left { background-color: #FCFCFC; }
 /*Sidebar ends*/
 
-/*Checkout Address Page*/
+/*Main layout*/
+.main-pane { background-color: #FCFCFC; }
+/*Main layout ends*/
 
+/*Checkout Address Page*/
 .address-radio { margin: 10px; }
 .address-radio .md-title {margin-top: 0;}
 .address-radio .md-subhead {margin-bottom: 0;}
-
 /*Checkout Address Page*/
 
 /*Images*/
-
-md-list-item.md-3-line > md-icon.combo,
-md-list-item.md-2-line > md-icon.combo,
-md-list-item.md-2-line > md-icon.food,
-.sidebar .nav-icon {
-  position: relative;
-  border: 1px solid #ddd;
-  border-radius: 50%;
-  display: inline-block;
-  overflow: hidden;
-  margin: 0px;
-  vertical-align: middle;
-  zoom:0.70;
-  transform: translateZ(0);
-  -webkit-transform: scale(0.70);
-  -moz-transform:scale(0.70);
-}
-
-md-list-item.md-3-line > md-icon.combo { height: 128px; width: 128px; }
-md-list-item.md-2-line > md-icon.combo { width: 104px; height: 104px; }
-md-list-item.md-2-line > md-icon.food { width: 96px; height: 96px; }
-.sidebar .nav-icon { width: 50%; height: auto; border:none; }
 md-icon.restaurant-icon { width: 40%; height: auto; max-height: 100%; }
 md-bottom-sheet md-icon { margin-right:20px; }
-
-#progress-bar > div { top:0; }
-#progress-bar { height:2px; z-index: 99999; }
 
 div[ng-view].ng-enter { -webkit-animation: fadeInRight 0.5s; animation: fadeInRight 0.5s;}
 .cart.ng-hide-remove { -webkit-animation: rotateInDownRight 0.7s; animation: rotateInDownRight 0.7s; }
