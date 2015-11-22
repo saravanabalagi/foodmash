@@ -3,7 +3,7 @@
  * progress, resize, thumbnail, preview, validation and CORS
  * FileAPI Flash shim for old browsers not supporting FormData
  * @author  Danial  <danial.farid@gmail.com>
- * @version 9.0.13
+ * @version 9.0.19
  */
 
 (function () {
@@ -427,7 +427,7 @@ if (!window.FileReader) {
  * AngularJS file upload directives and services. Supoorts: file upload/drop/paste, resume, cancel/abort,
  * progress, resize, thumbnail, preview, validation and CORS
  * @author  Danial  <danial.farid@gmail.com>
- * @version 9.0.13
+ * @version 9.0.19
  */
 
 if (window.XMLHttpRequest && !(window.FileAPI && FileAPI.shouldLoad)) {
@@ -448,7 +448,7 @@ if (window.XMLHttpRequest && !(window.FileAPI && FileAPI.shouldLoad)) {
 
 var ngFileUpload = angular.module('ngFileUpload', []);
 
-ngFileUpload.version = '9.0.13';
+ngFileUpload.version = '9.0.19';
 
 ngFileUpload.service('UploadBase', ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
   var upload = this;
@@ -907,6 +907,8 @@ ngFileUpload.service('Upload', ['$parse', '$timeout', '$compile', 'UploadResize'
 
     attr.$$ngfPrevFiles = files;
 
+    if (keepResult.keep && (!newFiles || !newFiles.length)) return;
+
     if (upload.validate(newFiles, ngModel, attr, scope, function () {
         if (noDelay) {
           update(files, [], newFiles, dupFiles, isSingleModel);
@@ -1049,6 +1051,15 @@ ngFileUpload.directive('ngfSelect', ['$parse', '$timeout', '$compile', 'Upload',
       if (r != null) return r;
 
       resetModel(evt);
+
+      // fix for md when the element is removed from the DOM and added back #460
+      try {
+        if (!isInputTypeFile() && !document.body.contains(fileElem[0])) {
+          generatedElems.push({el: elem, ref: fileElem});
+          document.body.appendChild(fileElem[0]);
+          fileElem.bind('change', changeFn);
+        }
+      } catch(e){/*ignore*/}
 
       if (isDelayedClickSupported(navigator.userAgent)) {
         setTimeout(function () {
@@ -1799,19 +1810,6 @@ ngFileUpload.service('UploadValidate', ['UploadDataUrl', '$q', '$timeout', funct
 ngFileUpload.service('UploadResize', ['UploadValidate', '$q', '$timeout', function (UploadValidate, $q, $timeout) {
   var upload = UploadValidate;
 
-  // add name getter to the blob constructor prototype
-  if (window.Object && Object.defineProperty) {
-    Object.defineProperty(Blob.prototype, 'name', {
-      get: function () {
-        return this.$ngfName;
-      },
-      set: function (v) {
-        this.$ngfName = v;
-      },
-      configurable: true
-    });
-  }
-
   /**
    * Conserve aspect ratio of the original region. Useful when shrinking/enlarging
    * images to fit into a certain area.
@@ -1843,7 +1841,7 @@ ngFileUpload.service('UploadResize', ['UploadValidate', '$q', '$timeout', functi
 
     imagenElement.onload = function () {
       try {
-        if (width === 0) {
+        if (!width) {
           width = imagenElement.width;
           height = imagenElement.height;
         }
@@ -1877,6 +1875,19 @@ ngFileUpload.service('UploadResize', ['UploadValidate', '$q', '$timeout', functi
     var elem = document.createElement('canvas');
     return window.atob && elem.getContext && elem.getContext('2d');
   };
+
+  if (upload.isResizeSupported()) {
+    // add name getter to the blob constructor prototype
+    Object.defineProperty(Blob.prototype, 'name', {
+      get: function () {
+        return this.$ngfName;
+      },
+      set: function (v) {
+        this.$ngfName = v;
+      },
+      configurable: true
+    });
+  }
 
   upload.resize = function (file, width, height, quality) {
     var deferred = $q.defer();

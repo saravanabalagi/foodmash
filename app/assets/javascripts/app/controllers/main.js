@@ -87,6 +87,7 @@ angular.module('foodmashApp.controllers')
     };
 
 }]);
+
 function DialogController($scope, $mdDialog) {
     $scope.hide = function() {
         $mdDialog.hide();
