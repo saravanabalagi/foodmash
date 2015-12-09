@@ -59,7 +59,7 @@
 /*Used everywhere ends*/
 
 /*Toolbar*/
-md-toolbar { background-color: #333; }
+md-toolbar.custom-theme { background-color: #666; }
 md-icon.title-logo { height: 60px; width: auto; }
 md-toolbar .username-title { margin-top: 14px; font-size: 16px; cursor: pointer; }
 /*Toolbar ends*/
@@ -121,7 +121,7 @@ md-toolbar .username-title { margin-top: 14px; font-size: 16px; cursor: pointer;
 /*Combo Description*/
 
 /*Sidebar*/
-md-sidenav.md-sidenav-left { background-color: #FCFCFC; }
+md-sidenav.md-sidenav-left { padding: 40px; background-color: #FCFCFC; }
 /*Sidebar ends*/
 
 /*Main layout*/
@@ -141,3 +141,20 @@ md-bottom-sheet md-icon { margin-right:20px; }
 div[ng-view].ng-enter { -webkit-animation: fadeInRight 0.5s; animation: fadeInRight 0.5s;}
 .cart.ng-hide-remove { -webkit-animation: rotateInDownRight 0.7s; animation: rotateInDownRight 0.7s; }
 .cart.ng-hide-add { -webkit-animation: fadeOutRight 0.7s; animation: fadeOutRight 0.7s; display: block !important; }
+
+
+/*Angular Tweaks*/
+a.md-button.md-default-theme.md-primary.md-raised, a.md-button.md-primary.md-raised, a.md-button.md-default-theme.md-primary.md-fab, a.md-button.md-primary.md-fab, .md-button.md-default-theme.md-primary.md-raised, .md-button.md-primary.md-raised, .md-button.md-default-theme.md-primary.md-fab, .md-button.md-primary.md-fab {
+    color: rgba(255,255,255,0.87);
+    background-color: #cd0c00;
+}
+
+md-checkbox.md-default-theme.md-checked, md-checkbox.md-checked .md-icon { background-color: rgba(205, 12, 0, 0.87); }
+md-radio-group.md-default-theme:not([disabled]), md-radio-group:not([disabled]) .md-primary .md-on, md-radio-group.md-default-theme:not([disabled]).md-primary, md-radio-group:not([disabled]).md-primary .md-on, md-radio-button.md-default-theme:not([disabled]), md-radio-button:not([disabled]) .md-primary .md-on, md-radio-button.md-default-theme:not([disabled]).md-primary, md-radio-button:not([disabled]).md-primary .md-on { background-color: rgba(205, 12, 0, 0.87); }
+md-toolbar.md-warn > md-tabs.md-default-theme, md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]).md-active, md-toolbar.md-warn > md-tabs.md-default-theme, md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]).md-focused { color: rgb(205, 12, 0); }
+md-toolbar.md-warn > md-tabs.md-default-theme, md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]) { color: #666; }
+md-toolbar.md-accent > md-tabs.md-default-theme, md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-ink-bar {
+    color: rgba(205, 12, 0,1);
+    background: rgba(205, 12, 0,1);
+}
+/*Angular Tweaks ends*/
