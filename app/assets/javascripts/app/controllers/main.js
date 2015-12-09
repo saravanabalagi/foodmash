@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('MainController', ['$scope', '$mdSidenav', '$mdDialog','CombosService','AuthService','$location','toaster', '$q','Combo','CartService', function($scope, $mdSidenav, $mdDialog, CombosService, AuthService, $location, toaster, $q, Combo, CartService){
+.controller('MainController', ['$scope', '$mdSidenav', 'CombosService', 'AuthService', '$location', 'toaster', '$q', 'Combo', 'CartService', function($scope, $mdSidenav, $mdDialog, CombosService, AuthService, $location, toaster, $q, Combo, CartService){
 	$scope.combos = {};
 	$scope.selected = null;
 
@@ -92,28 +92,6 @@ angular.module('foodmashApp.controllers')
 			$scope.combos = megaCombos;
 		});
 	};
-
-    $scope.showDescriptionDialog = function(ev){
-        $mdDialog.show({
-            controller: DialogController,
-            templateUrl: 'combo-description.html',
-            parent: angular.element(document.body),
-            targetEvent: ev,
-            clickOutsideToClose:true
-        });
-    };
-
-    function DialogController($scope, $mdDialog){
-        $scope.hide = function() {
-            $mdDialog.hide();
-        };
-        $scope.cancel = function() {
-            $mdDialog.cancel();
-        };
-        $scope.answer = function(answer) {
-            $mdDialog.hide(answer);
-        };
-    };
 
 }]);
 

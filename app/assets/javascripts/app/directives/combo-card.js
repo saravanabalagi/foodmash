@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('comboCard', ['toaster','CartService', function(toaster, CartService){
+.directive('comboCard', ['toaster','CartService', '$mdDialog', function(toaster, CartService, $mdDialog){
 
 	return {
 
@@ -10,7 +10,7 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/combo-card.html',
 
-		controller: ['$scope', 'toaster','CartService', function($scope, toaster, CartService){
+		controller: ['$scope', 'toaster','CartService', '$mdDialog', function($scope, toaster, CartService, $mdDialog){
 
 			$scope.selectedDishes = [];
 			$scope.filling = false;
@@ -48,8 +48,26 @@ angular.module('foodmashApp.directives')
 
 			$scope.removeCombo = function(combo){
 				CartService.removeFromCart(combo);
-				$scope.combo.quantity -= 1;
+				if($scope.combo.quantity >= 1){
+					$scope.combo.quantity -= 1;
+				}
 				toaster.pop('success', 'Deleted from cart!');
+			};
+
+			$scope.addComboDish = function(combo_dish){
+				$scope.combo.combo_dishes.filter(function(cdish){
+					if(cdish.id == combo_dish.id){
+						cdish.quantity += 1;
+					}
+				});
+			};
+
+			$scope.removeComboDish = function(combo_dish){
+				$scope.combo.combo_dishes.filter(function(cdish){
+					if(cdish.id == combo_dish.id && cdish.quantity >= 1){
+						cdish.quantity -= 1;
+					}
+				});
 			};
 
 			$scope.validateQuantity = function(combo_item){
@@ -79,6 +97,27 @@ angular.module('foodmashApp.directives')
 				}else{
 					return false;
 				}
+			};
+
+			$scope.showDescriptionDialog = function(ev){
+			    $mdDialog.show({
+			        controller: DialogController,
+			        templateUrl: 'combo-description.html',
+			        parent: angular.element(document.body),
+			        preserveScope: true,
+			        targetEvent: ev,
+			        clickOutsideToClose:true
+			    });
+			};
+
+			function DialogController($scope, $mdDialog){
+			    $scope.hide = function(){
+			        $mdDialog.hide();
+			    };
+
+			    $scope.cancel = function(){
+			        $mdDialog.cancel();
+			    };
 			};
 
 			function checkAndPush(selectedDish){
@@ -112,9 +151,10 @@ angular.module('foodmashApp.directives')
 			function setQuantityForCombo(){
 				CartService.getCartInfo().then(function(cart){
 					if($scope.combo){
+						$scope.combo.quantity = 0;
 						cart.orders.filter(function(order){
 							if(order.product.id == $scope.combo.id){
-								$scope.combo.quantity = order.quantity;
+								$scope.combo.quantity += order.quantity;
 							}
 						});
 					}

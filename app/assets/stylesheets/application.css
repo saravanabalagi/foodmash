@@ -176,4 +176,9 @@ md-toolbar.md-accent > md-tabs.md-default-theme, md-tabs > md-tabs-wrapper > md-
     color: rgba(205, 12, 0,1);
     background: rgba(205, 12, 0,1);
 }
+
+md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar) {
+    background-color: #666;
+    color: rgba(255,255,255,0.87);
+}
 /*Angular Tweaks ends*/

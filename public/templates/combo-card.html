@@ -1,4 +1,4 @@
-<div layout="row" flex class="combo" ng-click="showDescriptionDialog()">
+<div layout="row" flex class="combo" ng-click="showDescriptionDialog($event)">
     <div class="combo-img-container">
         <md-icon md-svg-icon="{{avatar_path}}" class="combo-img"></md-icon>
         <div class="combo-img-overlay" ng-hide="true"></div>
@@ -19,7 +19,7 @@
                 <!-- Doesn't work <li ng-repeat="combo_option in combo.combo_options">{{combo_option.getContents}}</li>-->
             </ul>
         </div>
-        <div class="combo-buy">
+        <div class="combo-buy" ng-hide="combo.quantity">
             <md-button class="md-primary md-raised" ng-click="addToCart(combo)" ng-disabled="checkComboSelection(combo)">
                 <md-icon md-svg-src="{{cart_path}}"></md-icon>
                 <span>Add to Cart</span>

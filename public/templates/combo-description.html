@@ -26,11 +26,11 @@
                         <div class="combo-dish-description">{{combo_dish.dish.description}}</div>
                     </div>
                     <div class="combo-dish-quantity-container" layout="row" layout-align="start center">
-                        <md-button class="md-icon-button" ng-click="add_quantity()">
+                        <md-button class="md-icon-button" ng-click="removeComboDish(combo_dish)">
                             <md-icon md-svg-src="{{minus_path}}" aria-label="Decrease"></md-icon>
                         </md-button>
-                        <span class="combo-dish-quantity">1</span>
-                        <md-button class="md-icon-button" ng-click="add_quantity()">
+                        <span class="combo-dish-quantity">{{combo_dish.quantity}}</span>
+                        <md-button class="md-icon-button" ng-click="addComboDish(combo_dish)">
                             <md-icon md-svg-src="{{plus_path}}" aria-label="Increase"></md-icon>
                         </md-button>
                     </div>
@@ -65,7 +65,7 @@
                                 <md-button class="md-icon-button" ng-click="add_quantity()">
                                     <md-icon md-svg-src="{{minus_path}}" aria-label="Decrease"></md-icon>
                                 </md-button>
-                                <span class="combo-option-dish-quantity">1</span>
+                                <span class="combo-option-dish-quantity">{{combo_option.quantity}}</span>
                                 <md-button class="md-icon-button" ng-click="add_quantity()">
                                     <md-icon md-svg-src="{{plus_path}}" aria-label="Increase"></md-icon>
                                 </md-button>
@@ -80,7 +80,7 @@
                 <span class="combo-description-price rupee">{{combo.price}}</span>
                 <md-button class="md-primary md-raised" ng-click="add_to_cart()">
                     <md-icon md-svg-src="{{cart_path}}"></md-icon>
-                    <span ng-click="add_to_cart()">Add to Cart</span>
+                    <span ng-click="addToCart(combo)">Add to Cart</span>
                 </md-button>
             </div>
         </md-dialog-actions>

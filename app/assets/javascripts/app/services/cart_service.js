@@ -95,9 +95,15 @@ angular.module('foodmashApp.services')
 
 	function updateCartInfo(){
 		var total = 0;
+
 		service.cart.orders.filter(function(order){ 
+			order.total = 0;
+			order.order_items.filter(function(oi){
+				order.total += oi.item.price * oi.quantity;
+			});
 			total += order.total * order.quantity;
 		});
+		
 		service.cart.total = total;
 	};
 
