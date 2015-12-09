@@ -1,61 +1,64 @@
 <!-- Shopping cart -->
     
-<div flex layout="row" ng-init="combo_1_clicked">
-  <div flex offset="20" layout="column" layout-align="center center">
-    <!-- Combo in cart -->
-    <div class="md-whiteframe-z2" layout-margin ng-repeat="order in cart.orders">
-      <div layout="row" layout-align="space-between center" ng-click="combo_1_clicked=!combo_1_clicked">
-        <md-content flex>
-          <md-list>
-            <md-list-item class="md-2-line">
-              <md-icon md-svg-icon="{{avatar_path}}" class="combo"></md-icon>
-              <div class="md-list-item-text">
-                  <h3>{{order.product.name}}</h3>
-                  <p>{{order.product.description}}</p>
-              </div>
-            </md-list-item>
-          </md-list>
-        </md-content>
-        <div layout-padding layout-margin>
-          <md-input-container>
-            <label>quantity</label>
-             <p>{{order.quantity}}</p>
-          </md-input-container>
-        </div>
-        X
-        <div layout-padding layout-margin class="rupee">{{order.total}}</div>
-      </div>
+  <div flex layout="column" layout-align="center center">
 
-      <div layout="row" ng-show="combo_1_clicked" class="combo-dishes">
-         <div layout="column" layout-padding flex offset="10">
-           <div layout="column">
-               <md-content>
-                 <md-list>
-
-                   <md-list-item class="md-2-line" ng-repeat="order_item in order.order_items">
-                     <md-icon md-svg-src="{{avatar_path}}" class="food"></md-icon>
-
-                     <div class="md-list-item-text">
-                       <label>{{order_item.item.name}}</label>
-                       <p>{{order_item.item.description}}</p>
-                       <md-input-container>
-                         <label>quantity</label>
-                          <p>{{order_item.quantity}}</p>
-                       </md-input-container>
-                     </div>
-
-                   </md-list-item>
-                   <!-- <md-divider md-inset></md-divider> -->
-                 
-                 </md-list>
-               </md-content>
-             </div>
-           </div>
-         <div flex="10"></div>
-       </div>
-
-    </div>
-    <!-- Combo in cart ends -->
+  <md-tabs flex md-border-bottom class="combo-layout" md-center-tabs>
+        <md-tab label="COD">
+            <md-content class="cod-tab-content">
+                <div class="g-recaptcha" data-sitekey="6Le6rhETAAAAANOau--jccxZuWYejMwGgyTuKz4B"></div>
+                <md-input-container>
+                    <label for="login-password">Enter your password to continue</label>
+                    <input id="login-password" name="login-password" ng-model="login.password" type="password" required>
+                </md-input-container>
+            </md-content>
+        </md-tab>
+        <md-tab label="Debit / Credit Card">
+            <md-content class="card-tab-content">
+                <div>
+                    <md-input-container>
+                        <label for="card-no">16 digit Card No.</label>
+                        <input id="card-no" name="card-no" ng-model="card" type="text" required>
+                    </md-input-container>
+                    <md-icon class="card-payment-type" md-svg-icon="{{avatar_path}}" ng-show="validate(cardno)"></md-icon>
+                </div>
+                <md-input-container>
+                    <label for="card-name">Name on Card</label>
+                    <input id="card-name" name="card-name" ng-model="card.password" type="text" required>
+                </md-input-container>
+                <div layout="row">
+                    <md-input-container flex>
+                        <label for="card-valid-till">Valid Till</label>
+                        <input id="card-valid-till" name="card-valid-till" ng-model="card.password" type="text" required>
+                    </md-input-container>
+                    <md-input-container flex>
+                        <label for="card-cvv">CVV</label>
+                        <input id="card-cvv" name="card-cvv" ng-model="card.password" type="password" required>
+                    </md-input-container>
+                    <md-switch class="md-primary" checked>Save Card</md-switch>
+                </div>
+            </md-content>
+        </md-tab>
+        <md-tab label="Netbanking">
+            <md-content class="netbanking-tab-content">
+                <div layout="row" class="netbanking-popular">
+                  <div layout="column" flex><md-icon md-svg-icon="{{avatar_path}}"></md-icon><span>Bank</span></div>
+                    <div layout="column" flex><md-icon md-svg-icon="{{avatar_path}}"></md-icon><span>Bank</span></div>
+                    <div layout="column" flex><md-icon md-svg-icon="{{avatar_path}}"></md-icon><span>Bank</span></div>
+                </div>
+                <div layout="row" class="netbanking-popular">
+                    <div layout="column" flex><md-icon md-svg-icon="{{avatar_path}}"></md-icon><span>Bank</span></div>
+                    <div layout="column" flex><md-icon md-svg-icon="{{avatar_path}}"></md-icon><span>Bank</span></div>
+                    <div layout="column" flex><md-icon md-svg-icon="{{avatar_path}}"></md-icon><span>Bank</span></div>
+                </div>
+                <md-input-container>
+                    <label>Choose your bank</label>
+                    <md-select ng-model="ctrl.userState">
+                        <md-option ng-repeat="bank in payment.netbanking" value="{{bank.name}}"> {{bank.name}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </md-content>
+        </md-tab>
+    </md-tabs>
 
     <div layout="row" layout-padding layout-align="center center">
       <h2 class="md-title" layout-padding layout-margin>Total Amount</h2>
@@ -66,8 +69,6 @@
       <md-button class="md-raised md-primary" ng-click="submitToPayu()">Pay</md-button>
     </div>
 
-  </div>  
-  <div flex="20"></div>        
 </div>
 
 <!-- Shopping cart ends -->

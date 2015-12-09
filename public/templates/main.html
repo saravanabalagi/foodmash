@@ -1,21 +1,24 @@
 <div layout="row" flex>
   <md-sidenav layout="column" class="md-sidenav-left" md-component-id="sidenav" md-is-locked-open="$mdMedia('gt-md')">
-
   <md-checkbox>Veg</md-checkbox>
   <md-checkbox>Egg</md-checkbox>
   <md-checkbox>Non-veg</md-checkbox>
   <br />
-  <span style="padding: 10px;">Sort By</span>
+  <h4>Sort By</h4>
 	  <md-radio-group ng-model="data.group1">
 	    <md-radio-button value="Price Ascending"  class="md-primary">Price Ascending</md-radio-button>
 	    <md-radio-button value="Price Descending" class="md-primary">Price descending</md-radio-button>
 	    <md-radio-button value="Popularity"  class="md-primary">Popularity</md-radio-button>
 	  </md-radio-group>
+    <br />
+   <h4>Price Range</h4>
+   <md-slider layout-margin class="md-primary" flex min="0" max="255"></md-slider>
   </md-sidenav>
-  <div class="main-pane" layout="column" flex layout-fill ng-cloak>
-    <md-tabs flex md-border-bottom class="combo-layout">
-      <md-tab ng-repeat="option in sideNavOptions" label="{{option.name}}" ng-click="selectOption(option)">
-        <combo-card ng-repeat="combo in combos"></combo-card>
-      </md-tab>
+  <div class="main-pane" layout="column" flex ng-cloak>
+      <md-tabs flex md-border-bottom class="combo-layout" md-center-tabs>
+        <md-tab ng-repeat="option in sideNavOptions" label="{{option.name}}" ng-click="selectOption(option)">
+          <combo-card ng-repeat="combo in combos"></combo-card>
+        </md-tab>
+      </md-tabs>
   </div>
 </div>

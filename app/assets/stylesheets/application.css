@@ -29,6 +29,7 @@
   -webkit-user-select:none;
   -moz-user-select:none;
   -ms-user-select:none;
+  background-color: #FCFCFC;
 }
 
 /*Used everywhere*/
@@ -59,8 +60,9 @@
 /*Used everywhere ends*/
 
 /*Toolbar*/
-md-toolbar.custom-theme { background-color: #666; }
+md-toolbar.custom-theme { background-color: #444; }
 md-icon.title-logo { height: 60px; width: auto; }
+md-icon.title-logo > * { width: auto; }
 md-toolbar .username-title { margin-top: 14px; font-size: 16px; cursor: pointer; }
 /*Toolbar ends*/
 
@@ -122,11 +124,8 @@ md-toolbar .username-title { margin-top: 14px; font-size: 16px; cursor: pointer;
 
 /*Sidebar*/
 md-sidenav.md-sidenav-left { padding: 40px; background-color: #FCFCFC; }
+md-sidenav.md-sidenav-left > h4 { padding: 0px 10px; }
 /*Sidebar ends*/
-
-/*Main layout*/
-.main-pane { background-color: #FCFCFC; }
-/*Main layout ends*/
 
 /*Checkout Address Page*/
 .address-radio { margin: 10px; }
@@ -134,14 +133,34 @@ md-sidenav.md-sidenav-left { padding: 40px; background-color: #FCFCFC; }
 .address-radio .md-subhead {margin-bottom: 0;}
 /*Checkout Address Page*/
 
+/*User Panel*/
+.user-profile-menu-item { min-height: 170px; }
+.md-button.user-profile-button { text-align: center; }
+md-icon.user-img { margin: 0; height: 100px; width: 100px; }
+md-icon.user-img > * { border-radius: 50%; }
+/*User Panel ends*/
+
+/*Cart Payment*/
+.cod-tab-content { padding: 30px 40px 0; }
+.card-tab-content { padding: 30px 40px 0; }
+.card-tab-content .card-payment-type { position: absolute; right: 10px; top: 20px; height: 30px; width: auto; margin:0; }
+.card-tab-content .card-payment-type > * { width: auto; }
+
+.netbanking-tab-content { padding: 0 40px; }
+.netbanking-tab-content > div.netbanking-popular:first-of-type { margin-top: 30px; }
+.netbanking-tab-content > div.netbanking-popular { padding: 20px; }
+.netbanking-tab-content > div.netbanking-popular > div { text-align: center }
+.netbanking-tab-content > div.netbanking-popular md-icon { width: 50px; height: 50px; }
+.netbanking-tab-content > div.netbanking-popular md-icon > *{ border-radius: 50%; }
+/*Cart Payment ends*/
+
 /*Images*/
 md-icon.restaurant-icon { width: 40%; height: auto; max-height: 100%; }
 md-bottom-sheet md-icon { margin-right:20px; }
 
 div[ng-view].ng-enter { -webkit-animation: fadeInRight 0.5s; animation: fadeInRight 0.5s;}
-.cart.ng-hide-remove { -webkit-animation: rotateInDownRight 0.7s; animation: rotateInDownRight 0.7s; }
-.cart.ng-hide-add { -webkit-animation: fadeOutRight 0.7s; animation: fadeOutRight 0.7s; display: block !important; }
-
+div[ng-view].ng-exit { -webkit-animation: fadeOutRight 0.7s; animation: fadeOutRight 0.7s; display: block !important; }
+/*Images ends*/
 
 /*Angular Tweaks*/
 a.md-button.md-default-theme.md-primary.md-raised, a.md-button.md-primary.md-raised, a.md-button.md-default-theme.md-primary.md-fab, a.md-button.md-primary.md-fab, .md-button.md-default-theme.md-primary.md-raised, .md-button.md-primary.md-raised, .md-button.md-default-theme.md-primary.md-fab, .md-button.md-primary.md-fab {

@@ -1,38 +1,39 @@
 <div layout="row" ng-if="currentUser">
     <md-menu md-position-mode="target-right target">
         <md-button aria-label="Open phone interactions menu" class="menu md-icon-button" ng-click="openMenu($mdOpenMenu, $event)">
-        <md-icon md-menu-origin md-svg-icon="{{user_path}}"></md-icon>
+         <md-tooltip md-direction="down"> Profile Options </md-tooltip>
+         <md-icon md-menu-origin md-svg-icon="{{user_path}}"></md-icon>
         </md-button>
         <md-menu-content width="4">
-            <md-menu-item>
-                <md-button ng-click="routToProfile()">
-                    <md-icon md-svg-icon="call:dialpad" md-menu-align-target></md-icon>
+            <md-menu-item class="user-profile-menu-item">
+                <md-button ng-click="routToProfile()" class="user-profile-button">
+                <div><md-icon class="user-img" md-svg-icon="{{avatar_path}}"></md-icon></div>
                     <span>{{currentUser.name}}</span>
                 </md-button>
             </md-menu-item>
             <md-menu-divider></md-menu-divider>
             <md-menu-item>
                 <md-button ng-click="routToProfile()">
-                    <md-icon md-svg-icon="call:dialpad" md-menu-align-target></md-icon>
+                <md-icon md-svg-icon="call:dialpad"></md-icon>
                     Order History
                 </md-button>
             </md-menu-item>
             <md-menu-item>
                 <md-button ng-click="routToProfile()">
-                    <md-icon md-svg-icon="call:dialpad" md-menu-align-target></md-icon>
+                <md-icon md-svg-icon="call:dialpad"></md-icon>
                     Contact Us
                 </md-button>
             </md-menu-item>
             <md-menu-item>
                 <md-button ng-click="routeToPanel()">
-                    <md-icon md-svg-icon="call:dialpad" md-menu-align-target></md-icon>
+                  <md-icon md-svg-icon="call:dialpad"></md-icon>
                     Panel
                 </md-button>
             </md-menu-item>
             <md-menu-divider></md-menu-divider>
             <md-menu-item>
               <md-button ng-click="logout()">
-                   <md-icon md-svg-icon="call:dialpad" md-menu-align-target></md-icon>
+                <md-icon md-svg-icon="call:dialpad"></md-icon>                   
                    Logout
               </md-button>
             </md-menu-item>

@@ -8,6 +8,7 @@
     <title><%= content_for?(:title) ? yeild(:title) : "Foodmash" %></title>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag "application", :media => "all" %>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
   <body ng-controller="MainController" layout="column" ng-cloak>
 
@@ -20,9 +21,11 @@
         <span flex></span>
         <span user-panel></span>
         <md-button class="menu md-icon-button" hide-gt-md ng-click="toggleSidenav()" aria-label="Filter">
+          <md-tooltip md-direction="down"> Show sidebar </md-tooltip>
           <md-icon md-svg-icon="{{filter_path}}"></md-icon>
         </md-button>
         <md-button class="menu md-icon-button" aria-label="Cart" ng-click="routeToCart()">
+          <md-tooltip md-direction="down"> Cart </md-tooltip>
           <md-icon md-svg-icon="{{cart_path}}"></md-icon>
         </md-button>
       </div>
