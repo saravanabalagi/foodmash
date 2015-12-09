@@ -33,6 +33,21 @@ angular.module('foodmashApp.services')
 			return ;
 	};
 
+	this.removeFromCart = function(combo){
+		for(var i = 0;i<service.cart.orders.length;i++){
+			if(service.cart.orders[i]["product"]["id"] == combo.id){
+				service.cart.orders[i]["quantity"] -= 1;
+				if(service.cart.orders[i]["quantity"] == 0){
+					service.cart.orders.splice(i, 1);
+				}
+				console.log(service.cart);
+				updateCartInfo();
+				return ;
+			}
+		}
+		return ;
+	};
+
 	this.getCartInfo = function(){
 		var d = $q.defer();
 		if(service.cart.orders){

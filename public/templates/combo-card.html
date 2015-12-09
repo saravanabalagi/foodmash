@@ -7,7 +7,7 @@
     <div class="combo-container" layout="column" flex>
         <div layout="row">
             <div class="combo-price"><span class="rupee">{{combo.price}}</span></div>
-            <md-icon class="combo-label" md-svg-src="images/label.svg"></md-icon>
+            <md-icon class="combo-label" md-svg-src="{{offers_path}}"></md-icon>
         </div>
         <div class="combo-desc" layout="column" flex>
             <div class="combo-name">{{combo.name}}</div>
@@ -20,18 +20,18 @@
             </ul>
         </div>
         <div class="combo-buy">
-            <md-button class="md-primary md-raised" ng-click="add_to_cart()">
+            <md-button class="md-primary md-raised" ng-click="addToCart(combo)" ng-disabled="checkComboSelection(combo)">
                 <md-icon md-svg-src="{{cart_path}}"></md-icon>
-                <span ng-click="add_to_cart()">Add to Cart</span>
+                <span>Add to Cart</span>
             </md-button>
         </div>
-        <div class="combo-quantity-container" layout="row" layout-align="start center" ng-hide="true">
-            <md-button class="md-icon-button" ng-click="add_quantity()">
-                <md-icon md-svg-src="img/icons/remove.svg" aria-label="Decrease"></md-icon>
+        <div class="combo-quantity-container" layout="row" layout-align="start center" ng-show="combo.quantity">
+            <md-button class="md-icon-button" ng-click="removeCombo(combo)">
+                <md-icon md-svg-src="{{minus_path}}" aria-label="Decrease"></md-icon>
             </md-button>
-            <span class="combo-quantity">1</span>
-            <md-button class="md-icon-button" ng-click="add_quantity()">
-                <md-icon md-svg-src="img/icons/add.svg" aria-label="Increase"></md-icon>
+            <span class="combo-quantity">{{combo.quantity}}</span>
+            <md-button class="md-icon-button" ng-click="addCombo(combo)">
+                <md-icon md-svg-src="{{plus_path}}" aria-label="Increase"></md-icon>
             </md-button>
         </div>
     </div>

@@ -16,6 +16,7 @@ angular.module('foodmashApp.directives')
 			$scope.filling = false;
 
 			setQuantityForComboItems();
+			setQuantityForCombo();
 
 			$scope.selectDish = function(combo, combo_option, dish){
 				var selectedDish = {"product": {}, "category": {}, "item": {}};
@@ -34,7 +35,21 @@ angular.module('foodmashApp.directives')
 			$scope.addToCart = function(combo){
 				pushAllComboDishes(combo);
 				CartService.addToCart(combo, $scope.selectedDishes);
+				setQuantityForCombo();
 				toaster.pop('success' ,'Added to cart!');
+			};
+
+			$scope.addCombo = function(combo){
+				pushAllComboDishes(combo);
+				CartService.addToCart(combo, $scope.selectedDishes);
+				setQuantityForCombo();
+				toaster.pop('success', 'Added to cart!');
+			};
+
+			$scope.removeCombo = function(combo){
+				CartService.removeFromCart(combo);
+				$scope.combo.quantity -= 1;
+				toaster.pop('success', 'Deleted from cart!');
 			};
 
 			$scope.validateQuantity = function(combo_item){
@@ -94,6 +109,18 @@ angular.module('foodmashApp.directives')
 				}
 			};
 
+			function setQuantityForCombo(){
+				CartService.getCartInfo().then(function(cart){
+					if($scope.combo){
+						cart.orders.filter(function(order){
+							if(order.product.id == $scope.combo.id){
+								$scope.combo.quantity = order.quantity;
+							}
+						});
+					}
+				});
+			};
+
 			function setQuantityForComboItems(){
 				if($scope.combo.combo_dishes && $scope.combo.combo_dishes.length > 0){
 					for(var i=0;i<$scope.combo.combo_dishes.length;i++){
@@ -101,7 +128,7 @@ angular.module('foodmashApp.directives')
 					}
 				}
 
-					if($scope.combo.combo_options && $scope.combo.combo_options.length > 0){
+				if($scope.combo.combo_options && $scope.combo.combo_options.length > 0){
 					for(var i=0;i<$scope.combo.combo_options.length;i++){
 						$scope.combo.combo_options[i].quantity = 1;
 					}

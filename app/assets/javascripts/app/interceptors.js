@@ -10,7 +10,7 @@ angular.module('foodmashApp.interceptors', [])
        'request': function(req) {
          var d = $q.defer();
          AuthService.currentUser().then(function(user) {
-           if(user && req.url != "https://foodmash.s3.amazonaws.com/") {
+           if(user && req.url != "https://foodmash.s3.amazonaws.com/"){
              req.params = req.params || {};
              req.params['auth_token'] = req.params['auth_token'] || user.auth_token;
              req.params['auth_user_token'] = req.params['auth_user_token'] || user.user_token;

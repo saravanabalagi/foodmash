@@ -17,6 +17,10 @@ class Web::PaymentsController < ApplicationController
 		end
  	end
 
+ 	def check_password_for_cod
+ 		
+ 	end
+
  	private
  	def set_current_cart
 		@cart = current_user.carts.where(aasm_state: 'not_started').first.presence 		

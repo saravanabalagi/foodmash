@@ -2,10 +2,10 @@
     <form>
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>{{combo.name}} <md-icon aria-hidden="true" md-svg-src="img/icons/ic_chevron_right_24px.svg"></md-icon> Contents </h2>
+                <h2>{{combo.name}} <md-icon aria-hidden="true" md-svg-src="{{right_path}}"></md-icon> Contents </h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="cancel()">
-                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                    <md-icon md-svg-src="{{small_close_path}}" aria-label="Close dialog"></md-icon>
                 </md-button>
             </div>
         </md-toolbar>
@@ -27,11 +27,11 @@
                     </div>
                     <div class="combo-dish-quantity-container" layout="row" layout-align="start center">
                         <md-button class="md-icon-button" ng-click="add_quantity()">
-                            <md-icon md-svg-src="img/icons/remove.svg" aria-label="Decrease"></md-icon>
+                            <md-icon md-svg-src="{{minus_path}}" aria-label="Decrease"></md-icon>
                         </md-button>
                         <span class="combo-dish-quantity">1</span>
                         <md-button class="md-icon-button" ng-click="add_quantity()">
-                            <md-icon md-svg-src="img/icons/add.svg" aria-label="Increase"></md-icon>
+                            <md-icon md-svg-src="{{plus_path}}" aria-label="Increase"></md-icon>
                         </md-button>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                         <md-icon md-svg-icon="/images/popup.svg" class="combo-option-dish-restaurant-img"></md-icon>
                         <div layout="row" class="combo-option-dish-price-label">
                             <div class="combo-option-dish-price"><span class="rupee">{{combo_option_dish.dish.price}}</span></div>
-                            <md-icon class="combo-option-dish-label" md-svg-src="{{label_path}}"></md-icon>
+                            <md-icon class="combo-option-dish-label" md-svg-src="{{offers_path}}"></md-icon>
                             <span flex></span>
                             <md-checkbox class="combo-option-dish-selected md-primary" ng-model="combo_option_dish_selected" aria-label="checkbox" ng-init="combo_option_dish_selected=true"></md-checkbox>
                         </div>
@@ -63,11 +63,11 @@
                         <div class="combo-option-dish-quantity-container" layout="row" layout-align="start center" ng-hide="true">
                             <div style="margin:auto">
                                 <md-button class="md-icon-button" ng-click="add_quantity()">
-                                    <md-icon md-svg-src="img/icons/remove.svg" aria-label="Decrease"></md-icon>
+                                    <md-icon md-svg-src="{{minus_path}}" aria-label="Decrease"></md-icon>
                                 </md-button>
                                 <span class="combo-option-dish-quantity">1</span>
                                 <md-button class="md-icon-button" ng-click="add_quantity()">
-                                    <md-icon md-svg-src="img/icons/add.svg" aria-label="Increase"></md-icon>
+                                    <md-icon md-svg-src="{{plus_path}}" aria-label="Increase"></md-icon>
                                 </md-button>
                             </div>
                         </div>
