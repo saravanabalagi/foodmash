@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('ComboController', ['$scope', 'Combo', '$location', '$routeParams', 'toaster', '$q','$timeout', 'Upload', function($scope, Combo, $location, $routeParams, toaster, $q, $timeout, Upload){
+.controller('ComboController', ['$scope', 'Combo', '$location', '$routeParams', 'toaster', '$q','$timeout', 'Upload', 'Aws', function($scope, Combo, $location, $routeParams, toaster, $q, $timeout, Upload, Aws){
 
 	$scope.combo = {};
 	$scope.combo_options = {};

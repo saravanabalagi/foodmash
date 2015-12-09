@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('RestaurantController', ['$scope','Restaurant','$routeParams','toaster','$q','$location','DishType','$timeout', function($scope, Restaurant, $routeParams, toaster, $q, $location, DishType, $timeout){
+.controller('RestaurantController', ['$scope','Restaurant','$routeParams','toaster','$q','$location','DishType','$timeout', 'Upload', 'Aws', function($scope, Restaurant, $routeParams, toaster, $q, $location, DishType, $timeout, Upload, Aws){
 	$scope.restaurant = {};
 	$scope.combos = {};
 	$scope.updatedRestaurant = new Restaurant;
@@ -51,6 +51,38 @@ angular.module('foodmashApp.controllers')
 			}
 		}
 		return d.promise;
+	};
+
+	$scope.uploadFiles = function(file, errFiles, updatedRestaurant){
+		if(file){
+			Aws.loadAWS().then(function(aws){
+				file.upload = Upload.upload({
+				    url: 'https://foodmash.s3.amazonaws.com/', //S3 upload url including bucket name
+				    method: 'POST',
+				    data: {
+				        key: 'images/restaurants/logo/' + Date.now() + '/' + file.name, // the key to store the file on S3, could be file name or customized
+				        AWSAccessKeyId: aws.key,
+				        acl: 'public-read', // sets the access to the uploaded file in the bucket: private, public-read, ...
+				        policy: aws.policy, // base64-encoded json policy (see article below)
+				        signature: aws.signature, // base64-encoded signature based on policy string (see article below)
+				        "Content-Type": file.type != '' ? file.type : 'application/octet-stream', // content type of the file (NotEmpty)
+				        file: file
+				    }
+				});
+
+				file.upload.progress(function(e){ file.progress = Math.min(100, parseInt(100.0 * e.loaded/e.total)); });
+
+				file.upload.then(function(response){
+					$scope.updatedRestaurant.logo = 'https://foodmash.s3.amazonaws.com/' + response.config.data.key;
+					$scope.updatedRestaurant.update().then(function(response){
+						toaster.pop('success', 'Restaurant was updated!');
+					}, function(err){
+						toaster.pop('error', 'Restaurant was not updated!');
+					});
+				});
+			});
+			$scope.file = file;
+		}
 	};
 
 	$scope.deleteRestaurant = function(){

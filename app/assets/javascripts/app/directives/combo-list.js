@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('comboList', ['Combo', '$q', 'toaster', '$location', function(Combo, $q, toaster, $location){
+.directive('comboList', ['Combo', '$q', 'toaster', '$location', 'Upload', 'Aws', function(Combo, $q, toaster, $location, 'Upload', 'Aws'){
 
 	return {
 
@@ -10,7 +10,7 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/combo-list.html',
 
-		controller: ['$scope', 'Combo', '$q', 'toaster', '$location', function($scope, Combo, $q, toaster, $location){
+		controller: ['$scope', 'Combo', '$q', 'toaster', '$location', 'Upload', 'Aws', function($scope, Combo, $q, toaster, $location, Upload, Aws){
 
 			$scope.updatedCombo = new Combo;
 
@@ -37,6 +37,42 @@ angular.module('foodmashApp.directives')
 
 			$scope.setUpdate = function(combo){
 				$scope.updatedCombo = angular.copy(combo);
+			};
+
+			$scope.uploadFiles = function(file, errFiles, updatedCombo){
+				if(file){
+					Aws.loadAWS().then(function(aws){
+						file.upload = Upload.upload({
+						    url: 'https://foodmash.s3.amazonaws.com/', //S3 upload url including bucket name
+						    method: 'POST',
+						    data: {
+						        key: 'images/combos/' + Date.now() + '/' + file.name, // the key to store the file on S3, could be file name or customized
+						        AWSAccessKeyId: aws.key,
+						        acl: 'public-read', // sets the access to the uploaded file in the bucket: private, public-read, ...
+						        policy: aws.policy, // base64-encoded json policy (see article below)
+						        signature: aws.signature, // base64-encoded signature based on policy string (see article below)
+						        "Content-Type": file.type != '' ? file.type : 'application/octet-stream', // content type of the file (NotEmpty)
+						        file: file
+						    }
+						});
+
+						file.upload.progress(function(e){ file.progress = Math.min(100, parseInt(100.0 * e.loaded/e.total)); });
+
+						file.upload.then(function(response){
+							$scope.updatedCombo.picture = 'https://foodmash.s3.amazonaws.com/' + response.config.data.key;
+							$scope.updatedCombo.update().then(function(response){
+								toaster.pop('success', 'Combo was updated!');
+								var index = $scope.combos.indexOf(updatedCombo);
+								if(angular.isNumber(index) && index >= 0){
+									$scope.combos[index] = $scope.updatedCombo;
+								}
+							}, function(err){
+								toaster.pop('error', 'Combo was not updated!');
+							});
+						});
+					});
+					$scope.file = file;
+				}
 			};
 
 			$scope.updateCombo = function(combo, updateCross){
