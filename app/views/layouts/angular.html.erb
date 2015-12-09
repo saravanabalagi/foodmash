@@ -14,16 +14,16 @@
     <md-toolbar layout="row" style="z-index:50">
       <div class="md-toolbar-tools">
         <span>
-            <md-icon class="title-logo" ng-click="routeToRoot()" md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/logo_hybrid.svg"></md-icon>
+            <md-icon class="title-logo" ng-click="routeToRoot()" md-svg-icon="{{logo_hybrid_path}}"></md-icon>
             <md-icon aria-hidden="true" md-svg-src="img/icons/ic_chevron_right_24px.svg"></md-icon>
         </span>
         <span flex></span>
         <span user-panel></span>
         <md-button class="menu md-icon-button" hide-gt-md ng-click="toggleSidenav()" aria-label="Filter">
-          <md-icon md-svg-icon="/assets/filter.svg"></md-icon>
+          <md-icon md-svg-icon="{{filter_path}}"></md-icon>
         </md-button>
         <md-button class="menu md-icon-button" aria-label="Cart" ng-click="routeToCart()">
-          <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cart.svg"></md-icon>
+          <md-icon md-svg-icon="{{cart_path}}"></md-icon>
         </md-button>
       </div>
     </md-toolbar>

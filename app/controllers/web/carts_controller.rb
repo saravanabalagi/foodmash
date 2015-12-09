@@ -26,7 +26,7 @@ class Web::CartsController < ApplicationController
 		if @cart and @cart.change_status(params[:cart][:status])
 			render status: 201, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name, :description, :price]}}], only: [:id, :quantity, :category_id, :category_type]} } ,:product => {only: [:id, :name, :price, :description]}], only: [:id, :quantity, :total, :updated_at]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at])
 		else
-			render status: 422, json: {erro: "Could change status of cart!"}
+			render status: 422, json: {error: "Could change status of cart!"}
 		end
 	end
 

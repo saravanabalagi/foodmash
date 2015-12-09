@@ -3,7 +3,7 @@
     <md-content flex>
       <md-list>
         <md-list-item class="md-2-line">
-          <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="combo"></md-icon>
+          <md-icon md-svg-icon="{{avatar_path}}" class="combo"></md-icon>
           <div class="md-list-item-text">
               <h3>{{order.product.name}}</h3>
               <p>{{order.product.description}}</p>
@@ -21,7 +21,7 @@
     <div layout-padding layout-margin class="rupee">{{order.total}}</div>
     <div layout-padding layout-margin>
     <md-button class="md-icon-button md-primary" ng-click="deleteOrder(order)">
-        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/wrong.svg"></md-icon>
+        <md-icon md-svg-src="{{wrong_path}}"></md-icon>
     </md-button>
     </div>
   </div>
@@ -33,7 +33,7 @@
              <md-list>
 
                <md-list-item class="md-2-line" ng-repeat="order_item in order.order_items">
-                 <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
+                 <md-icon md-svg-src="{{avatar_path}}" class="food"></md-icon>
 
                  <div class="md-list-item-text">
                    <label>{{order_item.item.name}}</label>

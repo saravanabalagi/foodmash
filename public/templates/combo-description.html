@@ -12,14 +12,14 @@
         <md-dialog-content layout="column" style="-webkit-order: 1; -ms-flex-order: 1; order: 1;">
             <div layout="row" class="combo-dish" ng-repeat="combo_dish in combo.combo_dishes">
                 <div class="combo-dish-img-container">
-                    <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="combo-dish-img"></md-icon>
+                    <md-icon md-svg-icon="{{avatar_path}}" class="combo-dish-img"></md-icon>
                     <div class="combo-dish-img-overlay"></div>
                     <md-icon md-svg-icon="/images/popup.svg" class="combo-dish-restaurant-img"></md-icon>
                 </div>
                 <div class="combo-dish-container" layout="column" flex>
                     <div layout="row">
                         <div class="combo-dish-price"><span class="rupee">{{combo_dish.dish.price}}</span></div>
-                        <md-icon class="combo-dish-label" md-svg-src="images/label.svg"></md-icon>
+                        <md-icon class="combo-dish-label" md-svg-src="{{label_path}}"></md-icon>
                     </div>
                     <div class="combo-dish-description-container" layout="column" flex>
                         <div class="combo-dish-name">{{combo_dish.dish.name}}</div>
@@ -39,12 +39,12 @@
             <div layout="row" ng-repeat="combo_option in combo.combo_options">
                 <div layout="column" class="combo-option-dish" ng-repeat="combo_option_dish in combo_option.combo_option_dishes">
                     <div class="combo-option-dish-img-container">
-                        <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="combo-option-dish-img"></md-icon>
+                        <md-icon md-svg-icon="{{avatar_path}}" class="combo-option-dish-img"></md-icon>
                         <div class="combo-option-dish-img-overlay"></div>
                         <md-icon md-svg-icon="/images/popup.svg" class="combo-option-dish-restaurant-img"></md-icon>
                         <div layout="row" class="combo-option-dish-price-label">
                             <div class="combo-option-dish-price"><span class="rupee">{{combo_option_dish.dish.price}}</span></div>
-                            <md-icon class="combo-option-dish-label" md-svg-src="images/label.svg"></md-icon>
+                            <md-icon class="combo-option-dish-label" md-svg-src="{{label_path}}"></md-icon>
                             <span flex></span>
                             <md-checkbox class="combo-option-dish-selected md-primary" ng-model="combo_option_dish_selected" aria-label="checkbox" ng-init="combo_option_dish_selected=true"></md-checkbox>
                         </div>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="combo-option-dish-add-extra">
                             <md-button class="md-raised" ng-click="add_extra()">
-                                <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cart.svg"></md-icon>
+                                <md-icon md-svg-src="{{cart_path}}"></md-icon>
                                 <span ng-click="add_to_cart()">Add Extra</span>
                             </md-button>
                         </div>
@@ -79,7 +79,7 @@
             <div class="combo-description-buy" layout="row">
                 <span class="combo-description-price rupee">{{combo.price}}</span>
                 <md-button class="md-primary md-raised" ng-click="add_to_cart()">
-                    <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cart.svg"></md-icon>
+                    <md-icon md-svg-src="{{cart_path}}"></md-icon>
                     <span ng-click="add_to_cart()">Add to Cart</span>
                 </md-button>
             </div>

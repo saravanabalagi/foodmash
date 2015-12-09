@@ -8,7 +8,7 @@
         <md-content flex>
           <md-list>
             <md-list-item class="md-2-line">
-              <md-icon md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="combo"></md-icon>
+              <md-icon md-svg-icon="{{avatar_path}}" class="combo"></md-icon>
               <div class="md-list-item-text">
                   <h3>{{order.product.name}}</h3>
                   <p>{{order.product.description}}</p>
@@ -33,7 +33,7 @@
                  <md-list>
 
                    <md-list-item class="md-2-line" ng-repeat="order_item in order.order_items">
-                     <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/avatar-1.svg" class="food"></md-icon>
+                     <md-icon md-svg-src="{{avatar_path}}" class="food"></md-icon>
 
                      <div class="md-list-item-text">
                        <label>{{order_item.item.name}}</label>
@@ -61,26 +61,6 @@
       <h2 class="md-title" layout-padding layout-margin>Total Amount</h2>
       <h2 class="md-display-1 rupee" layout-padding layout-margin>{{cart.total}}</h2>
     </div>
-
-    <!-- <div layout="column" layout-padding layout-align="center center">
-       <md-input-container flex>
-         <label>card no</label>
-         <input type="text" ng-model="payment.card_no" />
-       </md-input-container>
-        <md-input-container flex>
-         <label>expiry year</label>
-         <input ng-model="payment.expiry_year" />
-       </md-input-container>
-       <md-input-container flex>
-         <label>expiry month</label>
-         <input ng-model="payment.expiry_month" />
-       </md-input-container>
-       <md-input-container flex>
-         <label>ccv</label>
-         <input ng-model="payment.ccv" />
-       </md-input-container>
-    </div> -->
-   <div class="pm-button"><a href="https://www.payumoney.com/paybypayumoney/#/48EFA1A9A5C3B2151D2D2EC4F4FCDFB9"><img src="https://www.payumoney.com//media/images/payby_payumoney/buttons/132.png" /></a></div>
 
     <div layout="row" layout-align="center center">
       <md-button class="md-raised md-primary" ng-click="submitToPayu()">Pay</md-button>

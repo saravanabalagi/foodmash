@@ -6,6 +6,18 @@ angular.module('foodmashApp.controllers')
 	$scope.combos = {};
 	$scope.selected = null;
 
+	$scope.edit_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/edit.svg';
+	$scope.avatar_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/avatar-1.svg';
+	$scope.done_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/done.svg';
+	$scope.cross_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/cross.svg';
+	$scope.bin_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/bin.svg';
+	$scope.add_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/add.svg';
+	$scope.cart_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/cart.svg';
+	$scope.user_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/user.svg';
+	$scope.logo_hybrid_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/logo_hybrid.svg';
+	$scope.filter_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/filter.svg';
+	$scope.wrong_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/wrong.svg';
+
 	CombosService.loadSideNavOptions().then(function(sideNavOptions){
 		$scope.sideNavOptions = sideNavOptions;
 		$scope.selected = sideNavOptions[0];

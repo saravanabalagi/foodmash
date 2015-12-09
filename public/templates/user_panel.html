@@ -1,7 +1,7 @@
 <div layout="row" ng-if="currentUser">
     <md-menu md-position-mode="target-right target">
         <md-button aria-label="Open phone interactions menu" class="menu md-icon-button" ng-click="openMenu($mdOpenMenu, $event)">
-        <md-icon md-menu-origin md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/user.svg"></md-icon>
+        <md-icon md-menu-origin md-svg-icon="{{user_path}}"></md-icon>
         </md-button>
         <md-menu-content width="4">
             <md-menu-item>
@@ -40,5 +40,5 @@
     </md-menu>
 </div>
 <md-button aria-label="login" class="menu md-icon-button" ng-click="routeToLogin()" ng-if="!currentUser">
-  <md-icon md-menu-origin md-svg-icon="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/user.svg"></md-icon>
+  <md-icon md-menu-origin md-svg-icon="{{user_path}}"></md-icon>
 </md-button>

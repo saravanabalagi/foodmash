@@ -9,10 +9,10 @@
 
     <div layout="row" layout-align="center center">
       <md-button class="md-icon-button" ng-click="setUpdate(dish); dishUpdateShow=!dishUpdateShow">
-        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/edit.svg"></md-icon>
+        <md-icon md-svg-src="{{edit_path}}"></md-icon>
       </md-button>
       <md-button class="md-icon-button" ng-click="deleteDish(dish)">
-        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/bin.svg"></md-icon>
+        <md-icon md-svg-src="{{bin_path}}"></md-icon>
       </md-button>
     </div>
   </div>
@@ -56,10 +56,10 @@
         </md-select>
       </md-input-container>
       <md-button class="md-icon-button" ng-click="dishUpdateShow = !dishUpdateShow; dishUpdateCross = false">
-        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/done.svg"></md-icon>
+        <md-icon md-svg-src="{{done_path}}"></md-icon>
       </md-button>
       <md-button class="md-icon-button" ng-click="dishUpdateShow = !dishUpdateShow; dishUpdateCross = true">
-        <md-icon md-svg-src="https://s3-ap-southeast-1.amazonaws.com/cshare1/images/cross.svg"></md-icon>
+        <md-icon md-svg-src="{{cross_path}}"></md-icon>
       </md-button>
     </div>
   </form>
