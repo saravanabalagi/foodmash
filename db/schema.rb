@@ -21,13 +21,6 @@ ActiveRecord::Schema.define(version: 20151026111857) do
     t.integer  "packaging_centre_id"
   end
 
-  create_table "cart_delivery_addresses", force: :cascade do |t|
-    t.integer  "cart_id"
-    t.integer  "delivery_address_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-  end
-
   create_table "carts", force: :cascade do |t|
     t.integer  "user_id"
     t.datetime "created_at",                        null: false
@@ -55,10 +48,8 @@ ActiveRecord::Schema.define(version: 20151026111857) do
   end
 
   create_table "combo_option_dishes", force: :cascade do |t|
-    t.integer  "combo_option_id"
-    t.integer  "dish_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.integer "combo_option_id"
+    t.integer "dish_id"
   end
 
   create_table "combo_options", force: :cascade do |t|
@@ -202,8 +193,8 @@ ActiveRecord::Schema.define(version: 20151026111857) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",                                  null: false
-    t.string   "email",                  default: "",   null: false
+    t.string   "name",                   default: "",   null: false
+    t.string   "email"
     t.string   "encrypted_password",     default: "",   null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
