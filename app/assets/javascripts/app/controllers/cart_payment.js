@@ -6,17 +6,12 @@ angular.module('foodmashApp.controllers')
 
 	$scope.cart = {};
 	$scope.payment = { 
-		"key": 'fB7m8s',
-		"txnid": '1234',
-		"amount": 5,
 		"productinfo": 'a bunch of combos from Foodmash',
-		"firstname": 'praveen',
-		"email": 'praveen.beatle@gmail.com',
-		"phone": '9789002515',
-		"surl": '/cartSuccess',
-		"furl": '/cartFailure',
-		"salt": 'eRis5Chv',
-		"hash": '',
+		"firstname": $scope.currentUser.name.split(" ")[0],
+		"email": $scope.currentUser.email,
+		"phone": $scope.currentUser.mobile_no,
+		"surl": '/payments/success',
+		"furl": '/payments/failure',
 		"service_provider": 'payu_paisa'
 	};
 

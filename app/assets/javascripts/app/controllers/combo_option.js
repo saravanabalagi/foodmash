@@ -31,17 +31,6 @@ angular.module('foodmashApp.controllers')
 		$scope.combo_option = null;
 	});
 
-    //Requires refinement
-    $scope.getContents = function(){
-        var contents = "";
-        combo_option_dishes.forEach(function (element){
-            contents += element.dish.name;
-        });
-        contents.substr(0,contents.length-1);
-        return contents;
-    };
-    //Requires refinement
-
 
     $scope.loadComboOptionDishes = function(combo_option_id){
         var d = $q.defer();
@@ -49,7 +38,7 @@ angular.module('foodmashApp.controllers')
             if(combo_option_dishes.length > 0){
                 $scope.combo_option_dishes = combo_option_dishes;
             }else{
-                $scope.combo_option_dishes = [];
+                $scope.combo_option_dishes = new Array;
             }
             d.resolve(combo_option_dishes);
         }, function(err){

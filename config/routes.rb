@@ -63,9 +63,12 @@ Rails.application.routes.draw do
       end
     end
 
-    get '/payu/ok', to: 'payu#ok'
-    get '/payu/error', to: 'payu#error'
-    get '/payu/report', to: 'payu#report'
+    #payments
+    resources :payments, only: [:index] do 
+      collection do 
+        post '/getHash', to: 'payments#get_hash'
+      end
+    end
   end
   
   #routes for API calls
@@ -151,6 +154,14 @@ Rails.application.routes.draw do
           post '/destroy', to: 'orders#destroy'
         end
       end
+
+      #payments
+      resources :payments, only: [:index] do 
+        collection do 
+          post '/getHash', to: 'payments#get_hash'
+        end
+      end
+
       #contact_us
       resources :contact_us do 
         collection do 
