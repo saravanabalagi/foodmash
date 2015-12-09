@@ -19,6 +19,7 @@
 
   <form role="form" name="dishUpdateForm" ng-submit="updateDish(dish, dishUpdateCross)" ng-init="dishUpdateShow=false; dishUpdateCross = false" ng-show="dishUpdateShow">
     <div layout="row" layout-padding layout-align="center center">
+      <span class="progress" ng-show="file.progress > 0">{{file.progress + '%'}}</span>
       <md-button class="md-icon-button" type="file" ngf-select="uploadFiles($file, $invalidFiles, dish)"
           accept="image/*" ngf-max-size="40MB">
         <img ng-src="{{updatedDish.picture}}" alt="dish pic" />

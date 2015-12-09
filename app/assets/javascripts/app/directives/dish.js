@@ -15,6 +15,7 @@ angular.module('foodmashApp.directives')
 			$scope.cuisines = {};
 			$scope.dish_types = {};
 			$scope.updatedDish = new Dish;
+			$scope.file = {};
 
 			DishType.query().then(function(dish_types){
 				if(dish_types.length > 0){
@@ -43,7 +44,7 @@ angular.module('foodmashApp.directives')
 			$scope.uploadFiles = function(file, errFiles, dish){
 				if(file){
 					Aws.loadAWS().then(function(aws){
-						Upload.upload({
+						file.upload = Upload.upload({
 						    url: 'https://foodmash.s3.amazonaws.com/', //S3 upload url including bucket name
 						    method: 'POST',
 						    data: {
@@ -55,7 +56,11 @@ angular.module('foodmashApp.directives')
 						        "Content-Type": file.type != '' ? file.type : 'application/octet-stream', // content type of the file (NotEmpty)
 						        file: file
 						    }
-						}).then(function(response){
+						   });
+
+						file.upload.progress(function(e){ file.progress = Math.min(100, parseInt(100.0*e.loaded/e.total)); });
+
+						file.upload.then(function(response){
 							$scope.updatedDish.picture = 'https://foodmash.s3.amazonaws.com/' + response.config.data.key;
 							$scope.updatedDish.update().then(function(response){
 								toaster.pop('success', 'Dish was updated!');
@@ -68,6 +73,7 @@ angular.module('foodmashApp.directives')
 							});
 						});
 					});
+					$scope.file = file;
 				}
 			};
 
