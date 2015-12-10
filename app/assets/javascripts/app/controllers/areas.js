@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('AreasController', ['$scope', 'Areas', '$q', 'toaster', '$routeParams', function($scope, Areas, $q, toaster, $routeParams){
+.controller('AreasController', ['$scope', 'Areas', '$q', 'toaster', '$routeParams', 'PackagingCentre', function($scope, Areas, $q, toaster, $routeParams, PackagingCentre){
 
 	$scope.areas = {};
 	$scope.area = new Areas;
@@ -15,6 +15,16 @@ angular.module('foodmashApp.controllers')
 		}
 	}, function(err){
 		$scope.areas = null;
+	});
+
+	PackagingCentre.query().then(function(packaging_centres){
+		if(packaging_centres.length > 0){
+			$scope.packaging_centres = packaging_centres;
+		}else{
+			$scope.packaging_centres = null;
+		}
+	}, function(err){
+		$scope.packaging_centres = null;
 	});
 
 	$scope.addArea = function(addCross){

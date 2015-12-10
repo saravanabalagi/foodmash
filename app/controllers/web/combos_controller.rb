@@ -6,7 +6,7 @@ class Web::CombosController < ApplicationController
 	def index
 		@combos = Combo.where(params.permit(:id, :name))
 		if @combos 
-			render status: 200, json: @combos.as_json
+			render status: 200, json: @combos.as_json(:include => :packaging_centre)
 		else
 			render status: 404, json: {error: 'Combos not found!'}
 		end
@@ -24,7 +24,7 @@ class Web::CombosController < ApplicationController
 	def create
 		@combo = Combo.new combo_params
 		if @combo.save! 
-			render status: 201, json: @combo.as_json
+			render status: 201, json: @combo.as_json(:include => :packaging_centre)
 		else
 			render status: 422, json: @combo.errors.as_json
 		end
@@ -32,7 +32,7 @@ class Web::CombosController < ApplicationController
 
 	def update
 		if @combo && @combo.update_attributes(combo_update_params)
-			render status: 200, json: @combo.as_json
+			render status: 200, json: @combo.as_json(:include => :packaging_centre)
 		else
 			render status: 422, json: @combo.errors.as_json
 		end
@@ -88,10 +88,10 @@ class Web::CombosController < ApplicationController
 	end
 
 	def combo_params
-		params.require(:combo).permit(:name, :group_size, :no_of_purchases, :description, :active, :picture)
+		params.require(:combo).permit(:name, :group_size, :no_of_purchases, :description, :active, :picture, :packaging_centre_id)
 	end
 
 	def combo_update_params
-		params.require(:combo).permit(:name, :price, :group_size, :description, :active, :picture)
+		params.require(:combo).permit(:name, :price, :group_size, :description, :active, :picture, :packaging_centre_id)
 	end
 end

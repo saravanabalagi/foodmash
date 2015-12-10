@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('area', ['toaster', 'Areas', '$q', function(toaster, Areas, $q){
+.directive('area', ['toaster', 'Areas', '$q', 'PackagingCentre', function(toaster, Areas, $q, PackagingCentre){
 
 	return {
 
@@ -10,9 +10,19 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/area.html',
 
-		controller: ['$scope', 'toaster', 'Areas', '$q', function($scope, toaster, Areas, $q){
+		controller: ['$scope', 'toaster', 'Areas', '$q', 'PackagingCentre', function($scope, toaster, Areas, $q, PackagingCentre){
 
 			$scope.updatedArea = new Areas;
+
+			PackagingCentre.query().then(function(packaging_centres){
+				if(packaging_centres.length > 0){
+					$scope.packaging_centres = packaging_centres;
+				}else{
+					$scope.packaging_centres = null;
+				}
+			}, function(err){
+				$scope.packaging_centres = null;
+			});
 
 			$scope.setUpdate = function(area){
 				$scope.updatedArea = angular.copy(area);

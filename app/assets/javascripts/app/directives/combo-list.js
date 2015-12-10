@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('comboList', ['Combo', '$q', 'toaster', '$location', 'Upload', 'Aws', function(Combo, $q, toaster, $location, Upload, Aws){
+.directive('comboList', ['Combo', '$q', 'toaster', '$location', 'Upload', 'Aws', 'PackagingCentre', function(Combo, $q, toaster, $location, Upload, Aws, PackagingCentre){
 
 	return {
 
@@ -10,13 +10,23 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/combo-list.html',
 
-		controller: ['$scope', 'Combo', '$q', 'toaster', '$location', 'Upload', 'Aws', function($scope, Combo, $q, toaster, $location, Upload, Aws){
+		controller: ['$scope', 'Combo', '$q', 'toaster', '$location', 'Upload', 'Aws', 'PackagingCentre', function($scope, Combo, $q, toaster, $location, Upload, Aws, PackagingCentre){
 
 			$scope.updatedCombo = new Combo;
 
 			$scope.routeToCombo = function(combo){
 				$location.path("/combos/" + combo.id);
 			};
+
+			PackagingCentre.query().then(function(packaging_centres){
+				if(packaging_centres.length > 0){
+					$scope.packaging_centres = packaging_centres;
+				}else{
+					$scope.packaging_centres = null;
+				}
+			}, function(err){
+				$scope.packaging_centres = null;
+			});
 
 			$scope.updateActiveState = function(combo, active){
 				var d = $q.defer();

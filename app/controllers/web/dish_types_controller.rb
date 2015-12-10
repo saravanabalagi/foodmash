@@ -10,7 +10,7 @@ class Web::DishTypesController < ApplicationController
 		else
 			render status: 404, json: {error: 'Dishe Types were not found!'}
 		end
-		end
+	end
 
 	def create
 		@dish_type = DishType.new dish_type_params

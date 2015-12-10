@@ -1,6 +1,7 @@
  <div>
   <div layout="row" layout-padding layout-align="center center" ng-hide="updateShow">
-    <md-content flex ng-click="routeToAreas()">{{area.name}}</md-content>
+    <md-content flex>{{area.name}}</md-content>
+    <md-content flex>{{area.packaging_centre.name}}</md-content>
     <div layout="row" layout-align="center center">
       <md-button class="md-icon-button" ng-click="updateShow = !updateShow; setUpdate(area)">
         <md-icon md-svg-src="{{edit_path}}"></md-icon>
@@ -15,6 +16,13 @@
    <md-input-container flex>
        <label>Area</label>
        <input ng-model="updatedArea.name" type="text" />
+   </md-input-container>
+   <md-input-container flex>
+     <label>Packaging Centre</label>
+     <md-select ng-model="updatedArea.packaging_centre_id">
+       <md-option ng-repeat="packaging_centre in packaging_centres" value="{{packaging_centre.id}}">{{packaging_centre.name}}
+       </md-option>
+     </md-select>
    </md-input-container>
    <div layout="row" layout-align="center center" layout-padding>
      <md-button class="md-icon-button" layout-padding ng-click="updateShow = !updateShow; updateCross=false">

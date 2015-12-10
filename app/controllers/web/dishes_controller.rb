@@ -10,7 +10,7 @@ class Web::DishesController < ApplicationController
 		else
 			render status: 404, json: {error: 'Dishes not found!'}
 		end
-		end
+	end
 
 	def create
 		@dish = Dish.new dish_params

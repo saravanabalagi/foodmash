@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('CombosController', ['$scope', 'toaster', 'Combo', '$q', function($scope, toaster, Combo, $q){
+.controller('CombosController', ['$scope', 'toaster', 'Combo', '$q','PackagingCentre', function($scope, toaster, Combo, $q, PackagingCentre){
 
 	$scope.combo = new Combo;
 	$scope.combos = {};
@@ -15,6 +15,16 @@ angular.module('foodmashApp.controllers')
 		}
 	}, function(err){
 		$scope.combos = null;
+	});
+
+	PackagingCentre.query().then(function(packaging_centres){
+		if(packaging_centres.length > 0){
+			$scope.packaging_centres = packaging_centres;
+		}else{
+			$scope.packaging_centres = null;
+		}
+	}, function(err){
+		$scope.packaging_centres = null;
 	});
 
 	$scope.addCombo = function(addCross){
