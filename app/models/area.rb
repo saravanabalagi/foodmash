@@ -3,4 +3,5 @@ class Area < ActiveRecord::Base
 	validates :name, presence: true, length: {minimum: 2}
 	validates :city_id, presence: true
 	belongs_to :city 
+	belongs_to :packaging_centre
 end

@@ -87,6 +87,36 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 				}
 			}
 		})
+		.when('/packagingCentres', {
+			controller: 'PackagingCentresController',
+			templateUrl: '/templates/packaging_centres.html',
+			resolve: {
+				packaging_centres:
+				function(AuthorizeService){
+					AuthorizeService.authorizeRouteForSuperAdmin();
+				}
+			}
+		})
+		.when('/cities', {
+			controller: 'CitiesController',
+			templateUrl: '/templates/cities.html',
+			resolve: {
+				cities: 
+				function(AuthorizeService){
+					AuthorizeService.authorizeRouteForSuperAdmin();
+				}
+			}
+		})
+		.when('/cities/:id/areas', {
+			controller: 'AreasController',
+			templateUrl: '/templates/areas.html',
+			resolve: {
+				areas: 
+				function(AuthorizeService){
+					AuthorizeService.authorizeRouteForSuperAdmin();
+				}
+			}
+		})
 		.when('/combos/:id', {
 			controller: 'ComboController',
 			templateUrl: '/templates/combo.html',

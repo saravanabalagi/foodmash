@@ -24,4 +24,12 @@ angular.module('foodmashApp.controllers')
     $location.path("/cuisines");
   };
 
+   $scope.routeToCities = function(){
+    $location.path("/cities");
+  };
+
+  $scope.routeToPackagingCentres = function(){
+    $location.path("/packagingCentres");
+  };  
+
 }]);

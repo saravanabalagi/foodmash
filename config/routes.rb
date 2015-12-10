@@ -37,6 +37,12 @@ Rails.application.routes.draw do
     resources :cuisines
 
     resources :delivery_addresses
+
+     resources :cities
+
+    resources :packaging_centres
+
+    resources :areas
     
     resources :dishes do 
       collection do 

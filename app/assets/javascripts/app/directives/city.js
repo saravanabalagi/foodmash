@@ -1,0 +1,65 @@
+'use strict';
+
+angular.module('foodmashApp.directives')
+
+.directive('city', ['toaster', 'City', '$q', '$location', function(toaster, City, $q, $location){
+
+	return {
+
+		restrict: 'E',
+
+		templateUrl: '/templates/city.html',
+
+		controller: ['$scope', 'toaster', 'City', '$q', '$location', function($scope, toaster, City, $q, $location){
+
+			$scope.updatedCity = new City;
+
+			$scope.routeToAreas = function(){
+				$location.path("/cities/" + $scope.city.id + '/areas');
+			};
+
+			$scope.setUpdate = function(city){
+				$scope.updatedCity = angular.copy(city);
+			};
+
+			$scope.updateCity = function(city, updateCross){
+				var d = $q.defer();
+				if(!updateCross){
+					if(!$scope.updateCityForm.$pristine){
+						$scope.updatedCity.update().then(function(response){
+							toaster.pop('success', 'City was successfully updated!');
+							var index = $scope.cities.indexOf(city);
+							if(angular.isNumber(index) && index >= 0){
+								$scope.cities[index] = $scope.updatedCity;
+							}
+							d.resolve(response);
+						}, function(err){
+							toaster.pop('error', 'City was not updated!');
+							d.reject(err);
+						});
+					}else{
+						$scope.updatedCity = new City;
+						d.resolve(null);
+					}
+				 }
+				return d.promise;
+			};
+
+			$scope.deleteCity = function(city){
+				var d = $q.defer();
+				city.delete().then(function(response){
+					$scope.cities.splice($scope.cities.indexOf(city), 1);
+					toaster.pop('success', 'City was succussfully deleted!');
+					d.resolve(response);
+				}, function(err){
+					toaster.pop('error', 'City was not deleted!');
+					d.reject(err);
+				});
+				return d.promise;
+			};
+
+		}]
+
+	};
+
+}]);
