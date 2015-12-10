@@ -12,9 +12,9 @@
         <md-dialog-content layout="column" style="-webkit-order: 1; -ms-flex-order: 1; order: 1;">
             <div layout="row" class="combo-dish" ng-repeat="combo_dish in combo.combo_dishes">
                 <div class="combo-dish-img-container">
-                    <md-icon md-svg-icon="{{avatar_path}}" class="combo-dish-img"></md-icon>
+                     <img ng-src="{{combo_dish.dish.picture}}" alt="Combo Dish Picture" class="combo-dish-img" />
                     <div class="combo-dish-img-overlay"></div>
-                    <md-icon md-svg-icon="{{avatar_path}}" class="combo-dish-restaurant-img"></md-icon>
+                    <img ng-src="{{combo_dish.restaurant.logo}}" alt="Restaurant Logo" class="combo-dish-restaurant-img" />
                 </div>
                 <div class="combo-dish-container" layout="column" flex>
                     <div layout="row">
@@ -39,9 +39,9 @@
             <div layout="row" ng-repeat="combo_option in combo.combo_options">
                 <div layout="column" class="combo-option-dish" ng-repeat="combo_option_dish in combo_option.combo_option_dishes">
                     <div class="combo-option-dish-img-container">
-                        <md-icon md-svg-icon="{{avatar_path}}" class="combo-option-dish-img"></md-icon>
+                        <img ng-src="{{combo_option.dish.picture}}" alt="Combo Option Dish Pic" class="combo-option-dish-img" />
                         <div class="combo-option-dish-img-overlay"></div>
-                        <md-icon md-svg-icon="{{avatar_path}}" class="combo-option-dish-restaurant-img"></md-icon>
+                            <img ng-src="{{combo_option.dish.restaurant.logo}}" alt="Restaurant Logo" class="combo-option-dish-restaurant-img" />
                         <div layout="row" class="combo-option-dish-price-label">
                             <div class="combo-option-dish-price"><span class="rupee">{{combo_option_dish.dish.price}}</span></div>
                             <md-icon class="combo-option-dish-label" md-svg-src="{{offers_path}}"></md-icon>
