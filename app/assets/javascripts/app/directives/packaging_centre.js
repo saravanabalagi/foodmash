@@ -24,7 +24,7 @@ angular.module('foodmashApp.directives')
 					if(!$scope.updatePackagingCentreForm.$pristine){
 						$scope.updatedPackagingCentre.update().then(function(response){
 							toaster.pop('success', 'Packaging Centre was successfully updated!');
-							var index = $scope.cities.indexOf(city);
+							var index = $scope.packaging_centres.indexOf(packaging_centre);
 							if(angular.isNumber(index) && index >= 0){
 								$scope.packaging_centres[index] = $scope.updatedPackagingCentre;
 							}

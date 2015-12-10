@@ -19,7 +19,7 @@ angular.module('foodmashApp.controllers')
    };
 
    $scope.updateProfile = function(updateCross){
-     var d = $q.defer()
+     var d = $q.defer();
      if(!updateCross){
        if(!$scope.profileUpdateForm.$pristine){
          $scope.updatedUser.update().then(function(result){
