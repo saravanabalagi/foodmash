@@ -13,18 +13,18 @@
             </md-menu-item>
             <md-menu-divider></md-menu-divider>
             <md-menu-item>
-                <md-button ng-click="routToProfile()">
+                <md-button ng-click="routeToCustomerPanel()">
                 <md-icon md-svg-icon="call:dialpad"></md-icon>
                     Order History
                 </md-button>
             </md-menu-item>
             <md-menu-item>
-                <md-button ng-click="routToProfile()">
+                <md-button>
                 <md-icon md-svg-icon="call:dialpad"></md-icon>
                     Contact Us
                 </md-button>
             </md-menu-item>
-            <md-menu-item>
+            <md-menu-item ng-if="hasRolesForPanel()">
                 <md-button ng-click="routeToPanel()">
                   <md-icon md-svg-icon="call:dialpad"></md-icon>
                     Panel

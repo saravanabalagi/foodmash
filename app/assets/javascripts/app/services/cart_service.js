@@ -40,7 +40,6 @@ angular.module('foodmashApp.services')
 				if(service.cart.orders[i]["quantity"] == 0){
 					service.cart.orders.splice(i, 1);
 				}
-				console.log(service.cart);
 				updateCartInfo();
 				return ;
 			}

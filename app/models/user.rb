@@ -22,6 +22,10 @@ class User < ActiveRecord::Base
     @ability ||= Ability.new(self)
   end
 
+  def make_super_admin
+    self.add_role 'super_admin'
+  end
+
   def self.search_by_email(email)
     where("email like ?", "%#{email}%")
   end

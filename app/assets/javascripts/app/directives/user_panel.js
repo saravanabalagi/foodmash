@@ -28,8 +28,6 @@ angular.module('foodmashApp.directives')
           $scope.routeToPackagingCentrePanel();
         }else if(hasRole("restaurant_admin")){
           $scope.routeToRestaurantAdminPanel();
-        }else if(hasRole("customer")){
-          $scope.routeToCustomerPanel();
         }
       };
 
@@ -64,6 +62,14 @@ angular.module('foodmashApp.directives')
 
       $scope.routeToLogin = function(){
         $location.path("/login");
+      };
+
+      $scope.hasRolesForPanel = function(){
+        if(hasRole('super_admin') || hasRole('packaging_centre_admin') || hasRole('restaurant_admin')){
+            return true;
+        }else{
+          return false;
+        }
       };
 
       function hasRole(name){
