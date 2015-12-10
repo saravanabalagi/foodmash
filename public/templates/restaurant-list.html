@@ -1,7 +1,7 @@
 <div>
   <div layout="row" layout-padding layout-align="center center" ng-show="!updateShow">
     <md-button class="md-icon-button">
-        <md-icon md-svg-src="{{avatar_path}}"></md-icon>
+         <img ng-src="{{restaurant.logo}}" alt="Restaurant Logo" />
       </md-button>
     <md-content flex ng-click="routeToRestaurant(restaurant)">{{restaurant.name}}</md-content>
     <md-content flex>{{restaurant.address}}</md-content>

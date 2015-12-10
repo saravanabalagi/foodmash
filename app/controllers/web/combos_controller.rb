@@ -49,7 +49,7 @@ class Web::CombosController < ApplicationController
 	def get_offer_combos
 		@offerCombos = Combo.where(group_size: 1, active: true)
 		if @offerCombos
-			render status: 200, json: @offerCombos.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :price]} } , only: :id} }, only: [:id, :name, :description]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :description, :price]} }, only: :id } } ], only: [:name, :price, :id, :no_of_purchases, :description, :available, :active])
+			render status: 200, json: @offerCombos.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :price]} } , only: :id} }, only: [:id, :name, :description]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :description, :price]} }, only: :id } } ], only: [:name, :price, :id, :no_of_purchases, :description, :available, :active, :picture])
 		else
 			render status: 404, json: {error: "Could not find offer combos"}
 		end
@@ -58,7 +58,7 @@ class Web::CombosController < ApplicationController
 	def get_micro_combos
 		@microCombos = Combo.where(group_size: 1, active: true)
 		if @microCombos
-			render status: 200, json: @microCombos.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :price]} } , only: :id} }, only: [:id, :name, :description]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :description, :price]} }, only: :id } } ], only: [:name, :price, :id, :no_of_purchases, :description, :available, :active])
+			render status: 200, json: @microCombos.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :price]} } , only: :id} }, only: [:id, :name, :description]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :description, :price]} }, only: :id } } ], only: [:name, :price, :id, :no_of_purchases, :description, :available, :active, :picture])
 		else
 			render status: 404, json: {error: "Could not find micro combos"}
 		end
@@ -67,7 +67,7 @@ class Web::CombosController < ApplicationController
 	def get_medium_combos
 		@mediumCombos = Combo.where(group_size: 2, active: true)
 		if @mediumCombos
-			render status: 200, json: @mediumCombos.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :price]} } , only: :id} }, only: [:id, :name, :description]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :description, :price]} }, only: :id } } ], only: [:name, :price, :id, :no_of_purchases, :description, :available, :active])
+			render status: 200, json: @mediumCombos.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :price]} } , only: :id} }, only: [:id, :name, :description]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :description, :price]} }, only: :id } } ], only: [:name, :price, :id, :no_of_purchases, :description, :available, :active, :picture])
 		else
 			render status: 404, json: {error: "Could not find medium combos"}
 		end
@@ -76,7 +76,7 @@ class Web::CombosController < ApplicationController
 	def get_mega_combos
 		@megaCombos = Combo.where("group_size >= ?", 3).where(active: true)
 		if @megaCombos
-			render status: 200, json: @megaCombos.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :price]} } , only: :id} }, only: [:id, :name, :description]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :description, :price]} }, only: :id } } ], only: [:name, :price, :id, :no_of_purchases, :description, :available, :active])
+			render status: 200, json: @megaCombos.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :price]} } , only: :id} }, only: [:id, :name, :description]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :description, :price]} }, only: :id } } ], only: [:name, :price, :id, :no_of_purchases, :description, :available, :active, :picture])
 		else
 			render status: 404, json: {error: "Could not find mega combos"}
 		end

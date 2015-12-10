@@ -14,7 +14,7 @@
     <span class="progress" ng-show="file.progress > 0 && file.progress != 100">{{file.progress + '%'}}</span>
     <md-button class="md-icon-button" type="file" ngf-select="uploadFiles($file, $invalidFiles, combo)" 
     accept="image/*" ngf-max-size="40MB">
-      <img ng-src="{{combo.picture}}" alt="Combo Picture" />
+      <img ng-src="{{combo.picture}}" alt="Combo Picture" height="150" width="200" />
     </md-button>
     <md-input-container flex>
       <label>name</label>
@@ -54,7 +54,7 @@
 
           <div flex layout-gt-sm="row" layout="column" layout-align="center">
             <div class="md-whiteframe-z2" layout="row" layout-margin>
-                <md-icon md-svg-icon="{{avatar_path}}" class="restaurant-icon"></md-icon>
+                 <img ng-src="{{combo.picture}}" alt="Combo Picture" height="150" width="200" />
                 <div flex layout="column" layout-align="space-around center" layout-padding layout-align="space-around start">
                   <md-content>Price: <span class="rupee">{{combo.price}}</span></md-content>
                   <md-content>Group Size: {{combo.group_size}}</md-content>
