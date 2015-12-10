@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.services')
 
-.service('CombosService', ['$q', function($q, Combo){
+.service('CombosService', ['$q', function($q){
   var service = this;
   var sideNavOptions = [
      {pic_url: "https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/offers.svg", name: "Offers", icon_class: "nav-icon offers"},

@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('comboList', ['Combo', '$q', 'toaster', '$location', 'Upload', 'Aws', function(Combo, $q, toaster, $location, 'Upload', 'Aws'){
+.directive('comboList', ['Combo', '$q', 'toaster', '$location', 'Upload', 'Aws', function(Combo, $q, toaster, $location, Upload, Aws){
 
 	return {
 

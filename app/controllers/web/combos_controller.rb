@@ -88,10 +88,10 @@ class Web::CombosController < ApplicationController
 	end
 
 	def combo_params
-		params.require(:combo).permit(:name, :group_size, :no_of_purchases, :description, :active)
+		params.require(:combo).permit(:name, :group_size, :no_of_purchases, :description, :active, :picture)
 	end
 
 	def combo_update_params
-		params.require(:combo).permit(:name, :price, :group_size, :description, :active)
+		params.require(:combo).permit(:name, :price, :group_size, :description, :active, :picture)
 	end
 end

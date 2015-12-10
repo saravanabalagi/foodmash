@@ -11,6 +11,11 @@
 
 <form role="form" name="comboUpdateForm" ng-submit="updateCombo(updateCross)" ng-show="updateShow">
   <div layout="row" layout-padding layout-align="center center">
+    <span class="progress" ng-show="file.progress > 0 && file.progress != 100">{{file.progress + '%'}}</span>
+    <md-button class="md-icon-button" type="file" ngf-select="uploadFiles($file, $invalidFiles, combo)" 
+    accept="image/*" ngf-max-size="40MB">
+      <img ng-src="{{combo.picture}}" alt="Combo Picture" />
+    </md-button>
     <md-input-container flex>
       <label>name</label>
       <input type="text" ng-model="updatedCombo.name" />

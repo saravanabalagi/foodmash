@@ -17,8 +17,10 @@
 
 <form role="form" name="restaurantUpdateForm" ng-submit="updateRestaurant(restaurant, updateCross)" ng-init="updateShow=false; updateCross = false" ng-show="updateShow">
   <div layout="row" layout-padding layout-align="center center">
-    <md-button class="md-icon-button">
-      <md-icon md-svg-src="{{avatar_path}}"></md-icon>
+    <span class="progress" ng-show="file.progress > 0 && file.progress != 100">{{file.progress + '%'}}</span>
+    <md-button class="md-icon-button" type="file" ngf-select="uploadFiles($file, $invalidFiles, restaurant)" 
+    accept="image/*" ngf-max-size="40MB">
+      <img ng-src="{{restaurant.logo}}" alt="Restaurant Logo" />
     </md-button>
     <md-input-container flex>
       <label>name</label>

@@ -74,11 +74,11 @@ class Web::RestaurantsController < ApplicationController
 	end
 
 	def restaurant_params
-		params.require(:restaurant).permit(:name, :address, :branch, :picture_url, :latitude, :longitude, :description)
+		params.require(:restaurant).permit(:name, :address, :branch, :picture, :logo, :latitude, :longitude, :description)
 	end
 
 	def restaurant_update_params
-		params.require(:restaurant).permit(:name, :address, :branch, :picture_url, :latitude, :longitude, :description)
+		params.require(:restaurant).permit(:name, :address, :branch, :picture, :logo, :latitude, :longitude, :description)
 	end
 
 end

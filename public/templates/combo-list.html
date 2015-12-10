@@ -1,6 +1,6 @@
 <div>
   <div layout="row" layout-padding layout-align="center center" ng-show="!updateShow">
-    <md-button class="md-icon-button">
+    <md-button class="md-icon-button" ng-click="routeToCombo(combo)">
         <md-icon md-svg-src="{{avatar_path}}"></md-icon>
       </md-button>
     <md-content flex ng-click="routeToCombo(combo)">{{combo.name}}</md-content>
@@ -17,8 +17,10 @@
 
 <form role="form" name="comboUpdateForm" ng-submit="updateCombo(combo, updateCross)" ng-init="updateShow=false; updateCross = false" ng-show="updateShow">
   <div layout="row" layout-padding layout-align="center center">
-    <md-button class="md-icon-button">
-      <md-icon md-svg-src="{{avatar_path}}"></md-icon>
+    <span class="progress" ng-show="file.progress > 0 && file.progress != 100">{{file.progress + '%'}}</span>
+    <md-button class="md-icon-button" type="file" ngf-select="uploadFiles($file, $invalidFiles, updatedCombo)" 
+        accept="image/*" ngf-max-size="40MB">
+      <img ng-src="{{updatedCombo.picture}}" alt="Combo Picture" />
     </md-button>
     <md-input-container flex>
       <label>name</label>
