@@ -72,7 +72,7 @@
       </div>
       <div layout="row" layout-align="center center">
         <md-button class="md-raised" ng-click="routeToCart()">Cart</md-button>
-        <md-button class="md-raised md-primary" ng-click="processCart()">Submit</md-button>
+        <md-button class="md-raised md-primary" ng-click="processCart()" ng-disabled="!isDeliveryAddressSelected()">Submit</md-button>
       </div>
 
   </div> 
