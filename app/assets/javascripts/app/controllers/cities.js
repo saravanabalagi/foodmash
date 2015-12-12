@@ -6,6 +6,7 @@ angular.module('foodmashApp.controllers')
 	
 	$scope.cities = {};
 	$scope.city = new City;
+	$scope.loadingCities = true;
 
 	City.query().then(function(cities){
 		if(cities.length > 0){
@@ -13,8 +14,10 @@ angular.module('foodmashApp.controllers')
 		}else{
 		  $scope.cities = new Array;
 		}
+		$scope.loadingCities = false;
 	}, function(err){
 		$scope.cities = null;
+		$scope.loadingCities = false;
 	});
 
 	$scope.addCity = function(addCross){

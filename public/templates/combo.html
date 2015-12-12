@@ -114,7 +114,10 @@
                  <!-- for loop for listing -->
 
                  <!-- item 1 -->
-                  <combo-dish ng-repeat="combo_dish in combo_dishes"> </combo-dish>
+                 <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingComboDishes">
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                 </div>
+                 <combo-dish ng-repeat="combo_dish in combo_dishes"></combo-dish>
                  <!-- for loop ends -->
                  
          </div>
@@ -167,6 +170,9 @@
                    <!-- add new ends -->
 
                    <!-- for loop for listing -->
+                      <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingComboOptions">
+                         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                      </div>
                       <combo-option-list ng-repeat="combo_option in combo_options"> </combo-option-list>
                    <!-- for loop ends -->
                    

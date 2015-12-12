@@ -17,6 +17,9 @@
   <div class="main-pane" layout="column" flex ng-cloak>
       <md-tabs flex md-border-bottom class="combo-layout" md-center-tabs>
         <md-tab ng-repeat="option in sideNavOptions" label="{{option.name}}" ng-click="selectOption(option)">
+          <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingComboCards">
+             <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+          </div>
           <combo-card ng-repeat="combo in combos"></combo-card>
         </md-tab>
       </md-tabs>

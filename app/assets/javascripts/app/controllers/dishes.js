@@ -8,6 +8,7 @@ angular.module('foodmashApp.controllers')
 	$scope.dish_types = {};
 	$scope.cuisines = {};
 	$scope.dish = new Dish;
+	$scope.loadingDishes = true;
 
 	DishType.query().then(function(dish_types){
 		if(dish_types.length > 0){
@@ -42,6 +43,7 @@ angular.module('foodmashApp.controllers')
 			$scope.dishes = null;
 			d.reject(err);
 		});	
+		$scope.loadingDishes = false;
 		return d.promise;
 	};
 

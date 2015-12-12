@@ -28,6 +28,9 @@
 
     <div id="load-combo-option-dishes" ng-click="loadComboOptionDishes(combo_option.id)"></div>
 
+    <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingComboOptionDishes">
+       <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
     <combo-option-dish ng-repeat="combo_option_dish in combo_option_dishes"> </combo-option-dish>
 
    </div>

@@ -28,6 +28,9 @@
               <!-- for loop for listing -->
 
               <!-- item  -->
+              <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingDishTypes">
+                 <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+              </div>
               <dish-type ng-repeat="dish_type in dish_types"> </dish-type>
               <!-- item ends -->
               <!-- for loop ends -->

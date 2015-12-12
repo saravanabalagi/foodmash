@@ -6,6 +6,7 @@ angular.module('foodmashApp.controllers')
 
 	$scope.combo = new Combo;
 	$scope.combos = {};
+	$scope.loadingCombos = true;
 
 	Combo.query().then(function(combos){
 		if(combos.length > 0){
@@ -13,8 +14,10 @@ angular.module('foodmashApp.controllers')
 		}else{
 			$scope.combos = new Array;
 		}
+		$scope.loadingCombos = false;
 	}, function(err){
 		$scope.combos = null;
+		$scope.loadingCombos = false;
 	});
 
 	PackagingCentre.query().then(function(packaging_centres){

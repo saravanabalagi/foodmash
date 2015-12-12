@@ -46,6 +46,9 @@
   </div>
 </form>
 
+      <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingCombos">
+         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+      </div>
       <combo-list ng-repeat="combo in combos"> </combo-list>
         <!-- Combo ends -->
 

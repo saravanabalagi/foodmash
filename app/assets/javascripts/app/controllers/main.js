@@ -5,6 +5,7 @@ angular.module('foodmashApp.controllers')
 .controller('MainController', ['$scope', '$mdSidenav', 'CombosService', 'AuthService', '$location', 'toaster', '$q', 'Combo', 'CartService', function($scope, $mdSidenav, CombosService, AuthService, $location, toaster, $q, Combo, CartService){
 	$scope.combos = {};
 	$scope.selected = null;
+	$scope.loadingComboCards = true;
 
 	$scope.edit_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/edit.svg';
 	$scope.offers_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/offers.svg';
@@ -53,6 +54,7 @@ angular.module('foodmashApp.controllers')
 
 	$scope.selectOption = function(option){
 		$scope.selected = angular.isNumber(option)? $scope.sideNavOptions[option] : option;
+		$scope.loadingComboCards = true;
 		switch(option.name){
 			case "Offers":
 			$scope.offerCombos();
@@ -72,24 +74,40 @@ angular.module('foodmashApp.controllers')
 	$scope.offerCombos = function(){
 		Combo.loadOfferCombos().then(function(offerCombos){
 			$scope.combos = offerCombos;
+			$scope.loadingComboCards = false;
+		}, function(err){
+			$scope.combos = null;
+			$scope.loadingComboCards = false;
 		});
 	};
 
 	$scope.microCombos = function(){
 		Combo.loadMicroCombos().then(function(microCombos){
 			$scope.combos = microCombos;
+			$scope.loadingComboCards = false;
+		}, function(err){
+			$scope.combos = null;
+			$scope.loadingComboCards = false;
 		});
 	};
 
 	$scope.mediumCombos = function(){
 		Combo.loadMediumCombos().then(function(mediumCombos){
 			$scope.combos = mediumCombos;
+			$scope.loadingComboCards = false;
+		}, function(err){
+			$scope.combos = null;
+			$scope.loadingComboCards = false;
 		});
 	};
 
 	$scope.megaCombos = function(){
 		Combo.loadMegaCombos().then(function(megaCombos){
 			$scope.combos = megaCombos;
+			$scope.loadingComboCards = false;
+		}, function(err){
+			$scope.combos = null;
+			$scope.loadingComboCards = false;
 		});
 	};
 

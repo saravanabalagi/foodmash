@@ -151,6 +151,9 @@
               <!-- for loop for listing -->
 
               <!-- item 1 -->
+              <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingDishes">
+                 <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+              </div>
               <dish ng-repeat="dish in dishes"> </dish>
               <!-- for loop ends -->
               

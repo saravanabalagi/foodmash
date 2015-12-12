@@ -35,6 +35,9 @@
               <!-- for loop for listing -->
 
               <!-- item  -->
+              <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingAreas">
+                 <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+              </div>
               <area ng-repeat="area in areas"> </area>
               <!-- item ends -->
               <!-- for loop ends -->

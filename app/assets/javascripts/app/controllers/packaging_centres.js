@@ -6,6 +6,7 @@ angular.module('foodmashApp.controllers')
 	
 	$scope.packaging_centres = {};
 	$scope.packaging_centre = new PackagingCentre;
+	$scope.loadingPackagingCentres = true;
 
 	PackagingCentre.query().then(function(packaging_centres){
 		if(packaging_centres.length > 0){
@@ -13,8 +14,10 @@ angular.module('foodmashApp.controllers')
 		}else{
 		  $scope.packaging_centres = new Array;
 		}
+		$scope.loadingPackagingCentres = false;
 	}, function(err){
 		$scope.packaging_centres = null;
+		$scope.loadingPackagingCentres = false;
 	});
 
 	$scope.addPackagingCentre = function(addCross){

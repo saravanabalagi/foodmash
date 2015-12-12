@@ -8,6 +8,7 @@ angular.module('foodmashApp.controllers')
 	$scope.combo_option_dishes = {};
 	$scope.combo_option = {};
 	$scope.combo_option_dish = new ComboOptionDish;
+	$scope.loadingComboOptionDishes = true;
 
 	$scope.$on('$viewContentLoaded', function(){
 		$timeout(function(){
@@ -45,6 +46,7 @@ angular.module('foodmashApp.controllers')
             $scope.combo_option_dishes = null;
             d.reject(err);
         });
+        $scope.loadingComboOptionDishes = false;
         return d.promise;
 	};
 

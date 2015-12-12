@@ -35,6 +35,9 @@
   </div>
 </form>
 
+      <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingRestaurants">
+         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+      </div>
       <restaurant-list ng-repeat="restaurant in restaurants"> </restaurant-list>
         <!-- Restaurant ends -->
 

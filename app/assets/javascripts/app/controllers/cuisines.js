@@ -5,6 +5,7 @@ angular.module('foodmashApp.controllers')
 .controller('CuisinesController', ['$scope','Cuisine','$q','toaster', function($scope, Cuisine, $q, toaster){
 	$scope.cuisines = {};
 	$scope.cuisine = new Cuisine;
+	$scope.loadingCuisines = true;
 
 	Cuisine.query().then(function(cuisines){
 		if(cuisines.length > 0){
@@ -12,8 +13,10 @@ angular.module('foodmashApp.controllers')
 		}else{
 		  $scope.cuisines = new Array;
 		}
+		$scope.loadingCuisines = false;
 	}, function(err){
 		$scope.cuisines = null;
+		$scope.loadingCuisines = false;
 	});
 
 	$scope.addCuisine = function(addCross){

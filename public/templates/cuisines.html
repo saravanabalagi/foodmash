@@ -28,6 +28,9 @@
               <!-- for loop for listing -->
 
               <!-- item  -->
+              <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingCuisines">
+                 <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+              </div>
               <cuisine ng-repeat="cuisine in cuisines"></cuisine>
               <!-- item ends -->
               <!-- for loop ends -->

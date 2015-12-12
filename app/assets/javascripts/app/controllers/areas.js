@@ -6,6 +6,7 @@ angular.module('foodmashApp.controllers')
 
 	$scope.areas = {};
 	$scope.area = new Areas;
+	$scope.loadingAreas = true;
 
 	Areas.query({city_id: $routeParams.id}).then(function(areas){
 		if(areas.length > 0){
@@ -13,8 +14,10 @@ angular.module('foodmashApp.controllers')
 		}else{
 		  $scope.areas = new Array;
 		}
+		$scope.loadingAreas = false;
 	}, function(err){
 		$scope.areas = null;
+		$scope.loadingAreas = false;
 	});
 
 	PackagingCentre.query().then(function(packaging_centres){
