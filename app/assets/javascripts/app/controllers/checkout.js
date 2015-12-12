@@ -7,6 +7,7 @@ angular.module('foodmashApp.controllers')
 	$scope.delivery_addresses = {};
 	$scope.delivery_address = new DeliveryAddress;
 	$scope.cart = {};
+	$scope.loadingDeliveryAddresses = true;
 
 	CartService.getCartInfo().then(function(cart){
 		if(cart.orders.length == 0){
@@ -33,8 +34,10 @@ angular.module('foodmashApp.controllers')
 			$scope.delivery_addresses = new Array;
 			$scope.cart.delivery_address_id = null;
 		}
+		$scope.loadingDeliveryAddresses = false;
 	}, function(err){
 		$scope.delivery_addresses = null;
+		$scope.loadingDeliveryAddresses = false;
 	});
 
 	$scope.isDeliveryAddressSelected = function(){

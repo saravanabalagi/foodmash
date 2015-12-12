@@ -5,6 +5,9 @@
       <div layout="column" layout-align="center center">
         <md-radio-group layout="column" ng-model="cart_delivery_address_id">
           <!-- Repeatable Saved Address -->
+          <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingDeliveryAddresses">
+             <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+          </div>
           <delivery-address-list ng-repeat="delivery_address in delivery_addresses"> </delivery-address-list>
           <!-- Repeatable Saved Address ends-->
 
