@@ -102,8 +102,9 @@ angular.module('foodmashApp.directives')
 			$scope.showDescriptionDialog = function(ev){
 			    $mdDialog.show({
 			        controller: DialogController,
-			        templateUrl: 'combo-description.html',
+			        templateUrl: '/templates/combo-description.html',
 			        parent: angular.element(document.body),
+			        scope: $scope,
 			        preserveScope: true,
 			        targetEvent: ev,
 			        clickOutsideToClose:true

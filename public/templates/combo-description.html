@@ -78,7 +78,7 @@
         <md-dialog-actions layout="row" style="-webkit-order: 2; -ms-flex-order: 2; order: 2;">
             <div class="combo-description-buy" layout="row">
                 <span class="combo-description-price rupee">{{combo.price}}</span>
-                <md-button class="md-primary md-raised" ng-click="add_to_cart()">
+                <md-button class="md-primary md-raised" ng-click="addToCart(combo)">
                     <md-icon md-svg-src="{{cart_path}}"></md-icon>
                     <span ng-click="addToCart(combo)">Add to Cart</span>
                 </md-button>

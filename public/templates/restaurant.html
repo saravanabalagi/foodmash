@@ -91,63 +91,6 @@
                 </div>
             </div>
           </div>
-          <div flex="35" layout="column" layout-padding layout-align="center center" class="md-whiteframe-z2" ng-show="combos" ng-cloak>
-              <div>
-                <h1 class="md-title" layout-padding>
-                  Combos with food from {{restaurant.name}}
-                </h1>
-              </div>
-              <div flex class="auto-scroll">
-                
-              <!-- Combo 1 Card -->
-                <div layout="row" flex layout-margin class="md-whiteframe-z2" ng-init="combo_1_clicked" ng-repeat="combo in combos">
-                  <div flex layout="column">
-
-                      <div layout="row" layout-align="space-between center" ng-click="combo_1_clicked=!combo_1_clicked">
-                        <md-content flex>
-                          <md-list>
-                            <md-list-item class="md-3-line">
-                              <md-icon md-svg-icon="{{avatar_path}}" class="combo"></md-icon>
-                              <div class="md-list-item-text">
-                                  <h3>{{combo.name}}</h3>
-                                  <p>{{combo.description}}</p>
-                              </div>
-                            </md-list-item>
-                          </md-list>
-                        </md-content>
-                        <div layout-padding layout-margin class="rupee">{{combo.price}}</div>
-                        <div layout-padding layout-margin ng-show="combo_1_clicked" class="cart">
-                        <md-button class="md-icon-button md-primary" aria-label="Eat cake">
-                              <md-icon md-svg-src="{{cart_path}}"></md-icon>
-                          </md-button>
-                        </div>
-                      </div>
-
-                      <div layout="row" ng-show="combo_1_clicked" class="combo-options">
-                          <div layout="column" layout-padding flex offset="10">
-                            <div layout="column">
-                                <md-content>
-                                  <md-list>
-                                    <md-list-item class="md-2-line" ng-repeat="combo_option in combo.combo_options">
-                                      <md-icon md-svg-src="{{avatar_path}}" class="food"></md-icon>
-                                      <div class="md-list-item-text">
-                                        <h3>{{combo_option.name}}</h3>
-                                        <p>{{combo_option.description}}</p>
-                                      </div>
-                                    </md-list-item>
-                                  </md-list>
-                                </md-content>
-                              </div>
-                            </div>
-                          <div flex="10"></div>
-                        </div>
-
-                  </div>
-                </div>
-                <!-- Combo 1 Card ends-->
-
-              </div>
-          </div>
         </div>
 
         <!-- Dishes -->
