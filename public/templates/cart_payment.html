@@ -8,9 +8,17 @@
                 <div class="g-recaptcha" data-sitekey="6Le6rhETAAAAANOau--jccxZuWYejMwGgyTuKz4B"></div>
                 <md-input-container>
                     <label for="login-password">Enter your password to continue</label>
-                    <input id="login-password" name="login-password" ng-model="login.password" type="password" required>
+                    <input id="login-password" name="login-password" ng-model="password" type="password" required>
                 </md-input-container>
             </md-content>
+            <div layout="row" layout-padding layout-align="center center">
+              <h2 class="md-title" layout-padding layout-margin>Total Amount</h2>
+              <h2 class="md-display-1 rupee" layout-padding layout-margin>{{cart.total}}</h2>
+            </div>
+
+            <div layout="row" layout-align="center center">
+              <md-button class="md-raised md-primary" ng-click="payByCod()">Pay</md-button>
+            </div>
         </md-tab>
         <md-tab label="Debit / Credit Card">
             <md-content class="card-tab-content">
@@ -37,6 +45,14 @@
                     <md-switch class="md-primary" checked>Save Card</md-switch>
                 </div>
             </md-content>
+            <div layout="row" layout-padding layout-align="center center">
+              <h2 class="md-title" layout-padding layout-margin>Total Amount</h2>
+              <h2 class="md-display-1 rupee" layout-padding layout-margin>{{cart.total}}</h2>
+            </div>
+
+            <div layout="row" layout-align="center center">
+              <md-button class="md-raised md-primary" ng-click="submitToPayu()">Pay</md-button>
+            </div>
         </md-tab>
         <md-tab label="Netbanking">
             <md-content class="netbanking-tab-content">
@@ -59,15 +75,6 @@
             </md-content>
         </md-tab>
     </md-tabs>
-
-    <div layout="row" layout-padding layout-align="center center">
-      <h2 class="md-title" layout-padding layout-margin>Total Amount</h2>
-      <h2 class="md-display-1 rupee" layout-padding layout-margin>{{cart.total}}</h2>
-    </div>
-
-    <div layout="row" layout-align="center center">
-      <md-button class="md-raised md-primary" ng-click="submitToPayu()">Pay</md-button>
-    </div>
 
 </div>
 

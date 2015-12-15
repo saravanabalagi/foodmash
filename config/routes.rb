@@ -73,6 +73,7 @@ Rails.application.routes.draw do
     resources :payments, only: [:index] do 
       collection do 
         post '/getHash', to: 'payments#get_hash'
+        post '/checkPasswordForCod', to: 'payments#check_password_for_cod'
       end
     end
   end

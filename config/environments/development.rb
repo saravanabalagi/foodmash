@@ -28,7 +28,7 @@ Rails.application.configure do
   ENV['SECRET_ACCESS_KEY'] = 'vSl16qCWCEqtyeOBbK08C7rc4pCW7LipCeL3URXA'
 
   ENV['key'] = '0WccsP'
-  ENV['salt'] = 'K05Q3pqZ'
+  ENV['salt'] = 'dCinwE7R'
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
