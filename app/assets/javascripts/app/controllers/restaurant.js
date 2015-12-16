@@ -2,29 +2,16 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('RestaurantController', ['$scope','Restaurant','$routeParams','toaster','$q','$location','DishType','$timeout', 'Upload', 'Aws', function($scope, Restaurant, $routeParams, toaster, $q, $location, DishType, $timeout, Upload, Aws){
+.controller('RestaurantController', ['$scope','Restaurant','$routeParams','toaster','$q','$location','DishType','$timeout', 'Upload', 'Aws', 'Dish', function($scope, Restaurant, $routeParams, toaster, $q, $location, DishType, $timeout, Upload, Aws, Dish){
 	$scope.restaurant = {};
-	$scope.combos = {};
 	$scope.updatedRestaurant = new Restaurant;
-
-	$scope.$on('$viewContentLoaded', function() {
-    $timeout(function() {
-    	    angular.element(document.querySelector('#load-dishes')).triggerHandler('click');
-    	}, 1000);
-	});
 
 	Restaurant.query({id: $routeParams.id}).then(function(restaurants){
 		if(restaurants.length > 0){
 			$scope.restaurant = restaurants[0];
-			$scope.restaurant.hasCombos().then(function(combos){
-				if(combos.length > 0){
-					$scope.combos = combos;
-				}else{
-					$scope.combos = null;
-				}
-			}, function(err){
-				$scope.combos = null;
-			});
+			$timeout(function(){
+				angular.element(document.querySelector('#load-dishes')).triggerHandler('click');
+			}, 200);
 		}else{
 			$scope.restaurant = null;
 		}

@@ -94,7 +94,7 @@
         </div>
 
         <!-- Dishes -->
-      <div layout="row" ng-controller="DishesController" >
+      <div layout="row" ng-controller="DishesController">
           <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm></div>
           <div layout="column" flex layout-padding layout-margin>
               <md-content flex class="md-display-1" id="load-dishes" ng-click="loadDishes(restaurant.id)">Dishes</md-content>
@@ -150,17 +150,18 @@
 
               <!-- for loop for listing -->
 
-              <!-- item 1 -->
               <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingDishes">
                  <md-progress-circular md-mode="indeterminate"></md-progress-circular>
               </div>
               <dish ng-repeat="dish in dishes"> </dish>
+
               <!-- for loop ends -->
               
           </div>
           <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm> </div>
         </div>
-                <!-- Dishes ends-->
+      <!-- Dishes ends -->
+
 <!-- Restaurant ends -->
    
 
