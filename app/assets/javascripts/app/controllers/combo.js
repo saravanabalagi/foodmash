@@ -13,11 +13,11 @@ angular.module('foodmashApp.controllers')
 			$scope.combo = combos[0];
 	    	$timeout(function(){
 	    	    angular.element(document.querySelector('#load-combo-options')).triggerHandler('click');
-	    	}, 200);
+	    	}, 0);
 
 		    $timeout(function(){
 		    	    angular.element(document.querySelector('#load-combo-dishes')).triggerHandler('click');
-		    }, 200);
+		    }, 0);
 		}else{
 			$scope.combo = null;
 		}

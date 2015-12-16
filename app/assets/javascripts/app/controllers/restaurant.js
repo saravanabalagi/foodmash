@@ -11,7 +11,7 @@ angular.module('foodmashApp.controllers')
 			$scope.restaurant = restaurants[0];
 			$timeout(function(){
 				angular.element(document.querySelector('#load-dishes')).triggerHandler('click');
-			}, 200);
+			}, 0);
 		}else{
 			$scope.restaurant = null;
 		}
