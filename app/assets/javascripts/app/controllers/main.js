@@ -55,6 +55,7 @@ angular.module('foodmashApp.controllers')
 	$scope.selectOption = function(option){
 		$scope.selected = angular.isNumber(option)? $scope.sideNavOptions[option] : option;
 		$scope.loadingComboCards = true;
+		$scope.combos = {};
 		switch(option.name){
 			case "Offers":
 			$scope.offerCombos();
