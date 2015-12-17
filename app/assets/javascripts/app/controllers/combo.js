@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('ComboController', ['$scope', 'Combo', '$location', '$routeParams', 'toaster', '$q','$timeout', 'Upload', 'Aws', function($scope, Combo, $location, $routeParams, toaster, $q, $timeout, Upload, Aws){
+.controller('ComboController', ['$scope', 'Combo', '$location', '$routeParams', 'toaster', '$q', 'Upload', 'Aws', function($scope, Combo, $location, $routeParams, toaster, $q, Upload, Aws){
 
 	$scope.combo = {};
 	$scope.combo_options = {};
@@ -11,13 +11,6 @@ angular.module('foodmashApp.controllers')
 	Combo.query({id: $routeParams.id}).then(function(combos){
 		if(combos.length > 0){
 			$scope.combo = combos[0];
-	    	$timeout(function(){
-	    	    angular.element(document.querySelector('#load-combo-options')).triggerHandler('click');
-	    	}, 0);
-
-		    $timeout(function(){
-		    	    angular.element(document.querySelector('#load-combo-dishes')).triggerHandler('click');
-		    }, 0);
 		}else{
 			$scope.combo = null;
 		}

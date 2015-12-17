@@ -19,6 +19,12 @@ angular.module('foodmashApp.controllers')
 		$scope.dish_types = null;
 	});
 
+	$scope.$watch('combo', function(n, o){
+		if(n.id && $scope.loadingComboOptions){
+			$scope.loadComboOptions($scope.combo.id);
+		}
+	});
+
 	$scope.loadComboOptions = function(combo_id){
 		var d = $q.defer();
 		ComboOption.query({combo_id: combo_id}).then(function(combo_options){
