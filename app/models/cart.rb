@@ -194,6 +194,11 @@ class Cart < ActiveRecord::Base
 		self.order_id
 	end
 
+	def set_payment_method(payment_method)
+		self.payment_method = payment_method
+		self.save!
+	end
+
 	private
 	def calculate_total
 		self.total = orders.to_a.sum{|o| (o.order_items.to_a.sum{|oi| (oi.item.price * oi.quantity) || 0} * o.quantity) || 0}

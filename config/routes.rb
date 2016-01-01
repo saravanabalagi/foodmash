@@ -56,6 +56,7 @@ Rails.application.routes.draw do
         get '/clear', to: 'carts#clear'
         get '/show', to: 'carts#show'
         post '/changeStatus', to: 'carts#change_status'
+        get '/purchasedCarts', to: 'carts#purchased_carts'
       end
     end
 
