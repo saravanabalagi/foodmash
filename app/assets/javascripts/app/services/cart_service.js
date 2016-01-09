@@ -34,7 +34,7 @@ angular.module('foodmashApp.services')
 	};
 
 	this.removeFromCart = function(combo){
-		for(var i = 0;i<service.cart.orders.length;i++){
+		for(var i = service.cart.orders.length - 1; i>=0; i--){
 			if(service.cart.orders[i]["product"]["id"] == combo.id){
 				service.cart.orders[i]["quantity"] -= 1;
 				if(service.cart.orders[i]["quantity"] == 0){

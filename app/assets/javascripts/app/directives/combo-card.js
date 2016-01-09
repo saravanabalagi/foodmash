@@ -33,7 +33,6 @@ angular.module('foodmashApp.directives')
 			};
 
 			$scope.addToCart = function(combo){
-				console.log(combo);
 				pushAllComboDishes(combo);
 				CartService.addToCart(combo, $scope.selectedDishes);
 				setQuantityForCombo();
@@ -135,7 +134,6 @@ angular.module('foodmashApp.directives')
 			function pushAllComboDishes(combo){
 				if(combo.combo_dishes){
 					for(var i=0; i<combo.combo_dishes.length; i++){
-						console.log(combo.combo_dishes[i]);
 						var selectedDish = {"product": {}, "category": {}, "item": {}};
 						selectedDish["product"]["id"] = combo.id;
 						selectedDish["category_id"] = combo["combo_dishes"][i].id;
@@ -147,7 +145,6 @@ angular.module('foodmashApp.directives')
 						selectedDish["added_at"] = Date.now();
 						selectedDish["quantity"] = combo["combo_dishes"][i].quantity;
 						$scope.selectedDishes.push(selectedDish);
-						console.log($scope.selectedDishes);
 					}
 				}
 			};
