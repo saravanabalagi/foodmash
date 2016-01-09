@@ -33,6 +33,7 @@ angular.module('foodmashApp.directives')
 			};
 
 			$scope.addToCart = function(combo){
+				console.log(combo);
 				pushAllComboDishes(combo);
 				CartService.addToCart(combo, $scope.selectedDishes);
 				setQuantityForCombo();
@@ -51,7 +52,7 @@ angular.module('foodmashApp.directives')
 				if($scope.combo.quantity >= 1){
 					$scope.combo.quantity -= 1;
 				}
-				toaster.pop('success', 'Deleted from cart!');
+				toaster.pop('success', 'Removed from cart!');
 			};
 
 			$scope.addComboDish = function(combo_dish){
@@ -134,6 +135,7 @@ angular.module('foodmashApp.directives')
 			function pushAllComboDishes(combo){
 				if(combo.combo_dishes){
 					for(var i=0; i<combo.combo_dishes.length; i++){
+						console.log(combo.combo_dishes[i]);
 						var selectedDish = {"product": {}, "category": {}, "item": {}};
 						selectedDish["product"]["id"] = combo.id;
 						selectedDish["category_id"] = combo["combo_dishes"][i].id;
@@ -145,6 +147,7 @@ angular.module('foodmashApp.directives')
 						selectedDish["added_at"] = Date.now();
 						selectedDish["quantity"] = combo["combo_dishes"][i].quantity;
 						$scope.selectedDishes.push(selectedDish);
+						console.log($scope.selectedDishes);
 					}
 				}
 			};
@@ -158,6 +161,7 @@ angular.module('foodmashApp.directives')
 								$scope.combo.quantity += order.quantity;
 							}
 						});
+						$scope.selectedDishes = [];
 					}
 				});
 			};
