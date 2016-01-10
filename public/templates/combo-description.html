@@ -19,7 +19,7 @@
                 <div class="combo-dish-container" layout="column" flex>
                     <div layout="row">
                         <div class="combo-dish-price"><span class="rupee">{{combo_dish.dish.price}}</span></div>
-                        <md-icon class="combo-dish-label" md-svg-src="{{label_path}}"></md-icon>
+                        <md-icon class="combo-dish-label" md-svg-src="{{offers_path}}"></md-icon>
                     </div>
                     <div class="combo-dish-description-container" layout="column" flex>
                         <div class="combo-dish-name">{{combo_dish.dish.name}}</div>
@@ -37,6 +37,7 @@
                 </div>
             </div>
             <div layout="row" ng-repeat="combo_option in combo.combo_options">
+
                 <div layout="column" class="combo-option-dish" ng-repeat="combo_option_dish in combo_option.combo_option_dishes">
                     <div class="combo-option-dish-img-container">
                         <img ng-src="{{combo_option.dish.picture}}" alt="Combo Option Dish Pic" class="combo-option-dish-img" />
@@ -46,7 +47,7 @@
                             <div class="combo-option-dish-price"><span class="rupee">{{combo_option_dish.dish.price}}</span></div>
                             <md-icon class="combo-option-dish-label" md-svg-src="{{offers_path}}"></md-icon>
                             <span flex></span>
-                            <md-checkbox class="combo-option-dish-selected md-primary" ng-model="combo_option_dish_selected" aria-label="checkbox" ng-init="combo_option_dish_selected=true"></md-checkbox>
+                            <md-checkbox class="combo-option-dish-selected md-primary" aria-label="checkbox" ng-checked="checkIfSelected(combo_option, combo_option_dish)" ng-click="toggleDish(combo, combo_option, combo_option_dish)"></md-checkbox>
                         </div>
                     </div>
                     <div class="combo-option-dish-container" layout="column" flex>
@@ -54,25 +55,27 @@
                             <div class="combo-option-dish-name">{{combo_option_dish.dish.name}}</div>
                             <div class="combo-option-dish-description">{{combo_option_dish.dish.description}}</div>
                         </div>
-                        <div class="combo-option-dish-add-extra">
+                        <div class="combo-option-dish-add-extra" ng-hide="checkIfSelected(combo_option, combo_option_dish)">
                             <md-button class="md-raised" ng-click="add_extra()">
                                 <md-icon md-svg-src="{{cart_path}}"></md-icon>
-                                <span ng-click="add_to_cart()">Add Extra</span>
+                                <span>Add Extra</span>
                             </md-button>
                         </div>
-                        <div class="combo-option-dish-quantity-container" layout="row" layout-align="start center" ng-hide="true">
+                        <div class="combo-option-dish-quantity-container" layout="row" layout-align="start center" 
+                        ng-show="checkIfSelected(combo_option, combo_option_dish)">
                             <div style="margin:auto">
-                                <md-button class="md-icon-button" ng-click="add_quantity()">
+                                <md-button class="md-icon-button" ng-click="removeSelectedDish(combo_option, combo_option_dish)">
                                     <md-icon md-svg-src="{{minus_path}}" aria-label="Decrease"></md-icon>
                                 </md-button>
-                                <span class="combo-option-dish-quantity">{{combo_option.quantity}}</span>
-                                <md-button class="md-icon-button" ng-click="add_quantity()">
+                                <span class="combo-option-dish-quantity">{{showQuantityOfSelectedDish(combo_option, combo_option_dish)}}</span>
+                                <md-button class="md-icon-button" ng-click="selectDish(combo, combo_option, combo_option_dish.dish)">
                                     <md-icon md-svg-src="{{plus_path}}" aria-label="Increase"></md-icon>
                                 </md-button>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" style="-webkit-order: 2; -ms-flex-order: 2; order: 2;">
