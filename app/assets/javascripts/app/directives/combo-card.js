@@ -17,6 +17,7 @@ angular.module('foodmashApp.directives')
 
 			setQuantityForComboItems();
 			setQuantityForCombo();
+			pushDefaultComboOption($scope.combo);
 
 			$scope.selectDish = function(combo, combo_option, dish){
 				var selectedDish = {"product": {}, "item": {}};
@@ -30,13 +31,12 @@ angular.module('foodmashApp.directives')
 				selectedDish["added_at"] = Date.now();
 				selectedDish["quantity"] = 1;
 				checkAndPush(selectedDish)
-				console.log(selectedDish);
 			};
 
 			$scope.removeSelectedDish = function(combo_option, combo_option_dish){
-				if(checkIfSelected(combo_option, combo_option_dish)){
+				if($scope.checkIfSelected(combo_option, combo_option_dish)){
 					for(var i=0; i<$scope.selectedDishes.length; i++){
-						if(combo_option.id == $scope.selectedDishes[i]["category_id"] && combo_option_dish.dish_id == $scope.selectedDishes[i]["item"]["id"]){
+						if(combo_option.id == $scope.selectedDishes[i]["category_id"] && combo_option_dish.dish.id == $scope.selectedDishes[i]["item"]["id"]){
 							$scope.selectedDishes[i]["quantity"] -= 1;
 							if($scope.selectedDishes[i]["quantity"] == 0){
 								$scope.selectedDishes.splice(i, 1);
@@ -49,20 +49,18 @@ angular.module('foodmashApp.directives')
 			$scope.toggleDish = function(combo, combo_option, combo_option_dish){
 				if($scope.checkIfSelected(combo_option, combo_option_dish)){
 					for(var i=0; i<$scope.selectedDishes.length; i++){
-						if(combo_option.id == $scope.selectedDishes[i]["category_id"] && combo_option_dish.dish_id == $scope.selectedDishes[i]["item"]["id"]){
+						if(combo_option.id == $scope.selectedDishes[i]["category_id"] && combo_option_dish.dish.id == $scope.selectedDishes[i]["item"]["id"]){
 							$scope.selectedDishes.splice(i, 1);
 						}
 					}
 				}else{
 					$scope.selectDish(combo, combo_option, combo_option_dish.dish);
-					console.log($scope.checkIfSelected(combo_option, combo_option_dish));
 				}
 			};
 
 			$scope.checkIfSelected = function(combo_option, combo_option_dish){
 				for(var i=0; i<$scope.selectedDishes.length; i++){
-					if(combo_option.id == $scope.selectedDishes[i]["category_id"] && combo_option_dish.dish_id == $scope.selectedDishes[i]["item"]["id"]){
-						console.log('became true');
+					if(combo_option.id == $scope.selectedDishes[i]["category_id"] && combo_option_dish.dish.id == $scope.selectedDishes[i]["item"]["id"]){
 						return true;
 					}
 				}
@@ -78,17 +76,13 @@ angular.module('foodmashApp.directives')
 				return 0;
 			};
 
-			$scope.addToCart = function(combo){
-				pushAllComboDishes(combo);
-				CartService.addToCart(combo, $scope.selectedDishes);
-				setQuantityForCombo();
-				toaster.pop('success' ,'Added to cart!');
-			};
-
 			$scope.addCombo = function(combo){
 				pushAllComboDishes(combo);
 				CartService.addToCart(combo, $scope.selectedDishes);
+				$scope.selectedDishes = [];
 				setQuantityForCombo();
+				setQuantityForComboItems();
+				pushDefaultComboOption($scope.combo);
 				toaster.pop('success', 'Added to cart!');
 			};
 
@@ -135,7 +129,7 @@ angular.module('foodmashApp.directives')
 					}
 				}
 				if(combo.combo_options){
-					if(l == combo.combo_options.length){
+					if(l >= combo.combo_options.length){
 						return false;
 					}else{
 						return true;
@@ -169,19 +163,18 @@ angular.module('foodmashApp.directives')
 
 			function checkAndPush(selectedDish){
 				for(var i = 0; i<$scope.selectedDishes.length; i++){
-					if(selectedDish["product"]["id"] == $scope.selectedDishes[i]["product"]["id"] && selectedDish["category_id"] == $scope.selectedDishes[i]["category_id"] && selectedDish["category_type"] == $scope.selectedDishes[i]["category_type"]){
+					if(selectedDish["product"]["id"] == $scope.selectedDishes[i]["product"]["id"] && selectedDish["category_id"] == $scope.selectedDishes[i]["category_id"] && selectedDish["category_type"] == $scope.selectedDishes[i]["category_type"] && selectedDish["item"]["id"] == $scope.selectedDishes[i]["item"]["id"]){
 						$scope.selectedDishes[i]["quantity"] += 1;
 						return ;
 					}
 				}
 				$scope.selectedDishes.push(selectedDish);
-				console.log($scope.selectedDishes);
 			};
 
 			function pushAllComboDishes(combo){
 				if(combo.combo_dishes){
 					for(var i=0; i<combo.combo_dishes.length; i++){
-						var selectedDish = {"product": {}, "category": {}, "item": {}};
+						var selectedDish = {"product": {}, "item": {}};
 						selectedDish["product"]["id"] = combo.id;
 						selectedDish["category_id"] = combo["combo_dishes"][i].id;
 						selectedDish["category_type"] = "ComboDish";
@@ -196,6 +189,24 @@ angular.module('foodmashApp.directives')
 				}
 			};
 
+			function pushDefaultComboOption(combo){
+				if(combo.combo_options){
+					for(var i=0; i<combo.combo_options.length; i++){
+						var selectedDish = {"product": {}, "item": {}};
+						selectedDish["product"]["id"] = combo.id;
+						selectedDish["category_id"] = combo["combo_options"][i].id;
+						selectedDish["category_type"] = "ComboOption";
+						selectedDish["item"]["id"] = parseInt(combo["combo_options"][i].combo_option_dishes[0].dish.id, 10);
+						selectedDish["item"]["name"] = combo["combo_options"][i].combo_option_dishes[0].dish.name;
+						selectedDish["item"]["description"] = combo["combo_options"][i].combo_option_dishes[0].dish.description;
+						selectedDish["item"]["price"] = parseFloat(combo["combo_options"][i].combo_option_dishes[0].dish.price);
+						selectedDish["added_at"] = Date.now();
+						selectedDish["quantity"] = combo["combo_options"][i].quantity;
+						$scope.selectedDishes.push(selectedDish);
+					}
+				}
+			};
+
 			function setQuantityForCombo(){
 				CartService.getCartInfo().then(function(cart){
 					if($scope.combo){
@@ -205,7 +216,6 @@ angular.module('foodmashApp.directives')
 								$scope.combo.quantity += order.quantity;
 							}
 						});
-						$scope.selectedDishes = [];
 					}
 				});
 			};
