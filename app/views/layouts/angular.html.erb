@@ -27,7 +27,7 @@
           <div class="navbar-header pull-right">
             <ul class="nav navbar-nav pull-left">
               <li class="dropdown pull-left">
-                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="username">Lorem Ipsum</span><i class="fa fa-user fa-append"></i><span class="caret"></span></a>
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="username">User</span><i class="fa fa-user fa-append"></i><span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a>Account<i class="fa fa-user pull-right"></i> </a></li>
                   <li><a>Order History<i class="fa fa-shopping-bag pull-right"></i></a></li>
@@ -63,146 +63,16 @@
         </div>
       </nav>
 
-      <div class="sidebar-wrapper sidebar-open">
-        <div class="sidebar">
-          <section class="sidebar-section location-section">
-            <i class="fa fa-map-marker"></i>
-            <ul>
-              <li class="dropdown location-dropdown">
-                <a href="./index_files/index.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Kottur
-                  <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a>Kottur</a></li>
-                  <li><a>Nandanam</a></li>
-                  <li><a>Teynampet</a></li>
-                  <li><a>RA Puram</a></li>
-                </ul>
-              </li>
-            </ul>
-          </section>
-          <section class="sidebar-section">
-            <form class="sidebar-search-wrapper">
-              <div class="form-group is-empty">
-                <i class="material-icons input-search-icon">search</i>
-                <input type="text" class="form-control col-md-8 input-search" placeholder="Search">
-                <span class="material-input"></span>
-              </div>
-            </form>
-          </section>
-          <section class="sidebar-section">
-            <ul class="sidebar-nav group-size">
-              <li onclick="$(this).toggleClass('active')" class="active">
-                <a>
-                  <span>All Categories</span>
-                  <i class="fa fa-hashtag pull-right"></i>
-                  <div class="ripple-container"></div>
-                </a>
-              </li>
-              <li onclick="$(this).toggleClass('active')">
-                <a>
-                  <span>Budget</span>
-                  <i class="fa fa-coffee pull-right"></i>
-                  <div class="ripple-container"></div>
-                </a>
-              </li>
-              <li onclick="$(this).toggleClass('active')">
-                <a>
-                  <span>Corporate</span>
-                  <i class="fa fa-sitemap pull-right"></i>
-                  <div class="ripple-container"></div>
-                </a>
-              </li>
-              <li onclick="$(this).toggleClass('active')">
-                <a>
-                  <span>Health</span>
-                  <i class="fa fa-heartbeat pull-right"></i>
-                  <div class="ripple-container"></div>
-                </a>
-              </li>
-            </ul>
-          </section>
-          <section class="sidebar-section">
-            <h5>Size</h5>
-            <ul class="sidebar-nav group-size">
-              <li onclick="$(this).toggleClass('active')">
-                <a>
-                  <span>Micro</span>
-                  <i class="icon-user1 pull-right"></i>
-                </a>
-              </li>
-              <li onclick="$(this).toggleClass('active')">
-                <a>
-                  <span>Medium</span>
-                  <i class="icon-user2 pull-right" style="font-size: 18px; margin-top: -3px;"></i>
-                </a>
-              </li>
-              <li onclick="$(this).toggleClass('active')">
-                <a>
-                  <span>Mega</span>
-                  <i class="icon-user3 pull-right" style="font-size: 25px; padding: 0; margin-top: -5px;"></i>
-                </a>
-              </li>
-            </ul>
-          </section>
-          <section class="sidebar-section">
-            <h5>Preference</h5>
-            <ul class="sidebar-nav type">
-              <li onclick="$(this).toggleClass('active')" class="active">
-                <a>
-                  <span>All</span>
-                  <i class="fa fa-hashtag pull-right"></i>
-                </a>
-              </li>
-              <li onclick="$(this).toggleClass('active')">
-                <a>
-                  <span>Veg</span>
-                  <i class="fa fa-leaf pull-right"></i>
-                </a>
-              </li>
-              <li onclick="$(this).toggleClass('active')">
-                <a>
-                  <span>Egg</span>
-                  <i class="icon-egg pull-right"></i>
-                </a>
-              </li>
-              <li onclick="$(this).toggleClass('active')">
-                <a>
-                  <span>Non Veg</span>
-                  <i class="icon-meat pull-right"></i>
-                </a>
-              </li>
-            </ul>
-          </section>
-          <section class="sidebar-section">
-            <h5>Price</h5>
-            <ul class="sidebar-nav price">
-              <li onclick="$(this).toggleClass('active')" class="active">
-                <a>
-                  <span>Low to High</span>
-                  <i class="fa fa-sort-amount-asc pull-right"></i>
-                </a>
-              </li>
-              <li onclick="$(this).toggleClass('active')">
-                <a>
-                  <span>High to Low</span>
-                  <i class="fa fa-sort-amount-desc pull-right"></i>
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
-      </div>
-
       <div class="container">
         <div ng-view></div>
       </div>
 
     <toaster-container toaster-options="{'close-button': true, 'position-class': 'toast-bottom-right'}"></toaster-container>
 
-    <footer>
+    <!-- <footer>
       <span>&copy; Copyright 2015. Meals on Wheels Technology LLP. All rights reserved.</span>
       <div class="btn btn-fab btn-fab-nano btn-dark btn-raised back-to-top"><i class="fa fa-angle-up"></i></div>
-    </footer>
+    </footer> -->
 
     <%= javascript_include_tag "application" %>
   </body>

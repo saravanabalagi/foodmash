@@ -16,11 +16,8 @@ Rails.application.routes.draw do
 
     resources :combos do 
       collection do 
-        get 'getOfferCombos', to: 'combos#get_offer_combos'
-        get 'getMicroCombos', to: 'combos#get_micro_combos'
-        get 'getMediumCombos', to: 'combos#get_medium_combos'
-        get 'getMegaCombos', to: 'combos#get_mega_combos'
         post 'getComboAvailability', to: 'combos#get_combo_availability'
+        get 'loadFromPackagingCentre', to: 'combos#load_from_packaging_centre'
       end
     end
 
