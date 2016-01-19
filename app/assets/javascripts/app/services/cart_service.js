@@ -28,6 +28,7 @@ angular.module('foodmashApp.services')
 					future_order["order_items"].push(order_item);
 				}
 			}
+			console.log(future_order);
 			service.cart.orders.push(future_order);
 			updateCartInfo();
 			return ;
@@ -76,17 +77,27 @@ angular.module('foodmashApp.services')
 
 	function checkWithIncomingOrder(current_order, selected_dishes){
 		 var current_order_items_length = current_order["order_items"].length;
+		 var selected_dishes_length = selected_dishes.length;
+		 console.log(current_order_items_length);
+		 console.log(selected_dishes_length);
 		 var counting_length = 0;
-		 for(var i=0;i<current_order["order_items"].length;i++){
-		 		for(var j=0;j<selected_dishes.length;j++){
-		 			if(current_order["order_items"][i]["item"].id == selected_dishes[j]["item"].id && selected_dishes[j].category_id == current_order["order_items"][i].category_id && selected_dishes[j].category_type == current_order["order_items"][i].category_type && selected_dishes[j]["product"].id == current_order["product"].id && current_order["order_items"][i].quantity == selected_dishes[j].quantity){
-		 				counting_length += 1;
-		 				break;
-		 			}
-		 		}
-		 }
-		 if(counting_length == current_order_items_length){
-		 	return true;
+
+		 if(current_order_items_length == selected_dishes_length){
+			 for(var i=0;i<current_order_items_length;i++){
+			 		for(var j=0;j<selected_dishes_length;j++){
+			 			if(current_order["order_items"][i]["item"]["id"] == selected_dishes[j]["item"]["id"] && selected_dishes[j].category_id == current_order["order_items"][i].category_id && selected_dishes[j].category_type == current_order["order_items"][i].category_type && selected_dishes[j]["product"]["id"] == current_order["product"]["id"] && current_order["order_items"][i].quantity == selected_dishes[j].quantity){
+			 				counting_length += 1;
+			 				break;
+			 			}
+			 		}
+			 }
+			 console.log('counting length : ');
+			 console.log(counting_length);
+			 if(counting_length == selected_dishes_length){
+			 	return true;
+			 }else{
+			 	return false;
+			 }
 		 }else{
 		 	return false;
 		 }
