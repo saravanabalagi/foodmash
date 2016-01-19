@@ -1,0 +1,77 @@
+.loader {
+  background: #111; }
+  .loader div.loader-wrapper {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    text-align: center; }
+    .loader div.loader-wrapper a {
+      color: #CCC; }
+    .loader div.loader-wrapper a:hover, .loader div.loader-wrapper a:focus, .loader div.loader-wrapper a:active {
+      color: #FFF;
+      text-decoration: none;
+      background-color: transparent; }
+    .loader div.loader-wrapper > *:not(:first-child) {
+      margin-top: 20px; }
+    .loader div.loader-wrapper .choose-delivery-location-wrapper {
+      margin-top: 20px;
+      color: #CCC; }
+      .loader div.loader-wrapper .choose-delivery-location-wrapper > *:not(:last-child) {
+        margin-right: 5px; }
+      .loader div.loader-wrapper .choose-delivery-location-wrapper > .dropdown {
+        font-size: 20px; }
+        .loader div.loader-wrapper .choose-delivery-location-wrapper > .dropdown > .dropdown-menu {
+          margin-top: 10px;
+          right: 0; }
+          .loader div.loader-wrapper .choose-delivery-location-wrapper > .dropdown > .dropdown-menu li a {
+            color: #111; }
+          .loader div.loader-wrapper .choose-delivery-location-wrapper > .dropdown > .dropdown-menu li a:hover {
+            color: #000;
+            background-color: #DDD; }
+
+.thumbnail.combo-card {
+  position: relative;
+  -webkit-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.1);
+  -ms-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.1);
+  padding: 0; }
+  .thumbnail.combo-card .caption {
+    padding: 15px;
+    margin-bottom: 40px; }
+    .thumbnail.combo-card .caption > p {
+      font-size: 13px; }
+      .thumbnail.combo-card .caption > p:last-child {
+        position: absolute;
+        margin: 0;
+        bottom: 0;
+        left: 15px;
+        right: 15px; }
+        .thumbnail.combo-card .caption > p:last-child:before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          width: 100%;
+          height: 1px;
+          background-color: rgba(0, 0, 0, 0.1); }
+  .thumbnail.combo-card .quantity-counter {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%); }
+    .thumbnail.combo-card .quantity-counter .quantity {
+      padding: 0px 5px;
+      vertical-align: middle; }
+
+@media (min-width: 991px) and (max-width: 1199px) {
+  .thumbnail.combo-card .caption p:last-child a.btn {
+    padding: 5px; } }
+
+/*# sourceMappingURL=index.css.map */

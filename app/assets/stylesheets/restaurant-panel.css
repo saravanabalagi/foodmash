@@ -1,0 +1,129 @@
+.table-restaurant-panel tr i {
+  transition: all 0.3s ease-in-out; }
+  .table-restaurant-panel tr i:hover {
+    color: #c80a00; }
+.table-restaurant-panel tr th > .label-floating {
+  padding: 0;
+  margin: 0 0 -7px 0; }
+  .table-restaurant-panel tr th > .label-floating > label {
+    font-weight: inherit;
+    color: inherit; }
+  .table-restaurant-panel tr th > .label-floating > input {
+    margin: 0;
+    padding: 0;
+    margin-bottom: -7px;
+    background: none !important; }
+.table-restaurant-panel tr:nth-child(2n) {
+  background-color: #f0f0ff; }
+.table-restaurant-panel tbody tr.active {
+  position: relative;
+  background-color: #333;
+  color: #FFF;
+  /*&:after {
+  	content: "";
+  	display: inline-block;
+  	position: absolute;
+  	right: -20px;
+  	top: 0;
+  	bottom: 0;
+  	border-left: 10px solid #333;
+  	border-top: 10px solid transparent;
+  	border-bottom: 10px solid transparent;
+  }*/ }
+  .table-restaurant-panel tbody tr.active td {
+    background-color: transparent; }
+  .table-restaurant-panel tbody tr.active:hover {
+    background-color: #666; }
+    .table-restaurant-panel tbody tr.active:hover td {
+      background-color: transparent; }
+
+.order-description {
+  padding: 20px; }
+  .order-description h3, .order-description .order-status-wrapper,
+  .order-description .order-status-update-wrapper,
+  .order-description .order-time-elapsed-wrapper {
+    text-align: center; }
+    .order-description h3 .order-status, .order-description h3 .order-time-elapsed, .order-description .order-status-wrapper .order-status, .order-description .order-status-wrapper .order-time-elapsed,
+    .order-description .order-status-update-wrapper .order-status,
+    .order-description .order-status-update-wrapper .order-time-elapsed,
+    .order-description .order-time-elapsed-wrapper .order-status,
+    .order-description .order-time-elapsed-wrapper .order-time-elapsed {
+      font-weight: bold; }
+  .order-description .order-time-elapsed-wrapper {
+    margin-bottom: 30px; }
+  .order-description .order-status-meter-wrapper {
+    margin: 20px 0 30px 0;
+    position: relative;
+    -webkit-text-align: justify;
+    -moz-text-align: justify;
+    -ms-text-align: justify;
+    text-align-last: justify;
+    z-index: 2; }
+    .order-description .order-status-meter-wrapper i.fa {
+      font-size: 20px;
+      background-color: #444;
+      color: #FFF;
+      padding: 10px;
+      border-radius: 40px;
+      border: 1px solid rgba(0, 0, 0, 0.3); }
+    .order-description .order-status-meter-wrapper i.fa.completed {
+      background-color: #FFF;
+      color: #111; }
+    .order-description .order-status-meter-wrapper .order-status-meter {
+      display: inline-block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(50% - 15px);
+      height: 30px;
+      border-radius: 15px;
+      z-index: -1; }
+      .order-description .order-status-meter-wrapper .order-status-meter .progress-bar {
+        background-color: #349C27;
+        border-radius: 15px; }
+  .order-description .order-header {
+    margin-bottom: 10px;
+    -webkit-text-align: justify;
+    -moz-text-align: justify;
+    -ms-text-align: justify;
+    text-align-last: justify; }
+    .order-description .order-header span {
+      display: inline-block; }
+    .order-description .order-header .order-date {
+      font-weight: bold; }
+      .order-description .order-header .order-date:before {
+        font-weight: 100;
+        content: "Date: "; }
+      .order-description .order-header .order-date .order-time {
+        font-weight: 100; }
+    .order-description .order-header .order-amount-wrapper {
+      -webkit-text-align: auto;
+      -moz-text-align: auto;
+      -ms-text-align: auto;
+      text-align-last: auto;
+      font-weight: bold; }
+      .order-description .order-header .order-amount-wrapper:before {
+        font-weight: 100;
+        content: "Total amount: "; }
+      .order-description .order-header .order-amount-wrapper .order-amount:before {
+        content: "Rs."; }
+  .order-description .table-order-description tfoot tr:first-child {
+    border-top: 2px solid rgba(128, 128, 128, 0.15);
+    border-bottom: 2px solid rgba(128, 128, 128, 0.15);
+    background-color: #349C27;
+    color: #FFF;
+    font-weight: 100; }
+  .order-description .table-order-description tfoot tr.additional-notes-wrapper td[colspan='4'] {
+    padding: 30px;
+    text-align: center; }
+    .order-description .table-order-description tfoot tr.additional-notes-wrapper td[colspan='4'] span {
+      display: inline-block;
+      vertical-align: middle; }
+    .order-description .table-order-description tfoot tr.additional-notes-wrapper td[colspan='4'] span i {
+      font-size: 30px; }
+
+@media (max-width: 767px) {
+  .order-history {
+    padding: 0; } }
+
+/*# sourceMappingURL=restaurant-panel.css.map */

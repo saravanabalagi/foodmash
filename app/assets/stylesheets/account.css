@@ -1,0 +1,33 @@
+.user-info div i {
+  padding: 13px; }
+.user-info div .user-phone-prefix {
+  width: 30px; }
+.user-info div input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+.user-info > *:last-child {
+  margin-bottom: 20px; }
+
+.table-addresses thead tr div.new-address > * {
+  font-size: 12px; }
+.table-addresses thead tr div.new-address input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  display: block; }
+  .table-addresses thead tr div.new-address input:first-child {
+    font-size: 15px; }
+.table-addresses tbody tr div.combo span {
+  display: inline-block; }
+.table-addresses tbody tr div.combo span:not(.combo-name) {
+  display: block;
+  font-size: 12px; }
+.table-addresses tbody tr.active {
+  background-color: #dbe9ff; }
+  .table-addresses tbody tr.active td {
+    background-color: transparent; }
+    .table-addresses tbody tr.active td i.fa {
+      color: #349C27; }
+
+/*# sourceMappingURL=account.css.map */

@@ -1,0 +1,26 @@
+/*Signin and Register*/
+.btn-login, .btn-register {
+  padding: 10px 40px;
+  font-size: 17px; }
+
+.login-checkbox, .register-checkbox {
+  padding: 10px 0; }
+
+.login-wrapper, .register-wrapper {
+  padding: 20px;
+  text-align: justify;
+  -moz-text-align-last: justify;
+  -webkit-text-align-last: justify;
+  text-align-last: justify; }
+  .login-wrapper > *, .register-wrapper > * {
+    display: inline-block; }
+
+@media (max-width: 550px) {
+  .login-wrapper, .register-wrapper {
+    text-align: none; }
+    .login-wrapper > *, .register-wrapper > * {
+      display: table;
+      margin: 0 auto 30px; } }
+/*Signin and Register*/
+
+/*# sourceMappingURL=session.css.map */

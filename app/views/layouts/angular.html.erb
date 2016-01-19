@@ -10,32 +10,199 @@
     <%= stylesheet_link_tag "application", :media => "all" %>
     <script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
-  <body ng-controller="MainController" layout="column" ng-cloak>
+  <body ng-controller="MainController" ng-cloak>
 
-    <md-toolbar layout="row" style="z-index:50" class="custom-theme">
-      <div class="md-toolbar-tools">
-        <span>
-            <md-icon class="title-logo" ng-click="routeToRoot()" md-svg-icon="{{logo_hybrid_path}}"></md-icon>
-            <md-icon aria-hidden="true" md-svg-src="{{right_path}}"></md-icon>
-        </span>
-        <span flex></span>
-        <span user-panel></span>
-        <md-button class="menu md-icon-button" hide-gt-md ng-click="toggleSidenav()" aria-label="Filter">
-          <md-tooltip md-direction="down"> Show sidebar </md-tooltip>
-          <md-icon md-svg-icon="{{filter_path}}"></md-icon>
-        </md-button>
-        <md-button class="menu md-icon-button" aria-label="Cart" ng-click="routeToCart()">
-          <md-tooltip md-direction="down"> Cart </md-tooltip>
-          <md-icon md-svg-icon="{{cart_path}}"></md-icon>
-        </md-button>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+        <div class="container">
+          <div class="navbar-header pull-left">
+            <ul class="nav navbar-nav sidebar-options-wrapper pull-left">
+              <li class="sidebar-options" onclick="
+              $('.sidebar-wrapper').toggleClass('slide-and-hide');$('.sidebar-wrapper').toggleClass('slider-open')"><a><i class="fa fa-bars"></i></a></li>
+            </ul>
+            <a class="navbar-brand" href="index.html">
+              <img src="{{logo_transparent}}" />
+              <span class="logo-white">Food</span><span class="logo-red">mash</span>
+            </a>
+          </div>
+          <div class="navbar-header pull-right">
+            <ul class="nav navbar-nav pull-left">
+              <li class="dropdown pull-left">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="username">Lorem Ipsum</span><i class="fa fa-user fa-append"></i><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a>Account<i class="fa fa-user pull-right"></i> </a></li>
+                  <li><a>Order History<i class="fa fa-shopping-bag pull-right"></i></a></li>
+                  <li><a>Admin Panel<i class="fa fa-wrench pull-right"></i></a></li>
+                  <li><a>Contact us<i class="fa fa-phone pull-right"></i></a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a>Logout<i class="fa fa-sign-out pull-right"></i></a></li>
+                </ul>
+              </li>
+              <li class="pull-left">
+                <a>
+                  <span class="cart">Cart</span>
+                  <i class="fa fa-shopping-cart fa-append fa-prepend fa-shopping-cart-custom"></i>
+                  <span class="label label-default label-cart">
+                    <span class="rupee">&#8377; </span>
+                    <span class="cart-total">0</span>
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="navbar-header">
+            <div class="navbar-search-wrapper">
+              <form class="navbar-form navbar-left navbar-search-form">
+                <div class="form-group is-empty">
+                  <i class="material-icons input-search-icon">search</i>
+                  <input type="text" class="form-control col-md-8 input-search" placeholder="Search">
+                  <span class="material-input"></span>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="sidebar-wrapper sidebar-open">
+        <div class="sidebar">
+          <section class="sidebar-section location-section">
+            <i class="fa fa-map-marker"></i>
+            <ul>
+              <li class="dropdown location-dropdown">
+                <a href="./index_files/index.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Kottur
+                  <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a>Kottur</a></li>
+                  <li><a>Nandanam</a></li>
+                  <li><a>Teynampet</a></li>
+                  <li><a>RA Puram</a></li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+          <section class="sidebar-section">
+            <form class="sidebar-search-wrapper">
+              <div class="form-group is-empty">
+                <i class="material-icons input-search-icon">search</i>
+                <input type="text" class="form-control col-md-8 input-search" placeholder="Search">
+                <span class="material-input"></span>
+              </div>
+            </form>
+          </section>
+          <section class="sidebar-section">
+            <ul class="sidebar-nav group-size">
+              <li onclick="$(this).toggleClass('active')" class="active">
+                <a>
+                  <span>All Categories</span>
+                  <i class="fa fa-hashtag pull-right"></i>
+                  <div class="ripple-container"></div>
+                </a>
+              </li>
+              <li onclick="$(this).toggleClass('active')">
+                <a>
+                  <span>Budget</span>
+                  <i class="fa fa-coffee pull-right"></i>
+                  <div class="ripple-container"></div>
+                </a>
+              </li>
+              <li onclick="$(this).toggleClass('active')">
+                <a>
+                  <span>Corporate</span>
+                  <i class="fa fa-sitemap pull-right"></i>
+                  <div class="ripple-container"></div>
+                </a>
+              </li>
+              <li onclick="$(this).toggleClass('active')">
+                <a>
+                  <span>Health</span>
+                  <i class="fa fa-heartbeat pull-right"></i>
+                  <div class="ripple-container"></div>
+                </a>
+              </li>
+            </ul>
+          </section>
+          <section class="sidebar-section">
+            <h5>Size</h5>
+            <ul class="sidebar-nav group-size">
+              <li onclick="$(this).toggleClass('active')">
+                <a>
+                  <span>Micro</span>
+                  <i class="icon-user1 pull-right"></i>
+                </a>
+              </li>
+              <li onclick="$(this).toggleClass('active')">
+                <a>
+                  <span>Medium</span>
+                  <i class="icon-user2 pull-right" style="font-size: 18px; margin-top: -3px;"></i>
+                </a>
+              </li>
+              <li onclick="$(this).toggleClass('active')">
+                <a>
+                  <span>Mega</span>
+                  <i class="icon-user3 pull-right" style="font-size: 25px; padding: 0; margin-top: -5px;"></i>
+                </a>
+              </li>
+            </ul>
+          </section>
+          <section class="sidebar-section">
+            <h5>Preference</h5>
+            <ul class="sidebar-nav type">
+              <li onclick="$(this).toggleClass('active')" class="active">
+                <a>
+                  <span>All</span>
+                  <i class="fa fa-hashtag pull-right"></i>
+                </a>
+              </li>
+              <li onclick="$(this).toggleClass('active')">
+                <a>
+                  <span>Veg</span>
+                  <i class="fa fa-leaf pull-right"></i>
+                </a>
+              </li>
+              <li onclick="$(this).toggleClass('active')">
+                <a>
+                  <span>Egg</span>
+                  <i class="icon-egg pull-right"></i>
+                </a>
+              </li>
+              <li onclick="$(this).toggleClass('active')">
+                <a>
+                  <span>Non Veg</span>
+                  <i class="icon-meat pull-right"></i>
+                </a>
+              </li>
+            </ul>
+          </section>
+          <section class="sidebar-section">
+            <h5>Price</h5>
+            <ul class="sidebar-nav price">
+              <li onclick="$(this).toggleClass('active')" class="active">
+                <a>
+                  <span>Low to High</span>
+                  <i class="fa fa-sort-amount-asc pull-right"></i>
+                </a>
+              </li>
+              <li onclick="$(this).toggleClass('active')">
+                <a>
+                  <span>High to Low</span>
+                  <i class="fa fa-sort-amount-desc pull-right"></i>
+                </a>
+              </li>
+            </ul>
+          </section>
+        </div>
       </div>
-    </md-toolbar>
+
+      <div class="container">
+        <div ng-view></div>
+      </div>
 
     <toaster-container toaster-options="{'close-button': true, 'position-class': 'toast-bottom-right'}"></toaster-container>
 
-    <div id="primary" flex layout="column">
-      <div id="main" ng-view flex layout="column"></div>
-    </div>
+    <footer>
+      <span>&copy; Copyright 2015. Meals on Wheels Technology LLP. All rights reserved.</span>
+      <div class="btn btn-fab btn-fab-nano btn-dark btn-raised back-to-top"><i class="fa fa-angle-up"></i></div>
+    </footer>
 
     <%= javascript_include_tag "application" %>
   </body>

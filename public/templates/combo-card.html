@@ -1,4 +1,4 @@
-<div layout="row" flex class="combo">
+ <!-- <div layout="row" flex class="combo">
     <div class="combo-img-container" ng-click="showDescriptionDialog($event)">
        <img ng-src="{{combo.picture}}" alt="Combo Picture" height="200" width="225" />
         <div class="combo-img-overlay" ng-hide="true"></div>
@@ -16,7 +16,7 @@
                 <li ng-repeat="combo_option in combo.combo_options">
                     <span ng-repeat="combo_option_dish in combo_option.combo_option_dishes">{{combo_option_dish.dish.name}} / </span>
                 </li>
-                <!-- Doesn't work <li ng-repeat="combo_option in combo.combo_options">{{combo_option.getContents}}</li>-->
+                <!-- Doesn't work <li ng-repeat="combo_option in combo.combo_options">{{combo_option.getContents}}</li>
             </ul>
         </div>
         <div class="combo-buy" ng-hide="combo.quantity">
@@ -35,4 +35,27 @@
             </md-button>
         </div>
     </div>
+</div> --> 
+
+ <div class="row">
+
+   <div class="col-sm-6 col-md-4">
+     <div class="thumbnail combo-card">
+       <img src="{{combo.picture}}">
+       <div class="caption">
+         <h4>{{combo.title}}</h4>
+         <p>{{combo.description}}</p>
+         <p>
+           <span class="quantity-counter">
+             <a class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="material-icons">remove</i> </a>
+             <span class="quantity"> 0 </span>
+             <a class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="material-icons">add</i> </a>
+           </span>
+           <a class="btn btn-success" role="button" style="float:right" data-toggle=snackbar data-content="Added to cart" data-timeout="3000"><i class="fa fa-shopping-cart"></i>Buy</a> 
+           <a class="btn btn-primary" role="button" style="float:right; margin-right: 10px"><i class="material-icons">visibility</i>View</a> 
+         </p>
+       </div>
+     </div>
+   </div>
+
 </div>

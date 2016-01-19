@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('comboCard', ['toaster','CartService', '$mdDialog', function(toaster, CartService, $mdDialog){
+.directive('comboCard', ['toaster','CartService', function(toaster, CartService){
 
 	return {
 
@@ -10,7 +10,7 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/combo-card.html',
 
-		controller: ['$scope', 'toaster','CartService', '$mdDialog', function($scope, toaster, CartService, $mdDialog){
+		controller: ['$scope', 'toaster','CartService', function($scope, toaster, CartService){
 
 			$scope.selectedDishes = [];
 			$scope.filling = false;

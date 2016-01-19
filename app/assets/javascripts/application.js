@@ -21,5 +21,12 @@
 //= require angular-aria/angular-aria
 //= require angular-animate/angular-animate
 //= require jquery/dist/jquery
+//= require bootstrap
 //= require ng-file-upload
+//= require material
+//= require ripples
+//= require jquery.matchHeight
+//= require jquery.touchSwipe
+//= require wow
+//= require global
 //= require_tree .

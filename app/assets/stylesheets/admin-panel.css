@@ -1,0 +1,19 @@
+.table-panel tr i {
+  transition: all 0.3s ease-in-out; }
+  .table-panel tr i:hover {
+    color: #c80a00; }
+.table-panel tr th > .label-floating {
+  padding: 0;
+  margin: 0 0 -7px 0; }
+  .table-panel tr th > .label-floating > label {
+    font-weight: inherit;
+    color: inherit; }
+  .table-panel tr th > .label-floating > input {
+    margin: 0;
+    padding: 0;
+    margin-bottom: -7px;
+    background: none !important; }
+.table-panel tr:nth-child(2n) {
+  background-color: #f0f0ff; }
+
+/*# sourceMappingURL=admin-panel.css.map */

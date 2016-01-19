@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources', 
 	'foodmashApp.services', 'ngCookies', 'foodmashApp.directives', 'foodmashApp.controllers', 
-	'foodmashApp.interceptors', 'ngMaterial', 'ngAnimate', 'toaster', 'ngFileUpload', 'ngSanitize'])
+	'foodmashApp.interceptors', 'toaster', 'ngFileUpload', 'ngSanitize'])
 
 .config(['$routeProvider', '$locationProvider', '$httpProvider','railsSerializerProvider', function($routeProvider, $locationProvider, $httpProvider, railsSerializerProvider){
 	
