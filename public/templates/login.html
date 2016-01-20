@@ -1,100 +1,153 @@
 
-       <!-- Sign In -->
-       <div layout="row">
-          <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm></div>
-          <div layout="column" flex layout-padding layout-margin>
-              <md-content flex class="md-display-1">Sign In</md-content>
-              <md-divider class="bottom-margin bottom-padding"></md-divider>
-
-       <div flex="10"></div>
-
-       <div layout="row">
-         <div layout="column" flex offset="33">
-        <form name="login_form" role="form" ng-submit="submitLogin()" autocomplete="on">
-           <md-input-container layout-padding>
-               <label for="login.email">Email Address</label>
-               <input name="login.email" ng-model="login.email" type="email" required>
-           </md-input-container>
-           <md-input-container layout-padding>
-               <label for="login.password">Password</label>
-               <input name="login.password" ng-model="login.password" type="password" required>
-           </md-input-container>
-           <md-switch class="md-primary" layout-align="center center" layout-padding required>
-             Keep me signed in
-           </md-switch>
-           <div layout="row" layout-align="center center">
-             <md-button class="md-raised">Clear</md-button>
-             <md-button class="md-raised md-primary" type="submit">Login</md-button>
+ <div class="signin-section">
+   <h2 align="center">Sign In</h2>
+   <div class="container">
+     
+     <form class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" name="login_form" role="form" ng-submit="submitLogin()" autocomplete="on">
+      <div class="row">
+       <div class="form-group label-floating">
+         <div class="input-group">
+           <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+           <label for="login.email" class="control-label" for="email">Email Address</label>
+           <input name="login.email" ng-model="login.email" type="email" id="addon3a" class="form-control" required>
+           <p class="help-block"></p>
+           <span class="input-group-btn hidden">
+             <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
+               <i class="fa fa-user-plus"></i>
+             </a>
+           </span>
+         </div>
+       </div>
+      </div>
+      <div class="row">
+       <div class="form-group label-floating">
+         <div class="input-group">
+           <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
+           <label for="login.password" class="control-label" for="password">Password</label>
+           <input name="login.password" ng-model="login.password" type="password" id="addon3a" class="form-control" required>
+           <p class="help-block"></p>
+           <span class="input-group-btn hidden">
+             <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
+               <i class="fa fa-question"></i>
+             </a>
+           </span>
+         </div>
+       </div>
+       </div>
+       <div>
+         <div class="row login-wrapper">
+           <div class="checkbox login-checkbox">
+             <label>
+               <input type="checkbox">
+               <span style="padding:10px;">Remember me</span>
+             </label>
            </div>
-        </form>
-           <div layout-padding layout-margin></div>
-           <md-divider></md-divider>
-           
-           <!-- <div layout="row" layout-align="space-between center" layout-padding>
-             <md-button>Forgot Password</md-button>
-             <md-button class="md-primary">Create Account</md-button>
-           </div> -->
-         
-         </div>
-         <div flex>
+           <button type="submit" class="btn btn-raised btn-primary btn-login"><i class="fa fa-sign-in"></i>Login</button>
          </div>
        </div>
+     </form>
 
-      </div>
-   <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm> </div>
+   </div>
  </div>
 
 
-       <!--Sign In ends -->
-
-       <!-- Sign up -->
-
-       <div layout="row">
-          <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm></div>
-          <div layout="column" flex layout-padding layout-margin>
-              <md-content flex class="md-display-1">Sign Up</md-content>
-              <md-divider class="bottom-margin bottom-padding"></md-divider>
-
-
-       <div flex="10"></div>
-
-       <div layout="row">
-         <div layout="column" flex offset="33">
-          <form name="signup_form" role="form" ng-submit="submitSignup()" autocomplete="on">
-             <md-input-container layout-padding>
-                 <label for="signup.name">Name</label>
-                 <input name="signup.name" ng-model="signup.name" required>
-             </md-input-container>
-             <md-input-container layout-padding>
-                 <label for="signup.email">Email</label>
-                 <input name="signup.email" ng-model="signup.email" type="email" required>
-             </md-input-container>
-             <md-input-container layout-padding>
-                 <label for="signup.mobile_no">Phone</label>
-                 <input name="signup.mobile_no" ng-model="signup.mobile_no" type="phone" required>
-             </md-input-container>
-             <md-input-container layout-padding>
-                 <label for="signup.password">Password</label>
-                 <input name="signup.password" ng-model="signup.password" type="password" required>
-             </md-input-container>
-             <md-input-container layout-padding>
-                 <label for="signup.password_confirmation">Password Confirmation</label>
-                 <input name="signup.password_confirmation" ng-model="signup.password_confirmation" type="password" required>
-             </md-input-container>
-             <md-switch layout-align="center center" layout-padding required>
-               I accept all terms and conditions
-             </md-switch>
-             <div layout="row" layout-align="center center">
-               <md-button class="md-raised">Clear</md-button>
-               <md-button class="md-raised md-primary" type="submit">Register</md-button>
-             </div>
-          </form>
+ <div class="register-section">
+   <h2 align="center">Create a new account</h2>
+   <div class="container">
+     
+     <form class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" name="signup_form" role="form" ng-submit="submitSignup()" autocomplete="on">
+      <div class="row">
+       <div class="form-group label-floating">
+         <div class="input-group">
+           <span class="input-group-addon"><i class="fa fa-user"></i></span>
+           <label class="control-label" for="signup.name">Name</label>
+           <input name="signup.name" ng-model="signup.name" type="text" id="addon3a" class="form-control" required>
+           <p class="help-block"></p>
+           <span class="input-group-btn hidden">
+             <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
+               <i class="fa fa-user-plus"></i>
+             </a>
+           </span>
          </div>
-         <div flex> </div>
        </div>
-
-
       </div>
-   <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm> </div>
+      <div class="row">
+       <div class="form-group label-floating">
+         <div class="input-group">
+           <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+           <label class="control-label" for="signup.email">Email Address</label>
+           <input  name="signup.email" ng-model="signup.email" type="email" id="addon3a" class="form-control" required>
+           <p class="help-block"></p>
+           <span class="input-group-btn hidden">
+             <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
+               <i class="fa fa-user-plus"></i>
+             </a>
+           </span>
+         </div>
+       </div>
+      </div>
+      <div class="row">
+       <div class="form-group label-floating">
+         <div class="input-group">
+           <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+           <label class="control-label" for="signup.mobile_no">Phone</label>
+           <input name="signup.mobile_no" ng-model="signup.mobile_no" type="phone" id="addon3a" class="form-control">
+           <p class="help-block"></p>
+           <span class="input-group-btn hidden">
+             <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
+               <i class="fa fa-user-plus"></i>
+             </a>
+           </span>
+         </div>
+       </div>
+      </div>
+      <div class="row">
+       <div class="form-group label-floating">
+         <div class="input-group">
+           <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
+           <label class="control-label" for="signup.password">Password</label>
+           <input name="signup.password" ng-model="signup.password" type="password" id="addon3a" class="form-control" required>
+           <p class="help-block"></p>
+           <span class="input-group-btn hidden">
+             <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
+               <i class="fa fa-question"></i>
+             </a>
+           </span>
+         </div>
+       </div>
+       </div>
+       <div class="row">
+        <div class="form-group label-floating">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
+            <label class="control-label" for="signup.password_confirmation">Password Confirmation</label>
+            <input name="signup.password_confirmation" ng-model="signup.password_confirmation" type="password" id="addon3a" class="form-control" required>
+            <p class="help-block"></p>
+            <span class="input-group-btn hidden">
+              <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
+                <i class="fa fa-question"></i>
+              </a>
+            </span>
+          </div>
+        </div>
+        </div>
+       <div class="row register-wrapper">
+         <div class="checkbox register-checkbox">
+           <label>
+             <input type="checkbox">
+             <span style="padding:10px;">I accept all <a>terms &amp; conditions</a></span>
+           </label>
+         </div>
+         <button type="submit" class="btn btn-raised btn-primary btn-register"><i class="fa fa-user-plus"></i>Register</button>
+       </div>
+     </form>
+
+   </div>
  </div>
-       <!-- Sign up ends -->
+
+
+
+
+
+
+

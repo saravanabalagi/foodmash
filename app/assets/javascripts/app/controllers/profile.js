@@ -18,21 +18,18 @@ angular.module('foodmashApp.controllers')
      $scope.updatedUser = angular.copy(user);
    };
 
-   $scope.updateProfile = function(updateCross){
+   $scope.updateProfile = function(){
      var d = $q.defer();
-     if(!updateCross){
-       if(!$scope.profileUpdateForm.$pristine){
-         $scope.updatedUser.update().then(function(result){
-           toaster.pop('success', 'Profile info updated!');
-           $scope.user = $scope.updatedUser;
-           d.resolve(result);
-         }, function(err){
-           toaster.pop('error', 'Profile info failed to update!');
-           d.reject(err);
-         });
-       }else{
-         d.resolve(null);
-       }
+     if(!$scope.profileUpdateForm.$pristine){
+       $scope.user.update().then(function(result){
+         toaster.pop('success', 'Profile info updated!');
+         d.resolve(result);
+       }, function(err){
+         toaster.pop('error', 'Profile info failed to update!');
+         d.reject(err);
+       });
+     }else{
+       d.resolve(null);
      }
     return d.promise;
    };

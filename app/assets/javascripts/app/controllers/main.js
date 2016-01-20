@@ -69,7 +69,6 @@ angular.module('foodmashApp.controllers')
 	 	};
 
 
-
 	 	$scope.checkIfMainOptionSelected = function(option){
 	 		for(var i=0;i<$scope.selected.length; i++){
 				if($scope.selected[i] == option){

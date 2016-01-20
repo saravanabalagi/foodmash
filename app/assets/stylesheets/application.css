@@ -20,7 +20,4 @@
  *= require animate
  *= require global
  *= require sidebar
- *= require index
- *= require_tree .
- *= require_self
  */

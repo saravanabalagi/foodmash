@@ -19,26 +19,17 @@
               <li class="sidebar-options" onclick="
               $('.sidebar-wrapper').toggleClass('slide-and-hide');$('.sidebar-wrapper').toggleClass('slider-open')"><a><i class="fa fa-bars"></i></a></li>
             </ul>
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" ng-click="routeToRoot()">
               <img src="{{logo_transparent}}" />
               <span class="logo-white">Food</span><span class="logo-red">mash</span>
             </a>
           </div>
+
           <div class="navbar-header pull-right">
             <ul class="nav navbar-nav pull-left">
-              <li class="dropdown pull-left">
-                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="username">User</span><i class="fa fa-user fa-append"></i><span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a>Account<i class="fa fa-user pull-right"></i> </a></li>
-                  <li><a>Order History<i class="fa fa-shopping-bag pull-right"></i></a></li>
-                  <li><a>Admin Panel<i class="fa fa-wrench pull-right"></i></a></li>
-                  <li><a>Contact us<i class="fa fa-phone pull-right"></i></a></li>
-                  <li role="separator" class="divider"></li>
-                  <li><a>Logout<i class="fa fa-sign-out pull-right"></i></a></li>
-                </ul>
-              </li>
+              <user-panel></user-panel>
               <li class="pull-left">
-                <a>
+                <a ng-click="routeToCart()">
                   <span class="cart">Cart</span>
                   <i class="fa fa-shopping-cart fa-append fa-prepend fa-shopping-cart-custom"></i>
                   <span class="label label-default label-cart">
@@ -49,6 +40,7 @@
               </li>
             </ul>
           </div>
+          
           <div class="navbar-header">
             <div class="navbar-search-wrapper">
               <form class="navbar-form navbar-left navbar-search-form">
