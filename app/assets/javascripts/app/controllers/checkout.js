@@ -4,21 +4,21 @@ angular.module('foodmashApp.controllers')
 
 .controller('CheckoutController', ['$scope', '$q', 'toaster','$location','$rootScope','DeliveryAddress','CartService','Cart', function($scope, $q, toaster, $location, $rootScope, DeliveryAddress, CartService, Cart){
 
+	$scope.cart = {};
 	$scope.delivery_addresses = {};
 	$scope.delivery_address = new DeliveryAddress;
-	$scope.cart = {};
 	$scope.loadingDeliveryAddresses = true;
 
-	CartService.getCartInfo().then(function(cart){
-		if(cart.orders.length == 0){
-			toaster.pop('warning', 'Cart is empty!');
-			$location.path("/cart");
-		}else{
-			$scope.cart = cart;
-		}
-	}, function(cart){
-		$scope.cart = cart;
-	});
+	// CartService.getCartInfo().then(function(cart){
+	// 	if(cart.orders.length == 0){
+	// 		toaster.pop('warning', 'Cart is empty!');
+	// 		$location.path("/cart");
+	// 	}else{
+	// 		$scope.cart = cart;
+	// 	}
+	// }, function(cart){
+	// 	$scope.cart = cart;
+	// });
 
 	DeliveryAddress.query({user_id: $rootScope.currentUser.id}).then(function(delivery_addresses){
 		if(delivery_addresses.length > 0){
@@ -40,8 +40,8 @@ angular.module('foodmashApp.controllers')
 		$scope.loadingDeliveryAddresses = false;
 	});
 
-	$scope.isDeliveryAddressSelected = function(){
-		if($scope.cart.delivery_address_id){
+	$scope.isDeliveryAddressSelected = function(delivery_address){
+		if($scope.cart.delivery_address_id == delivery_address.id){
 			return true;
 		}else{
 			return false;

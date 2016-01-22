@@ -17,9 +17,6 @@
 //= require angularjs-toaster/toaster
 //= require angular-sanitize/angular-sanitize
 //= require lodash/lodash
-//= require angular-material/angular-material
-//= require angular-aria/angular-aria
-//= require angular-animate/angular-animate
 //= require jquery/dist/jquery
 //= require bootstrap
 //= require ng-file-upload

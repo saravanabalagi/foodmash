@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.services')
 
-.service('CartService', ['$q','Cart', function($q, Cart){
+.service('CartService', ['$q','Cart','$rootScope', function($q, Cart, $rootScope){
 
 	var service = this;
 	service.cart = {};
@@ -10,6 +10,10 @@ angular.module('foodmashApp.services')
 	service.cart.total = 0;
 
 	refurbishCartFromServer();
+
+	this.setCartGlobally = function(){
+		$rootScope.cart = service.cart;
+	};
 
 	this.addToCart = function(combo, selected_dishes){
 		for(var i = 0;i<service.cart.orders.length;i++){
@@ -28,7 +32,6 @@ angular.module('foodmashApp.services')
 					future_order["order_items"].push(order_item);
 				}
 			}
-			console.log(future_order);
 			service.cart.orders.push(future_order);
 			updateCartInfo();
 			return ;
@@ -61,11 +64,13 @@ angular.module('foodmashApp.services')
 	this.setCartInfo = function(cart){
 		if(cart){
 			service.cart = cart;
+			$rootScope.cart = service.cart;
 		}
 	};
 
 	this.refreshCart = function(){
 		refurbishCartFromServer();
+		$rootScope.cart = service.cart;
 	};
 
 	function refurbishCartFromServer(){
@@ -78,8 +83,6 @@ angular.module('foodmashApp.services')
 	function checkWithIncomingOrder(current_order, selected_dishes){
 		 var current_order_items_length = current_order["order_items"].length;
 		 var selected_dishes_length = selected_dishes.length;
-		 console.log(current_order_items_length);
-		 console.log(selected_dishes_length);
 		 var counting_length = 0;
 
 		 if(current_order_items_length == selected_dishes_length){
@@ -91,8 +94,6 @@ angular.module('foodmashApp.services')
 			 			}
 			 		}
 			 }
-			 console.log('counting length : ');
-			 console.log(counting_length);
 			 if(counting_length == selected_dishes_length){
 			 	return true;
 			 }else{
@@ -115,6 +116,7 @@ angular.module('foodmashApp.services')
 		});
 		
 		service.cart.total = total;
+		$rootScope.cart = service.cart;
 	};
 
 }]);

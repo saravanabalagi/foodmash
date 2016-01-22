@@ -34,11 +34,7 @@ angular.module('foodmashApp.controllers')
 				url: 'https://test.payu.in/_payment',
 				data: $scope.payment
 			}).success(function(data){
-				console.log('success!!');
-				console.log(data);
 			}).error(function(data){
-				console.log('error!!');
-				console.log(data);
 			});
 		}, function(err){
 			toaster.pop('error', 'Could not submit!');

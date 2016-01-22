@@ -2,10 +2,12 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('MainController', ['$scope', 'CombosService', 'AuthService', '$location', 'toaster', '$q', 'Combo', 'CartService', function($scope, CombosService, AuthService, $location, toaster, $q, Combo, CartService){
-	$scope.combos = {};
+.controller('MainController', ['$scope', 'CombosService', 'AuthService', '$location', 'toaster', '$q', 'Combo', '$rootScope', 'CartService', function($scope, CombosService, AuthService, $location, toaster, $q, Combo, $rootScope, CartService){
+		$scope.combos = {};
 		$scope.selected = [];
 		$scope.loadingComboCards = true;
+
+		CartService.setCartGlobally();
 
 		$scope.mainOptions = 
 		[

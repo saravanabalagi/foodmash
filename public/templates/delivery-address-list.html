@@ -1,65 +1,37 @@
 
-<div layout="row" layout-align="center center">
-  <md-radio-button value="{{delivery_address.id}}" class="md-primary address-radio" ng-hide="updateShow" ng-class="{'md-checked' : delivery_address.primary == 1}">
-    <div layout="column" layout-padding>
-      <h1 class="md-title">{{delivery_address.name}}</h1>
-      <div>{{delivery_address.line1}}</div>
-      <div>{{delivery_address.line2}}</div>
-      <div>{{delivery_address.city}}</div>
-      <div>{{delivery_address.pincode}}</div>
-      <div>{{delivery_address.area}}</div>
-      <h1 class="md-subhead">{{delivery_address.contact_no}}</h1>
-    </div>
-  </md-radio-button>
-  <div layout="row" layout-padding ng-hide="updateShow">
-	  <md-button class="md-icon-button md-primary" layout-padding ng-click="updateShow = !updateShow; setUpdate(delivery_address)">
-	    <md-icon md-svg-src="{{edit_path}}"></md-icon>
-	  </md-button>
-	  <md-button class="md-icon-button md-primary" layout-padding ng-click="deleteDeliveryAddress(delivery_address)">
-	    <md-icon md-svg-src="{{bin_path}}"></md-icon>
-	  </md-button>
-	</div>
+ <td ng-click="selectDeliveryAddress(delivery_address)"><i class="fa fa-check-circle"></td>
+ <td>
+   <div class="combo">
+     <span class="combo-name">{{delivery_address.name}}</span>
+     <span>{{delivery_address.line1}}</span>
+     <span>{{delivery_address.line2}}</span>
+     <span>{{delivery_address.area}}</span>
+     <span>{{delivery_address.pincode}}</span>
+     <span>{{delivery_address.city}}</span>
+     <span>{{delivery_address.contact_no}}</span>
+   </div>
 
-	  <form role="form" name="deliveryAddressUpdateForm" ng-submit="updateDeliveryAddress(delivery_address, updateCross)" ng-init="updateShow=false; updateCross = false" ng-show="updateShow">
-	    <div layout="row" layout-padding layout-align="center center">
-	      <md-input-container flex>
-	        <label>name</label>
-	        <input type="text" ng-model="updatedDeliveryAddress.name" />
-	      </md-input-container>
-	       <md-input-container flex>
-	        <label>address line 1</label>
-	        <input ng-model="updatedDeliveryAddress.line1" />
-	      </md-input-container>
-	      <md-input-container flex>
-	        <label>address line 2</label>
-	        <input ng-model="updatedDeliveryAddress.line2" />
-	      </md-input-container>
-	      <md-input-container flex>
-	        <label>city</label>
-	        <input ng-model="updatedDeliveryAddress.city" />
-	      </md-input-container>
-	      <md-input-container flex>
-	        <label>pincode</label>
-	        <input ng-model="updatedDeliveryAddress.pincode" />
-	      </md-input-container>
-	      <md-input-container flex>
-	        <label>area</label>
-	        <input ng-model="updatedDeliveryAddress.area" />
-	      </md-input-container>
-	      <md-input-container flex>
-	        <label>contact no</label>
-	        <input ng-model="updatedDeliveryAddress.contact_no" />
-	      </md-input-container>
-	      <md-input-container flex>
-	        <md-switch ng-model="updatedDeliveryAddress.primary">
-	      </md-switch>
-	      </md-input-container>
-	      <md-button class="md-icon-button" ng-click="updateShow = !updateShow; updateCross = false">
-	        <md-icon md-svg-src="{{done_path}}"></md-icon>
-	      </md-button>
-	      <md-button class="md-icon-button" ng-click="updateShow = !updateShow; updateCross = true">
-	        <md-icon md-svg-src="{{cross_path}}"></md-icon>
-	      </md-button>
-	    </div>
-	  </form>
-</div>
+ </td>
+ <td ng-click="updateShow = !updateShow; setUpdate(delivery_address)"><i class="icon-edit"></i></td>
+ <td ng-click="deleteDeliveryAddress(delivery_address)"><i class="icon-trash"></i></td>
+
+<td ng-show="updateShow"><i class="fa fa-check-circle hidden"></td>
+<td ng-show="updateShow">
+ <div class="new-address">
+   <label>Name</label>
+   <input type="text" placeholder="Full Name" id="new-address-name" ng-model="updatedDeliveryAddress.name" />
+   <label>Address Line 1</label>
+   <input type="text" placeholder="Address Line 1" id="new-address-line-1" ng-model="updatedDeliveryAddress.line1" />
+   <label>Address Line 2</label>
+   <input type="text" placeholder="Address Line 2" id="new-address-line-2" ng-model="updatedDeliveryAddress.line2" />
+   <label>Area</label>
+   <input type="text" placeholder="Area" ng-model="updatedDeliveryAddress.area" />
+   <label>Pincode</label>
+   <input type="text" placeholder="Pincode" ng-model="updatedDeliveryAddress.pincode" />
+   <label>City</label>
+   <input type="text" placeholder="City" ng-model="updatedDeliveryAddress.city" />
+   <label>Contact No</label>
+   <input type="text" placeholder="Contact No" ng-model="updatedDeliveryAddress.contact_no" />
+ </div>
+</td>
+<td ng-show="updateShow" colspan="2" ng-click="updateDeliveryAddress(delivery_address)"><i class="fa fa-check-circle"></i> Save </td>

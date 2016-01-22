@@ -1,9 +1,7 @@
-<!-- Shopping cart -->
     
-<div flex layout="column" layout-align="center center">
-    <!-- Combo in cart -->
+<!-- <div flex layout="column" layout-align="center center">
+
     <order-list ng-repeat="order in cart.orders"></order-list>
-    <!-- Combo in cart ends -->
 
     <div layout="row" layout-padding layout-align="center center">
       <h2 class="md-title" layout-padding layout-margin>Total Amount</h2>
@@ -14,6 +12,115 @@
       <md-button class="md-raised md-primary" ng-disabled="cart.total == 0 || filling" ng-click="routeToCheckout()">Checkout</md-button>
     </div>
       
+</div> -->
+
+
+<div class="col-md-6 order-description">
+  <div class="order-contents">
+    <table class="table table-striped table-hover table-cart">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>In Cart</th>
+          <th style="min-width: 90px">Quantity</th>
+          <th>Amount</th>
+          <th style="width:35px"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr order-list ng-repeat="order in cart.orders"> </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td>Total</td>
+          <td></td>
+          <td><span class="rupee"></span>{{cart.total}}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Tax</td>
+          <td>14.5%</td>
+          <td><span class="rupee"></span>{{cart.tax}}</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Aggregation + Delivery</td>
+          <td></td>
+          <td><span class="rupee"></span>50</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Grand Total</td>
+          <td></td>
+          <td><span class="rupee"></span>{{cart.grand_total}}</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 </div>
 
-<!-- Shopping cart ends -->
+
+<div class="col-md-6 delivery-information">
+    <div class="contact-information-warpper">
+      <div class="user-email-wrapper">
+        <i class="fa fa-envelope"></i>
+        <span class="user-email">{{currentUser.email}}</span>
+        <i class="fa fa-question-circle" data-title="Email Address" data-content="Invoice will be sent to the mentioned email address. To change email address, logout and login with the preferred email address" data-toggle="popover" data-trigger="hover" data-placement="bottom"></i>
+      </div>
+      <div class="user-phone-wrapper">
+        <i class="fa fa-phone"></i>
+        <input type="text" class="user-phone-prefix" value="+91" disabled="true" />
+        <input type="text" class="user-phone" id="user-phone" disabled="true" value="{{currentUser.mobile_no}}" />
+      </div>
+    </div>
+    <table class="table table-striped table-hover table-addresses">
+      <thead>
+        <tr>
+          <th style="width:35px"></th>
+          <th>Choose Address</th>
+          <th style="width:35px"></th>
+          <th style="width:35px"></th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr delivery-address-list ng-repeat="delivery_address in delivery_addresses" 
+        ng-class="{active : isDeliveryAddressSelected(delivery_address)}"> 
+        </tr>
+        
+        <tr class="add-new-address-wrapper">
+          <th></th>
+          <th colspan="3">Deliver to a new address</th>
+        </tr>
+        <tr class="new-address-wrapper">
+          <td><i class="fa fa-check-circle hidden"></td>
+          <td>
+            <div class="new-address" role="form" name="deliveryAddressAddForm">
+              <input type="text" placeholder="Full Name" id="new-address-name" ng-model="delivery_address.name" />
+              <input type="text" placeholder="Address Line 1" id="new-address-line-1" ng-model="delivery_address.line1" />
+              <input type="text" placeholder="Address Line 2" id="new-address-line-2" ng-model="delivery_address.line2" />
+              <input type="text" placeholder="Area" ng-model="delivery_address.area" />
+              <input type="text" placeholder="Pincode" ng-model="delivery_address.pincode" />
+              <input type="text" placeholder="City" ng-model="delivery_address.city" />
+              <input type="text" placeholder="Contact No" ng-model="delivery_address.contact_no" />
+            </div>
+          </td>
+          <td colspan="2" ng-click="addDeliveryAddress()"><i class="fa fa-check-circle"></i> Save </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
+<div class="row">
+  <div class="proceed-to-pay-wrapper">
+    <a class="btn btn-raised btn-info" ng-disabled="proceedToPayment()">
+      Proceed to Pay
+    </a>
+  </div>
+</div>

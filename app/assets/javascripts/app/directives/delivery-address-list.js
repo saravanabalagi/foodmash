@@ -6,7 +6,7 @@ angular.module('foodmashApp.directives')
 
 	return {
 
-		restrict: 'E',
+		restrict: 'A',
 
 		templateUrl: '/templates/delivery-address-list.html',
 
@@ -20,24 +20,17 @@ angular.module('foodmashApp.directives')
 
 			$scope.updateDeliveryAddress = function(delivery_address, updateCross){
 				var d = $q.defer();
-				if(!updateCross){
-					if(!$scope.deliveryAddressUpdateForm.$pristine){
-						$scope.updatedDeliveryAddress.update().then(function(response){
-							toaster.pop('success', 'Delivery Address was updated!');
-							var index = $scope.delivery_addresses.indexOf(delivery_address);
-							if(angular.isNumber(index) && index >= 0){
-								$scope.reload();
-							}
-							d.resolve(response);
-						}, function(err){
-							toaster.pop('error', 'Delivery Address was not updated!');
-							d.reject(err);
-						});
-					}else{
-						$scope.updatedDeliveryAddress = new DeliveryAddress;
-						d.resolve(null);
+				$scope.updatedDeliveryAddress.update().then(function(response){
+					toaster.pop('success', 'Delivery Address was updated!');
+					var index = $scope.delivery_addresses.indexOf(delivery_address);
+					if(angular.isNumber(index) && index >= 0){
+						$scope.reload();
 					}
-				}
+					d.resolve(response);
+				}, function(err){
+					toaster.pop('error', 'Delivery Address was not updated!');
+					d.reject(err);
+				});
 				return d.promise;
 			};
 

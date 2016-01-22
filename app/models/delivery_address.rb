@@ -12,7 +12,7 @@ class DeliveryAddress < ActiveRecord::Base
 	private
 	def falsify_true_records
 		user = User.find self.user_id
-		user.delivery_addresses.where(primary: true).update_all(primary: false) if self.primary
+		user.delivery_addresses.where(primary: true).update_all(primary: false) if (self.primary and self.primary_changed?)
 		return true
 	end
 
