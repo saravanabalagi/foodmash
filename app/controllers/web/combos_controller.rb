@@ -31,7 +31,7 @@ class Web::CombosController < ApplicationController
 	end
 
 	def update
-		if @combo && @combo.update_attributes(combo_update_params)
+		if @combo && @combo.update_attributes!(combo_update_params)
 			render status: 200, json: @combo.as_json(:include => :packaging_centre)
 		else
 			render status: 422, json: @combo.errors.as_json
@@ -47,7 +47,7 @@ class Web::CombosController < ApplicationController
 	end
 
 	def load_from_packaging_centre
-		@loadedFromPackagingCentre = Combo.where(params.permit(:id, :name, :packaging_centre_id))
+		@loadedFromPackagingCentre = Combo.where(params.permit(:id, :name, :packaging_centre_id)).where(active: true)
 		if @loadedFromPackagingCentre
 			render status: 200, json: @loadedFromPackagingCentre.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :price, :description]} } , only: :id} }, only: [:id, :name, :description]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name, :logo]}}, only: [:id, :name, :description, :price, :picture]} }, only: :id } } ], only: [:name, :price, :id, :no_of_purchases, :description, :available, :active, :picture])
 		else
@@ -61,10 +61,10 @@ class Web::CombosController < ApplicationController
 	end
 
 	def combo_params
-		params.require(:combo).permit(:name, :group_size, :no_of_purchases, :description, :active, :picture, :packaging_centre_id)
+		params.require(:combo).permit(:name, :group_size, :no_of_purchases, :description, :active, :picture, :packaging_centre_id, :category)
 	end
 
 	def combo_update_params
-		params.require(:combo).permit(:name, :price, :group_size, :description, :active, :picture, :packaging_centre_id)
+		params.require(:combo).permit(:name, :price, :group_size, :description, :active, :picture, :packaging_centre_id, :category)
 	end
 end

@@ -1,31 +1,64 @@
-<md-list flex-offset="20">
+<div class="sidebar-wrapper sidebar-open">
+  <div class="sidebar">
+   <!--  <section class="sidebar-section">
+      <h5>Main</h5>
+      <ul class="sidebar-nav group-size">
+        <li onclick="$(this).toggleClass('active')" class="active">
+          <a>
+            <span>Dashboard</span>
+            <i class="fa fa-dashboard pull-right"></i>
+          </a>
+        </li>
+        <li onclick="$(this).toggleClass('active')">
+          <a>
+            <span>Projections</span>
+            <i class="fa fa-line-chart pull-right"></i>
+          </a>
+        </li>
+        <li onclick="$(this).toggleClass('active')">
+          <a>
+            <span>Notifications</span>
+            <span class="label pull-right label-primary">2</span>
+          </a>
+        </li>
+      </ul>
+    </section> -->
+    <section class="sidebar-section">
+      <h5>Manage</h5>
+      <ul class="sidebar-nav type">
+        <li ng-repeat="option in panelOptions" ng-class="{active: checkIfSelected(option.alias)}" ng-click="selectPanelOption(option.alias)">
+          <a>
+            <span>{{option.name}}</span>
+            <i class="{{option.icon_class}}"></i>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <section class="sidebar-section">
+      <h5>Change / Edit</h5>
+      <ul class="sidebar-nav price">
+        <li onclick="$(this).toggleClass('active')">
+          <a>
+            <span>Terms</span>
+            <i class="fa fa-shield pull-right"></i>
+          </a>
+        </li>
+        <li onclick="$(this).toggleClass('active')">
+          <a>
+            <span>Discounts</span>
+            <i class="fa fa-inr pull-right"></i>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </div>
+</div>
 
-		<md-menu-item>
-			<md-button ng-click="routeToCombos()">Combos</md-button>
-		</md-menu-item>
 
-		<md-menu-item>
-			<md-button ng-click="routeToRestaurants()">Restaurants</md-button>
-		</md-menu-item>
+<div class="container">
+<div class="row">
 
-		<md-menu-item>
-			<md-button ng-click="routeToDishTypes()">Dish Types</md-button>
-		</md-menu-item>
+	<combos ng-show="checkIfSelected('Combos')"></combos>
 
-		<md-menu-item>
-			<md-button ng-click="routeToCuisines()">Cuisines</md-button>
-		</md-menu-item>
-
-		<md-menu-item>
-			<md-button ng-click="routeToCities()">Cities</md-button>
-		</md-menu-item>
-
-		<md-menu-item>
-			<md-button ng-click="routeToPackagingCentres()">Packaging Centres</md-button>
-		</md-menu-item>
-
-		<md-menu-item>
-			<md-button ng-click="routeToUserRoles()">User Roles</md-button>
-		</md-menu-item>
-
- </md-list>
+</div>
+</div>

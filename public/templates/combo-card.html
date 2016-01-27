@@ -55,7 +55,7 @@
             <span class="quantity">{{combo.quantity}}</span>
             <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="addCombo(combo)"><i class="material-icons">add</i> </a>
           </span>
-          <a class="btn btn-success" role="button" style="float:right" data-toggle=snackbar data-content="Added to cart" data-timeout="3000" ng-hide="combo.quantity"><i class="fa fa-shopping-cart" ng-click="addCombo(combo)"></i>Buy</a> 
+          <a ng-click="addCombo(combo)" class="btn btn-success" role="button" style="float:right" data-toggle=snackbar data-content="Added to cart" data-timeout="3000" ng-hide="combo.quantity"><i class="fa fa-shopping-cart"></i>Buy</a> 
           <a class="btn btn-primary" role="button" style="float:right; margin-right: 10px"><i class="material-icons">visibility</i>View</a> 
         </p>
       </div>

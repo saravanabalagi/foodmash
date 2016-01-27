@@ -6,7 +6,7 @@ angular.module('foodmashApp.directives')
 
 	return {
 
-		restrict: 'E',
+		restrict: 'A',
 
 		templateUrl: '/templates/combo-list.html',
 
@@ -16,6 +16,16 @@ angular.module('foodmashApp.directives')
 
 			$scope.routeToCombo = function(combo){
 				$location.path("/combos/" + combo.id);
+			};
+
+			$scope.toggleCategoryOptionForUpdate = function(){
+				$scope.toggleCategoryOptionForUpdate.counter+=1;
+				$scope.updatedCombo.category = $scope.categoryOptions[$scope.toggleCategoryOptionForUpdate.counter % 4].name;
+			};
+
+			$scope.toggleActiveOptionForUpdate = function(){
+				$scope.toggleActiveOptionForUpdate.counter += 1;
+				$scope.updatedCombo.active = $scope.activeOptions[$scope.toggleActiveOptionForUpdate.counter % 2].value;
 			};
 
 			PackagingCentre.query().then(function(packaging_centres){
@@ -28,9 +38,10 @@ angular.module('foodmashApp.directives')
 				$scope.packaging_centres = null;
 			});
 
-			$scope.updateActiveState = function(combo, active){
+			$scope.updateActiveState = function(combo){
 				var d = $q.defer();
-				combo.update({active: active}).then(function(response){
+				combo.active = !combo.active;
+				combo.update().then(function(response){
 					toaster.pop('success', 'Combo was updated!');
 					var index = $scope.combos.indexOf(combo);
 					if(angular.isNumber(index) && index >= 0){
@@ -39,7 +50,6 @@ angular.module('foodmashApp.directives')
 					d.resolve(response);
 				}, function(err){
 					toaster.pop('error', 'Combo was not updated!');
-					combo.active = !combo.active;
 					d.reject(err);
 				});
 				return d.promise;
@@ -47,6 +57,8 @@ angular.module('foodmashApp.directives')
 
 			$scope.setUpdate = function(combo){
 				$scope.updatedCombo = angular.copy(combo);
+				$scope.toggleCategoryOptionForUpdate.counter = $scope.categoryOptions.filter(function(co){if($scope.updatedCombo.category == co.name){return $scope.categoryOptions.indexOf(co);} });
+				$scope.toggleActiveOptionForUpdate.counter = $scope.updatedCombo.active == true ? 1 : 0;
 			};
 
 			$scope.uploadFiles = function(file, errFiles, updatedCombo){
@@ -85,26 +97,19 @@ angular.module('foodmashApp.directives')
 				}
 			};
 
-			$scope.updateCombo = function(combo, updateCross){
+			$scope.updateCombo = function(combo){
 				var d = $q.defer();
-				if(!updateCross){
-					if(!$scope.comboUpdateForm.$pristine){
-						$scope.updatedCombo.update().then(function(response){
-							toaster.pop('success', 'Combo was updated!');
-							var index = $scope.combos.indexOf(combo);
-							if(angular.isNumber(index) && index >= 0){
-								$scope.combos[index] = $scope.updatedCombo;
-							}
-							d.resolve(response);
-						}, function(err){
-							toaster.pop('error', 'Combo was not updated!');
-							d.reject(err);
-						});
-					}else{
-						$scope.updatedCombo = new Combo;
-						d.resolve(null);
+				$scope.updatedCombo.update().then(function(response){
+					toaster.pop('success', 'Combo was updated!');
+					var index = $scope.combos.indexOf(combo);
+					if(angular.isNumber(index) && index >= 0){
+						$scope.combos[index] = $scope.updatedCombo;
 					}
-				}
+					d.resolve(response);
+				}, function(err){
+					toaster.pop('error', 'Combo was not updated!');
+					d.reject(err);
+				});
 				return d.promise;
 			};
 
