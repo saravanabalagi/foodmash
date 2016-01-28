@@ -2,17 +2,27 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('restaurantList', ['Restaurant', '$q', '$location', 'toaster', 'Upload', 'Aws', function(Restaurant, $q, $location, toaster, Upload, Aws){
+.directive('restaurantList', ['Restaurant', '$q', '$location', 'toaster', 'Upload', 'Aws', 'Areas', function(Restaurant, $q, $location, toaster, Upload, Aws, Areas){
 
 	return {
 
-		restrict: 'E',
+		restrict: 'A',
 
 		templateUrl: '/templates/restaurant-list.html',
 
-		controller: ['$scope', 'Restaurant', '$q', '$location', 'toaster', 'Upload', 'Aws', function($scope, Restaurant, $q, $location, toaster, Upload, Aws){
+		controller: ['$scope', 'Restaurant', '$q', '$location', 'toaster', 'Upload', 'Aws', 'Areas', function($scope, Restaurant, $q, $location, toaster, Upload, Aws, Areas){
 
 			$scope.updatedRestaurant = new Restaurant;
+
+			Areas.query().then(function(areas){
+				if(areas.length > 0){
+					$scope.areas = areas;
+				}else{
+					$scope.areas = null;
+				}
+			}, function(err){
+				$scope.areas = null;
+			});
 
 			$scope.routeToRestaurant = function(restaurant){
 				$location.path("/restaurants/" + restaurant.id);
@@ -58,26 +68,19 @@ angular.module('foodmashApp.directives')
 				}
 			};
 
-			$scope.updateRestaurant = function(restaurant, updateCross){
+			$scope.updateRestaurant = function(restaurant){
 				var d = $q.defer();
-				if(!updateCross){
-					if(!$scope.restaurantUpdateForm.$pristine){
-						$scope.updatedRestaurant.update().then(function(response){
-							toaster.pop('success', 'Restaurant was updated!');
-							var index = $scope.restaurants.indexOf(restaurant);
-							if(angular.isNumber(index) && index >= 0){
-								$scope.restaurants[index] = $scope.updatedRestaurant;
-							}
-							d.resolve(response);
-						}, function(err){
-							toaster.pop('error', 'Restaurant failed to update!');
-							d.reject(err);
-						});
-					}else{
-						$scope.updatedRestaurant = new Restaurant;
-						d.resolve(null);
+				$scope.updatedRestaurant.update().then(function(response){
+					toaster.pop('success', 'Restaurant was updated!');
+					var index = $scope.restaurants.indexOf(restaurant);
+					if(angular.isNumber(index) && index >= 0){
+						$scope.restaurants[index] = $scope.updatedRestaurant;
 					}
-				}
+					d.resolve(response);
+				}, function(err){
+					toaster.pop('error', 'Restaurant failed to update!');
+					d.reject(err);
+				});
 				return d.promise;
 			};
 

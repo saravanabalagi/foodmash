@@ -1,46 +1,55 @@
-  
-<div layout="row">
-     <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm></div>
-     <div layout="column" flex layout-padding layout-margin>
-         <md-content flex class="md-display-1">Restaurants</md-content>
-         <md-divider class="bottom-margin bottom-padding"></md-divider>
 
-<form role="form" name="restaurantAddForm" ng-submit="addRestaurant(addCross)" ng-init="addCross=false">
-  <div layout="row" layout-padding layout-align="center center">
-    <md-button class="md-icon-button">
-      <md-icon md-svg-src="{{avatar_path}}"></md-icon>
-    </md-button>
-    <md-input-container flex>
-      <label>name</label>
-      <input type="text" ng-model="restaurant.name" />
-    </md-input-container>
-    <md-input-container flex>
-      <label>address</label>
-      <input ng-model="restaurant.address" />
-    </md-input-container>
-     <md-input-container flex>
-      <label>branch</label>
-      <input type="text" ng-model="restaurant.branch">
-    </md-input-container>
-    <md-input-container flex>
-      <label>description</label>
-      <input ng-model="restaurant.description" />
-    </md-input-container>
-    <md-button class="md-icon-button" ng-click="addCross=false">
-      <md-icon md-svg-src="{{done_path}}"></md-icon>
-    </md-button>
-    <md-button class="md-icon-button" ng-click="addCross=true">
-      <md-icon md-svg-src="{{cross_path}}"></md-icon>
-    </md-button>
-  </div>
-</form>
+  <div class="col-md-12">
 
-      <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingRestaurants">
-         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-      </div>
-      <restaurant-list ng-repeat="restaurant in restaurants"> </restaurant-list>
-        <!-- Restaurant ends -->
+    <table class="table table-striped table-hover table-panel">
+      <thead>
+      <tr>
+        <th style="width:40px">#</th>
+        <th>
+          <div class="form-group label-floating is-empty">
+            <label class="control-label" for="focusedInput1">Name</label>
+            <input class="form-control" id="focusedInput1" type="text" ng-model="restaurant.name">
+            <span class="material-input"></span>
+            
+          </div>
+        </th>
+        <th>
+          <div class="form-group label-floating is-empty">
+            <label class="control-label" for="focusedInput1">Address</label>
+            <input class="form-control" id="focusedInput1" type="text" ng-model="restaurant.address">
+            <span class="material-input"></span>
+          </div>
+        </th>
+        <th>
+          <div class="form-group label-floating is-empty">
+              <span class="dropdown location-dropdown">
+              <a data-target="#" class="dropdown-toggle" data-toggle="dropdown" ng-init="selectedRestaurant = {};">{{selectedRestaurant.name}}
+                <b class="caret"></b></a>
+                <ul class="dropdown-menu" id="delivery-location-dropdown">
+                  <li ng-repeat="area in areas" ng-click="restaurant.area_id = area.id; selectedRestaurant = area"><a>{{area.name}}</a>
+                  </li>
+                </ul>
+              </span>
+              <span class="material-input"></span>
+            </div>
+        </th>
+        <th>
+          <div class="form-group label-floating is-empty">
+            <label class="control-label" for="focusedInput1">Description</label>
+            <input class="form-control" id="focusedInput1" type="text" ng-model="restaurant.description">
+            <span class="material-input"></span>
+          </div>
+        </th>
+        <th style="width:40px"></th>
+        <th style="width:40px"></th>
+        <th style="width:40px" ng-click="addRestaurant()"><i class="material-icons">add_circle_outline</i></th>
+      </tr>
+      </thead>
+      <tbody>
 
-    </div>
-    <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm> </div>
+      <tr restaurant-list ng-repeat="restaurant in restaurants"> </tr>
+
+      </tbody>
+    </table>
+
   </div>

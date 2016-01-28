@@ -1,28 +1,5 @@
 <div class="sidebar-wrapper sidebar-open">
   <div class="sidebar">
-   <!--  <section class="sidebar-section">
-      <h5>Main</h5>
-      <ul class="sidebar-nav group-size">
-        <li onclick="$(this).toggleClass('active')" class="active">
-          <a>
-            <span>Dashboard</span>
-            <i class="fa fa-dashboard pull-right"></i>
-          </a>
-        </li>
-        <li onclick="$(this).toggleClass('active')">
-          <a>
-            <span>Projections</span>
-            <i class="fa fa-line-chart pull-right"></i>
-          </a>
-        </li>
-        <li onclick="$(this).toggleClass('active')">
-          <a>
-            <span>Notifications</span>
-            <span class="label pull-right label-primary">2</span>
-          </a>
-        </li>
-      </ul>
-    </section> -->
     <section class="sidebar-section">
       <h5>Manage</h5>
       <ul class="sidebar-nav type">
@@ -59,6 +36,8 @@
 <div class="row">
 
 	<combos ng-show="checkIfSelected('Combos')"></combos>
+
+	<restaurants ng-show="checkIfSelected('Restaurants')"></restaurants>
 
 </div>
 </div>

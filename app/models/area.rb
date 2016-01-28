@@ -4,4 +4,5 @@ class Area < ActiveRecord::Base
 	validates :city_id, presence: true
 	belongs_to :city 
 	belongs_to :packaging_centre
+	has_many :restaurants
 end

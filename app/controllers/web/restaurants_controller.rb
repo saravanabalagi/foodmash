@@ -6,7 +6,7 @@ class Web::RestaurantsController < ApplicationController
 	def index
 		@restaurants = Restaurant.where(params.permit(:id))
 		if @restaurants 
-			render status: 200, json: @restaurants.as_json(:include => :dishes)
+			render status: 200, json: @restaurants.as_json(:include => [:dishes, :area])
 		else
 			render status: 404, json: {error: 'Restaurants not found!'}
 		end
@@ -15,7 +15,7 @@ class Web::RestaurantsController < ApplicationController
 	def create
 		@restaurant = Restaurant.new restaurant_params
 		if @restaurant.save! 
-			render status: 201, json: @restaurant.as_json
+			render status: 201, json: @restaurant.as_json(:include => [:dishes, :area])
 		else
 			render status: 422, json: @restaurant.errors.as_json
 		end
@@ -23,7 +23,7 @@ class Web::RestaurantsController < ApplicationController
 
 	def update
 		if @restaurant && @restaurant.update_attributes(restaurant_update_params)
-			render status: 200, json: @restaurant.as_json
+			render status: 200, json: @restaurant.as_json(:include => [:dishes, :area])
 		else
 			render status: 422, json: @restaurant.errors.as_json
 		end
@@ -74,11 +74,11 @@ class Web::RestaurantsController < ApplicationController
 	end
 
 	def restaurant_params
-		params.require(:restaurant).permit(:name, :address, :branch, :picture, :logo, :latitude, :longitude, :description)
+		params.require(:restaurant).permit(:name, :address, :branch, :picture, :logo, :latitude, :longitude, :description, :area_id)
 	end
 
 	def restaurant_update_params
-		params.require(:restaurant).permit(:name, :address, :branch, :picture, :logo, :latitude, :longitude, :description)
+		params.require(:restaurant).permit(:name, :address, :branch, :picture, :logo, :latitude, :longitude, :description, :area_id)
 	end
 
 end
