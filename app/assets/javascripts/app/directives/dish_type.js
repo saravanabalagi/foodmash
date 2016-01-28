@@ -6,7 +6,7 @@ angular.module('foodmashApp.directives')
 
 	return {
 
-		restrict: 'E',
+		restrict: 'A',
 
 		templateUrl: '/templates/dish_type.html',
 
@@ -20,24 +20,17 @@ angular.module('foodmashApp.directives')
 
 			$scope.updateDishType = function(dish_type, updateCross){
 				var d = $q.defer();
-				if(!updateCross){
-					if(!$scope.updateDishTypeForm.$pristine){
-						$scope.updatedDishType.update().then(function(response){
-							toaster.pop('success', 'Dish Type was successfully updated!');
-							var index = $scope.dish_types.indexOf(dish_type);
-							if(angular.isNumber(index) && index >= 0){
-								$scope.dish_types[index] = $scope.updatedDishType;
-							}
-							d.resolve(response);
-						}, function(err){
-							toaster.pop('error', 'Dish Type was not updated!');
-							d.reject(err);
-						});
-					}else{
-						$scope.updatedDishType = new DishType;
-						d.resolve(null);
+				$scope.updatedDishType.update().then(function(response){
+					toaster.pop('success', 'Dish Type was successfully updated!');
+					var index = $scope.dish_types.indexOf(dish_type);
+					if(angular.isNumber(index) && index >= 0){
+						$scope.dish_types[index] = $scope.updatedDishType;
 					}
-				 }
+					d.resolve(response);
+				}, function(err){
+					toaster.pop('error', 'Dish Type was not updated!');
+					d.reject(err);
+				});
 				return d.promise;
 			};
 
