@@ -29,23 +29,8 @@ angular.module('foodmashApp.controllers')
 			{name: "Non Veg", icon_class: "icon-meat pull-right"}
 		];
 
-		$scope.edit_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/edit.svg';
-		$scope.offers_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/offers.svg';
-		$scope.avatar_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/avatar-1.svg';
-		$scope.done_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/done.svg';
-		$scope.cross_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/cross.svg';
-		$scope.bin_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/bin.svg';
-		$scope.add_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/add.svg';
-		$scope.cart_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/cart.svg';
-		$scope.user_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/user.svg';
 		$scope.logo_transparent = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/logo_transparent.png';
-		$scope.filter_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/filter.svg';
-		$scope.wrong_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/wrong.svg';
-		$scope.plus_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/plus.svg';
-		$scope.minus_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/minus.svg';
-		$scope.small_close_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/small_close.svg';
-		$scope.right_path = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/right.svg';
-
+		
 		Combo.loadFromPackagingCentre().then(function(loadedFromPackagingCentre){
 			$scope.combos = loadedFromPackagingCentre;
 			$scope.loadingComboCards = false;
