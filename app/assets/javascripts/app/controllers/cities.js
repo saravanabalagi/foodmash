@@ -20,21 +20,14 @@ angular.module('foodmashApp.controllers')
 		$scope.loadingCities = false;
 	});
 
-	$scope.addCity = function(addCross){
-		if(!addCross){
-			if(!$scope.addCityForm.$pristine){
-				$scope.city.save().then(function(result){
-					toaster.pop('success', 'A new City was created!');
-					$scope.cities.unshift($scope.city);
-					$scope.city = new City;
-				}, function(err){
-					toaster.pop('error', 'Failed to create new City!');
-				});
-			}
-		}else{
+	$scope.addCity = function(){
+		$scope.city.save().then(function(result){
+			toaster.pop('success', 'A new City was created!');
+			$scope.cities.unshift($scope.city);
 			$scope.city = new City;
-			d.resolve(null);
-		}
+		}, function(err){
+			toaster.pop('error', 'Failed to create new City!');
+		});
 	};
 
 }]);

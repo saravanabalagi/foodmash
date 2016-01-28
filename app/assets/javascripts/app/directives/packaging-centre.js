@@ -6,7 +6,7 @@ angular.module('foodmashApp.directives')
 
 	return {
 
-		restrict: 'E',
+		restrict: 'A',
 
 		templateUrl: '/templates/packaging_centre.html',
 
@@ -18,26 +18,19 @@ angular.module('foodmashApp.directives')
 				$scope.updatedPackagingCentre = angular.copy(packaging_centre);
 			};
 
-			$scope.updatePackagingCentre = function(packaging_centre, updateCross){
+			$scope.updatePackagingCentre = function(packaging_centre){
 				var d = $q.defer();
-				if(!updateCross){
-					if(!$scope.updatePackagingCentreForm.$pristine){
-						$scope.updatedPackagingCentre.update().then(function(response){
-							toaster.pop('success', 'Packaging Centre was successfully updated!');
-							var index = $scope.packaging_centres.indexOf(packaging_centre);
-							if(angular.isNumber(index) && index >= 0){
-								$scope.packaging_centres[index] = $scope.updatedPackagingCentre;
-							}
-							d.resolve(response);
-						}, function(err){
-							toaster.pop('error', 'Packaging Centre was not updated!');
-							d.reject(err);
-						});
-					}else{
-						$scope.updatedPackagingCentre = new PackagingCentre;
-						d.resolve(null);
+				$scope.updatedPackagingCentre.update().then(function(response){
+					toaster.pop('success', 'Centre was successfully updated!');
+					var index = $scope.packaging_centres.indexOf(packaging_centre);
+					if(angular.isNumber(index) && index >= 0){
+						$scope.packaging_centres[index] = $scope.updatedPackagingCentre;
 					}
-				 }
+					d.resolve(response);
+				}, function(err){
+					toaster.pop('error', 'Centre was not updated!');
+					d.reject(err);
+				});
 				return d.promise;
 			};
 
@@ -45,10 +38,10 @@ angular.module('foodmashApp.directives')
 				var d = $q.defer();
 				packaging_centre.delete().then(function(response){
 					$scope.packaging_centres.splice($scope.packaging_centres.indexOf(packaging_centre), 1);
-					toaster.pop('success', 'Packaging Centre was succussfully deleted!');
+					toaster.pop('success', 'Centre was succussfully deleted!');
 					d.resolve(response);
 				}, function(err){
-					toaster.pop('error', 'Packaging Centre was not deleted!');
+					toaster.pop('error', 'Centre was not deleted!');
 					d.reject(err);
 				});
 				return d.promise;

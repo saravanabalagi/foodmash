@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('restaurantList', ['Restaurant', '$q', '$location', 'toaster', 'Upload', 'Aws', 'Areas', function(Restaurant, $q, $location, toaster, Upload, Aws, Areas){
+.directive('restaurant', ['Restaurant', '$q', '$location', 'toaster', 'Upload', 'Aws', 'Areas', function(Restaurant, $q, $location, toaster, Upload, Aws, Areas){
 
 	return {
 
