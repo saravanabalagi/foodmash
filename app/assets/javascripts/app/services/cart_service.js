@@ -8,9 +8,10 @@ angular.module('foodmashApp.services')
 	service.cart = {};
 	service.cart.orders = [];
 	service.cart.total = 0;
+		
+	refurbishCartFromServer();
 
 	this.setCartGlobally = function(){
-		refurbishCartFromServer();
 		$rootScope.cart = service.cart;
 	};
 
@@ -75,6 +76,7 @@ angular.module('foodmashApp.services')
 	function refurbishCartFromServer(){
 		Cart.show().then(function(cart){
 			service.cart = cart;
+			$rootScope.cart = service.cart;
 		}, function(err){
 		});
 	};
