@@ -1,0 +1,42 @@
+
+<td>{{$index + 1}}</td>
+<td>{{user.email}}</td>
+<td>
+<ul>
+  <li ng-repeat="role in user.roles">
+    <span>{{role.name}}</span> 
+    <span ng-if="role.name == 'restaurant_admin'"> ({{role.resource.name}}:{{role.resource.area.name}}) </span>
+    <span ng-if="role.name == 'packaging_centre_admin'">({{role.resource.name}})</span>
+    <span ng-click="removeRole(user, role)"><i class="icon-trash"></i></span>
+  </li>
+</ul>
+</td>
+<td ng-init="addShow=false" ng-click="addShow=!addShow; setUser(user)"><i class="icon-edit"></i></td>
+
+<div ng-show="addShow">
+  <div class="form-group label-floating is-empty">
+      <span class="dropdown location-dropdown">
+      <a data-target="#" class="dropdown-toggle" data-toggle="dropdown">{{role_name}}
+        <b class="caret"></b></a>
+        <ul class="dropdown-menu" id="delivery-location-dropdown">
+          <li ng-repeat="r_name in role_names" ng-click="setRoleName(r_name); loadResources()"><a>{{r_name}}</a>
+          </li>
+        </ul>
+      </span>
+      <span class="material-input"></span>
+    </div>
+    <div class="form-group label-floating is-empty" ng-show="role_name=='restaurant_admin' || role_name=='packaging_centre_admin'">
+        <span class="dropdown location-dropdown">
+        <a data-target="#" class="dropdown-toggle" data-toggle="dropdown">{{resource.name}}
+          <b class="caret"></b></a>
+          <ul class="dropdown-menu" id="delivery-location-dropdown">
+            <li ng-repeat="r in resources" ng-click="setResource(r)"><a>{{r.name}}</a>
+              <span ng-show="role_name == 'restaurant_admin'">({{r.area.name}})</span>
+            </li>
+          </ul>
+        </span>
+        <span class="material-input"></span>
+      </div>
+      <div style="width:40px"></div>
+      <div style="width:40px" ng-click="addUserRole()"><i class="material-icons">add_circle_outline</i></div>
+</div>

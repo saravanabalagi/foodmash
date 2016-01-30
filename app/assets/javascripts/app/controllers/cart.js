@@ -18,19 +18,21 @@ angular.module('foodmashApp.controllers')
 		$scope.cart = cart;
 	});
 
-	DeliveryAddress.query({user_id: $rootScope.currentUser.id}).then(function(delivery_addresses){
-		if(delivery_addresses.length > 0){
-			$scope.delivery_addresses = delivery_addresses;
-			setPrimaryAsDeliveryAddress();
-		}else{
-			$scope.delivery_addresses = new Array;
-			$scope.cart.delivery_address_id = null;
-		}
-		$scope.loadingDeliveryAddresses = false;
-	}, function(err){
-		$scope.delivery_addresses = null;
-		$scope.loadingDeliveryAddresses = false;
-	});
+	if($rootScope.currentUser){
+		DeliveryAddress.query({user_id: $rootScope.currentUser.id}).then(function(delivery_addresses){
+			if(delivery_addresses.length > 0){
+				$scope.delivery_addresses = delivery_addresses;
+				setPrimaryAsDeliveryAddress();
+			}else{
+				$scope.delivery_addresses = new Array;
+				$scope.cart.delivery_address_id = null;
+			}
+			$scope.loadingDeliveryAddresses = false;
+		}, function(err){
+			$scope.delivery_addresses = null;
+			$scope.loadingDeliveryAddresses = false;
+		});
+	}
 
 	$scope.isDeliveryAddressSelected = function(delivery_address){
 		if($scope.cart.delivery_address_id == delivery_address.id){
@@ -47,10 +49,27 @@ angular.module('foodmashApp.controllers')
 	};
 
 	$scope.proceedToPayment = function(){
-		if($scope.cart.total == 0 && angular.isNumber($scope.cart.delivery_address_id)){
-			return true;
+		if($scope.cart.total == 0){
+			toaster.pop('info', 'Cart is empty!');
+			return ;
 		}
-		return false;
+		if(!$rootScope.currentUser){
+			toaster.pop('info', 'Login to proceed to Payment');
+			$location.path('/login');
+			$rootScope.storeLocation = '/cart';
+			return ;
+		}
+		if(!angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser){
+			toaster.pop('info', 'Delivery Address needs to be selected!');
+			return ;
+		}
+		if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser){
+			$scope.processPayment();
+		}
+	};
+
+	$scope.processPayment = function(){
+		
 	};
 
 	// $scope.processCart = function(){
@@ -133,7 +152,11 @@ angular.module('foodmashApp.controllers')
 
 	function calcTaxAndGrandTotal(){
 		$scope.cart.tax = parseFloat(($scope.cart.total * 0.145).toFixed(2));
-		$scope.cart.grand_total = $scope.cart.total + $scope.cart.tax + 50.00;
+		if($scope.cart.total && $scope.cart.tax){
+			$scope.cart.grand_total = $scope.cart.total + $scope.cart.tax + 50.00;
+		}else{
+			$scope.cart.grand_total = 0;			
+		}
 	};
 
 	function validateCart(){

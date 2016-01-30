@@ -21,28 +21,19 @@ angular.module('foodmashApp.controllers')
 		$scope.users = null;
 	});
 
-	$scope.addUserRole = function(addCross){
+	$scope.addUserRole = function(){
 		var d = $q.defer();
-		if(!addCross){
-			if(!$scope.userRoleAddForm.$pristine){
-				User.addRole($scope.user.id, $scope.role_name, $scope.resource.id).then(function(user){
-					toaster.pop('success', 'User was assigned a new role!');
-					var index = findUser($scope.user);
-					if(angular.isNumber(index) && index >= 0){
-						$scope.users[index] = user;
-					}
-					d.resolve(user);
-				}, function(err){
-					toaster.pop('error', 'User was not assigned a new role!');
-					d.reject(err);
-				});
-			}else{
-				d.resolve(null);
+		User.addRole($scope.user.id, $scope.role_name, $scope.resource.id).then(function(user){
+			toaster.pop('success', 'User was assigned a new role!');
+			var index = findUser($scope.user);
+			if(angular.isNumber(index) && index >= 0){
+				$scope.users[index] = user;
 			}
-		}else{
-			$scope.user = {}; $scope.role_name = ""; $scope.resource = {};
-			d.resolve(null);
-		}
+			d.resolve(user);
+		}, function(err){
+			toaster.pop('error', 'User was not assigned a new role!');
+			d.reject(err);
+		});
 		return d.promise;
 	};
 

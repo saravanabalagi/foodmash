@@ -1,58 +1,29 @@
 
-<div layout="row">
-  <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm></div>
-  <div layout="column" flex layout-padding layout-margin>
-      <md-content flex class="md-display-1">Users Roles</md-content>
-      <md-divider class="bottom-margin bottom-padding"></md-divider>
-      
-      <!-- add new -->
-      <form role="form" name="userRoleAddForm" ng-submit="addUserRole(addCross)" ng-init="addCross=false">
-        <div layout="row">
-           <md-autocomplete flex required
-              md-selected-item="user"
-              md-search-text="email"
-              md-search-text-change="null"
-              md-selected-item-change="null"
-              md-items="user in searchUsers(email)"
-              md-item-text="user.email"
-              md-floating-label="Users">
-            <md-item-template>
-              <span md-highlight-text="email">{{user.email}}</span>
-            </md-item-template>
-          </md-autocomplete>
-          <md-input-container flex>
-             <label>Roles</label>
-             <md-select ng-model="role_name" ng-change="loadResources(role_name)">
-               <md-option ng-repeat="role in role_names" value="{{role}}">{{role}}</md-option>
-             </md-select>
-          </md-input-container>
-          <md-autocomplete flex required ng-show="role_name == 'restaurant_admin' || role_name == 'packaging_centre_admin'"
-             md-selected-item="resource"
-             md-search-text-change="null"
-             md-selected-item-change="null"
-             md-items="resource in resources"
-             md-item-text="resource.name"
-             md-floating-label="Resources">
-          <md-item-template>
-            <span md-highlight-text="ctrl.searchText">{{resource.name}} : {{resource.branch}}</span>
-          </md-item-template>
-          </md-autocomplete>
-          <div layout="row" layout-align="center center" layout-padding>
-            <md-button class="md-icon-button" layout-padding ng-click="addCross=false">
-              <md-icon  md-svg-src="{{add_path}}"></md-icon>
-            </md-button>
-            <md-button class="md-icon-button" layout-padding ng-click="addCross=true">
-              <md-icon  md-svg-src="{{cross_path}}"></md-icon>
-            </md-button>
-          </div>
-        </div>
-      </form>
-      <!-- add new ends -->
+ <div class="col-md-12">
 
-      <!-- for loop for listing -->
-        <user-role ng-repeat="user in users"> </user-role>
-      <!-- for loop ends -->
-      
+  <div class="form-group label-floating is-empty">
+      <label class="control-label" for="focusedInput1">User</label>
+      <input class="form-control" id="focusedInput1" type="text" ng-model="email" ng-change="searchUsers()" placeholder="search by email">
+      <span class="material-input"></span>
   </div>
-  <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm> </div>
-</div>
+
+   <table class="table table-striped table-hover table-panel">
+     <thead>
+     <tr>
+       <th style="width:40px">#</th>
+       <th>
+           <label class="control-label" for="focusedInput1">Name</label>
+       </th>
+       <th>
+           <label class="control-label" for="focusedInput1">Roles</label>
+       </th>
+     </tr>
+     </thead>
+     <tbody>
+
+        <tr user-role ng-repeat="user in users"></tr>
+
+     </tbody>
+   </table>
+
+ </div>
