@@ -31,13 +31,19 @@ angular.module('foodmashApp.controllers')
 
 		$scope.logo_transparent = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/logo_transparent.png';
 		
-		Combo.loadFromPackagingCentre().then(function(loadedFromPackagingCentre){
-			$scope.combos = loadedFromPackagingCentre;
-			$scope.loadingComboCards = false;
-		}, function(err){
-			$scope.combos = null;
-			$scope.loadingComboCards = false;
-		});
+		if(!$rootScope.combos){
+			Combo.loadFromPackagingCentre().then(function(loadedFromPackagingCentre){
+				$scope.combos = loadedFromPackagingCentre;
+				$rootScope.combos = $scope.combos;
+				$scope.loadingComboCards = false;
+			}, function(err){
+				$scope.combos = null;
+				$rootScope.combos = null;
+				$scope.loadingComboCards = false;
+			});
+		}else{
+			$scope.combos = $rootScope.combos;
+		}
 
 		AuthService.currentUser().then(function(user){
 			$scope.user = user;
