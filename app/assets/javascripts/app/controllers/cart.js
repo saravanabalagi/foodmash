@@ -14,6 +14,7 @@ angular.module('foodmashApp.controllers')
 	CartService.getCartInfo().then(function(cart){
 		$scope.cart = cart;
 		calcTaxAndGrandTotal();
+		console.log($scope.cart);
 	}, function(cart){
 		$scope.cart = cart;
 	});
