@@ -18,20 +18,28 @@ angular.module('foodmashApp.controllers')
 		$scope.cart = cart;
 	});
 
-	if($rootScope.currentUser){
+	if($rootScope.currentUser && !$rootScope.delivery_addresses){
 		DeliveryAddress.query({user_id: $rootScope.currentUser.id}).then(function(delivery_addresses){
 			if(delivery_addresses.length > 0){
 				$scope.delivery_addresses = delivery_addresses;
+				$rootScope.delivery_addresses = delivery_addresses;
 				setPrimaryAsDeliveryAddress();
 			}else{
 				$scope.delivery_addresses = new Array;
 				$scope.cart.delivery_address_id = null;
+				$rootScope.delivery_addresses = null;
 			}
 			$scope.loadingDeliveryAddresses = false;
 		}, function(err){
 			$scope.delivery_addresses = null;
 			$scope.loadingDeliveryAddresses = false;
 		});
+	}else{
+		if($rootScope.delivery_addresses){
+			$scope.delivery_addresses = $rootScope.delivery_addresses;
+		}else{
+			$scope.delivery_addresses = null;
+		}
 	}
 
 	$scope.isDeliveryAddressSelected = function(delivery_address){
@@ -107,13 +115,15 @@ angular.module('foodmashApp.controllers')
 		DeliveryAddress.query({user_id: $rootScope.currentUser.id}).then(function(delivery_addresses){
 		if(delivery_addresses.length > 0){
 			$scope.delivery_addresses = delivery_addresses;
+			$rootScope.delivery_addresses = delivery_addresses;
 			$scope.delivery_addresses.filter(function(delivery_address){
-			setPrimaryAsDeliveryAddress();
+				setPrimaryAsDeliveryAddress();
 			});
 			d.resolve(null);
 		}else{
 			$scope.delivery_addresses = new Array;
 			$scope.cart.delivery_address_id = null;
+			$rootScope.delivery_addresses = null;
 			d.resolve(null);
 		}
 	}, function(err){
