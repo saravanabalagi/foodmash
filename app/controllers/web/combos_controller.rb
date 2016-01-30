@@ -48,8 +48,13 @@ class Web::CombosController < ApplicationController
 
 	def load_from_packaging_centre
 		@loadedFromPackagingCentre = Combo.where(params.permit(:id, :name, :packaging_centre_id)).where(active: true)
+		hash = Digest::SHA1.hexdigest(@loadedFromPackagingCentre.to_a.to_s)
 		if @loadedFromPackagingCentre
-			render status: 200, json: @loadedFromPackagingCentre.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :price, :description]} } , only: :id} }, only: [:id, :name, :description]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name, :logo]}}, only: [:id, :name, :description, :price, :picture]} }, only: :id } } ], only: [:name, :price, :id, :no_of_purchases, :description, :available, :active, :picture])
+			render status: 200, json: {data:
+				{
+					combos: @loadedFromPackagingCentre.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :price, :description]} } , only: :id} }, only: [:id, :name, :description]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name, :logo]}}, only: [:id, :name, :description, :price, :picture]} }, only: :id } } ], only: [:name, :price, :id, :no_of_purchases, :description, :available, :active, :picture]), 
+					hash: hash.as_json}
+				}
 		else
 			render status: 404, json: {error: "Could not load combos"}
 		end

@@ -31,19 +31,31 @@ angular.module('foodmashApp.controllers')
 
 		$scope.logo_transparent = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/logo_transparent.png';
 		
-		if(!$rootScope.combos){
-			Combo.loadFromPackagingCentre().then(function(loadedFromPackagingCentre){
-				$scope.combos = loadedFromPackagingCentre;
-				$rootScope.combos = $scope.combos;
-				$scope.loadingComboCards = false;
-			}, function(err){
-				$scope.combos = null;
-				$rootScope.combos = null;
-				$scope.loadingComboCards = false;
-			});
-		}else{
+		if($rootScope.combos){
 			$scope.combos = $rootScope.combos;
+		}else{
+			$rootScope.combos = null;
+			$rootScope.combos_hash = null;
 		}
+
+		Combo.loadFromPackagingCentre().then(function(loadedFromPackagingCentre){
+			if(!$rootScope.combos_hash){
+				$scope.combos = loadedFromPackagingCentre.data.combos;
+				$rootScope.combos = $scope.combos;
+				$rootScope.combos_hash = loadedFromPackagingCentre.data.hash;
+			}
+			else if($rootScope.combos_hash && loadedFromPackagingCentre.data.hash != $rootScope.combos_hash){
+				$scope.combos = loadedFromPackagingCentre.data.combos;
+				$rootScope.combos = $scope.combos;
+				$rootScope.combos_hash = loadedFromPackagingCentre.data.hash;
+			}
+			$scope.loadingComboCards = false;
+		}, function(err){
+			$scope.combos = null;
+			$rootScope.combos = null;
+			$rootScope.combos_hash = null;
+			$scope.loadingComboCards = false;
+		});
 
 		AuthService.currentUser().then(function(user){
 			$scope.user = user;
