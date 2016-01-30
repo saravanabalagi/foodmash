@@ -214,6 +214,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 		})
 		.when('/', 
 		{
+			controller: 'MainController',
 			templateUrl: '/templates/main.html'
 		}
 		).otherwise({redirectTo: '/'});

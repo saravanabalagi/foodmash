@@ -25,7 +25,8 @@
     <section class="sidebar-section">
       <h5>Preference</h5>
       <ul class="sidebar-nav type">
-        <li ng-repeat="option in preferenceOptions" ng-class="{active: checkIfPreferenceOptionSelected(option)}" ng-click="selectPreferenceOption(option)">
+        <li ng-repeat="option in preferenceOptions" ng-class="{active: checkIfPreferenceOptionSelected(option)}" 
+        ng-click="selectPreferenceOption(option)">
           <a>
             <span>{{option.name}}</span>
             <i class="{{option.icon_class}}"></i>

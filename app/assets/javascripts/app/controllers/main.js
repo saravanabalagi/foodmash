@@ -2,12 +2,10 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('MainController', ['$scope', 'CombosService', 'AuthService', '$location', 'toaster', '$q', 'Combo', '$rootScope', 'CartService', function($scope, CombosService, AuthService, $location, toaster, $q, Combo, $rootScope, CartService){
+.controller('MainController', ['$scope', '$location', 'toaster', '$q', 'Combo', '$rootScope', function($scope, $location, toaster, $q, Combo, $rootScope){
 		$scope.combos = {};
 		$scope.selected = [];
 		$scope.loadingComboCards = true;
-
-		CartService.setCartGlobally();
 
 		$scope.mainOptions = 
 		[
@@ -28,8 +26,6 @@ angular.module('foodmashApp.controllers')
 			{name: "Egg", icon_class: "icon-egg pull-right"},
 			{name: "Non Veg", icon_class: "icon-meat pull-right"}
 		];
-
-		$scope.logo_transparent = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/logo_transparent.png';
 		
 		if($rootScope.combos){
 			$scope.combos = $rootScope.combos;
@@ -44,7 +40,7 @@ angular.module('foodmashApp.controllers')
 				$rootScope.combos = $scope.combos;
 				$rootScope.combos_hash = loadedFromPackagingCentre.data.hash;
 			}
-			else if($rootScope.combos_hash && loadedFromPackagingCentre.data.hash != $rootScope.combos_hash){
+			else if($rootScope.combos_hash && loadedFromPackagingCentre.data.hash !== $rootScope.combos_hash){
 				$scope.combos = loadedFromPackagingCentre.data.combos;
 				$rootScope.combos = $scope.combos;
 				$rootScope.combos_hash = loadedFromPackagingCentre.data.hash;
@@ -56,23 +52,6 @@ angular.module('foodmashApp.controllers')
 			$rootScope.combos_hash = null;
 			$scope.loadingComboCards = false;
 		});
-
-		AuthService.currentUser().then(function(user){
-			$scope.user = user;
-		});
-
-		$scope.$on('user:unset', function(event){
-	  		$scope.user = null;
-	   });
-
-		$scope.routeToCart = function(){
-			$location.path("/cart");
-		};
-
-	 	$scope.routeToRoot = function(){
-	 	 	$location.path("/");
-	 	};
-
 
 	 	$scope.checkIfMainOptionSelected = function(option){
 	 		for(var i=0;i<$scope.selected.length; i++){
