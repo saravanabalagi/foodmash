@@ -5,16 +5,16 @@
       <span class="combo-name">{{order.product.name}}</span>
       <div ng-repeat="order_item in order.order_items">
         <span>{{order_item.quantity}} x {{order_item.item.name}}</span>
-        <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="removeOrderItem(order_item)"><i class="material-icons">remove</i> </a>
-        <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="addOrderItem(order_item)"><i class="material-icons">add</i> </a>
+        <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="removeOrderItem(order_item)"><i class="fa fa-minus-circle"></i> </a>
+        <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="addOrderItem(order_item)"><i class="fa fa-plus-circle"></i> </a>
       </div>
     </div>
   </td>
   <td>
     <span class="quantity-counter">
-      <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="removeOrder(order)"><i class="material-icons">remove</i> </a>
+      <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="removeOrder(order)"><i class="fa fa-minus-circle"></i> </a>
       <span class="quantity"> {{order.quantity}} </span>
-      <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="addOrder(order)"><i class="material-icons">add</i> </a>
+      <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="addOrder(order)"><i class="fa fa-plus-circle"></i> </a>
     </span>
   </td>
   <td><span class="rupee"></span>{{order.total}}</td>

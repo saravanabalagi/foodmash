@@ -7,7 +7,7 @@ angular.module('foodmashApp.controllers')
   $scope.user = {};
   $scope.updatedUser = new User;
 
-  User.query($rootScope.currentUser.id).then(function(users){
+  User.query({id: $rootScope.currentUser.id}).then(function(users){
     if(users.length > 0){
       $scope.user = users[0];
     }else{
