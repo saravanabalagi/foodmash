@@ -1,44 +1,44 @@
 @font-face {
   font-family: 'Segoe UI';
-  src: url("segoeui/segoeui.eot");
+  src: url("assets/segoeui/segoeui.eot");
   /* IE9 Compat Modes */
-  src: url("segoeui/segoeui.eot?#iefix") format("embedded-opentype"), url("segoeui/segoeui.woff") format("woff"), url("segoeui/segoeui.ttf") format("truetype"), url("segoeui/segoeui.svgz") format("svg"), url("segoeui/segoeui.svg") format("svg");
+  src: url("assets/segoeui/segoeui.eot?#iefix") format("embedded-opentype"), url("assets/segoeui/segoeui.woff") format("woff"), url("assets/segoeui/segoeui.ttf") format("truetype"), url("assets/segoeui/segoeui.svgz") format("svg"), url("assets/segoeui/segoeui.svg") format("svg");
   /* Legacy iOS */ }
 @font-face {
   font-family: 'Segoe UI Light';
-  src: url("segoeui/segoeuil.eot");
+  src: url("assets/segoeui/segoeuil.eot");
   /* IE9 Compat Modes */
-  src: url("segoeui/segoeuil.eot?#iefix") format("embedded-opentype"), url("segoeui/segoeuil.woff") format("woff"), url("segoeui/segoeuil.ttf") format("truetype"), url("segoeui/segoeuil.svgz") format("svg"), url("segoeui/segoeuil.svg") format("svg");
+  src: url("assets/segoeui/segoeuil.eot?#iefix") format("embedded-opentype"), url("assets/segoeui/segoeuil.woff") format("woff"), url("assets/segoeui/segoeuil.ttf") format("truetype"), url("assets/segoeui/segoeuil.svgz") format("svg"), url("assets/segoeui/segoeuil.svg") format("svg");
   /* Legacy iOS */ }
 @font-face {
   font-family: 'Segoe UI Semibold';
-  src: url("segoeui/segoeuisb.eot");
+  src: url("assets/segoeui/segoeuisb.eot");
   /* IE9 Compat Modes */
-  src: url("segoeui/segoeuisb.eot?#iefix") format("embedded-opentype"), url("segoeui/segoeuisb.woff") format("woff"), url("segoeui/segoeuisb.ttf") format("truetype"), url("segoeui/segoeuisb.svgz") format("svg"), url("segoeui/segoeuisb.svg") format("svg");
+  src: url("assets/segoeui/segoeuisb.eot?#iefix") format("embedded-opentype"), url("assets/segoeui/segoeuisb.woff") format("woff"), url("assets/segoeui/segoeuisb.ttf") format("truetype"), url("assets/segoeui/segoeuisb.svgz") format("svg"), url("assets/segoeui/segoeuisb.svg") format("svg");
   /* Legacy iOS */ }
 @font-face {
   font-family: 'Myriad Pro';
-  src: url("myriadpro/myriadpro.eot");
+  src: url("assets/myriadpro/myriadpro.eot");
   /* IE9 Compat Modes */
-  src: url("myriadpro/myriadpro.eot?#iefix") format("embedded-opentype"), url("myriadpro/myriadpro.woff") format("woff"), url("myriadpro/myriadpro.ttf") format("truetype"), url("myriadpro/myriadpro.svgz") format("svg"), url("myriadpro/myriadpro.svg") format("svg");
+  src: url("assets/myriadpro/myriadpro.eot?#iefix") format("embedded-opentype"), url("assets/myriadpro/myriadpro.woff") format("woff"), url("assets/myriadpro/myriadpro.ttf") format("truetype"), url("assets/myriadpro/myriadpro.svgz") format("svg"), url("assets/myriadpro/myriadpro.svg") format("svg");
   /* Legacy iOS */ }
 @font-face {
   font-family: 'Myriad Pro Condensed';
-  src: url("myriadpro/myriadproc.eot");
+  src: url("assets/myriadpro/myriadproc.eot");
   /* IE9 Compat Modes */
-  src: url("myriadpro/myriadproc.eot?#iefix") format("embedded-opentype"), url("myriadpro/myriadproc.woff") format("woff"), url("myriadpro/myriadproc.ttf") format("truetype"), url("myriadpro/myriadproc.svgz") format("svg"), url("myriadpro/myriadproc.svg") format("svg");
+  src: url("assets/myriadpro/myriadproc.eot?#iefix") format("embedded-opentype"), url("assets/myriadpro/myriadproc.woff") format("woff"), url("assets/myriadpro/myriadproc.ttf") format("truetype"), url("assets/myriadpro/myriadproc.svgz") format("svg"), url("assets/myriadpro/myriadproc.svg") format("svg");
   /* Legacy iOS */ }
 @font-face {
   font-family: 'Myriad Pro Semibold';
-  src: url("myriadpro/myriadprosb.eot");
+  src: url("assets/myriadpro/myriadprosb.eot");
   /* IE9 Compat Modes */
-  src: url("myriadpro/myriadprosb.eot?#iefix") format("embedded-opentype"), url("myriadpro/myriadprosb.woff") format("woff"), url("myriadpro/myriadprosb.ttf") format("truetype"), url("myriadpro/myriadprosb.svgz") format("svg"), url("myriadpro/myriadprosb.svg") format("svg");
+  src: url("assets/myriadpro/myriadprosb.eot?#iefix") format("embedded-opentype"), url("assets/myriadpro/myriadprosb.woff") format("woff"), url("assets/myriadpro/myriadprosb.ttf") format("truetype"), url("assets/myriadpro/myriadprosb.svgz") format("svg"), url("assets/myriadpro/myriadprosb.svg") format("svg");
   /* Legacy iOS */ }
 @font-face {
   font-family: 'Myriad Pro Semibold';
-  src: url("myriadpro/myriadprosb.eot");
+  src: url("assets/myriadpro/myriadprosb.eot");
   /* IE9 Compat Modes */
-  src: url("myriadpro/myriadprosb.eot?#iefix") format("embedded-opentype"), url("myriadpro/myriadprosb.woff") format("woff"), url("myriadpro/myriadprosb.ttf") format("truetype"), url("myriadpro/myriadprosb.svgz") format("svg"), url("myriadpro/myriadprosb.svg") format("svg");
+  src: url("assets/myriadpro/myriadprosb.eot?#iefix") format("embedded-opentype"), url("assets/myriadpro/myriadprosb.woff") format("woff"), url("assets/myriadpro/myriadprosb.ttf") format("truetype"), url("assets/myriadpro/myriadprosb.svgz") format("svg"), url("assets/myriadpro/myriadprosb.svg") format("svg");
   /* Legacy iOS */ }
 html {
   height: 100%;
@@ -112,7 +112,7 @@ h3, .h3 {
   width: 100%;
   height: 100%;
   z-index: 9999;
-  background: url("/logo_loading.gif") 50% 50% no-repeat #111; }
+  background: url("assets/logo_loading.gif") 50% 50% no-repeat #111; }
 
 .logo-white {
   color: white !important; }

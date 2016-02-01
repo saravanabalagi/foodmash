@@ -12,16 +12,16 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 
 	$routeProvider
 	
-	.when('/users/:user_id', {
+	.when('/account', {
 	    controller: 'ProfileController',
 	    templateUrl: '/templates/profile.html', 
 	    resolve: {
 	      user:
-	      function($q, $route, $location, AuthService, toaster, User, $routeParams) {
+	      function($q, $rootScope, $location, AuthService, toaster, User) {
 	        var d = $q.defer(); 
 
 	        AuthService.currentUser().then(function(user) { 
-	          if(user && user.id == $route.current.params.user_id) {
+	          if(user && user.id == $rootScope.currentUser.id) {
 	            d.resolve();
 	          } else {
 	          	toaster.pop('error', 'Unauthorized!');

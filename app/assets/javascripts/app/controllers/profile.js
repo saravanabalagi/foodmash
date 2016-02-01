@@ -2,16 +2,19 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('ProfileController', ['$scope', '$routeParams', 'User','$q','toaster', function($scope, $routeParams, User, $q, toaster){
+.controller('ProfileController', ['$scope', 'User','$q','toaster', 'AuthService', '$rootScope', function($scope, User, $q, toaster, AuthService, $rootScope){
 
   $scope.user = {};
   $scope.updatedUser = new User;
 
-  User.query({id: $routeParams.user_id})
-  .then(function(users) {
+  User.query($rootScope.currentUser.id).then(function(users){
     if(users.length > 0){
       $scope.user = users[0];
+    }else{
+      $scope.user = null;
     }
+  }, function(err){
+    $scope.user = null;
   });
 
   $scope.setUpdate = function(user){
@@ -19,19 +22,13 @@ angular.module('foodmashApp.controllers')
    };
 
    $scope.updateProfile = function(){
-     var d = $q.defer();
-     if(!$scope.profileUpdateForm.$pristine){
-       $scope.user.update().then(function(result){
-         toaster.pop('success', 'Profile info updated!');
-         d.resolve(result);
-       }, function(err){
-         toaster.pop('error', 'Profile info failed to update!');
-         d.reject(err);
-       });
-     }else{
-       d.resolve(null);
-     }
-    return d.promise;
+     $scope.user.update().then(function(user){
+       toaster.pop('success', 'Profile info updated!');
+       $scope.user = user;
+       AuthService.updateCurrentUser(user);
+     }, function(err){
+       toaster.pop('error', 'Profile info failed to update!');
+     });
    };
 
 }]);
