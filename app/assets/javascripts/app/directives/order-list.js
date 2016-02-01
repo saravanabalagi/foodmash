@@ -48,6 +48,9 @@ angular.module('foodmashApp.directives')
 				var index = findOrderInCart(order.id);
 				order.quantity -= 1;
 				if(angular.isNumber(index) && index >= 0){
+					if(order.quantity == 0){
+						$scope.deleteOrder(order);
+					}
 					if(order.quantity >= 1 && order.quantity <=50){
 						$scope.updateCartInfo();
 						$scope.filling = false;

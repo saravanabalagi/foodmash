@@ -161,7 +161,7 @@ angular.module('foodmashApp.controllers')
 	};
 
 	function calcTaxAndGrandTotal(){
-		$scope.cart.tax = parseFloat(($scope.cart.total * 0.145).toFixed(2));
+		$scope.cart.tax = parseFloat(($scope.cart.total * 0.02).toFixed(2));
 		if($scope.cart.total && $scope.cart.tax){
 			$scope.cart.grand_total = $scope.cart.total + $scope.cart.tax + 50.00;
 		}else{
