@@ -144,28 +144,6 @@ angular.module('foodmashApp.directives')
 				}
 			};
 
-			$scope.showDescriptionDialog = function(ev){
-			    $mdDialog.show({
-			        controller: DialogController,
-			        templateUrl: '/templates/combo-description.html',
-			        parent: angular.element(document.body),
-			        scope: $scope,
-			        preserveScope: true,
-			        targetEvent: ev,
-			        clickOutsideToClose:true
-			    });
-			};
-
-			function DialogController($scope, $mdDialog){
-			    $scope.hide = function(){
-			        $mdDialog.hide();
-			    };
-
-			    $scope.cancel = function(){
-			        $mdDialog.cancel();
-			    };
-			};
-
 			function checkAndPush(selectedDish){
 				for(var i = 0; i<$scope.selectedDishes.length; i++){
 					if(selectedDish["product"]["id"] == $scope.selectedDishes[i]["product"]["id"] && selectedDish["category_id"] == $scope.selectedDishes[i]["category_id"] && selectedDish["category_type"] == $scope.selectedDishes[i]["category_type"] && selectedDish["item"]["id"] == $scope.selectedDishes[i]["item"]["id"]){

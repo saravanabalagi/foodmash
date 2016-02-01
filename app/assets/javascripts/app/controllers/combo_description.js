@@ -40,8 +40,10 @@ angular.module('foodmashApp.controllers')
 			for(var i=0; i<$scope.selectedDishes.length; i++){
 				if(combo_option.id == $scope.selectedDishes[i]["category_id"] && combo_option_dish.dish.id == $scope.selectedDishes[i]["item"]["id"]){
 					$scope.selectedDishes[i]["quantity"] -= 1;
-					if($scope.selectedDishes[i]["quantity"] == 0){
+					if($scope.selectedDishes[i]["quantity"] == 0 && checkAndRemove($scope.combo, combo_option)){
 						$scope.selectedDishes.splice(i, 1);
+					}else{
+						$scope.selectedDishes[i]["quantity"] = 1;
 					}
 				}
 			}
@@ -106,7 +108,7 @@ angular.module('foodmashApp.controllers')
 
 	$scope.removeComboDish = function(combo_dish){
 		$scope.combo.combo_dishes.filter(function(cdish){
-			if(cdish.id == combo_dish.id && cdish.quantity >= 1){
+			if(cdish.id == combo_dish.id && cdish.quantity > 1){
 				cdish.quantity -= 1;
 			}
 		});
@@ -141,28 +143,6 @@ angular.module('foodmashApp.controllers')
 		}
 	};
 
-	$scope.showDescriptionDialog = function(ev){
-	    $mdDialog.show({
-	        controller: DialogController,
-	        templateUrl: '/templates/combo-description.html',
-	        parent: angular.element(document.body),
-	        scope: $scope,
-	        preserveScope: true,
-	        targetEvent: ev,
-	        clickOutsideToClose:true
-	    });
-	};
-
-	function DialogController($scope, $mdDialog){
-	    $scope.hide = function(){
-	        $mdDialog.hide();
-	    };
-
-	    $scope.cancel = function(){
-	        $mdDialog.cancel();
-	    };
-	};
-
 	function checkAndPush(selectedDish){
 		for(var i = 0; i<$scope.selectedDishes.length; i++){
 			if(selectedDish["product"]["id"] == $scope.selectedDishes[i]["product"]["id"] && selectedDish["category_id"] == $scope.selectedDishes[i]["category_id"] && selectedDish["category_type"] == $scope.selectedDishes[i]["category_type"] && selectedDish["item"]["id"] == $scope.selectedDishes[i]["item"]["id"]){
@@ -171,6 +151,20 @@ angular.module('foodmashApp.controllers')
 			}
 		}
 		$scope.selectedDishes.push(selectedDish);
+	};
+
+	function checkAndRemove(combo, combo_option){
+		var count = 0;
+		$scope.selectedDishes.filter(function(selectedDish){
+			if(selectedDish["product"]["id"] == combo.id && selectedDish["category_id"] == combo_option.id){
+				count += 1;
+			}
+		});
+		if(count == 1){
+			return false;
+		}else if(count > 1){
+			return true;
+		}
 	};
 
 	function pushAllComboDishes(combo){
