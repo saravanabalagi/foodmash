@@ -10,7 +10,7 @@ class Api::V1::CombosController < ApiApplicationController
 			render status: 200, json: {success: true, 
 			data: 
 			{
-				combos: @combos.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => [{:restaurant => {only: [:id, :name, :logo]}}, {:cuisine => {only: :name}}], only: [:id, :name, :description, :label, :price, :picture]} } , only: :id} }, only: [:id, :name, :description, :priority]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name, :logo]}}, only: [:id, :name, :description, :label, :price, :picture] } }, only: [:id, :priority] } } ], only: [:name, :id, :no_of_purchases, :description, :group_size, :available, :label, :price, :picture]), 
+				combos: @combos.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => [{:restaurant => {only: [:id, :name, :logo]}}], only: [:id, :name, :description, :label, :price, :picture]} } , only: :id} }, only: [:id, :name, :description, :priority]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name, :logo]}}, only: [:id, :name, :description, :label, :price, :picture] } }, only: [:id, :priority] } } ], only: [:name, :id, :no_of_purchases, :description, :group_size, :available, :label, :price, :picture]), 
 				cart: @cart.as_json(:include => {:orders => {:include => {:product => {only: :id}}, only: [:id, :quantity, :total]} }, only: [:id, :total]) } 
 			}
 		else
