@@ -7,12 +7,6 @@ angular.module('foodmashApp.controllers')
 	$scope.combos = {};
 	$scope.updatedRestaurant = new Restaurant;
 
-	$scope.$on('$viewContentLoaded', function() {
-    $timeout(function() {
-    	    angular.element(document.querySelector('#load-dishes')).triggerHandler('click');
-    	}, 1000);
-	});
-
 	Areas.query().then(function(areas){
 		if(areas.length > 0){
 		  $scope.areas = areas;		

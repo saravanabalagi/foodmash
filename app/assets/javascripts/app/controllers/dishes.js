@@ -30,6 +30,12 @@ angular.module('foodmashApp.controllers')
 		$scope.cuisines = null;
 	});
 
+	$scope.$watch('restaurant', function(n, o){
+		if(n.id && $scope.loadingDishes){
+			$scope.loadDishes($scope.restaurant.id);
+		}
+	});
+
 	$scope.loadDishes = function(restaurant_id){
 		var d = $q.defer();
 		Dish.query({restaurant_id: restaurant_id}).then(function(dishes){
