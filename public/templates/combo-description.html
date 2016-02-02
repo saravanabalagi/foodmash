@@ -39,9 +39,9 @@
             <div layout="row" ng-repeat="combo_option in combo.combo_options">
                 <div layout="column" class="combo-option-dish" ng-repeat="combo_option_dish in combo_option.combo_option_dishes">
                     <div class="combo-option-dish-img-container">
-                        <img ng-src="{{combo_option.dish.picture}}" alt="Combo Option Dish Pic" class="combo-option-dish-img" />
+                        <img ng-src="{{combo_option_dish.dish.picture}}" alt="Combo Option Dish Pic" class="combo-option-dish-img" />
                         <div class="combo-option-dish-img-overlay"></div>
-                            <img ng-src="{{combo_option.dish.restaurant.logo}}" alt="Restaurant Logo" class="combo-option-dish-restaurant-img" />
+                            <img ng-src="{{combo_option_dish.dish.restaurant.logo}}" alt="Restaurant Logo" class="combo-option-dish-restaurant-img" />
                         <div layout="row" class="combo-option-dish-price-label">
                             <div class="combo-option-dish-price"><span class="rupee">{{combo_option_dish.dish.price}}</span></div>
                             <md-icon class="combo-option-dish-label" md-svg-src="{{offers_path}}"></md-icon>
