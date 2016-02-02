@@ -52,6 +52,8 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'tzinfo-data'
 #for payment gateway integration
 
+gem 'material_icons'
+
 group :production do
   gem 'execjs'
   gem 'pg'
