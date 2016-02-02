@@ -52,7 +52,7 @@ class Web::CombosController < ApplicationController
 		if @loadedFromPackagingCentre
 			render status: 200, json: {data:
 				{
-					combos: @loadedFromPackagingCentre.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :price, :description]} } , only: :id} }, only: [:id, :name, :description]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name, :logo]}}, only: [:id, :name, :description, :price, :picture]} }, only: :id } } ], only: [:name, :price, :id, :no_of_purchases, :description, :available, :active, :picture]), 
+					combos: @loadedFromPackagingCentre.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name]}}, only: [:id, :name, :price, :description, :picture]} } , only: :id} }, only: [:id, :name, :description]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name, :logo]}}, only: [:id, :name, :description, :price, :picture]} }, only: :id } } ], only: [:name, :price, :id, :no_of_purchases, :description, :available, :active, :picture]), 
 					hash: hash.as_json}
 				}
 		else
