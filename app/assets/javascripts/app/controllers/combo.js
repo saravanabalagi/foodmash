@@ -7,6 +7,7 @@ angular.module('foodmashApp.controllers')
 	$scope.combo = {};
 	$scope.combo_options = {};
 	$scope.updatedCombo = new Combo;
+	$scope.categories = [{name: 'regular'}, {name: 'budget'}, {name: 'corporate'}, {name: 'health'}];
 
 	$scope.$on('$viewContentLoaded', function() {
     $timeout(function() {

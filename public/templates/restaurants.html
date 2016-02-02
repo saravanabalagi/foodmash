@@ -19,8 +19,11 @@
       <input ng-model="restaurant.address" />
     </md-input-container>
      <md-input-container flex>
-      <label>branch</label>
-      <input type="text" ng-model="restaurant.branch">
+      <label>Area</label>
+      <md-select ng-model="restaurant.area_id">
+        <md-option ng-repeat="area in areas" value="{{area.id}}">{{area.name}}
+        </md-option>
+      </md-select>
     </md-input-container>
     <md-input-container flex>
       <label>description</label>

@@ -6,6 +6,7 @@ angular.module('foodmashApp.controllers')
 
 	$scope.combo = new Combo;
 	$scope.combos = {};
+	$scope.categories = [{name: 'regular'}, {name: 'budget'}, {name: 'corporate'}, {name: 'health'}];
 	$scope.loadingCombos = true;
 
 	Combo.query().then(function(combos){

@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('restaurantList', ['Restaurant', '$q', '$location', 'toaster', 'Upload', 'Aws', function(Restaurant, $q, $location, toaster, Upload, Aws){
+.directive('restaurantList', ['Restaurant', '$q', '$location', 'toaster', 'Upload', 'Aws', 'Areas', function(Restaurant, $q, $location, toaster, Upload, Aws, Areas){
 
 	return {
 
@@ -10,9 +10,19 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/restaurant-list.html',
 
-		controller: ['$scope', 'Restaurant', '$q', '$location', 'toaster', 'Upload', 'Aws', function($scope, Restaurant, $q, $location, toaster, Upload, Aws){
+		controller: ['$scope', 'Restaurant', '$q', '$location', 'toaster', 'Upload', 'Aws', 'Areas', function($scope, Restaurant, $q, $location, toaster, Upload, Aws, Areas){
 
 			$scope.updatedRestaurant = new Restaurant;
+
+			Areas.query().then(function(areas){
+				if(areas.length > 0){
+				  $scope.areas = areas;		
+				}else{
+				  $scope.areas = new Array;
+				}
+			}, function(err){
+				$scope.areas = null;
+			});
 
 			$scope.routeToRestaurant = function(restaurant){
 				$location.path("/restaurants/" + restaurant.id);

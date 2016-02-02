@@ -28,9 +28,12 @@
       <label>description</label>
       <input ng-model="updatedRestaurant.description" />
     </md-input-container>
-     <md-input-container flex>
-      <label>branch</label>
-      <input type="text" ng-model="updatedRestaurant.branch" />
+    <md-input-container flex>
+      <label>Area</label>
+      <md-select ng-model="updatedRestaurant.area_id">
+        <md-option ng-repeat="area in areas" value="{{area.id}}">{{area.name}}
+        </md-option>
+      </md-select>
     </md-input-container>
     <md-input-container flex>
       <label>latitude</label>
@@ -71,7 +74,7 @@
                       </div>
                 </div>
                 <div flex="40" class="md-whiteframe-z2" layout-margin layout="column" layout-align="space-around center" layout-padding>
-                  <h1 class="md-title"> {{restaurant.branch}} </h1>
+                  <h1 class="md-title"> {{restaurant.area.name}} </h1>
                   <md-content>{{restaurant.address}}</md-content>
                   <div layout="row" layout-align="center center" layout-padding>
                     <md-button class="md-raised">Call</md-button>

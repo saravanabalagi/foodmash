@@ -5,6 +5,7 @@
       </md-button>
     <md-content flex ng-click="routeToCombo(combo)">{{combo.name}}</md-content>
     <md-content flex>{{combo.group_size}}</md-content>
+    <md-content flex>{{combo.category}}</md-content>
     <md-content flex>{{combo.description}}</md-content>
     <md-content flex><md-switch ng-model="combo.active" ng-change="updateActiveState(combo, combo.active)"></md-switch></md-content>
     <md-content flex>{{combo.packaging_centre.name}}</md-content>
@@ -30,6 +31,13 @@
      <md-input-container flex>
       <label>group size</label>
       <input type="text" ng-model="updatedCombo.group_size">
+    </md-input-container>
+    <md-input-container flex>
+      <label>Category</label>
+      <md-select ng-model="updatedCombo.category">
+        <md-option ng-repeat="category in categories" value="{{category.name}}">{{category.name}}
+        </md-option>
+      </md-select>
     </md-input-container>
     <md-input-container flex>
       <label>description</label>

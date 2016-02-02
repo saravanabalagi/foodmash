@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('RestaurantController', ['$scope','Restaurant','$routeParams','toaster','$q','$location','DishType','$timeout', 'Upload', 'Aws', function($scope, Restaurant, $routeParams, toaster, $q, $location, DishType, $timeout, Upload, Aws){
+.controller('RestaurantController', ['$scope','Restaurant','$routeParams','toaster','$q','$location','DishType','$timeout', 'Upload', 'Aws', 'Areas', function($scope, Restaurant, $routeParams, toaster, $q, $location, DishType, $timeout, Upload, Aws, Areas){
 	$scope.restaurant = {};
 	$scope.combos = {};
 	$scope.updatedRestaurant = new Restaurant;
@@ -11,6 +11,16 @@ angular.module('foodmashApp.controllers')
     $timeout(function() {
     	    angular.element(document.querySelector('#load-dishes')).triggerHandler('click');
     	}, 1000);
+	});
+
+	Areas.query().then(function(areas){
+		if(areas.length > 0){
+		  $scope.areas = areas;		
+		}else{
+		  $scope.areas = new Array;
+		}
+	}, function(err){
+		$scope.areas = null;
 	});
 
 	Restaurant.query({id: $routeParams.id}).then(function(restaurants){

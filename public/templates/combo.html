@@ -29,6 +29,13 @@
       <input type="text" ng-model="updatedCombo.group_size" />
     </md-input-container>
     <md-input-container flex>
+      <label>Category</label>
+      <md-select ng-model="updatedCombo.category">
+        <md-option ng-repeat="category in categories" value="{{category.name}}">{{category.name}}
+        </md-option>
+      </md-select>
+    </md-input-container>
+    <md-input-container flex>
       <label>description</label>
       <input ng-model="updatedCombo.description" />
     </md-input-container>
@@ -58,6 +65,7 @@
                 <div flex layout="column" layout-align="space-around center" layout-padding layout-align="space-around start">
                   <md-content>Price: <span class="rupee">{{combo.price}}</span></md-content>
                   <md-content>Group Size: {{combo.group_size}}</md-content>
+                  <md-content>Description: {{combo.category}}</md-content>
                   <md-content>Description: {{combo.description}}</md-content>
                 </div>
             </div>

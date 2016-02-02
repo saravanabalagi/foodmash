@@ -5,7 +5,7 @@
       </md-button>
     <md-content flex ng-click="routeToRestaurant(restaurant)">{{restaurant.name}}</md-content>
     <md-content flex>{{restaurant.address}}</md-content>
-    <md-content flex>{{restaurant.branch}}</md-content>
+    <md-content flex>{{restaurant.area.name}}</md-content>
     <md-content flex>{{restaurant.description}}</md-content>
     <md-button class="md-icon-button" ng-click="updateShow = !updateShow; setUpdate(restaurant)">
       <md-icon md-svg-src="{{edit_path}}"></md-icon>
@@ -31,8 +31,11 @@
       <input ng-model="updatedRestaurant.address" />
     </md-input-container>
      <md-input-container flex>
-      <label>branch</label>
-      <input type="text" ng-model="updatedRestaurant.branch">
+      <label>Area</label>
+      <md-select ng-model="updatedRestaurant.area_id">
+        <md-option ng-repeat="area in areas" value="{{area.id}}">{{area.name}}
+        </md-option>
+      </md-select>
     </md-input-container>
     <md-input-container flex>
       <label>description</label>

@@ -23,6 +23,13 @@
       <input type="text" ng-model="combo.group_size">
     </md-input-container>
     <md-input-container flex>
+      <label>Category</label>
+      <md-select ng-model="combo.category">
+        <md-option ng-repeat="category in categories" value="{{category.name}}">{{category.name}}
+        </md-option>
+      </md-select>
+    </md-input-container>
+    <md-input-container flex>
       <label>description</label>
       <input ng-model="combo.description" />
     </md-input-container>
