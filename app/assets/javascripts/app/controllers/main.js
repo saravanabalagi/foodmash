@@ -197,6 +197,7 @@ angular.module('foodmashApp.controllers')
 			}else{
 				if($scope.selected.size == 0){
 					$scope.combos = $filter('filter')($scope.loadedFromPackagingCentre, {label: option.alias});
+					console.log($scope.combos);
 				}else{
 					$filter('filter')($scope.loadedFromPackagingCentre, {label: option.alias}).filter(function(combo){
 						if($scope.combos.indexOf(combo) == -1){
