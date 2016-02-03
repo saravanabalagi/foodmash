@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('ProfileController', ['$scope', 'User','$q','toaster', 'AuthService', '$rootScope', function($scope, User, $q, toaster, AuthService, $rootScope){
+.controller('ProfileController', ['$scope', 'User','$q','toaster', '$rootScope', function($scope, User, $q, toaster, $rootScope){
 
   $scope.user = {};
   $scope.updatedUser = new User;
@@ -25,7 +25,8 @@ angular.module('foodmashApp.controllers')
      $scope.user.update().then(function(user){
        toaster.pop('success', 'Profile info updated!');
        $scope.user = user;
-       AuthService.updateCurrentUser(user);
+       $rootScope.currentUser.name = user.name;
+       $rootScope.currentUser.mobile_no = user.mobile_no;
      }, function(err){
        toaster.pop('error', 'Profile info failed to update!');
      });
