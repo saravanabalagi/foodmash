@@ -2,29 +2,31 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('MainController', ['$scope', '$location', 'toaster', '$q', 'Combo', '$rootScope', function($scope, $location, toaster, $q, Combo, $rootScope){
-		$scope.combos = {};
-		$scope.selected = [];
+.controller('MainController', ['$scope', '$location', 'toaster', '$q', 'Combo', '$rootScope', '$filter', function($scope, $location, toaster, $q, Combo, $rootScope, $filter){
+		$scope.loadedFromPackagingCentre = [];
+		$scope.combos = [];
+		$scope.selected = new Set();
 		$scope.loadingComboCards = true;
 
 		$scope.mainOptions = 
 		[
-			{name: "All", icon_class: "fa fa-hashtag pull-right"},
-			{name: "Budget", icon_class: "fa fa-coffee pull-right"},
-			{name: "Corporate", icon_class: "fa fa-sitemap pull-right"},
-			{name: "Health", icon_class: "fa fa-heartbeat pull-right"}
+			{name: "All", icon_class: "fa fa-hashtag pull-right", alias: ''},
+			{name: "Regular", icon_class: "fa fa-cutlery pull-right", alias: 'regular'},
+			{name: "Budget", icon_class: "fa fa-coffee pull-right", alias: 'budget'},
+			{name: "Corporate", icon_class: "fa fa-sitemap pull-right", alias: 'corporate'},
+			{name: "Health", icon_class: "fa fa-heartbeat pull-right", alias: 'health'}
 		];
 		$scope.sizeOptions = 
 		[
-		   {name: "Micro", icon_class: "icon-user1 pull-right", style: ""},
-		   {name: "Medium", icon_class: "icon-user2 pull-right", style: "font-size: 18px; margin-top: -3px;"},
-		   {name: "Mega", icon_class: "icon-user3 pull-right", style: "font-size: 25px; padding: 0; margin-top: -5px;"}
+		   {name: "Micro", icon_class: "icon-user1 pull-right", style: "", alias: 1},
+		   {name: "Medium", icon_class: "icon-user2 pull-right", style: "font-size: 18px; margin-top: -3px;", alias: 2},
+		   {name: "Mega", icon_class: "icon-user3 pull-right", style: "font-size: 25px; padding: 0; margin-top: -5px;", alias: 3}
 		];
 		$scope.preferenceOptions = 
 		[
-			{name: "Veg", icon_class: "fa fa-leaf pull-right"},
-			{name: "Egg", icon_class: "icon-egg pull-right"},
-			{name: "Non Veg", icon_class: "icon-meat pull-right"}
+			{name: "Veg", icon_class: "fa fa-leaf pull-right", alias: 'veg'},
+			{name: "Egg", icon_class: "icon-egg pull-right", alias: 'egg'},
+			{name: "Non Veg", icon_class: "icon-meat pull-right", alias: 'non-veg'}
 		];
 		
 		if($rootScope.combos){
@@ -37,6 +39,7 @@ angular.module('foodmashApp.controllers')
 		Combo.loadFromPackagingCentre().then(function(loadedFromPackagingCentre){
 			if(!$rootScope.combos_hash){
 				$scope.combos = loadedFromPackagingCentre.data.combos;
+				$scope.loadedFromPackagingCentre = loadedFromPackagingCentre.data.combos;
 				$rootScope.combos = $scope.combos;
 				$rootScope.combos_hash = loadedFromPackagingCentre.data.hash;
 			}
@@ -53,110 +56,157 @@ angular.module('foodmashApp.controllers')
 			$scope.loadingComboCards = false;
 		});
 
-	 	$scope.checkIfMainOptionSelected = function(option){
-	 		for(var i=0;i<$scope.selected.length; i++){
-				if($scope.selected[i] == option){
-					return true;
-				}
+		$scope.lessThanOrEqualTo = function(actual, expected){
+			console.log(typeof(+expected))
+			if(!isNaN(+expected)){
+				return actual <= +expected;
+			}else{
+				return true;
 			}
+		};
+
+	 	$scope.checkIfMainOptionSelected = function(option){
+	 		if($scope.selected.has(option))
+	 			return true;
 	 		return false;
 	 	};
 
 	 	$scope.selectMainOption = function(option){
-	 		if($scope.checkIfMainOptionSelected(option)){
-	 			$scope.selected.splice($scope.selected.indexOf(option), 1);	
-	 		}else{
-	 			$scope.selected.push(option);
-	 		}
-	 		$scope.loadingComboCards = true;
-	 		$scope.combos = {};
 	 		switch(option.name){
 	 			case "All":
 	 			break;
+	 			case "Regular":
+	 				addOrRemoveMainFilters(option);
+	 			break;
 	 			case "Budget":
+	 				addOrRemoveMainFilters(option);
 	 			break;
 	 			case "Corporate":
+	 				addOrRemoveMainFilters(option);
 	 			break;
 	 			case "Health":
+	 				addOrRemoveMainFilters(option);
 	 			break;
 	 		}
 	 	};
 
-	 	$scope.checkIfSizeOptionSelected = function(option){
-			for(var i=0;i<$scope.selected.length; i++){
-				if($scope.selected[i] == option){
-					return true;
+ 	 	function addOrRemoveMainFilters(option){
+ 			if($scope.selected.has(option)){
+				$scope.selected.delete(option);
+				if($scope.selected.size == 0){
+					$scope.combos = $scope.loadedFromPackagingCentre;
+				}else{
+					$filter('filter')($scope.loadedFromPackagingCentre, {category: option.alias}, true).filter(function(combo){
+						if($scope.combos.indexOf(combo) != -1){
+							$scope.combos.splice($scope.combos.indexOf(combo), 1);
+						}
+					});
 				}
+			}else{
+				if($scope.selected.size == 0){
+					$scope.combos = $filter('filter')($scope.loadedFromPackagingCentre, {category: option.alias}, true);
+				}else{
+					$filter('filter')($scope.loadedFromPackagingCentre, {category: option.alias}, true).filter(function(combo){
+						if($scope.combos.indexOf(combo) == -1){
+							$scope.combos.push(combo);
+						}
+					});
+				}
+				$scope.selected.add(option);
 			}
+ 	 	};
+
+	 	$scope.checkIfSizeOptionSelected = function(option){
+			if($scope.selected.has(option))
+	 			return true;
 	 		return false;
 	 	};
 
 		$scope.selectSizeOption = function(option){
-			if($scope.checkIfSizeOptionSelected(option)){
-				$scope.selected.splice($scope.selected.indexOf(option), 1);	
-			}else{
-				$scope.selected.push(option);
-			}
-			$scope.loadingComboCards = true;
-			$scope.combos = {};
 			switch(option.name){
-				case "Offers":
-				$scope.offerCombos();
-				break;
 				case "Micro":
-				$scope.microCombos();
+					addOrRemoveSizeFilters(option);
 				break;
 				case "Medium":
-				$scope.mediumCombos();
+					addOrRemoveSizeFilters(option);
 				break;
 				case "Mega":
-				$scope.megaCombos();
+					addOrRemoveSizeFilters(option);
 				break;
 			}
 		};
 
-	 	$scope.checkIfPreferenceOptionSelected = function(option){
-	 		for(var i=0;i<$scope.selected.length; i++){
-				if($scope.selected[i] == option){
-					return true;
+	 	function addOrRemoveSizeFilters(option){
+			if($scope.selected.has(option)){
+				$scope.selected.delete(option);
+				if($scope.selected.size == 0){
+					$scope.combos = $scope.loadedFromPackagingCentre;
+				}else{
+					$filter('filter')($scope.loadedFromPackagingCentre, {group_size: option.alias}).filter(function(combo){
+						if($scope.combos.indexOf(combo) != -1){
+							$scope.combos.splice($scope.combos.indexOf(combo), 1);
+						}
+					});
 				}
+			}else{
+				if($scope.selected.size == 0){
+					$scope.combos = $filter('filter')($scope.loadedFromPackagingCentre, {group_size: option.alias});
+				}else{
+					$filter('filter')($scope.loadedFromPackagingCentre, {group_size: option.alias}).filter(function(combo){
+						if($scope.combos.indexOf(combo) == -1){
+							$scope.combos.push(combo);
+						}
+					});
+				}
+				$scope.selected.add(option);
 			}
+	 	};
+
+	 	$scope.checkIfPreferenceOptionSelected = function(option){
+	 		if($scope.selected.has(option))
+	 			return true;
 	 		return false;
 	 	};
 
 	 	$scope.selectPreferenceOption = function(option){
-	 		if($scope.checkIfPreferenceOptionSelected(option)){
-	 			$scope.selected.splice($scope.selected.indexOf(option), 1);	
-	 		}else{
-	 			$scope.selected.push(option);
-	 		}
-	 		$scope.loadingComboCards = true;
-	 		$scope.combos = {};
 	 		switch(option.name){
 	 			case "Veg":
+			 		addOrRemovePreferenceFilters(option);
 	 			break;
 	 			case "Egg":
+	 				addOrRemovePreferenceFilters(option);
 	 			break;
 	 			case "Non Veg":
+	 				addOrRemovePreferenceFilters(option);
 	 			break;
 	 		}
 	 	};
 
-		$scope.offerCombos = function(){
-			
-		};
-
-		$scope.microCombos = function(){
-			
-		};
-
-		$scope.mediumCombos = function(){
-			
-		};
-
-		$scope.megaCombos = function(){
-			
-		};
+	 	function addOrRemovePreferenceFilters(option){
+			if($scope.selected.has(option)){
+				$scope.selected.delete(option);
+				if($scope.selected.size == 0){
+					$scope.combos = $scope.loadedFromPackagingCentre;
+				}else{
+					$filter('filter')($scope.loadedFromPackagingCentre, {label: option.alias}, true).filter(function(combo){
+						if($scope.combos.indexOf(combo) != -1){
+							$scope.combos.splice($scope.combos.indexOf(combo), 1);
+						}
+					});
+				}
+			}else{
+				if($scope.selected.size == 0){
+					$scope.combos = $filter('filter')($scope.loadedFromPackagingCentre, {label: option.alias}, true);
+				}else{
+					$filter('filter')($scope.loadedFromPackagingCentre, {label: option.alias}, true).filter(function(combo){
+						if($scope.combos.indexOf(combo) == -1){
+							$scope.combos.push(combo);
+						}
+					});
+				}
+				$scope.selected.add(option);
+			}
+	 	};
 
 }]);
 

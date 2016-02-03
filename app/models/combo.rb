@@ -1,5 +1,5 @@
 class Combo < ActiveRecord::Base
-	before_save {|combo| write_attribute(:category, combo.category.downcase)}
+	before_save {|combo| write_attribute(:category, combo.category.titleize)}
 	belongs_to :packaging_centre
 	has_many :combo_dishes, dependent: :destroy
 	has_many :combo_options, dependent: :destroy
