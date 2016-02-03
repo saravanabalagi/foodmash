@@ -18,9 +18,9 @@ angular.module('foodmashApp.controllers')
 		];
 		$scope.sizeOptions = 
 		[
-		   {name: "Micro", icon_class: "icon-user1 pull-right", style: ""},
-		   {name: "Medium", icon_class: "icon-user2 pull-right", style: "font-size: 18px; margin-top: -3px;"},
-		   {name: "Mega", icon_class: "icon-user3 pull-right", style: "font-size: 25px; padding: 0; margin-top: -5px;"}
+		   {name: "Micro", icon_class: "icon-user1 pull-right", style: "", alias: 1},
+		   {name: "Medium", icon_class: "icon-user2 pull-right", style: "font-size: 18px; margin-top: -3px;", alias: 2},
+		   {name: "Mega", icon_class: "icon-user3 pull-right", style: "font-size: 25px; padding: 0; margin-top: -5px;", alias: 3}
 		];
 		$scope.preferenceOptions = 
 		[
@@ -124,16 +124,43 @@ angular.module('foodmashApp.controllers')
 
 		$scope.selectSizeOption = function(option){
 			switch(option.name){
-				case "Offers":
-				break;
 				case "Micro":
+					addOrRemoveSizeFilters(option);
 				break;
 				case "Medium":
+					addOrRemoveSizeFilters(option);
 				break;
 				case "Mega":
+					addOrRemoveSizeFilters(option);
 				break;
 			}
 		};
+
+	 	function addOrRemoveSizeFilters(option){
+			if($scope.selected.has(option)){
+				$scope.selected.delete(option);
+				if($scope.selected.size == 0){
+					$scope.combos = $scope.loadedFromPackagingCentre;
+				}else{
+					$filter('filter')($scope.loadedFromPackagingCentre, {group_size: option.alias}).filter(function(combo){
+						if($scope.combos.indexOf(combo) != -1){
+							$scope.combos.splice($scope.combos.indexOf(combo), 1);
+						}
+					});
+				}
+			}else{
+				if($scope.selected.size == 0){
+					$scope.combos = $filter('filter')($scope.loadedFromPackagingCentre, {group_size: option.alias});
+				}else{
+					$filter('filter')($scope.loadedFromPackagingCentre, {group_size: option.alias}).filter(function(combo){
+						if($scope.combos.indexOf(combo) == -1){
+							$scope.combos.push(combo);
+						}
+					});
+				}
+				$scope.selected.add(option);
+			}
+	 	};
 
 	 	$scope.checkIfPreferenceOptionSelected = function(option){
 	 		if($scope.selected.has(option))
