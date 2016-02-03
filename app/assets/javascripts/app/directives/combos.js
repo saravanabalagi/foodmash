@@ -54,6 +54,11 @@ angular.module('foodmashApp.directives')
 				$scope.packaging_centres = null;
 			});
 
+            $scope.selectPackagingCentre = function(packaging_centre){
+                $scope.selectedPackagingCentre = packaging_centre;
+                $scope.combo.packaging_centre_id = packaging_centre.id;
+            };
+
 			$scope.toggleCategoryOption = function(){
 				if(typeof($scope.toggleCategoryOption.counter) == 'undefined'){
 					$scope.toggleCategoryOption.counter = 1;
@@ -94,6 +99,7 @@ angular.module('foodmashApp.directives')
 
 			$scope.addCombo = function(){
 				var d = $q.defer();
+                console.log($scope.combo);
 				$scope.combo.save().then(function(response){
 					toaster.pop('success', 'Combo was created!');
 					$scope.combos.unshift($scope.combo);

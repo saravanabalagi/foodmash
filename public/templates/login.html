@@ -1,9 +1,10 @@
-
  <div class="signin-section">
-   <h2 align="center">Sign In</h2>
    <div class="container">
-     
-     <form class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" name="login_form" role="form" ng-submit="submitLogin()" autocomplete="on">
+
+     <form class="col-md-6 col-sm-8 col-sm-offset-2" name="login_form" role="form" ng-submit="submitLogin()" autocomplete="on">
+      <div class="row">
+          <h2 align="center">Sign In</h2>
+      </div>
       <div class="row">
        <div class="form-group label-floating">
          <div class="input-group">
@@ -47,100 +48,96 @@
        </div>
      </form>
 
-   </div>
- </div>
 
-
- <div class="register-section">
-   <h2 align="center">Create a new account</h2>
-   <div class="container">
-     
-     <form class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" name="signup_form" role="form" ng-submit="submitSignup()" autocomplete="on">
-      <div class="row">
-       <div class="form-group label-floating">
-         <div class="input-group">
-           <span class="input-group-addon"><i class="fa fa-user"></i></span>
-           <label class="control-label" for="signup.name">Name</label>
-           <input name="signup.name" ng-model="signup.name" type="text" id="addon3a" class="form-control" required>
-           <p class="help-block"></p>
+       <form class="col-md-6 col-sm-8 col-sm-offset-2" name="signup_form" role="form" ng-submit="submitSignup()" autocomplete="on">
+           <div class="row">
+               <h2 align="center">Register</h2>
+           </div>
+           <div class="row">
+               <div class="form-group label-floating">
+                   <div class="input-group">
+                       <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                       <label class="control-label" for="signup.name">Name</label>
+                       <input name="signup.name" ng-model="signup.name" type="text" id="addon3a" class="form-control" required>
+                       <p class="help-block"></p>
            <span class="input-group-btn hidden">
              <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
-               <i class="fa fa-user-plus"></i>
+                 <i class="fa fa-user-plus"></i>
              </a>
            </span>
-         </div>
-       </div>
-      </div>
-      <div class="row">
-       <div class="form-group label-floating">
-         <div class="input-group">
-           <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-           <label class="control-label" for="signup.email">Email Address</label>
-           <input  name="signup.email" ng-model="signup.email" type="email" id="addon3a" class="form-control" required>
-           <p class="help-block"></p>
+                   </div>
+               </div>
+           </div>
+           <div class="row">
+               <div class="form-group label-floating">
+                   <div class="input-group">
+                       <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                       <label class="control-label" for="signup.email">Email Address</label>
+                       <input  name="signup.email" ng-model="signup.email" type="email" id="addon3a" class="form-control" required>
+                       <p class="help-block"></p>
            <span class="input-group-btn hidden">
              <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
-               <i class="fa fa-user-plus"></i>
+                 <i class="fa fa-user-plus"></i>
              </a>
            </span>
-         </div>
-       </div>
-      </div>
-      <div class="row">
-       <div class="form-group label-floating">
-         <div class="input-group">
-           <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-           <label class="control-label" for="signup.mobile_no">Phone</label>
-           <input name="signup.mobile_no" ng-model="signup.mobile_no" type="phone" id="addon3a" class="form-control">
-           <p class="help-block"></p>
+                   </div>
+               </div>
+           </div>
+           <div class="row">
+               <div class="form-group label-floating">
+                   <div class="input-group">
+                       <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                       <label class="control-label" for="signup.mobile_no">Phone</label>
+                       <input name="signup.mobile_no" ng-model="signup.mobile_no" type="phone" id="addon3a" class="form-control">
+                       <p class="help-block"></p>
            <span class="input-group-btn hidden">
              <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
-               <i class="fa fa-user-plus"></i>
+                 <i class="fa fa-user-plus"></i>
              </a>
            </span>
-         </div>
-       </div>
-      </div>
-      <div class="row">
-       <div class="form-group label-floating">
-         <div class="input-group">
-           <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
-           <label class="control-label" for="signup.password">Password</label>
-           <input name="signup.password" ng-model="signup.password" type="password" id="addon3a" class="form-control" required>
-           <p class="help-block"></p>
+                   </div>
+               </div>
+           </div>
+           <div class="row">
+               <div class="form-group label-floating">
+                   <div class="input-group">
+                       <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
+                       <label class="control-label" for="signup.password">Password</label>
+                       <input name="signup.password" ng-model="signup.password" type="password" id="addon3a" class="form-control" required>
+                       <p class="help-block"></p>
            <span class="input-group-btn hidden">
              <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
-               <i class="fa fa-question"></i>
+                 <i class="fa fa-question"></i>
              </a>
            </span>
-         </div>
-       </div>
-       </div>
-       <div class="row">
-        <div class="form-group label-floating">
-          <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
-            <label class="control-label" for="signup.password_confirmation">Password Confirmation</label>
-            <input name="signup.password_confirmation" ng-model="signup.password_confirmation" type="password" id="addon3a" class="form-control" required>
-            <p class="help-block"></p>
+                   </div>
+               </div>
+           </div>
+           <div class="row">
+               <div class="form-group label-floating">
+                   <div class="input-group">
+                       <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
+                       <label class="control-label" for="signup.password_confirmation">Password Confirmation</label>
+                       <input name="signup.password_confirmation" ng-model="signup.password_confirmation" type="password" id="addon3a" class="form-control" required>
+                       <p class="help-block"></p>
             <span class="input-group-btn hidden">
               <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
-                <i class="fa fa-question"></i>
+                  <i class="fa fa-question"></i>
               </a>
             </span>
-          </div>
-        </div>
-        </div>
-       <div class="row register-wrapper">
-         <div class="checkbox register-checkbox">
-           <label>
-             <input type="checkbox">
-             <span style="padding:10px;">I accept all <a>terms &amp; conditions</a></span>
-           </label>
-         </div>
-         <button type="submit" class="btn btn-raised btn-primary btn-register"><i class="fa fa-user-plus"></i>Register</button>
-       </div>
-     </form>
+                   </div>
+               </div>
+           </div>
+           <div class="row register-wrapper">
+               <div class="checkbox register-checkbox">
+                   <label>
+                       <input type="checkbox">
+                       <span style="padding:10px;">I accept all <a>terms &amp; conditions</a></span>
+                   </label>
+               </div>
+               <button type="submit" class="btn btn-raised btn-primary btn-register"><i class="fa fa-user-plus"></i>Register</button>
+           </div>
+       </form>
 
    </div>
  </div>

@@ -13,7 +13,7 @@
   <body ng-controller="BodyController" ng-cloak>
 
     <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
-        <div class="container">
+        <div class="container-fluid">
           <div class="navbar-header pull-left">
             <ul class="nav navbar-nav sidebar-options-wrapper pull-left">
               <li class="sidebar-options" onclick="
@@ -27,7 +27,7 @@
 
           <div class="navbar-header pull-right">
             <ul class="nav navbar-nav pull-left">
-              <user-panel></user-panel>
+              <li user-panel class="dropdown pull-left"></li>
               <li class="pull-left">
                 <a ng-click="routeToCart()">
                   <span class="cart">Cart</span>
@@ -45,7 +45,7 @@
             <div class="navbar-search-wrapper">
               <form class="navbar-form navbar-left navbar-search-form">
                 <div class="form-group is-empty">
-                  <i class="fa fa-search"></i>
+                  <i class="material-icons input-search-icon">search</i>
                   <input type="text" class="form-control col-md-8 input-search" placeholder="Search">
                   <span class="material-input"></span>
                 </div>
@@ -55,11 +55,7 @@
         </div>
       </nav>
 
-      <div class="container">
-        <div class="row">
-          <div ng-view></div>
-        </div>
-      </div>
+      <div ng-view></div>
 
     <toaster-container toaster-options="{'close-button': true, 'position-class': 'toast-bottom-right'}"></toaster-container>
 

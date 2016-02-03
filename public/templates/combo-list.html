@@ -6,19 +6,19 @@
  <td ng-hide="updateShow">{{combo.group_size}}</td>
  <td ng-hide="updateShow"><i class="{{getIconForCategory(combo)}}"></i></td>
  <td ng-hide="updateShow">{{combo.packaging_centre.name}}</td>
- <td ng-hide="updateShow"><i class="material-icons">{{combo.picture}}</i></td>
+ <td ng-hide="updateShow" style="width:40px"><i class="material-icons">image</i></td>
  <td ng-hide="updateShow"  ng-click="updateShow = !updateShow; setUpdate(combo)" ng-init="updateShow=false"><i class="icon-edit"></i></td>
- <td ng-hide="updateShow" ng-click="deleteCombo(combo)"><i class="icon-trash  "></i></td>
+ <td ng-hide="updateShow" ng-click="deleteCombo(combo)"><i class="icon-trash"></i></td>
 
   <td ng-show="updateShow">{{$index + 1}}</td>
   <td ng-show="updateShow" ng-click="toggleActiveOptionForUpdate()">
     <i class="{{getIconForActive(updatedCombo)}}"></i>
   </td>
   <td ng-show="updateShow">
-      <input class="form-control" id="focusedInput1" type="text" ng-model="updatedCombo.name">
+      <input class="form-control" type="text" ng-model="updatedCombo.name">
   </td>
  <td ng-show="updateShow">
-      <input class="form-control" id="focusedInput1" type="number" min="1" max="50" ng-model="updatedCombo.group_size">
+      <input class="form-control" type="number" min="1" max="50" ng-model="updatedCombo.group_size">
   </td>
   <td ng-show="updateShow" ng-click="toggleCategoryOptionForUpdate()">
     <i class="{{getIconForCategory(updatedCombo)}}"></i>
@@ -33,9 +33,10 @@
           <li ng-repeat="packaging_centre in packaging_centres" ng-click="updatedCombo.packaging_centre_id = packaging_centre.id; selectedPackagingCentre = packaging_centre"><a>{{packaging_centre.name}}</a></li>
         </ul>
       </span>
-      <span class="material-input"></span>
     </div>
   </td>
-  <td ng-show="updateShow" ng-click="updateShow = !updateShow"><i class="icon-edit"></i></td>
-  <td ng-show="updateShow" ng-click="updateCombo(combo)"><i class="fa fa-check-circle">Save</i></td>
+  <td ng-show="updateShow"><i class="material-icons" ngf-select="uploadFiles($file, $invalidFiles, combo)"
+                              accept="image/*" ngf-max-size="40MB">image</i></td>
+  <td ng-show="updateShow" ng-click="updateShow = !updateShow"><i class="fa fa-times-circle"></i></td>
+  <td ng-show="updateShow" ng-click="updateCombo(combo)"><i class="fa fa-check-circle"></i></td>
 

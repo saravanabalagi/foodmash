@@ -8,34 +8,37 @@
           <th style="width:40px" ng-click="toggleActiveOption()"><i class="{{getIconForActive(combo)}}"></i></th>
           <th>
             <div class="form-group label-floating is-empty">
-              <label class="control-label" for="focusedInput1">Name</label>
-              <input class="form-control" id="focusedInput1" type="text" ng-model="combo.name">
+              <label class="control-label">Name</label>
+              <input class="form-control" type="text" ng-model="combo.name">
               <span class="material-input"></span>
             </div>
           </th>
-         <th>
+         <th style="width:40px">
             <div class="form-group label-floating is-empty">
-              <label class="control-label" for="focusedInput1">Size</label>
-              <input class="form-control" id="focusedInput1" type="number" min="1" max="50" ng-model="combo.group_size">
+              <label class="control-label">Size</label>
+              <input class="form-control" type="number" min="1" max="50" ng-model="combo.group_size">
               <span class="material-input"></span>
             </div>
           </th>
           <th style="width:40px" ng-click="toggleCategoryOption()"><i class="{{getIconForCategory(combo)}}"></i></th>
-          <th>
+          <th style="width: 150px">
             <div class="form-group label-floating is-empty">
-              <span class="dropdown location-dropdown">
-              <a data-target="#" class="dropdown-toggle" data-toggle="dropdown" ng-init="selectedPackagingCentre = {};">{{selectedPackagingCentre.name}}
-                <b class="caret"></b></a>
+              <span class="dropdown custom-dropdown">
+                <a data-target="#" class="dropdown-toggle custom-dropdown-toggle" data-toggle="dropdown" ng-init="selectedPackagingCentre = {};">
+                    <span ng-hide="selectedPackagingCentre.name">Centre</span>{{selectedPackagingCentre.name}}
+                    <b class="caret"></b>
+                </a>
                 <ul class="dropdown-menu" id="delivery-location-dropdown">
-                  <li ng-repeat="packaging_centre in packaging_centres" ng-click="combo.packaging_centre_id = packaging_centre.id; selectedPackagingCentre = packaging_centre"><a>{{packaging_centre.name}}</a></li>
+                  <li ng-repeat="packaging_centre in packaging_centres" ng-click="selectPackagingCentre(packaging_centre)">{{packaging_centre.name}}</li>
                 </ul>
               </span>
               <span class="material-input"></span>
             </div>
           </th>
-          <th style="width:40px"></th>
-          <th style="width:40px"></th>
+          <th style="width:40px"><i class="material-icons" ngf-select="uploadFiles($file, $invalidFiles, combo)"
+                                    accept="image/*" ngf-max-size="40MB">image</i></th>
           <th style="width:40px" ng-click="addCombo()"><i class="material-icons">add_circle_outline</i></th>
+          <th style="width:40px"></th>
         </tr>
         </thead>
         <tbody>
