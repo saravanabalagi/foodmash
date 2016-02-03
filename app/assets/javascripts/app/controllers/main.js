@@ -96,7 +96,7 @@ angular.module('foodmashApp.controllers')
 				if($scope.selected.size == 0){
 					$scope.combos = $scope.loadedFromPackagingCentre;
 				}else{
-					$filter('filter')($scope.loadedFromPackagingCentre, {category: option.alias}).filter(function(combo){
+					$filter('filter')($scope.loadedFromPackagingCentre, {category: option.alias}, true).filter(function(combo){
 						if($scope.combos.indexOf(combo) != -1){
 							$scope.combos.splice($scope.combos.indexOf(combo), 1);
 						}
@@ -104,9 +104,9 @@ angular.module('foodmashApp.controllers')
 				}
 			}else{
 				if($scope.selected.size == 0){
-					$scope.combos = $filter('filter')($scope.loadedFromPackagingCentre, {category: option.alias});
+					$scope.combos = $filter('filter')($scope.loadedFromPackagingCentre, {category: option.alias}, true);
 				}else{
-					$filter('filter')($scope.loadedFromPackagingCentre, {category: option.alias}).filter(function(combo){
+					$filter('filter')($scope.loadedFromPackagingCentre, {category: option.alias}, true).filter(function(combo){
 						if($scope.combos.indexOf(combo) == -1){
 							$scope.combos.push(combo);
 						}
@@ -188,7 +188,7 @@ angular.module('foodmashApp.controllers')
 				if($scope.selected.size == 0){
 					$scope.combos = $scope.loadedFromPackagingCentre;
 				}else{
-					$filter('filter')($scope.loadedFromPackagingCentre, {label: option.alias}).filter(function(combo){
+					$filter('filter')($scope.loadedFromPackagingCentre, {label: option.alias}, true).filter(function(combo){
 						if($scope.combos.indexOf(combo) != -1){
 							$scope.combos.splice($scope.combos.indexOf(combo), 1);
 						}
@@ -196,10 +196,9 @@ angular.module('foodmashApp.controllers')
 				}
 			}else{
 				if($scope.selected.size == 0){
-					$scope.combos = $filter('filter')($scope.loadedFromPackagingCentre, {label: option.alias});
-					console.log($scope.combos);
+					$scope.combos = $filter('filter')($scope.loadedFromPackagingCentre, {label: option.alias}, true);
 				}else{
-					$filter('filter')($scope.loadedFromPackagingCentre, {label: option.alias}).filter(function(combo){
+					$filter('filter')($scope.loadedFromPackagingCentre, {label: option.alias}, true).filter(function(combo){
 						if($scope.combos.indexOf(combo) == -1){
 							$scope.combos.push(combo);
 						}
