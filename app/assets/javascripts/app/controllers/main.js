@@ -31,6 +31,7 @@ angular.module('foodmashApp.controllers')
 		
 		if($rootScope.combos){
 			$scope.combos = $rootScope.combos;
+			$scope.loadedFromPackagingCentre = $rootScope.combos;
 		}else{
 			$rootScope.combos = null;
 			$rootScope.combos_hash = null;
