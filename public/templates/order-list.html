@@ -5,8 +5,6 @@
       <span class="combo-name">{{order.product.name}}</span>
       <div ng-repeat="order_item in order.order_items">
         <span>{{order_item.quantity}} x {{order_item.item.name}}</span>
-        <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="removeOrderItem(order_item)"><i class="material-icons">remove</i></i> </a>
-        <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="addOrderItem(order_item)"><i class="material-icons">add</i> </a>
       </div>
     </div>
   </td>
