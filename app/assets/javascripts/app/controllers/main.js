@@ -98,7 +98,7 @@ angular.module('foodmashApp.controllers')
 							var index = $scope.combos.indexOf(combo);
 							$scope.combos[index].filter -= 1;
 							if($scope.combos[index].filter == 0){
-								$scope.combos.splice($scope.combos.indexOf(combo), 1);
+								$scope.combos.splice(index, 1);
 							}
 						}
 					});
@@ -152,7 +152,7 @@ angular.module('foodmashApp.controllers')
 							var index = $scope.combos.indexOf(combo);
 							$scope.combos[index].filter -= 1;
 							if($scope.combos[index].filter == 0){
-								$scope.combos.splice($scope.combos.indexOf(combo), 1);
+								$scope.combos.splice(index, 1);
 							}
 						}
 					});
@@ -206,7 +206,7 @@ angular.module('foodmashApp.controllers')
 							var index = $scope.combos.indexOf(combo);
 							$scope.combos[index].filter -= 1;
 							if($scope.combos[index].filter == 0){
-								$scope.combos.splice($scope.combos.indexOf(combo), 1);
+								$scope.combos.splice(index, 1);
 							}
 						}
 					});
