@@ -26,10 +26,10 @@ angular.module('foodmashApp.directives')
 
 			$scope.categoryOptions = 
 			[
-				{name: "regular", icon_class: "fa fa-cutlery"},
-				{name: "budget", icon_class: "fa fa-coffee"},
-				{name: "corporate", icon_class: "fa fa-sitemap"},
-				{name: "health", icon_class: "fa fa-heartbeat"}
+				{name: "Regular", icon_class: "fa fa-cutlery"},
+				{name: "Budget", icon_class: "fa fa-coffee"},
+				{name: "Corporate", icon_class: "fa fa-sitemap"},
+				{name: "Health", icon_class: "fa fa-heartbeat"}
 			];
 			$scope.combo.category =  $scope.categoryOptions[0].name;
 
@@ -100,7 +100,6 @@ angular.module('foodmashApp.directives')
 
 			$scope.addCombo = function(){
 				var d = $q.defer();
-                console.log($scope.combo);
 				$scope.combo.save().then(function(response){
 					toaster.pop('success', 'Combo was created!');
 					$scope.combos.unshift($scope.combo);

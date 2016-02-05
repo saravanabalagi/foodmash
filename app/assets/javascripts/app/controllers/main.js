@@ -10,10 +10,10 @@ angular.module('foodmashApp.controllers')
 
 		$scope.mainOptions = 
 		[
-			{name: "Regular", icon_class: "fa fa-cutlery pull-right", alias: 'regular'},
-			{name: "Budget", icon_class: "fa fa-coffee pull-right", alias: 'budget'},
-			{name: "Corporate", icon_class: "fa fa-sitemap pull-right", alias: 'corporate'},
-			{name: "Health", icon_class: "fa fa-heartbeat pull-right", alias: 'health'}
+			{name: "Regular", icon_class: "fa fa-cutlery pull-right", alias: 'Regular'},
+			{name: "Budget", icon_class: "fa fa-coffee pull-right", alias: 'Budget'},
+			{name: "Corporate", icon_class: "fa fa-sitemap pull-right", alias: 'Corporate'},
+			{name: "Health", icon_class: "fa fa-heartbeat pull-right", alias: 'Health'}
 		];
 		$scope.sizeOptions = 
 		[
