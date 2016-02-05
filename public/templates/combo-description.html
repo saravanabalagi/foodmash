@@ -9,9 +9,9 @@
           <p>{{combo_dish.dish.description}}</p>
           <p>
             <span class="quantity-counter">
-              <a ng-click="removeComboDish(combo_dish)" class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="fa fa-minus-circle"></i> </a>
+              <a ng-click="removeComboDish(combo_dish)" class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="material-icons">remove</i> </a>
               <span class="quantity">{{combo_dish.quantity}}</span>
-              <a ng-click="addComboDish(combo_dish)" class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="fa fa-plus-circle"></i> </a>
+              <a ng-click="addComboDish(combo_dish)" class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="material-icons">add</i> </a>
             </span>
           </p>
         </div>
@@ -29,9 +29,9 @@
           <p>
             <a ng-click="toggleDish(combo, combo_option, combo_option_dish)" class="btn btn-primary btn-select-combo-option"><i class="fa fa-check-circle"></i>Choose</a> 
             <span class="quantity-counter" ng-show="checkIfSelected(combo_option, combo_option_dish)">
-              <a ng-click="removeSelectedDish(combo_option, combo_option_dish)" class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="fa fa-minus-circle"></i> </a>
+              <a ng-click="removeSelectedDish(combo_option, combo_option_dish)" class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="material-icons">remove</i> </a>
               <span class="quantity">{{showQuantityOfSelectedDish(combo_option, combo_option_dish)}}</span>
-              <a ng-click="selectDish(combo, combo_option, combo_option_dish.dish)" class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="fa fa-plus-circle"></i> </a>
+              <a ng-click="selectDish(combo, combo_option, combo_option_dish.dish)" class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="material-icons">add</i> </a>
             </span>
             <a ng-click="toggleDish(combo, combo_option, combo_option_dish)" ng-hide="checkIfSelected(combo_option, combo_option_dish)" ng-click="" class="btn btn-success btn-add-extra"><i class="fa fa-shopping-cart"></i>Add Extra</a> 
           </p>

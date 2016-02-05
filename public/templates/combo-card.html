@@ -13,9 +13,9 @@
         </ul>
         <p>
           <span class="quantity-counter" ng-show="combo.quantity">
-            <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="removeCombo(combo)"><i class="fa fa-minus-circle"></i> </a>
+            <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="removeCombo(combo)"><i class="material-icons">remove</i> </a>
             <span class="quantity">{{combo.quantity}}</span>
-            <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="addCombo(combo)"><i class="fa fa-plus-circle"></i> </a>
+            <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="addCombo(combo)"><i class="material-icons">add</i> </a>
           </span>
           <a ng-click="addCombo(combo)" class="btn btn-success" role="button" style="float:right" data-toggle=snackbar data-content="Added to cart" data-timeout="3000" ng-hide="combo.quantity"><i class="fa fa-shopping-cart"></i>Buy</a> 
           <a ng-click="routeToComboDescription(combo)" class="btn btn-primary" role="button" style="float:right; margin-right: 10px"><i class="fa fa-eye"></i>View</a> 

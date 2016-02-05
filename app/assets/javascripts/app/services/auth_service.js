@@ -18,6 +18,12 @@ angular.module('foodmashApp.services')
      $rootScope.$broadcast("auth_token:set", auth_token);
    };
 
+   this.updateCurrentUser = function(){
+      service._user.name = $rootScope.currentUser.name;
+      service._user.mobile_no = $rootScope.currentUser.mobile_no;
+      $cookieStore.put('user', service._user);
+   };
+
    this.removeCurrentUser = function() {
      service._user = null;
      $cookieStore.remove('user');
