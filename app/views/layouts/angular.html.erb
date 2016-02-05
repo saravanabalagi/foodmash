@@ -34,7 +34,7 @@
                   <i class="fa fa-shopping-cart fa-append fa-prepend fa-shopping-cart-custom"></i>
                   <span class="label label-default label-cart">
                     <span class="rupee">&#8377; </span>
-                    <span class="cart-total">{{cart.total || loading...}}</span>
+                    <span class="cart-total" ng-bind="cart.total">loading...</span>
                   </span>
                 </a>
               </li>
