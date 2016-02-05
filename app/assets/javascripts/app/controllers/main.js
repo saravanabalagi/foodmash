@@ -111,12 +111,12 @@ angular.module('foodmashApp.controllers')
 					});
 				}else{
 					$filter('filter')($scope.loadedFromPackagingCentre, {category: option.alias}, true).filter(function(combo){
+						if(combo.filter){
+							combo.filter += 1;
+						}else{
+							combo.filter = 1;
+						}
 						if($scope.combos.indexOf(combo) == -1){
-							if(combo.filter){
-								combo.filter += 1;
-							}else{
-								combo.filter = = 1;
-							}
 							$scope.combos.push(combo);
 						}
 					});
@@ -169,12 +169,12 @@ angular.module('foodmashApp.controllers')
 					});
 				}else{
 					$filter('filter')($scope.loadedFromPackagingCentre, {group_size: option.alias}).filter(function(combo){
+						if(combo.filter){
+							combo.filter += 1;
+						}else{
+							combo.filter = 1;
+						}
 						if($scope.combos.indexOf(combo) == -1){
-							if(combo.filter){
-								combo.filter += 1;
-							}else{
-								combo.filter = = 1;
-							}
 							$scope.combos.push(combo);
 						}
 					});
@@ -227,12 +227,12 @@ angular.module('foodmashApp.controllers')
 					});
 				}else{
 					$filter('filter')($scope.loadedFromPackagingCentre, {label: option.alias}, true).filter(function(combo){
+						if(combo.filter){
+							combo.filter += 1;
+						}else{
+							combo.filter = 1;
+						}
 						if($scope.combos.indexOf(combo) == -1){
-							if(combo.filter){
-								combo.filter += 1;
-							}else{
-								combo.filter = = 1;
-							}
 							$scope.combos.push(combo);
 						}
 					});
