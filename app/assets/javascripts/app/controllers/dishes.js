@@ -4,9 +4,9 @@ angular.module('foodmashApp.controllers')
 
 .controller('DishesController', ['$scope', 'Dish','$q', 'toaster','DishType','Cuisine', function($scope, Dish, $q, toaster, DishType, Cuisine){
 
-	$scope.dishes = {};
-	$scope.dish_types = {};
-	$scope.cuisines = {};
+	$scope.dishes = [];
+	$scope.dish_types = [];
+	$scope.cuisines = [];
 	$scope.dish = new Dish;
 	$scope.loadingDishes = true;
 

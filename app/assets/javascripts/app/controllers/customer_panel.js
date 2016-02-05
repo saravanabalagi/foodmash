@@ -4,7 +4,7 @@ angular.module('foodmashApp.controllers')
 
 .controller('CustomerPanelController', ['$scope','$location','toaster','$rootScope','Cart', function($scope, $location, toaster, $rootScope, Cart){
 
-	$scope.carts = {};
+	$scope.carts = [];
 	$scope.loadingPurchasedCarts = true;
 
 	Cart.purchasedCarts().then(function(carts){

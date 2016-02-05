@@ -12,7 +12,7 @@ angular.module('foodmashApp.directives')
 
 		controller: ['$scope', 'toaster', 'PackagingCentre', '$q', '$location', function($scope, toaster, PackagingCentre, $q, $location){
 
-			$scope.packaging_centres = {};
+			$scope.packaging_centres = [];
 			$scope.packaging_centre = new PackagingCentre;
 			$scope.loadingPackagingCentres = true;
 

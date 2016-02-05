@@ -13,7 +13,7 @@ angular.module('foodmashApp.directives')
 		controller: ['$scope', 'ComboOption', '$q', 'toaster', '$location', 'DishType', function($scope, ComboOption, $q, toaster, $location, DishType){
 
 			$scope.updatedComboOption = new ComboOption;	
-			$scope.dish_types = {};
+			$scope.dish_types = [];
 
 			DishType.query().then(function(dish_types){
 				if(dish_types.length > 0){

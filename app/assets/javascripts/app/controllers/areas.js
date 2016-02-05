@@ -4,7 +4,7 @@ angular.module('foodmashApp.controllers')
 
 .controller('AreasController', ['$scope', 'Areas', '$q', 'toaster', '$routeParams', 'PackagingCentre', function($scope, Areas, $q, toaster, $routeParams, PackagingCentre){
 
-	$scope.areas = {};
+	$scope.areas = [];
 	$scope.area = new Areas;
 	$scope.loadingAreas = true;
 

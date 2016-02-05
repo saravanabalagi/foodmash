@@ -12,7 +12,7 @@ angular.module('foodmashApp.directives')
 
 		controller: ['$scope', '$q', 'toaster','User', function($scope, $q, toaster, User){
 
-			$scope.users = {};
+			$scope.users = [];
 
 			$scope.searchUsers = function(){
 				if($scope.email.length >= 4){

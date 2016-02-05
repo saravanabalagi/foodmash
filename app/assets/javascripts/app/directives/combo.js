@@ -13,6 +13,7 @@ angular.module('foodmashApp.directives')
 		controller: ['$scope', 'Combo', '$q', 'toaster', '$location', 'Upload', 'Aws', 'PackagingCentre', function($scope, Combo, $q, toaster, $location, Upload, Aws, PackagingCentre){
 
 			$scope.updatedCombo = new Combo;
+			$scope.packaging_centres = [];
 
 			$scope.routeToCombo = function(combo){
 				$location.path("/combos/" + combo.id);

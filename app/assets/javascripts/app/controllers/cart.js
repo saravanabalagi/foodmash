@@ -7,7 +7,7 @@ angular.module('foodmashApp.controllers')
 	$scope.cart = {};
 	$scope.filling = false;
 
-	$scope.delivery_addresses = {};
+	$scope.delivery_addresses = [];
 	$scope.delivery_address = new DeliveryAddress;
 	$scope.loadingDeliveryAddresses = true;
 

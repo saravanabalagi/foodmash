@@ -12,8 +12,8 @@ angular.module('foodmashApp.directives')
 
 		controller: ['$scope', 'Dish', '$q', 'toaster', 'DishType', 'Cuisine','Upload', 'Aws', function($scope, Dish, $q, toaster, DishType, Cuisine, Upload, Aws){
 
-			$scope.cuisines = {};
-			$scope.dish_types = {};
+			$scope.cuisines = [];
+			$scope.dish_types = [];
 			$scope.updatedDish = new Dish;
 			$scope.file = {};
 

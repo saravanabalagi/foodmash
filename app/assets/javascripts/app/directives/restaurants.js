@@ -13,8 +13,9 @@ angular.module('foodmashApp.directives')
 		controller: ['$scope', 'toaster', 'Restaurant', '$q', 'PackagingCentre', 'Areas', function($scope, toaster, Restaurant, $q, PackagingCentre, Areas){
 
 			$scope.restaurant = new Restaurant;
-			$scope.restaurants = {};
+			$scope.restaurants = [];
 			$scope.loadingRestaurants = true;
+			$scope.areas = [];
 
 			Areas.query().then(function(areas){
 				if(areas.length > 0){

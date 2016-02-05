@@ -4,7 +4,7 @@ angular.module('foodmashApp.controllers')
 
 .controller('CitiesController', ['$scope','City','$q','toaster', function($scope, City, $q, toaster){
 	
-	$scope.cities = {};
+	$scope.cities = [];
 	$scope.city = new City;
 	$scope.loadingCities = true;
 

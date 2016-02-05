@@ -13,7 +13,7 @@ angular.module('foodmashApp.directives')
 		controller: ['$scope', '$q', 'toaster','User','Restaurant','PackagingCentre', function($scope, $q, toaster, User, Restaurant, PackagingCentre){
 
 			$scope.role_names = ["super_admin", "packaging_centre_admin", "restaurant_admin", "customer"];
-			$scope.resources = {};
+			$scope.resources = [];
 			$scope.resource = {};
 			$scope.role_name = "";
 

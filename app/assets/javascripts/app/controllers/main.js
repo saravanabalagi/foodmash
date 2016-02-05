@@ -57,7 +57,6 @@ angular.module('foodmashApp.controllers')
 		});
 
 		$scope.lessThanOrEqualTo = function(actual, expected){
-			console.log(typeof(+expected))
 			if(!isNaN(+expected)){
 				return actual <= +expected;
 			}else{
@@ -73,8 +72,6 @@ angular.module('foodmashApp.controllers')
 
 	 	$scope.selectMainOption = function(option){
 	 		switch(option.name){
-	 			case "All":
-	 			break;
 	 			case "Regular":
 	 				addOrRemoveMainFilters(option);
 	 			break;
@@ -98,16 +95,24 @@ angular.module('foodmashApp.controllers')
 				}else{
 					$filter('filter')($scope.loadedFromPackagingCentre, {category: option.alias}, true).filter(function(combo){
 						if($scope.combos.indexOf(combo) != -1){
-							$scope.combos.splice($scope.combos.indexOf(combo), 1);
+							var index = $scope.combos.indexOf(combo);
+							$scope.combos[index].filter -= 1;
+							if($scope.combos[index].filter == 0){
+								$scope.combos.splice($scope.combos.indexOf(combo), 1);
+							}
 						}
 					});
 				}
 			}else{
 				if($scope.selected.size == 0){
 					$scope.combos = $filter('filter')($scope.loadedFromPackagingCentre, {category: option.alias}, true);
+					$scope.combos.filter(function(combo){
+						combo.filter = 1;
+					});
 				}else{
 					$filter('filter')($scope.loadedFromPackagingCentre, {category: option.alias}, true).filter(function(combo){
 						if($scope.combos.indexOf(combo) == -1){
+							combo.filter += 1;
 							$scope.combos.push(combo);
 						}
 					});
@@ -144,16 +149,24 @@ angular.module('foodmashApp.controllers')
 				}else{
 					$filter('filter')($scope.loadedFromPackagingCentre, {group_size: option.alias}).filter(function(combo){
 						if($scope.combos.indexOf(combo) != -1){
-							$scope.combos.splice($scope.combos.indexOf(combo), 1);
+							var index = $scope.combos.indexOf(combo);
+							$scope.combos[index].filter -= 1;
+							if($scope.combos[index].filter == 0){
+								$scope.combos.splice($scope.combos.indexOf(combo), 1);
+							}
 						}
 					});
 				}
 			}else{
 				if($scope.selected.size == 0){
 					$scope.combos = $filter('filter')($scope.loadedFromPackagingCentre, {group_size: option.alias});
+					$scope.combos.filter(function(combo){
+						combo.filter = 1;
+					});
 				}else{
 					$filter('filter')($scope.loadedFromPackagingCentre, {group_size: option.alias}).filter(function(combo){
 						if($scope.combos.indexOf(combo) == -1){
+							combo.filter += 1;
 							$scope.combos.push(combo);
 						}
 					});
@@ -190,16 +203,24 @@ angular.module('foodmashApp.controllers')
 				}else{
 					$filter('filter')($scope.loadedFromPackagingCentre, {label: option.alias}, true).filter(function(combo){
 						if($scope.combos.indexOf(combo) != -1){
-							$scope.combos.splice($scope.combos.indexOf(combo), 1);
+							var index = $scope.combos.indexOf(combo);
+							$scope.combos[index].filter -= 1;
+							if($scope.combos[index].filter == 0){
+								$scope.combos.splice($scope.combos.indexOf(combo), 1);
+							}
 						}
 					});
 				}
 			}else{
 				if($scope.selected.size == 0){
 					$scope.combos = $filter('filter')($scope.loadedFromPackagingCentre, {label: option.alias}, true);
+					$scope.combos.filter(function(combo){
+						combo.filter = 1;
+					});
 				}else{
 					$filter('filter')($scope.loadedFromPackagingCentre, {label: option.alias}, true).filter(function(combo){
 						if($scope.combos.indexOf(combo) == -1){
+							combo.filter += 1;
 							$scope.combos.push(combo);
 						}
 					});

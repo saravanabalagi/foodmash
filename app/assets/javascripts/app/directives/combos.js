@@ -13,7 +13,8 @@ angular.module('foodmashApp.directives')
 		controller: ['$scope', 'toaster', 'Combo', '$q', 'PackagingCentre', function($scope, toaster, Combo, $q, PackagingCentre){
 
 			$scope.combo = new Combo;
-			$scope.combos = {};
+			$scope.combos = [];
+			$scope.packaging_centres = [];
 			$scope.loadingCombos = true;
 
 			$scope.activeOptions = 

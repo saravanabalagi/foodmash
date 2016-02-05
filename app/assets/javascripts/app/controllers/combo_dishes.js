@@ -4,10 +4,10 @@ angular.module('foodmashApp.controllers')
 
 .controller('ComboDishesController', ['$scope', 'ComboDish', '$q', 'toaster', 'DishType', 'Dish', function($scope, ComboDish, $q, toaster, DishType, Dish){
 
-	$scope.dish_types = {};
-	$scope.combo_dishes = {};
+	$scope.dish_types = [];
+	$scope.combo_dishes = [];
 	$scope.combo_dish = new ComboDish;
-	$scope.dishes = {};
+	$scope.dishes = [];
 	$scope.loadingComboDishes = true;
 
 	DishType.query().then(function(dish_types){

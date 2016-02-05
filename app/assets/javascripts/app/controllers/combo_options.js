@@ -4,8 +4,8 @@ angular.module('foodmashApp.controllers')
 
 .controller('ComboOptionsController', ['$scope', 'ComboOption', '$q', 'toaster','DishType', function($scope, ComboOption, $q, toaster, DishType){
 
-	$scope.dish_types = {};
-	$scope.combo_options = {};
+	$scope.dish_types = [];
+	$scope.combo_options = [];
 	$scope.combo_option = new ComboOption;
 	$scope.loadingComboOptions = true;
 
