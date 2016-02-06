@@ -79,13 +79,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 		})
 		.when('/combo-description', {
 			controller: 'ComboDescriptionController',
-			templateUrl: '/templates/combo-description.html',
-			resolve: {
-				combo:
-				function(AuthorizeService){
-					AuthorizeService.authorizeRouteForCustomer();
-				}
-			}
+			templateUrl: '/templates/combo-description.html'
 		})
 		.when('/login', 
 		{
