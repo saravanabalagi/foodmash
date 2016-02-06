@@ -10,6 +10,7 @@
  <td ng-hide="updateShow"  ng-click="updateShow = !updateShow; setUpdate(combo)" ng-init="updateShow=false"><i class="icon-edit"></i></td>
  <td ng-hide="updateShow" ng-click="deleteCombo(combo)"><i class="icon-trash"></i></td>
 
+  <span class="progress" ng-show="file.progress > 0 && file.progress != 100">{{file.progress + '%'}}</span>
   <td ng-show="updateShow">{{$index + 1}}</td>
   <td ng-show="updateShow" ng-click="toggleActiveOptionForUpdate()">
     <i class="{{getIconForActive(updatedCombo)}}"></i>
