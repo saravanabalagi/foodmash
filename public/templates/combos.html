@@ -44,7 +44,8 @@
         </thead>
         <tbody>
 
-          <tr combo ng-repeat="combo in combos" ng-init="comboDishShow = false" ng-click="comboDishShow=!comboDishShow"></tr>
+          <tr combo ng-repeat-start="combo in combos" ng-init="comboDishShow = false"> </tr>
+          <tr class="expanded" combo-dishes ng-show="comboDishShow" ng-repeat-end> </tr>
 
         </tbody>
       </table>

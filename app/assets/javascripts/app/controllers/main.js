@@ -70,24 +70,7 @@ angular.module('foodmashApp.controllers')
 	 		return false;
 	 	};
 
-	 	$scope.selectMainOption = function(option){
-	 		switch(option.name){
-	 			case "Regular":
-	 				addOrRemoveMainFilters(option);
-	 			break;
-	 			case "Budget":
-	 				addOrRemoveMainFilters(option);
-	 			break;
-	 			case "Corporate":
-	 				addOrRemoveMainFilters(option);
-	 			break;
-	 			case "Health":
-	 				addOrRemoveMainFilters(option);
-	 			break;
-	 		}
-	 	};
-
- 	 	function addOrRemoveMainFilters(option){
+ 	 	$scope.addOrRemoveMainFilters = function(option){
  			if($scope.selected.has(option)){
 				$scope.selected.delete(option);
 				if($scope.selected.size == 0){
@@ -131,21 +114,7 @@ angular.module('foodmashApp.controllers')
 	 		return false;
 	 	};
 
-		$scope.selectSizeOption = function(option){
-			switch(option.name){
-				case "Micro":
-					addOrRemoveSizeFilters(option);
-				break;
-				case "Medium":
-					addOrRemoveSizeFilters(option);
-				break;
-				case "Mega":
-					addOrRemoveSizeFilters(option);
-				break;
-			}
-		};
-
-	 	function addOrRemoveSizeFilters(option){
+	 	$scope.addOrRemoveSizeFilters = function(option){
 			if($scope.selected.has(option)){
 				$scope.selected.delete(option);
 				if($scope.selected.size == 0){
@@ -189,21 +158,7 @@ angular.module('foodmashApp.controllers')
 	 		return false;
 	 	};
 
-	 	$scope.selectPreferenceOption = function(option){
-	 		switch(option.name){
-	 			case "Veg":
-			 		addOrRemovePreferenceFilters(option);
-	 			break;
-	 			case "Egg":
-	 				addOrRemovePreferenceFilters(option);
-	 			break;
-	 			case "Non Veg":
-	 				addOrRemovePreferenceFilters(option);
-	 			break;
-	 		}
-	 	};
-
-	 	function addOrRemovePreferenceFilters(option){
+	 	$scope.addOrRemovePreferenceFilters = function(option){
 			if($scope.selected.has(option)){
 				$scope.selected.delete(option);
 				if($scope.selected.size == 0){

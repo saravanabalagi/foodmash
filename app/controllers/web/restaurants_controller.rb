@@ -12,6 +12,15 @@ class Web::RestaurantsController < ApplicationController
 		end
 	end
 
+	def load_from_packaging_centre
+		@restaurants = Restaurant.where(params.permit(:id))
+		if @restaurants 
+			render status: 200, json: @restaurants.as_json(:include => [:dishes, :area])
+		else
+			render status: 404, json: {error: 'Restaurants not found!'}
+		end
+	end
+
 	def create
 		@restaurant = Restaurant.new restaurant_params
 		if @restaurant.save! 
