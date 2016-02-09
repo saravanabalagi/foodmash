@@ -1,59 +1,45 @@
-<!-- <div>
-  <div layout="row" layout-padding layout-align="center center" ng-init="comboDishUpdateShow=false" ng-hide="comboDishUpdateShow">
-    <md-content flex>{{combo_dish.dish_type.name}}</md-content>
-    <md-content flex>{{combo_dish.dish.name}}</md-content>
-    <md-content flex>{{combo_dish.priority}}</md-content>
-    <div layout="row" layout-align="center center">
-      <md-button class="md-icon-button" ng-click="setUpdate(combo_dish); comboDishUpdateShow=!comboDishUpdateShow">
-        <md-icon md-svg-src="{{edit_path}}"></md-icon>
-      </md-button>
-      <md-button class="md-icon-button" ng-click="deleteComboDish(combo_dish)">
-        <md-icon md-svg-src="{{bin_path}}"></md-icon>
-      </md-button>
-    </div>
-  </div>
-
-  <form role="form" name="comboDishUpdateForm" ng-submit="updateComboDish(combo_dish, comboDishUpdateCross)" ng-init="comboDishUpdateCross = false" ng-show="comboDishUpdateShow">
-    <div layout="row" layout-padding layout-align="center center">
-      <md-button class="md-icon-button">
-        <md-icon md-svg-src="{{avatar_path}}"></md-icon>
-      </md-button>
-      <md-input-container flex>
-        <label>Type</label>
-        <md-select ng-model="updatedComboDish.dish_type_id" ng-change="loadDishesForUpdate(updatedComboDish.dish_type_id)">
-          <md-option ng-repeat="dish_type in dish_types" value="{{dish_type.id}}">{{dish_type.name}}</md-option>
-        </md-select>
-      </md-input-container>
-      <md-input-container flex>
-        <label>Dish</label>
-        <md-select ng-model="updatedComboDish.dish_id">
-          <md-option ng-repeat="dish in dishesForUpdate" value="{{dish.id}}">{{dish.name}}   ({{dish.restaurant.name}} : {{dish.restaurant.branch}})
-         </md-option>
-       </md-select>
-      </md-input-container>
-      <md-input-container flex>
-        <label>Priority</label>
-        <input type="text" ng-model="updatedComboDish.priority" />
-      </md-input-container>
-      <md-button class="md-icon-button" ng-click="comboDishUpdateShow = !comboDishUpdateShow; comboDishUpdateCross = false">
-        <md-icon md-svg-src="{{done_path}}"></md-icon>
-      </md-button>
-      <md-button class="md-icon-button" ng-click="comboDishUpdateShow = !comboDishUpdateShow; comboDishUpdateCross = true">
-        <md-icon md-svg-src="{{cross_path}}"></md-icon>
-      </md-button>
-    </div>
-  </form>
 
 
-</div>
- -->
+<td ng-hide="updateShow" ng-init="updateShow=false">{{$index + 1}}</td>
+<td ng-hide="updateShow">{{combo_dish.dish.restaurant.name}}</td>
+<td ng-hide="updateShow">{{combo_dish.dish.dish_type.name}}</td>
+<td ng-hide="updateShow">{{combo_dish.dish.name}}</td>
+<td ng-hide="updateShow" ng-click="updateShow=!updateShow; setUpdate(combo_dish)"><i class="icon-edit"></i></td>
+<td ng-hide="updateShow" ng-click="deleteComboDish(combo_dish)"><i class="icon-trash"></i></td>
 
-
-
-
- <td>{{$index + 1}}</td>
- <td>Column content</td>
- <td>Column content</td>
- <td><i class="icon-edit"></i></td>
- <td><i class="icon-trash  "></i></td>
-
+ <td ng-show="updateShow">{{$index + 1}}</td>
+ <td ng-show="updateShow">
+   <div class="form-group label-floating is-empty">
+     <span class="dropdown location-dropdown">
+     <a data-target="#" class="dropdown-toggle" data-toggle="dropdown" ng-init="selectedRestaurantForUpdate = {};">{{selectedRestaurantForUpdate.name || updatedComboDish.dish.restaurant.name}}
+       <b class="caret"></b></a>
+       <ul class="dropdown-menu" id="delivery-location-dropdown">
+         <li ng-repeat="restaurant in restaurants_for_update" ng-click="selectRestaurantForUpdate(restaurant)"><a>{{restaurant.name}}</a></li>
+       </ul>
+     </span>
+   </div>
+ </td>
+ <td ng-show="updateShow">
+   <div class="form-group label-floating is-empty">
+     <span class="dropdown location-dropdown">
+     <a data-target="#" class="dropdown-toggle" data-toggle="dropdown" ng-init="selectedDishTypeForUpdate = {};">{{selectedDishTypeForUpdate.name || updatedComboDish.dish.dish_type.name}}
+       <b class="caret"></b></a>
+       <ul class="dropdown-menu" id="delivery-location-dropdown">
+         <li ng-repeat="dish_type in dish_types_for_update" ng-click="selectDishTypeForUpdate(dish_type)"><a>{{dish_type.name}}</a></li>
+       </ul>
+     </span>
+   </div>
+ </td>
+ <td ng-show="updateShow">
+   <div class="form-group label-floating is-empty">
+     <span class="dropdown location-dropdown">
+     <a data-target="#" class="dropdown-toggle" data-toggle="dropdown" ng-init="selectedDishForUpdate = {};">{{selectedDishForUpdate.name || updatedComboDish.dish.name}}
+       <b class="caret"></b></a>
+       <ul class="dropdown-menu" id="delivery-location-dropdown">
+         <li ng-repeat="dish in dishes_for_update" ng-click="selectDishForUpdate(dish)"><a>{{dish.name}}</a></li>
+       </ul>
+     </span>
+   </div>
+ </td>
+ <td ng-show="updateShow" ng-click="updateShow = !updateShow"><i class="fa fa-times-circle"></i></td>
+ <td ng-show="updateShow" ng-click="updateComboDish(combo_dish)"><i class="fa fa-check-circle"></i></td>

@@ -6,7 +6,7 @@ class Web::CombosController < ApplicationController
 	def index
 		@combos = Combo.where(params.permit(:id, :name, :packaging_centre_id))
 		if @combos 
-			render status: 200, json: @combos.as_json(:include => :packaging_centre)
+			render status: 200, json: @combos.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => [{:restaurant => {:include => :area}}, :dish_type] } } } } } }, {:combo_dishes => {:include => {:dish => {:include => [{:restaurant => {:include => :area }}, :dish_type]} } } } ])
 		else
 			render status: 404, json: {error: 'Combos not found!'}
 		end
@@ -24,7 +24,7 @@ class Web::CombosController < ApplicationController
 	def create
 		@combo = Combo.new combo_params
 		if @combo.save! 
-			render status: 201, json: @combo.as_json(:include => :packaging_centre)
+			render status: 201, json: @combo.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => [{:restaurant => {:include => :area}}, :dish_type] } } } } } }, {:combo_dishes => {:include => {:dish => {:include => [{:restaurant => {:include => :area}}, :dish_type] } } } } ])
 		else
 			render status: 422, json: @combo.errors.as_json
 		end
@@ -32,7 +32,7 @@ class Web::CombosController < ApplicationController
 
 	def update
 		if @combo && @combo.update_attributes!(combo_update_params)
-			render status: 200, json: @combo.as_json(:include => :packaging_centre)
+			render status: 200, json: @combo.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => [{:restaurant => {:include => :area}}, :dish_type] } } } } } }, {:combo_dishes => {:include => {:dish => {:include => [{:restaurant => {:include => :area}}, :dish_type] } } } } ])
 		else
 			render status: 422, json: @combo.errors.as_json
 		end

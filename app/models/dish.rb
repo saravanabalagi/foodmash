@@ -10,6 +10,7 @@ class Dish < ActiveRecord::Base
   validates :restaurant_id, presence: true
   validates :dish_type_id, presence: true
   validates :label, presence: true
+  before_destroy :ensure_dish_not_referenced
   after_save :update_combos_on_save
 
   def belongs_to_combos
@@ -63,6 +64,15 @@ class Dish < ActiveRecord::Base
       end
     end
     return true
+  end
+
+  def ensure_dish_not_referenced
+    if combos.empty?
+      return true
+    else
+      errors.add(:base, "Combos present!")
+      return false
+    end
   end
 
 end

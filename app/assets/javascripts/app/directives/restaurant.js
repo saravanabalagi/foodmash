@@ -8,7 +8,7 @@ angular.module('foodmashApp.directives')
 
 		restrict: 'A',
 
-		templateUrl: '/templates/restaurant-list.html',
+		templateUrl: '/templates/restaurant.html',
 
 		controller: ['$scope', 'Restaurant', '$q', '$location', 'toaster', 'Upload', 'Aws', 'Areas', function($scope, Restaurant, $q, $location, toaster, Upload, Aws, Areas){
 
@@ -24,6 +24,11 @@ angular.module('foodmashApp.directives')
 			}, function(err){
 				$scope.areas = null;
 			});
+
+			$scope.selectAreaForUpdate = function(area){
+				$scope.selectedAreaForUpdate = area;
+				$scope.updatedRestaurant.area_id = area.id;
+			};
 
 			$scope.routeToRestaurant = function(restaurant){
 				$location.path("/restaurants/" + restaurant.id);

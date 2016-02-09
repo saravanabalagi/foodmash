@@ -41,8 +41,10 @@ angular.module('foodmashApp.directives')
 
 			$scope.$watch('combo', function(n, o){
 				if(n.id){
-					if($scope.combo.combo_dishes && $scope.combo_dishes.length > 0){
-						$scope.combo_dishes = $scope.combo.combo_dishes;
+					if($scope.combo.combo_dishes && $scope.combo.combo_dishes.length > 0){
+						$scope.combo.combo_dishes.filter(function(cd){
+							$scope.combo_dishes.push(new ComboDish(cd));
+						});
 					}else{
 						$scope.combo_dishes = new Array;
 					}
@@ -51,11 +53,13 @@ angular.module('foodmashApp.directives')
 
 			$scope.selectRestaurant = function(restaurant){
 				$scope.selectedRestaurant = restaurant;
+				$scope.loadDishes($scope.selectedDishType.id || null, $scope.selectedRestaurant.id || null);
 			};
 
 			$scope.selectDishType = function(dish_type){
 				$scope.selectedDishType = dish_type;
-				$scope.loadDishes(dish_type.id, $scope.selectedRestaurant.id);
+				$scope.combo_dish.dish_type_id = dish_type.id;
+				$scope.loadDishes($scope.selectedDishType.id || null, $scope.selectedRestaurant.id || null);
 			};
 
 			$scope.selectDish = function(dish){
@@ -81,27 +85,18 @@ angular.module('foodmashApp.directives')
 				return d.promise;
 			};
 
-			$scope.addComboDish = function(comboDishesAddCross, combo_id){
+			$scope.addComboDish = function(combo_id){
 				var d = $q.defer();
 				$scope.combo_dish.combo_id = combo_id;
-				if(!comboDishesAddCross){
-					if(!$scope.comboDishAddForm.$pristine){
-						$scope.combo_dish.save().then(function(response){
-							toaster.pop('success', 'Combo Dish was created!');
-							$scope.combo_dishes.unshift($scope.combo_dish);
-							$scope.combo_dish = new ComboDish;
-							d.resolve(response);
-						}, function(err){
-							toaster.pop('error', 'Combo Dish was not created!');
-							d.reject(null);
-						});
-					}else{
-						d.resolve(null);
-					}
-				}else{
+				$scope.combo_dish.save().then(function(response){
+					toaster.pop('success', 'Combo Dish was created!');
+					$scope.combo_dishes.unshift($scope.combo_dish);
 					$scope.combo_dish = new ComboDish;
-					d.resolve(null);
-				}
+					d.resolve(response);
+				}, function(err){
+					toaster.pop('error', 'Combo Dish was not created!');
+					d.reject(null);
+				});
 				return d.promise;
 			};
 
