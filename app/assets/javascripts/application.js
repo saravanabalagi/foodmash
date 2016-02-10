@@ -49,6 +49,9 @@ $(document).ready( function() {
         $(this).parents(".dropdown").find('> a').html($(this).text() + ' <span class="caret"></span>');
     });
 
+    $(".footer-push").height($("footer").height());
+    $("footer").css("margin-top","-"+$("footer").outerHeight()+"px");
+
     $(".back-to-top").hide();
     $(".back-to-top").click(function(){
         $("html, body").animate({ scrollTop: 0 }, "slow");
@@ -127,13 +130,6 @@ $(document).ready( function() {
 $(window).load( function() {
 
     if(!$('#choose-delivery-location-continue').length) { $(".loader").fadeOut("slow"); }
-
-    $("footer").prev()
-        .append("<div class='footer-push'></div>")
-        .css("min-height","100%")
-        .css("padding-bottom","30px");
-    $(".footer-push").height($("footer").height());
-    $("footer").css("margin-top","-"+$("footer").outerHeight()+"px");
 
 });
 
