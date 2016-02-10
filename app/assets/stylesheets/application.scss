@@ -1323,7 +1323,7 @@ footer {
           right: 0;
           width: 100%;
           height: 1px;
-          background-color: rgba(0,0,0,0.1);
+          background-color: rgba(0, 0, 0, 0.1);
         }
       }
     }
@@ -1335,13 +1335,26 @@ footer {
       -ms-transform: translate(-6px,-7px);
       transform: translate(-6px,-7px);
     }
+    .quantity { padding: 0px 5px; vertical-align: middle }
+  }
+}
+.thumbnail.combo-option {
+  .quantity-counter {
     position: absolute;
     top: 50%;
     -webkit-transform: translateY(-50%);
     -moz-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-    .quantity { padding: 0px 5px; vertical-align: middle }
+  }
+}
+.thumbnail.combo-dish {
+  .caption > p:last-child {
+    text-align: right;
+    .quantity-counter {
+      display: inline-block;
+      padding: 15px;
+    }
   }
 }
 
