@@ -1,4 +1,5 @@
-<a ng-if="currentUser" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="username">{{currentUser.name}}</span><i class="fa fa-user fa-append"></i><span class="caret"></span></a>
+<a ng-if="currentUser" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+  <span class="username">{{currentUser.name}}</span><i class="fa fa-user fa-append"></i><span class="caret"></span></a>
 <ul ng-if="currentUser" class="dropdown-menu">
   <li ng-click="routToProfile()"><a>Account<i class="fa fa-user pull-right"></i> </a></li>
   <li ng-click="routeToCustomerPanel()"><a>Order History<i class="fa fa-shopping-bag pull-right"></i></a></li>
@@ -8,6 +9,7 @@
   <li ng-click="logout()"><a>Logout<i class="fa fa-sign-out pull-right"></i></a></li>
 </ul>
 
-<a ng-if="!currentUser" ng-click="routeToLogin()" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-  Login<i class="fa fa-sign-in pull-right fa-append"></i>
+<a ng-if="!currentUser" ng-click="routeToLogin()" class="dropdown-toggle login-text-wrapper">
+  <span class="username">Login</span>
+  <i class="fa fa-sign-in pull-right fa-append"></i>
 </a>
