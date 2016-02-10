@@ -6,7 +6,7 @@ class Web::ComboDishesController < ApplicationController
 	def index 
 		@combo_dishes = ComboDish.where(params.permit(:id, :combo_id, :dish_type_id))
 		if @combo_dishes
-			render status: 200, json: @combo_dishes.as_json(:include => [:dish_type, :dish])
+			render status: 200, json: @combo_dishes.as_json(:include => {:dish => {:include => [{:restaurant => {:include => :area}}, :dish_type]}})
 		else
 			render status: 404, json: {error: "Could not fetch combo dishes!"}
 		end
@@ -15,7 +15,7 @@ class Web::ComboDishesController < ApplicationController
 	def create 
 		@combo_dish = ComboDish.new combo_dish_params
 		if @combo_dish.save!
-			render status: 200, json: @combo_dish.as_json(:include => [:dish_type, :dish])
+			render status: 200, json: @combo_dish.as_json(:include => {:dish => {:include => [{:restaurant => {:include => :area}}, :dish_type]}})
 		else
 			render status: 422, json: {error: "Could not create combo dish!"}
 		end
@@ -23,7 +23,7 @@ class Web::ComboDishesController < ApplicationController
 
 	def update
 		if @combo_dish and @combo_dish.update_attributes(combo_dish_update_params)
-			render status: 200, json: @combo_dish.as_json(:include => [:dish_type, :dish])
+			render status: 200, json: @combo_dish.as_json(:include => {:dish => {:include => [{:restaurant => {:include => :area}}, :dish_type]}})
 		else
 			render status: 422, json: {error: "Could not update combo dish!"}
 		end

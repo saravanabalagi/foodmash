@@ -1,186 +1,41 @@
-<!-- Combos -->
-<div layout="row" layout-align="center left">
-  <md-button class="md-icon-button" ng-init="updateShow=false" ng-click="updateShow = !updateShow; setUpdate(combo)">
-    <md-icon md-svg-src="{{edit_path}}"></md-icon>
-  </md-button>
 
-  <md-button class="md-icon-button" ng-init="updateShow=false; updateCross=false">
-    <md-icon md-svg-src="{{bin_path}}" ng-click="deleteCombo()"></md-icon>
-  </md-button>
-</div>
 
-<form role="form" name="comboUpdateForm" ng-submit="updateCombo(updateCross)" ng-show="updateShow">
-  <div layout="row" layout-padding layout-align="center center">
-    <span class="progress" ng-show="file.progress > 0 && file.progress != 100">{{file.progress + '%'}}</span>
-    <md-button class="md-icon-button" type="file" ngf-select="uploadFiles($file, $invalidFiles, combo)" 
-    accept="image/*" ngf-max-size="40MB">
-      <img ng-src="{{combo.picture}}" alt="Combo Picture" height="150" width="200" />
-    </md-button>
-    <md-input-container flex>
-      <label>name</label>
-      <input type="text" ng-model="updatedCombo.name" />
-    </md-input-container>
-    <md-input-container flex>
-      <label>price</label>
-      <input ng-model="updatedCombo.price" />
-    </md-input-container>
-     <md-input-container flex>
-      <label>group size</label>
-      <input type="text" ng-model="updatedCombo.group_size" />
-    </md-input-container>
-    <md-input-container flex>
-      <label>description</label>
-      <input ng-model="updatedCombo.description" />
-    </md-input-container>
-    <md-button class="md-icon-button" ng-click="updateShow = !updateShow; updateCross = false" name="save">
-      <md-icon md-svg-src="{{done_path}}"></md-icon>
-    </md-button>
-    <md-button class="md-icon-button" ng-click="updateShow = !updateShow; updateCross = true" name="cancel">
-     <md-icon md-svg-src="{{cross_path}}"></md-icon>
-    </md-button>
-  </div>
-</form>
+ <td ng-hide="updateShowForCombo">{{$index + 1}}</td>
+ <td ng-hide="updateShowForCombo" ng-click="updateActiveState(combo)"><i class="{{getIconForActive(combo)}}"></i></td>
+ <td ng-hide="updateShowForCombo" ng-click="comboDishShow=!comboDishShow">{{combo.name}}</td>
+ <td ng-hide="updateShowForCombo">{{combo.group_size}}</td>
+ <td ng-hide="updateShowForCombo"><i class="{{getIconForCategory(combo)}}"></i></td>
+ <td ng-hide="updateShowForCombo">{{combo.packaging_centre.name}}</td>
+ <td ng-hide="updateShowForCombo" style="width:40px"><i class="material-icons">image</i></td>
+ <td ng-hide="updateShowForCombo"  ng-click="updateShowForCombo = !updateShowForCombo; setUpdate(combo)" ng-init="updateShowForCombo=false"><i class="icon-edit"></i></td>
+ <td ng-hide="updateShowForCombo" ng-click="deleteCombo(combo)"><i class="icon-trash"></i></td>
 
-    <div flex layout="column" layout-gt-lg="row">
-      <div flex layout="column" layout-padding>
-        
-        <div layout="column">
-
-          <div layout="row" layout-align="center center">
-            <h1 class="md-title" layout-padding>
-               {{combo.name}}
-            </h1>
-          </div>
-
-          <div flex layout-gt-sm="row" layout="column" layout-align="center">
-            <div class="md-whiteframe-z2" layout="row" layout-margin>
-                 <img ng-src="{{combo.picture}}" alt="Combo Picture" height="150" width="200" />
-                <div flex layout="column" layout-align="space-around center" layout-padding layout-align="space-around start">
-                  <md-content>Price: <span class="rupee">{{combo.price}}</span></md-content>
-                  <md-content>Group Size: {{combo.group_size}}</md-content>
-                  <md-content>Description: {{combo.description}}</md-content>
-                </div>
-            </div>
-          </div>
-
-          
-        </div>
-      </div>
+  <span class="progress" ng-show="file.progress > 0 && file.progress != 100">{{file.progress + '%'}}</span>
+  <td ng-show="updateShowForCombo">{{$index + 1}}</td>
+  <td ng-show="updateShowForCombo" ng-click="toggleActiveOptionForUpdate()">
+    <i class="{{getIconForActive(updatedCombo)}}"></i>
+  </td>
+  <td ng-show="updateShowForCombo">
+      <input class="form-control" type="text" ng-model="updatedCombo.name">
+  </td>
+ <td ng-show="updateShowForCombo">
+      <input class="form-control" type="number" min="1" max="50" ng-model="updatedCombo.group_size">
+  </td>
+  <td ng-show="updateShowForCombo" ng-click="toggleCategoryOptionForUpdate()">
+    <i class="{{getIconForCategory(updatedCombo)}}"></i>
+  </td>
+  <td ng-show="updateShowForCombo">
+    <div class="form-group label-floating is-empty">
+      <span class="dropdown location-dropdown">
+      <a data-target="#" class="dropdown-toggle" data-toggle="dropdown">{{selectedPackagingCentreForUpdate.name || updatedCombo.packaging_centre.name}}
+        <b class="caret"></b></a>
+        <ul class="dropdown-menu" id="delivery-location-dropdown">
+          <li ng-repeat="packaging_centre in packaging_centres" ng-click="selectPackagingCentreForUpdate(packaging_centre)"><a>{{packaging_centre.name}}</a></li>
+        </ul>
+      </span>
     </div>
-
-
-
-    <!-- Combo Dishes -->
-
-    <div layout="row" ng-controller="ComboDishesController">
-             <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm></div>
-             <div layout="column" flex layout-padding layout-margin>
-                 <md-content flex class="md-display-1" id="load-combo-dishes" ng-click="loadComboDishes(combo.id)">Combo Dishes</md-content>
-                 <md-divider class="bottom-margin bottom-padding"></md-divider>
-                 
-                 <!-- add new -->
-                 <md-button class="md-icon-button" layout-padding ng-click="comboDishesAddShow = !comboDishesAddShow" ng-init="comboDishesAddShow = true; comboDishesAddCross = false">
-                     <md-icon md-svg-src="{{add_path}}"></md-icon>
-                 </md-button>
-                 <form name="comboDishAddForm" layout="row" ng-show="comboDishesAddShow" ng-submit="addComboDish(comboDishesAddCross, combo.id)">
-                   <md-input-container flex>
-                     <label>Type</label>
-                     <md-select ng-model="combo_dish.dish_type_id" ng-change="loadDishes(combo_dish.dish_type_id)">
-                       <md-option ng-repeat="dish_type in dish_types" value="{{dish_type.id}}">{{dish_type.name}}</md-option>
-                     </md-select>
-                   </md-input-container>
-                   <md-input-container flex>
-                     <label>Dish</label>
-                     <md-select ng-model="combo_dish.dish_id">
-                       <md-option ng-repeat="dish in dishes" value="{{dish.id}}">{{dish.name}}   ({{dish.restaurant.name}} : {{dish.restaurant.branch}})</md-option>
-                     </md-select>
-                   </md-input-container>
-                    <md-input-container flex>
-                     <label>Priority</label>
-                     <input type="text" ng-model="combo_dish.priority" />
-                   </md-input-container>
-
-                   <div layout="row" layout-align="center center" layout-padding>
-                     <md-button class="md-icon-button" layout-padding ng-click="comboDishesAddCross=false">
-                       <md-icon md-svg-src="{{done_path}}"></md-icon>
-                     </md-button>
-                     <md-button class="md-icon-button" layout-padding ng-click="comboDishesAddShow = !comboDishesAddShow; comboDishesAddCross=true">
-                       <md-icon md-svg-src="{{cross_path}}"></md-icon>
-                     </md-button>
-                   </div>
-                 </form>
-                 <!-- add new ends -->
-
-                 <!-- for loop for listing -->
-
-                 <!-- item 1 -->
-                 <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingComboDishes">
-                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-                 </div>
-                 <combo-dish ng-repeat="combo_dish in combo_dishes"></combo-dish>
-                 <!-- for loop ends -->
-                 
-         </div>
-         <!-- <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm> </div> -->
-       </div>
-
-    
-    <!-- Combo Dishes ends-->
-
-      <!-- Combo Options -->
-
-      <div layout="row" ng-controller="ComboOptionsController">
-               <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm></div>
-               <div layout="column" flex layout-padding layout-margin>
-                   <md-content flex class="md-display-1" id="load-combo-options" ng-click="loadComboOptions(combo.id)">Combo Options</md-content>
-                   <md-divider class="bottom-margin bottom-padding"></md-divider>
-                   
-                   <!-- add new -->
-                   <md-button class="md-icon-button" layout-padding ng-click="comboOptionsAddShow = !comboOptionsAddShow" ng-init="comboOptionsAddShow = true; comboOptionsAddCross = false">
-                       <md-icon md-svg-src="{{add_path}}"></md-icon>
-                   </md-button>
-                   <form name="comboOptionAddForm" layout="row" ng-show="comboOptionsAddShow" ng-submit="addComboOption(comboOptionsAddCross, combo.id)">
-                     <md-input-container flex>
-                       <label>Name</label>
-                       <input type="text" ng-model="combo_option.name" />
-                     </md-input-container>
-                     <md-input-container flex>
-                       <label>Description</label>
-                       <input type="text" ng-model="combo_option.description" />
-                     </md-input-container>
-                     <md-input-container flex>
-                       <label>Type</label>
-                       <md-select ng-model="combo_option.dish_type_id">
-                         <md-option ng-repeat="dish_type in dish_types" value="{{dish_type.id}}">{{dish_type.name}}</md-option>
-                       </md-select>
-                     </md-input-container>
-                     <md-input-container flex>
-                       <label>Priority</label>
-                       <input type="text" ng-model="combo_option.priority" />
-                     </md-input-container>
-                     <div layout="row" layout-align="center center" layout-padding>
-                       <md-button class="md-icon-button" layout-padding ng-click="comboOptionsAddCross=false">
-                         <md-icon md-svg-src="{{done_path}}"></md-icon>
-                       </md-button>
-                       <md-button class="md-icon-button" layout-padding ng-click="comboOptionsAddShow = !comboOptionsAddShow; comboOptionsAddCross=true">
-                         <md-icon md-svg-src="{{cross_path}}"></md-icon>
-                       </md-button>
-                     </div>
-                   </form>
-                   <!-- add new ends -->
-
-                   <!-- for loop for listing -->
-                      <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingComboOptions">
-                         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-                      </div>
-                      <combo-option-list ng-repeat="combo_option in combo_options"> </combo-option-list>
-                   <!-- for loop ends -->
-                   
-           </div>
-           <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm> </div>
-         </div>
-
-     
-      <!-- Combo Option ends-->
-
-<!-- Combo ends -->
+  </td>
+  <td ng-show="updateShowForCombo"><i class="material-icons" ngf-select="uploadFiles($file, $invalidFiles, combo)"
+                              accept="image/*" ngf-max-size="40MB">image</i></td>
+  <td ng-show="updateShowForCombo" ng-click="updateShowForCombo = !updateShowForCombo"><i class="fa fa-times-circle"></i></td>
+  <td ng-show="updateShowForCombo" ng-click="updateCombo(combo)"><i class="fa fa-check-circle"></i></td>

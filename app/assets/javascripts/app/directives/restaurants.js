@@ -39,6 +39,11 @@ angular.module('foodmashApp.directives')
 				$scope.loadingRestaurants = false;
 			});
 
+			$scope.selectArea = function(area){
+				$scope.selectedArea = area;
+				$scope.restaurant.area_id = area.id;
+			};
+
 			$scope.addRestaurant = function(){
 				var d = $q.defer();
 				$scope.restaurant.save().then(function(response){

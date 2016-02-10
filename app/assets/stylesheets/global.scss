@@ -178,7 +178,9 @@ h3, .h3 {
   font-size: 18px;
   margin: 0 2px; }
 .navbar .navbar-brand {
-  padding-left: 50px; }
+  padding-left: 50px;
+  margin-left: 0 !important;
+}
   .navbar .navbar-brand > img {
     height: 50px;
     width: auto;
@@ -240,6 +242,11 @@ h3, .h3 {
 @media (min-width: 500px) {
   .sidebar-search-wrapper {
     display: none; } }
+@media (max-width: 330px) {
+  .login-text-wrapper {
+    margin-right: -10px;
+  }
+}
 @media (max-width: 319px) {
   .navbar-brand > span {
     display: none; } }

@@ -8,7 +8,7 @@ angular.module('foodmashApp.directives')
 
 		restrict: 'A',
 
-		templateUrl: '/templates/combo-list.html',
+		templateUrl: '/templates/combo.html',
 
 		controller: ['$scope', 'Combo', '$q', 'toaster', '$location', 'Upload', 'Aws', 'PackagingCentre', function($scope, Combo, $q, toaster, $location, Upload, Aws, PackagingCentre){
 
@@ -96,6 +96,11 @@ angular.module('foodmashApp.directives')
 					});
 					$scope.file = file;
 				}
+			};
+
+			$scope.selectPackagingCentreForUpdate = function(packaging_centre){
+				$scope.updatedCombo.packaging_centre_id = packaging_centre.id;
+				$scope.selectedPackagingCentreForUpdate = packaging_centre;
 			};
 
 			$scope.updateCombo = function(combo){

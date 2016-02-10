@@ -1,0 +1,56 @@
+<td></td>
+<td colspan="8">
+  <table class="table table-hover table-striped">
+    <thead>
+      <th>#</th>
+      <th>
+         <div class="form-group label-floating is-empty">
+          <span class="dropdown custom-dropdown">
+            <a data-target="#" class="dropdown-toggle custom-dropdown-toggle" data-toggle="dropdown" ng-init="selectedRestaurant = {};">
+                <span ng-hide="selectedRestaurant.name">Restaurant</span>{{selectedRestaurant.name}}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" id="delivery-location-dropdown">
+              <li ng-repeat="restaurant in restaurants" ng-click="selectRestaurant(restaurant)">{{restaurant.name}}</li>
+            </ul>
+          </span>
+          <span class="material-input"></span>
+        </div>
+      </th>
+      <th>
+        <div class="form-group label-floating is-empty">
+          <span class="dropdown custom-dropdown">
+            <a data-target="#" class="dropdown-toggle custom-dropdown-toggle" data-toggle="dropdown" ng-init="selectedDishType = {};">
+                <span ng-hide="selectedDishType.name">Dish Type</span>{{selectedDishType.name}}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" id="delivery-location-dropdown">
+              <li ng-repeat="dish_type in dish_types" ng-click="selectDishType(dish_type)">{{dish_type.name}}</li>
+            </ul>
+          </span>
+          <span class="material-input"></span>
+        </div>
+      </th>
+      <th ng-hide="loadingDishes">
+        <div class="form-group label-floating is-empty">
+          <span class="dropdown custom-dropdown">
+            <a data-target="#" class="dropdown-toggle custom-dropdown-toggle" data-toggle="dropdown" ng-init="selectedDish = {};">
+                <span ng-hide="selectedDish.name">Dish</span>{{selectedDish.name}}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" id="delivery-location-dropdown">
+              <li ng-repeat="dish in dishes" ng-click="selectDish(dish)">{{dish.name}}</li>
+            </ul>
+          </span>
+          <span class="material-input"></span>
+        </div>
+      </th>
+      <th style="width:40px"></th>
+      <th style="width:40px" ng-click="addComboDish(combo.id)"><i class="material-icons">add_circle_outline</i></th>
+    </thead>
+    <tbody>
+      <tr combo-dish ng-repeat="combo_dish in combo_dishes"></tr>
+    </tbody>
+  </table>
+</td>
+<td></td>
