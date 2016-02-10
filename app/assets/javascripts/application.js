@@ -35,8 +35,12 @@ $(document).ready( function() {
     $('[data-toggle="popover"]').popover();
 
     $('.rupee').html("&#8377; ");
+
+    //After combo-cards get loaded
+    $(".thumbnail > .img-wrapper").each(function() { $(this).height($(this).width()*0.75); });
     $('.combo-card').matchHeight();
-    $('.thumbnail img').matchHeight();
+    //After combo-cards get loaded
+
 
     $('body').swipe( {
         //Generic swipe handler for all directions
