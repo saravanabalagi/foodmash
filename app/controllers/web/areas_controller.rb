@@ -44,10 +44,10 @@ class Web::AreasController < ApplicationController
 	end
 
 	def area_params
-		params.require(:area).permit(:name, :city_id, :packaging_centre_id)
+		params.require(:area).permit(:name, :city_id, :packaging_centre_id, :pincode)
 	end
 
 	def area_update_params
-		params.require(:area).permit(:name, :city_id, :packaging_centre_id)
+		params.require(:area).permit(:name, :city_id, :packaging_centre_id, :pincode)
 	end
 end

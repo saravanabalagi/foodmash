@@ -1,10 +1,10 @@
 
 <td ng-hide="updateShow">{{$index + 1}}</td>
-<td ng-hide="updateShow">{{city.name}}</td>
+<td ng-hide="updateShow" ng-click="areasShow = !areasShow">{{city.name}}</td>
 <td ng-hide="updateShow" ng-init="updateShow = false" ng-click="updateShow=!updateShow; setUpdate(city)"><i class="icon-edit"></i></td>
 <td ng-hide="updateShow" ng-click="deleteCity(city)"><i class="icon-trash"></i></td>
 
 <td ng-show="updateShow">{{$index + 1}}</td>
 <td ng-show="updateShow"><input class="form-control" id="focusedInput1" type="text" ng-model="updatedCity.name"></td>
-<td ng-show="updateShow" ng-click="updateShow=!updateShow"><i class="icon-edit"></i></td>
+<td ng-show="updateShow" ng-click="updateShow=!updateShow"><i class="icon-cross"></i></td>
 <td ng-show="updateShow" ng-click="updateCity(city)"><i class="fa fa-check-circle">Save</i></td>

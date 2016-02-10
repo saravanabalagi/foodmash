@@ -6,14 +6,15 @@ angular.module('foodmashApp.directives')
 
 	return {
 
-		restrict: 'E',
+		restrict: 'A',
 
 		templateUrl: '/templates/area.html',
 
 		controller: ['$scope', 'toaster', 'Areas', '$q', 'PackagingCentre', function($scope, toaster, Areas, $q, PackagingCentre){
 
 			$scope.updatedArea = new Areas;
-			$scope.packaging_centres = [];
+			$scope.packaging_centres_for_update = [];
+			$scope.loadingPackagingCentresForUpdate = true;
 
 			PackagingCentre.query().then(function(packaging_centres){
 				if(packaging_centres.length > 0){
@@ -21,6 +22,7 @@ angular.module('foodmashApp.directives')
 				}else{
 					$scope.packaging_centres = null;
 				}
+				$scope.loadingPackagingCentresForUpdate = false;
 			}, function(err){
 				$scope.packaging_centres = null;
 			});
@@ -29,26 +31,24 @@ angular.module('foodmashApp.directives')
 				$scope.updatedArea = angular.copy(area);
 			};
 
-			$scope.updateArea = function(area, updateCross){
+			$scope.selectPackagingCentreForUpdate = function(packaging_centre){
+				$scope.selectedPackagingCentreForUpdate = packaging_centre;
+				$scope.updatedArea.packaging_centre_id = packaging_centre.id;
+			};
+
+			$scope.updateArea = function(area){
 				var d = $q.defer();
-				if(!updateCross){
-					if(!$scope.updateAreaForm.$pristine){
-						$scope.updatedArea.update().then(function(response){
-							toaster.pop('success', 'Area was successfully updated!');
-							var index = $scope.areas.indexOf(area);
-							if(angular.isNumber(index) && index >= 0){
-								$scope.areas[index] = $scope.updatedArea;
-							}
-							d.resolve(response);
-						}, function(err){
-							toaster.pop('error', 'Area was not updated!');
-							d.reject(err);
-						});
-					}else{
-						$scope.updatedArea = new Areas;
-						d.resolve(null);
+				$scope.updatedArea.update().then(function(response){
+					toaster.pop('success', 'Area was successfully updated!');
+					var index = $scope.areas.indexOf(area);
+					if(angular.isNumber(index) && index >= 0){
+						$scope.areas[index] = $scope.updatedArea;
 					}
-				 }
+					d.resolve(response);
+				}, function(err){
+					toaster.pop('error', 'Area was not updated!');
+					d.reject(err);
+				});
 				return d.promise;
 			};
 

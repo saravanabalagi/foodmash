@@ -6,7 +6,7 @@ class Web::CitiesController < ApplicationController
 	def index
 		@cities = City.where(params.permit(:id, :name))
 		if @cities 
-			render status: 200, json: @cities.as_json
+			render status: 200, json: @cities.as_json(:include => :areas)
 		else
 			render status: 404, json: {error: 'Cities were not found!'}
 		end
@@ -15,7 +15,7 @@ class Web::CitiesController < ApplicationController
 	def create
 		@city = City.new city_params
 		if @city.save! 
-			render status: 201, json: @city.as_json
+			render status: 201, json: @city.as_json(:include => :areas)
 		else
 			render status: 422, json: @city.errors.as_json
 		end
@@ -23,7 +23,7 @@ class Web::CitiesController < ApplicationController
 
 	def update
 		if @city && @city.update_attributes(city_update_params)
-			render status: 200, json: @city.as_json
+			render status: 200, json: @city.as_json(:include => :areas)
 		else
 			render status: 422, json: @city.errors.as_json
 		end

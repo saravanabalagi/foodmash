@@ -1,37 +1,29 @@
- <div>
-  <div layout="row" layout-padding layout-align="center center" ng-hide="updateShow">
-    <md-content flex>{{area.name}}</md-content>
-    <md-content flex>{{area.packaging_centre.name}}</md-content>
-    <div layout="row" layout-align="center center">
-      <md-button class="md-icon-button" ng-click="updateShow = !updateShow; setUpdate(area)">
-        <md-icon md-svg-src="{{edit_path}}"></md-icon>
-      </md-button>
-      <md-button class="md-icon-button" ng-click="deleteArea(area)">
-        <md-icon md-svg-src="{{bin_path}}"></md-icon>
-      </md-button>
-    </div>
-  </div>
 
-  <form layout="row" name="updateAreaForm" ng-submit="updateArea(area, updateCross)" ng-init="updateShow=false; updateCross=false" ng-show="updateShow">
-   <md-input-container flex>
-       <label>Area</label>
-       <input ng-model="updatedArea.name" type="text" />
-   </md-input-container>
-   <md-input-container flex>
-     <label>Packaging Centre</label>
-     <md-select ng-model="updatedArea.packaging_centre_id">
-       <md-option ng-repeat="packaging_centre in packaging_centres" value="{{packaging_centre.id}}">{{packaging_centre.name}}
-       </md-option>
-     </md-select>
-   </md-input-container>
-   <div layout="row" layout-align="center center" layout-padding>
-     <md-button class="md-icon-button" layout-padding ng-click="updateShow = !updateShow; updateCross=false">
-       <md-icon md-svg-src="{{done_path}}"></md-icon>
-     </md-button>
-     <md-button class="md-icon-button" layout-padding ng-click="updateShow = !updateShow; updateCross = true">
-       <md-icon md-svg-src="{{cross_path}}"></md-icon>
-     </md-button>
+
+<td ng-hide="updateShow" ng-init="updateShow=false">{{$index + 1}}</td>
+<td ng-hide="updateShow">{{area.name}}</td>
+<td ng-hide="updateShow">{{area.pincode}}</td>
+<td ng-hide="updateShow">{{area.packaging_centre.name}}</td>
+<td ng-hide="updateShow" ng-click="updateShow=!updateShow; setUpdate(area)"><i class="icon-edit"></i></td>
+<td ng-hide="updateShow" ng-click="deleteArea(area)"><i class="icon-trash"></i></td>
+
+ <td ng-show="updateShow">{{$index + 1}}</td>
+ <td ng-show="updateShow">
+     <input class="form-control" type="text" ng-model="updatedArea.name">
+ </td>
+ <td ng-show="updateShow">
+     <input class="form-control" type="text" ng-model="updatedArea.pincode">
+ </td>
+ <td ng-hide="loadingPackagingCentresForUpdate">
+   <div class="form-group label-floating is-empty">
+     <span class="dropdown location-dropdown">
+     <a data-target="#" class="dropdown-toggle" data-toggle="dropdown">{{selectedPackagingCentreForUpdate.name || updatedArea.packaging_centre.name}}
+       <b class="caret"></b></a>
+       <ul class="dropdown-menu" id="delivery-location-dropdown">
+         <li ng-repeat="packaging_centre in packaging_centres_for_update" ng-click="selectPackagingCentreForUpdate(packaging_centre)"><a>{{packaging_centre.name}}</a></li>
+       </ul>
+     </span>
    </div>
-  </form>
-
-</div>
+ </td>
+ <td ng-show="updateShow" ng-click="updateShow = !updateShow"><i class="fa fa-times-circle"></i></td>
+ <td ng-show="updateShow" ng-click="updateArea(area)"><i class="fa fa-check-circle"></i></td>

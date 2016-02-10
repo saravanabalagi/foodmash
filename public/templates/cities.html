@@ -18,7 +18,8 @@
      </thead>
      <tbody>
 
-     <tr city ng-repeat="city in cities"></tr>
+     <tr city ng-repeat-start="city in cities" ng-init="areasShow=false"></tr>
+     <tr class="expanded" areas ng-show="areasShow" ng-repeat-end></tr>
       
      </tbody>
    </table>
