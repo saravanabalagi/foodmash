@@ -95,7 +95,6 @@ angular.module('foodmashApp.directives')
 
 			$scope.updateDish = function(dish){
 				var d = $q.defer();
-				console.log($scope.updatedDish);
 				$scope.updatedDish.update().then(function(response){
 					toaster.pop('success', 'Dish was updated!');
 					var index = $scope.dishes.indexOf(dish);

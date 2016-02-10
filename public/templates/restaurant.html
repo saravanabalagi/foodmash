@@ -10,10 +10,10 @@
 
  <td ng-show="updateShow">{{$index + 1}}</td>
  <td ng-show="updateShow">
-     <input class="form-control" id="focusedInput1" type="text" ng-model="updatedRestaurant.name">
+     <input class="form-control" type="text" ng-model="updatedRestaurant.name">
  </td>
 <td ng-show="updateShow">
-     <input class="form-control" id="focusedInput1" type="text" ng-model="updatedRestaurant.address">
+     <input class="form-control" type="text" ng-model="updatedRestaurant.address">
  </td>
  <td ng-show="updateShow">
    <div class="form-group label-floating is-empty">
@@ -28,5 +28,5 @@
    </div>
  </td>
  <td ng-show="updateShow" ng-click="updateShow = !updateShow"><i class="fa fa-times-circle"></i></td>
- <td ng-show="updateShow" ng-click="updateRestaurant(restaurant)"><i class="fa fa-check-circle">Save</i></td>
+ <td ng-show="updateShow" ng-click="updateRestaurant(restaurant)"><i class="fa fa-check-circle"></i></td>
 

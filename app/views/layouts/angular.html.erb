@@ -13,56 +13,71 @@
   <body ng-controller="BodyController" ng-cloak>
 
     <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
-        <div class="container-fluid">
-          <div class="navbar-header pull-left">
-            <ul class="nav navbar-nav sidebar-options-wrapper pull-left">
-              <li class="sidebar-options" onclick="
-              $('.sidebar-wrapper').toggleClass('slide-and-hide');$('.sidebar-wrapper').toggleClass('slider-open')"><a><i class="fa fa-bars"></i></a></li>
-            </ul>
-            <a class="navbar-brand" ng-click="routeToRoot()">
-              <img src="{{logo_transparent}}" />
-              <span class="logo-white">Food</span><span class="logo-red">mash</span>
-            </a>
-          </div>
+      <div class="container-fluid">
+        <div class="navbar-header pull-left">
+          <ul class="nav navbar-nav sidebar-options-wrapper pull-left">
+            <li class="sidebar-options" onclick="
+            $('.sidebar-wrapper').toggleClass('slide-and-hide');$('.sidebar-wrapper').toggleClass('slider-open')"><a><i class="fa fa-bars"></i></a></li>
+          </ul>
+          <a class="navbar-brand" ng-click="routeToRoot()">
+            <img src="{{logo_transparent}}" />
+            <span class="logo-white">Food</span><span class="logo-red">mash</span>
+          </a>
+        </div>
 
-          <div class="navbar-header pull-right">
-            <ul class="nav navbar-nav pull-left">
-              <li user-panel class="dropdown pull-left"></li>
-              <li class="pull-left">
-                <a ng-click="routeToCart()">
-                  <span class="cart">Cart</span>
-                  <i class="fa fa-shopping-cart fa-append fa-prepend fa-shopping-cart-custom"></i>
-                  <span class="label label-default label-cart">
-                    <span class="rupee">&#8377; </span>
-                    <span class="cart-total" ng-bind="cart.total">loading...</span>
-                  </span>
-                </a>
-              </li>
-            </ul>
-          </div>
-          
-          <div class="navbar-header">
-            <div class="navbar-search-wrapper">
-              <form class="navbar-form navbar-left navbar-search-form">
-                <div class="form-group is-empty">
-                  <i class="material-icons input-search-icon">search</i>
-                  <input type="text" class="form-control col-md-8 input-search" placeholder="Search">
-                  <span class="material-input"></span>
-                </div>
-              </form>
-            </div>
+        <div class="navbar-header pull-right">
+          <ul class="nav navbar-nav pull-left">
+            <li user-panel class="dropdown pull-left"></li>
+            <li class="pull-left">
+              <a ng-click="routeToCart()">
+                <span class="cart">Cart</span>
+                <i class="fa fa-shopping-cart fa-append fa-prepend fa-shopping-cart-custom"></i>
+                <span class="label label-default label-cart">
+                  <span class="rupee">&#8377; </span>
+                  <span class="cart-total" ng-bind="cart.total">loading...</span>
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="navbar-header">
+          <div class="navbar-search-wrapper">
+            <form class="navbar-form navbar-left navbar-search-form">
+              <div class="form-group is-empty">
+                <i class="material-icons input-search-icon">search</i>
+                <input type="text" class="form-control col-md-8 input-search" placeholder="Search">
+                <span class="material-input"></span>
+              </div>
+            </form>
           </div>
         </div>
-      </nav>
+      </div>
+    </nav>
 
+    <div class="content-layout">
       <div ng-view></div>
+      <div class="footer-push"></div>
+    </div>
+
+    <footer>
+      <span>&copy; Copyright 2015.</span>
+      <span>Meals on Wheels Technology LLP.</span>
+      <span>All rights reserved.</span>
+      <div class="footer-links">
+        <span>&nbsp;Terms & Conditions&nbsp;</span>
+        <span>&nbsp;Privacy Policy&nbsp;</span>
+        <span>&nbsp;Contact Us&nbsp;</span>
+      </div>
+      <div class="footer-social-links">
+        <span><i class="fa fa-facebook"></i></span>
+        <span><i class="fa fa-twitter"></i></span>
+        <span><i class="fa fa-instagram"></i></span>
+      </div>
+      <div class="btn btn-fab btn-fab-nano btn-dark btn-raised back-to-top"><i class="fa fa-angle-up"></i></div>
+    </footer>
 
     <toaster-container toaster-options="{'close-button': true, 'position-class': 'toast-bottom-right'}"></toaster-container>
-
-    <!-- <footer>
-      <span>&copy; Copyright 2015. Meals on Wheels Technology LLP. All rights reserved.</span>
-      <div class="btn btn-fab btn-fab-nano btn-dark btn-raised back-to-top"><i class="fa fa-angle-up"></i></div>
-    </footer> -->
 
     <%= javascript_include_tag "application" %>
   </body>

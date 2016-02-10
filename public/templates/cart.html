@@ -7,7 +7,7 @@
           <th>#</th>
           <th>In Cart</th>
           <th style="min-width: 90px">Quantity</th>
-          <th>Amount</th>
+          <th></th>
           <th style="width:35px"></th>
         </tr>
       </thead>
@@ -83,7 +83,7 @@
           <th colspan="3">Deliver to a new address</th>
         </tr>
         <tr class="new-address-wrapper">
-          <td><i class="fa fa-check-circle hidden"></td>
+          <td><i class="fa fa-check-circle hidden"></i></td>
           <td>
             <div class="new-address" role="form" name="deliveryAddressAddForm">
               <input type="text" placeholder="Full Name" id="new-address-name" ng-model="delivery_address.name" />
@@ -95,7 +95,7 @@
               <input type="text" placeholder="Contact No" ng-model="delivery_address.contact_no" />
             </div>
           </td>
-          <td colspan="2" ng-click="addDeliveryAddress()"><i class="fa fa-check-circle"></i> Save </td>
+          <td colspan="2" ng-click="addDeliveryAddress()"><i class="fa fa-check-circle"></i></td>
         </tr>
       </tbody>
     </table>

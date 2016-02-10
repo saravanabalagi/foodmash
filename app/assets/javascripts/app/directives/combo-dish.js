@@ -56,7 +56,6 @@ angular.module('foodmashApp.directives')
 
 			$scope.setUpdate = function(combo_dish){
 				$scope.updatedComboDish = angular.copy(combo_dish);
-				console.log($scope.updateShow);
 			};
 
 			$scope.loadDishesForUpdate = function(dish_type_id, restaurant_id){
