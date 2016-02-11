@@ -6,7 +6,7 @@ class Web::UsersController < ApplicationController
 	def index
 		@users = User.where(params.permit(:id, :email))
 		if @users
-			render status: 200, json: @users.as_json(:include => {:roles => {:include => :resource}}, only: [:name, :email, :mobile_no, :id])
+			render status: 200, json: @users.as_json(:include => {:roles => {:include => :resource}}, only: [:name, :email, :mobile_no, :id, :user_token])
 		else
 			render status: 404, json: {error: "User not found!"}
 		end
@@ -15,7 +15,7 @@ class Web::UsersController < ApplicationController
 	def find_by_email
 		@users = User.search_by_email(params[:email])
 		if @users
-			render status: 200, json: @users.as_json(:include => {:roles => {:include => :resource}}, only: [:name, :email, :mobile_no, :id])
+			render status: 200, json: @users.as_json(:include => {:roles => {:include => {:resource => {:include => :area}}}}, only: [:name, :email, :mobile_no, :id])
 		else
 			render status: 404, json: {error: "User not found!"}
 		end
@@ -23,7 +23,7 @@ class Web::UsersController < ApplicationController
 
 	def update
 		if @user and @user.update_attributes!(user_update_params)
-			render status: 200, json: @user.as_json(:include => {:roles => {:include => :resource}}, only: [:name, :email, :mobile_no, :id])
+			render status: 200, json: @user.as_json(:include => {:roles => {:include => :resource}}, only: [:name, :email, :mobile_no, :id, :user_token])
 		else
 			render status: 422, json: {error: @user.errors.as_json}
 		end
@@ -33,7 +33,7 @@ class Web::UsersController < ApplicationController
 		@user = User.find params[:user][:id]
 		resource = fetch_resource
 		if @user and @user.add_role(params[:user][:role_name], resource)
-			render status: 200, json: @user.as_json(:include => {:roles => {:include => :resource}}, only: [:name, :email, :mobile_no, :id])
+			render status: 200, json: @user.as_json(:include => {:roles => {:include => {:resource => {:include => :area}}}}, only: [:name, :email, :mobile_no, :id])
 		else
 			render status: 422, json: {error: "Failed to add role"}
 		end
@@ -43,7 +43,7 @@ class Web::UsersController < ApplicationController
 		@user = User.find params[:user][:id]
 		resource = fetch_resource
 		if @user and @user.remove_role(params[:user][:role_name], resource)
-			render status: 200, json: @user.as_json(:include => {:roles => {:include => :resource}}, only: [:name, :email, :mobile_no, :id])
+			render status: 200, json: @user.as_json(:include => {:roles => {:include => {:resource => {:include => :area}}}}, only: [:name, :email, :mobile_no, :id])
 		else
 			render status: 422, json: {error: "Failed to remove role!"}
 		end

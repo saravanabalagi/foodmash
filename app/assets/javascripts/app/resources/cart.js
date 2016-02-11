@@ -30,6 +30,17 @@ angular.module('foodmashApp.resources')
 		return d.promise;
 	};
 
+	resource.purchasedCarts = function(){
+		var self = this;
+		var d = $q.defer();
+		resource.$get(self.$url('purchasedCarts')).then(function(response){
+			d.resolve(response);
+		}, function(err){
+			d.reject(err);
+		});
+		return d.promise;
+	};	
+
 	resource.show = function(){
 		var self = this;
 		var d = $q.defer();

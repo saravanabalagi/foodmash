@@ -6,7 +6,7 @@ angular.module('foodmashApp.directives')
 
 	return {
 
-		restrict: 'E',
+		restrict: 'A',
 
 		templateUrl: '/templates/cuisine.html',
 
@@ -20,24 +20,17 @@ angular.module('foodmashApp.directives')
 
 			$scope.updateCuisine = function(cuisine, updateCross){
 				var d = $q.defer();
-				if(!updateCross){
-					if(!$scope.updateCuisineForm.$pristine){
-						$scope.updatedCuisine.update().then(function(response){
-							toaster.pop('success', 'Cuisine was successfully updated!');
-							var index = $scope.cuisines.indexOf(cuisine);
-							if(angular.isNumber(index) && index >= 0){
-								$scope.cuisines[index] = $scope.updatedCuisine;
-							}
-							d.resolve(response);
-						}, function(err){
-							toaster.pop('error', 'Cuisine was not updated!');
-							d.reject(err);
-						});
-					}else{
-						$scope.updatedCuisine = new Cuisine;
-						d.resolve(null);
+				$scope.updatedCuisine.update().then(function(response){
+					toaster.pop('success', 'Cuisine was successfully updated!');
+					var index = $scope.cuisines.indexOf(cuisine);
+					if(angular.isNumber(index) && index >= 0){
+						$scope.cuisines[index] = $scope.updatedCuisine;
 					}
-				}
+					d.resolve(response);
+				}, function(err){
+					toaster.pop('error', 'Cuisine was not updated!');
+					d.reject(err);
+				});
 				return d.promise;
 			};
 

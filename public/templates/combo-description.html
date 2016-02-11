@@ -1,88 +1,48 @@
-<md-dialog aria-label="Mango (Fruit)" style="opacity: 1">
-    <form>
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                <h2>{{combo.name}} <md-icon aria-hidden="true" md-svg-src="{{right_path}}"></md-icon> Contents </h2>
-                <span flex></span>
-                <md-button class="md-icon-button" ng-click="cancel()">
-                    <md-icon md-svg-src="{{small_close_path}}" aria-label="Close dialog"></md-icon>
-                </md-button>
-            </div>
-        </md-toolbar>
-        <md-dialog-content layout="column" style="-webkit-order: 1; -ms-flex-order: 1; order: 1;">
-            <div layout="row" class="combo-dish" ng-repeat="combo_dish in combo.combo_dishes">
-                <div class="combo-dish-img-container">
-                     <img ng-src="{{combo_dish.dish.picture}}" alt="Combo Dish Picture" class="combo-dish-img" />
-                    <div class="combo-dish-img-overlay"></div>
-                    <img ng-src="{{combo_dish.restaurant.logo}}" alt="Restaurant Logo" class="combo-dish-restaurant-img" />
-                </div>
-                <div class="combo-dish-container" layout="column" flex>
-                    <div layout="row">
-                        <div class="combo-dish-price"><span class="rupee">{{combo_dish.dish.price}}</span></div>
-                        <md-icon class="combo-dish-label" md-svg-src="{{label_path}}"></md-icon>
-                    </div>
-                    <div class="combo-dish-description-container" layout="column" flex>
-                        <div class="combo-dish-name">{{combo_dish.dish.name}}</div>
-                        <div class="combo-dish-description">{{combo_dish.dish.description}}</div>
-                    </div>
-                    <div class="combo-dish-quantity-container" layout="row" layout-align="start center">
-                        <md-button class="md-icon-button" ng-click="removeComboDish(combo_dish)">
-                            <md-icon md-svg-src="{{minus_path}}" aria-label="Decrease"></md-icon>
-                        </md-button>
-                        <span class="combo-dish-quantity">{{combo_dish.quantity}}</span>
-                        <md-button class="md-icon-button" ng-click="addComboDish(combo_dish)">
-                            <md-icon md-svg-src="{{plus_path}}" aria-label="Increase"></md-icon>
-                        </md-button>
-                    </div>
-                </div>
-            </div>
-            <div layout="row" ng-repeat="combo_option in combo.combo_options">
-                <div layout="column" class="combo-option-dish" ng-repeat="combo_option_dish in combo_option.combo_option_dishes">
-                    <div class="combo-option-dish-img-container">
-                        <img ng-src="{{combo_option_dish.dish.picture}}" alt="Combo Option Dish Pic" class="combo-option-dish-img" />
-                        <div class="combo-option-dish-img-overlay"></div>
-                            <img ng-src="{{combo_option_dish.dish.restaurant.logo}}" alt="Restaurant Logo" class="combo-option-dish-restaurant-img" />
-                        <div layout="row" class="combo-option-dish-price-label">
-                            <div class="combo-option-dish-price"><span class="rupee">{{combo_option_dish.dish.price}}</span></div>
-                            <md-icon class="combo-option-dish-label" md-svg-src="{{offers_path}}"></md-icon>
-                            <span flex></span>
-                            <md-checkbox class="combo-option-dish-selected md-primary" ng-model="combo_option_dish_selected" aria-label="checkbox" ng-init="combo_option_dish_selected=true"></md-checkbox>
-                        </div>
-                    </div>
-                    <div class="combo-option-dish-container" layout="column" flex>
-                        <div class="combo-option-dish-description-container" layout="column" flex>
-                            <div class="combo-option-dish-name">{{combo_option_dish.dish.name}}</div>
-                            <div class="combo-option-dish-description">{{combo_option_dish.dish.description}}</div>
-                        </div>
-                        <div class="combo-option-dish-add-extra">
-                            <md-button class="md-raised" ng-click="add_extra()">
-                                <md-icon md-svg-src="{{cart_path}}"></md-icon>
-                                <span ng-click="add_to_cart()">Add Extra</span>
-                            </md-button>
-                        </div>
-                        <div class="combo-option-dish-quantity-container" layout="row" layout-align="start center" ng-hide="true">
-                            <div style="margin:auto">
-                                <md-button class="md-icon-button" ng-click="add_quantity()">
-                                    <md-icon md-svg-src="{{minus_path}}" aria-label="Decrease"></md-icon>
-                                </md-button>
-                                <span class="combo-option-dish-quantity">{{combo_option.quantity}}</span>
-                                <md-button class="md-icon-button" ng-click="add_quantity()">
-                                    <md-icon md-svg-src="{{plus_path}}" aria-label="Increase"></md-icon>
-                                </md-button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </md-dialog-content>
-        <md-dialog-actions layout="row" style="-webkit-order: 2; -ms-flex-order: 2; order: 2;">
-            <div class="combo-description-buy" layout="row">
-                <span class="combo-description-price rupee">{{combo.price}}</span>
-                <md-button class="md-primary md-raised" ng-click="addToCart(combo)">
-                    <md-icon md-svg-src="{{cart_path}}"></md-icon>
-                    <span ng-click="addToCart(combo)">Add to Cart</span>
-                </md-button>
-            </div>
-        </md-dialog-actions>
-    </form>
-</md-dialog>
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2" ng-repeat="combo_dish in combo.combo_dishes">
+      <div class="thumbnail combo-dish">
+        <img src="{{combo_dish.dish.picture}}">
+        <div class="caption">
+          <h4>{{combo_dish.dish.name}}</h4>
+          <p>{{combo_dish.dish.description}}</p>
+          <p>
+            <span class="quantity-counter">
+              <a ng-click="removeComboDish(combo_dish)" class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="material-icons">remove</i> </a>
+              <span class="quantity">{{combo_dish.quantity}}</span>
+              <a ng-click="addComboDish(combo_dish)" class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="material-icons">add</i> </a>
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="combo-option-row" ng-repeat="combo_option in combo.combo_options">
+    <div class="combo-option-wrapper" ng-repeat="combo_option_dish in combo_option.combo_option_dishes">
+      <div class="thumbnail combo-option selected">
+        <img src="{{combo_option_dish.dish.picture}}">
+        <div class="caption">
+          <h4>{{combo_option_dish.dish.name}}</h4>
+          <p>{{combo_option_dish.dish.description}}</p>
+          <p>
+            <a ng-click="toggleDish(combo, combo_option, combo_option_dish)" class="btn btn-primary btn-select-combo-option"><i class="fa fa-check-circle"></i>Choose</a> 
+            <span class="quantity-counter" ng-show="checkIfSelected(combo_option, combo_option_dish)">
+              <a ng-click="removeSelectedDish(combo_option, combo_option_dish)" class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="material-icons">remove</i> </a>
+              <span class="quantity">{{showQuantityOfSelectedDish(combo_option, combo_option_dish)}}</span>
+              <a ng-click="selectDish(combo, combo_option, combo_option_dish.dish)" class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="material-icons">add</i> </a>
+            </span>
+            <a ng-click="toggleDish(combo, combo_option, combo_option_dish)" ng-hide="checkIfSelected(combo_option, combo_option_dish)" ng-click="" class="btn btn-success btn-add-extra"><i class="fa fa-shopping-cart"></i>Add Extra</a> 
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row add-to-cart-wrapper">
+    <a ng-click="routeToRoot()" class="btn btn-raised btn-dark" role="button" data-toggle=snackbar data-content="Added to cart" data-timeout="3000"><i class="fa fa-angle-left"></i>Back</a> 
+    <a ng-click="addCombo(combo)" class="btn btn-raised btn-info" role="button" data-toggle=snackbar data-content="Added to cart" data-timeout="3000"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
+  </div> 
+
+</div>

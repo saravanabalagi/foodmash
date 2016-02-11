@@ -6,7 +6,7 @@ angular.module('foodmashApp.directives')
 
 	return {
 
-		restrict: 'E',
+		restrict: 'A',
 
 		templateUrl: '/templates/order-list.html',
 
@@ -19,14 +19,18 @@ angular.module('foodmashApp.directives')
 			  $scope.old_quantity = oldValue.quantity;
 			});
 
-			$scope.updateOrder = function(order){
+			$scope.addOrder = function(order){
 				var index = findOrderInCart(order.id);
+				order.quantity += 1;
 				if(angular.isNumber(index) && index >= 0){
 					if(order.quantity >= 1 && order.quantity <=50){
 						$scope.updateCartInfo();
 						$scope.filling = false;
 						toaster.pop('success', 'Order was updated!');
-					}if(order.quantity === null){
+					}else{
+						order.quantity = 50;
+					}
+					if(order.quantity === null){
 						$scope.filling = true;
 					}if(order.quantity === undefined){
 						order.quantity = $scope.old_quantity;
@@ -40,14 +44,71 @@ angular.module('foodmashApp.directives')
 				}
 			};
 
-			$scope.updateOrderItem = function(order_item){
+			$scope.removeOrder = function(order){
+				var index = findOrderInCart(order.id);
+				order.quantity -= 1;
+				if(angular.isNumber(index) && index >= 0){
+					if(order.quantity == 0){
+						$scope.deleteOrder(order);
+					}
+					if(order.quantity >= 1 && order.quantity <=50){
+						$scope.updateCartInfo();
+						$scope.filling = false;
+						toaster.pop('success', 'Order was updated!');
+					}else{
+						order.quantity = 1;
+					}
+					if(order.quantity === null){
+						$scope.filling = true;
+					}if(order.quantity === undefined){
+						order.quantity = $scope.old_quantity;
+						$scope.updateCartInfo();
+						$scope.filling = false;
+						toaster.pop('error', 'Order quantity was reset due to invalidity!');
+					}
+				}else{
+					toaster.pop('error', 'Order was not updated!');
+					order.quantity = $scope.old_quantity;
+				}
+			};
+
+			$scope.addOrderItem = function(order_item){
 				var index = findOrderItemInOrder(order_item.id);
+				order_item.quantity += 1;
 				if(angular.isNumber(index) && index >= 0){
 					if(order_item.quantity >= 1 && order_item.quantity <=50){
 						updateOrderInfo();
 						$scope.fillingOrder = false;
 						toaster.pop('success', 'Order Item was updated!');
-					}if(order_item.quantity === null){
+					}else{
+						order_item.quantity = 50;
+					}
+					if(order_item.quantity === null){
+						$scope.fillingOrder = true;
+					}if(order_item.quantity === undefined){
+						order_item.quantity = 1;
+						updateOrderInfo();
+						$scope.fillingOrder = false;
+						toaster.pop('error', 'Order Item quantity was reset due to invalidity!');
+					}
+				}else{
+					toaster.pop('error', 'Order was not updated!');
+					order_item.quantity = 1;
+				}
+			};
+
+			$scope.removeOrderItem = function(order_item){
+				var index = findOrderItemInOrder(order_item.id);
+				order_item.quantity -= 1;
+				if(angular.isNumber(index) && index >= 0){
+					if(order_item.quantity >= 1 && order_item.quantity <=50){
+						updateOrderInfo();
+						$scope.fillingOrder = false;
+						toaster.pop('success', 'Order Item was updated!');
+					}else{
+						order_item.quantity = 1;
+					}
+					if(order_item.quantity === null){
 						$scope.fillingOrder = true;
 					}if(order_item.quantity === undefined){
 						order_item.quantity = 1;

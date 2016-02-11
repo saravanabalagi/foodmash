@@ -6,7 +6,7 @@ angular.module('foodmashApp.directives')
 
 	return {
 
-		restrict: 'E',
+		restrict: 'A',
 
 		templateUrl: '/templates/city.html',
 
@@ -22,26 +22,19 @@ angular.module('foodmashApp.directives')
 				$scope.updatedCity = angular.copy(city);
 			};
 
-			$scope.updateCity = function(city, updateCross){
+			$scope.updateCity = function(city){
 				var d = $q.defer();
-				if(!updateCross){
-					if(!$scope.updateCityForm.$pristine){
-						$scope.updatedCity.update().then(function(response){
-							toaster.pop('success', 'City was successfully updated!');
-							var index = $scope.cities.indexOf(city);
-							if(angular.isNumber(index) && index >= 0){
-								$scope.cities[index] = $scope.updatedCity;
-							}
-							d.resolve(response);
-						}, function(err){
-							toaster.pop('error', 'City was not updated!');
-							d.reject(err);
-						});
-					}else{
-						$scope.updatedCity = new City;
-						d.resolve(null);
+				$scope.updatedCity.update().then(function(response){
+					toaster.pop('success', 'City was successfully updated!');
+					var index = $scope.cities.indexOf(city);
+					if(angular.isNumber(index) && index >= 0){
+						$scope.cities[index] = $scope.updatedCity;
 					}
-				 }
+					d.resolve(response);
+				}, function(err){
+					toaster.pop('error', 'City was not updated!');
+					d.reject(err);
+				});
 				return d.promise;
 			};
 

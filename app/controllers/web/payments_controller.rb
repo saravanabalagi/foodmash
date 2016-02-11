@@ -1,7 +1,7 @@
 class Web::PaymentsController < ApplicationController
  	respond_to :json
  	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
- 	before_filter :set_current_cart
+ 	before_filter :set_current_cart, except: :index
  	before_filter :authenticate_user_from_token!
 
  	def index
@@ -13,12 +13,16 @@ class Web::PaymentsController < ApplicationController
 		if checksum.present?
 			render status: 200, json: {hash: checksum.as_json}
 		else
-			render status: 200, json: {error: 'Could not calculate hash!'}
+			render status: 422, json: {error: 'Could not calculate hash!'}
 		end
  	end
 
  	def check_password_for_cod
- 		
+ 		if current_user.valid_password? params[:payment][:password] and @cart.change_status('purchase') and @cart.set_payment_method('COD') and @cart.generate_order_id
+ 			render status: 200, json: {message: 'Succesfully ordered!'}
+ 		else
+ 			render status: 422, json: {error: 'Password was incorrect!'}
+ 		end
  	end
 
  	private

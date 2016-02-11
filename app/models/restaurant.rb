@@ -3,6 +3,7 @@ class Restaurant < ActiveRecord::Base
 	belongs_to :area
 	has_many :dishes, dependent: :destroy
 	has_many :dish_types, through: :dishes
+	belongs_to :area
 
 
 	def get_carts_for_restaurant

@@ -1,177 +1,34 @@
-<!-- Resturants -->
-<div layout="row" layout-align="center left">
-  <md-button class="md-icon-button" ng-init="updateShow=false" ng-click="updateShow = !updateShow; setUpdate(restaurant)">
-    <md-icon md-svg-src="{{edit_path}}"></md-icon>
-  </md-button>
+<td ng-hide="updateShow">{{$index + 1}}</td>
+<td ng-hide="updateShow" ng-click="dishesShow=!dishesShow">{{restaurant.name}}</td>
+<td ng-hide="updateShow">{{restaurant.address}}</td>
+<td ng-hide="updateShow">{{restaurant.area.name}}</td>
+<td ng-hide="updateShow">{{restaurant.description}}</td>
+<td ng-hide="updateShow"><i class="material-icons">image</i></td>
+<td ng-hide="updateShow" ng-init="upadteShow=false" ng-click="updateShow=!updateShow; setUpdate(restaurant)"><i class="icon-edit"></i></td>
+<td ng-hide="updateShow"><i class="icon-trash" ng-click="deleteRestaurant(restaurant)"></i></td>
 
-  <md-button class="md-icon-button" ng-init="updateShow=false; updateCross=false">
-    <md-icon md-svg-src="{{bin_path}}" ng-click="deleteRestaurant()"></md-icon>
-  </md-button>
-</div>
-
-<form role="form" name="restaurantUpdateForm" ng-submit="updateRestaurant(updateCross)" ng-show="updateShow">
-  <div layout="row" layout-padding layout-align="center center">
-    <span class="progress" ng-show="file.progress > 0 && file.progress != 100">{{file.progress + '%'}}</span>
-    <md-button class="md-icon-button" type="file" ngf-select="uploadFiles($file, $invalidFiles, updatedRestaurant)" 
-    accept="image/*" ngf-max-size="40MB">
-      <img ng-src="{{updatedRestaurant.logo}}" alt="Restaurant Logo" />
-    </md-button>
-    <md-input-container flex>
-      <label>name</label>
-      <input type="text" ng-model="updatedRestaurant.name" />
-    </md-input-container>
-    <md-input-container flex>
-      <label>address</label>
-      <input ng-model="updatedRestaurant.address" />
-    </md-input-container>
-    <md-input-container flex>
-      <label>description</label>
-      <input ng-model="updatedRestaurant.description" />
-    </md-input-container>
-    <md-input-container flex>
-      <label>Area</label>
-      <md-select ng-model="updatedRestaurant.area_id">
-        <md-option ng-repeat="area in areas" value="{{area.id}}">{{area.name}}
-        </md-option>
-      </md-select>
-    </md-input-container>
-    <md-input-container flex>
-      <label>latitude</label>
-      <input type="text" ng-model="updatedRestaurant.latitude" />
-    </md-input-container>
-    <md-input-container flex>
-      <label>longitude</label>
-      <input type="text" ng-model="updatedRestaurant.longitude" />
-    </md-input-container>
-    <md-button class="md-icon-button" ng-click="updateShow = !updateShow; updateCross = false" name="save">
-      <md-icon md-svg-src="{{done_path}}"></md-icon>
-    </md-button>
-    <md-button class="md-icon-button" ng-click="updateShow = !updateShow; updateCross = true" name="cancel">
-     <md-icon md-svg-src="{{cross_path}}"></md-icon>
-    </md-button>
-  </div>
-</form>
-
-  <div flex layout="column" layout-gt-lg="row">
-          <div flex layout="column" layout-padding>
-            
-            <div layout="column">
-
-              <div layout="row" layout-align="center center">
-                <h1 class="md-title" layout-padding>
-                   {{restaurant.name}}
-                </h1>
-              </div>
-              <div flex layout-gt-sm="row" layout="column" layout-align="center">
-                <div class="md-whiteframe-z2" layout="row" layout-margin>
-                       <img ng-src="{{restaurant.logo}}" alt="Restaurant Logo" height="150" width="200" />
-                      <div flex layout="column" layout-align="space-around center" layout-padding layout-align="space-around start">
-                        <md-content>Type: Dine | Delivery | Take-away</md-content>
-                        <md-content>Working hours: 11am to 11pm</md-content>
-                        <md-content>Cuisine: Multi-cuisine</md-content>
-                        <md-content>Speciality: Pizzas</md-content>
-                        <md-content class="md-subhead"> Ratings: 4.3/5</md-content>
-                      </div>
-                </div>
-                <div flex="40" class="md-whiteframe-z2" layout-margin layout="column" layout-align="space-around center" layout-padding>
-                  <h1 class="md-title"> {{restaurant.area.name}} </h1>
-                  <md-content>{{restaurant.address}}</md-content>
-                  <div layout="row" layout-align="center center" layout-padding>
-                    <md-button class="md-raised">Call</md-button>
-                    <md-button class="md-raised md-primary">Maps</md-button>
-                  </div>
-                </div>
-              </div>
-
-              
-            </div>
-           <div flex layout="column" class="no-scroll" ng-show="restaurant.description">
-                <div layout="row" layout-padding layout-align="center center">
-                <h1 class="md-title"> About the Restaurant </h1>
-                </div>
-                <div flex layout="column" layout-padding class="auto-scroll">
-                <p class="no-margin" >{{restaurant.description}}</p>
-                </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Dishes -->
-      <div layout="row" ng-controller="DishesController" >
-          <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm></div>
-          <div layout="column" flex layout-padding layout-margin>
-              <md-content flex class="md-display-1" id="load-dishes" ng-click="loadDishes(restaurant.id)">Dishes</md-content>
-              <md-divider class="bottom-margin bottom-padding"></md-divider>
-              
-              <!-- add new -->
-              <md-button class="md-icon-button" layout-padding ng-click="dishesAddShow = !dishesAddShow" ng-init="dishesAddShow = true; dishesAddCross = false">
-                  <md-icon md-svg-src="{{add_path}}"></md-icon>
-              </md-button>
-              <form name="dishAddForm" layout="row" ng-show="dishesAddShow" ng-submit="addDish(dishesAddCross, restaurant.id)">
-                <md-input-container flex>
-                  <label>Name</label>
-                  <input type="text" ng-model="dish.name" />
-                </md-input-container>
-                <md-input-container flex>
-                  <label>Price</label>
-                  <input type="text" ng-model="dish.price" />
-                </md-input-container>
-                 <md-input-container flex>
-                  <label>Description</label>
-                  <input type="text" ng-model="dish.description" />
-                </md-input-container>
-                <md-input-container flex>
-                  <label>Type</label>
-                  <md-select ng-model="dish.dish_type_id">
-                    <md-option ng-repeat="dish_type in dish_types" value="{{dish_type.id}}">{{dish_type.name}}</md-option>
-                  </md-select>
-                </md-input-container>
-                <md-input-container flex>
-                  <label>Cuisine</label>
-                  <md-select ng-model="dish.cuisine_id">
-                    <md-option ng-repeat="cuisine in cuisines" value="{{cuisine.id}}">{{cuisine.name}}</md-option>
-                  </md-select>
-                </md-input-container>
-                 <md-input-container flex>
-                      <label>Label</label>
-                      <md-select ng-model="dish.label">
-                        <md-option value="veg">Veg</md-option>
-                        <md-option value="non-veg">Non Veg</md-option>
-                        <md-option value="egg">Egg</md-option>
-                      </md-select>
-                    </md-input-container>
-                <div layout="row" layout-align="center center" layout-padding>
-                  <md-button class="md-icon-button" layout-padding ng-click="dishesAddCross=false">
-                    <md-icon md-svg-src="{{done_path}}"></md-icon>
-                  </md-button>
-                  <md-button class="md-icon-button" layout-padding ng-click="dishesAddShow = !dishesAddShow; dishesAddCross=true">
-                    <md-icon md-svg-src="{{cross_path}}"></md-icon>
-                  </md-button>
-                </div>
-              </form>
-              <!-- add new ends -->
-
-              <!-- for loop for listing -->
-
-              <!-- item 1 -->
-              <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingDishes">
-                 <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-              </div>
-              <dish ng-repeat="dish in dishes"> </dish>
-              <!-- for loop ends -->
-              
-          </div>
-          <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm> </div>
-        </div>
-                <!-- Dishes ends-->
-<!-- Restaurant ends -->
-   
-
-
-
-
-
-
-
-
+ <td ng-show="updateShow">{{$index + 1}}</td>
+ <td ng-show="updateShow">
+     <input class="form-control" type="text" ng-model="updatedRestaurant.name">
+ </td>
+<td ng-show="updateShow">
+     <input class="form-control" type="text" ng-model="updatedRestaurant.address">
+ </td>
+ <td ng-show="updateShow">
+   <div class="form-group label-floating is-empty">
+     <span class="dropdown location-dropdown">
+     <a data-target="#" class="dropdown-toggle" data-toggle="dropdown">{{selectedAreaForUpdate.name || updatedRestaurant.area.name}}
+       <b class="caret"></b></a>
+       <ul class="dropdown-menu" id="delivery-location-dropdown">
+         <li ng-repeat="area in areas" ng-click="selectAreaForUpdate(area)"><a>{{area.name}}</a></li>
+       </ul>
+     </span>
+     <span class="material-input"></span>
+   </div>
+ </td>
+ <td ng-show="updateShow">
+    <input class="form-control" type="text" ng-model="updatedRestaurant.description">
+ </td>
+ <td ng-show="updateShow" ng-click="updateShow = !updateShow"><i class="fa fa-times-circle"></i></td>
+ <td ng-show="updateShow" ng-click="updateRestaurant(restaurant)"><i class="fa fa-check-circle"></i></td>
 

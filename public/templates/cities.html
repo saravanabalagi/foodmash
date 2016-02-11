@@ -1,41 +1,28 @@
-<!-- Cities -->
 
-        <div layout="row">
-          <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm></div>
-          <div layout="column" flex>
-              <div layout-padding layout-margin>
-                <md-content flex class="md-display-1">Cities</md-content>
-                <md-divider class="bottom-margin bottom-padding"></md-divider>
-              </div>
-              
-              <!-- add new -->
-               <form flex layout="row" name="addCityForm" ng-submit="addCity(addCross)" ng-init="addCross=false">
-                <md-input-container flex>
-                    <label>City</label>
-                    <input ng-model="city.name" type="text" />
-                </md-input-container>
-                <div layout="row" layout-align="center center" layout-padding>
-                  <md-button class="md-icon-button" layout-padding ng-click="addCross=false">
-                    <md-icon md-svg-src="{{done_path}}"></md-icon>
-                  </md-button>
-                  <md-button class="md-icon-button" layout-padding ng-click="addCross=true">
-                    <md-icon md-svg-src="{{cross_path}}"></md-icon>
-                  </md-button>
-                </div>
-               </form>
-              <!-- add new ends -->
+ <div class="col-md-12">
 
-              <!-- for loop for listing -->
+   <table class="table table-striped table-hover table-panel">
+     <thead>
+     <tr>
+       <th style="width:40px">#</th>
+       <th>
+         <div class="form-group label-floating is-empty">
+           <label class="control-label">Cities</label>
+           <input class="form-control" type="text" ng-model="city.name">
+           <span class="material-input"></span>
+         </div>
+       </th>
+       <th style="width:40px"></th>
+       <th style="width:40px" ng-click="addCity()"><i class="material-icons">add_circle_outline</i></th>
+     </tr>
+     </thead>
+     <tbody>
 
-              <!-- item  -->
-              <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingCities">
-                 <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-              </div>
-              <city ng-repeat="city in cities"> </city>
-              <!-- item ends -->
-              <!-- for loop ends -->
-              
-          </div>
-          <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm> </div>
-        </div>
-<!--  Cities ends-->
+     <tr city ng-repeat-start="city in cities" ng-init="areasShow=false"></tr>
+     <tr class="expanded" areas ng-show="areasShow" ng-repeat-end></tr>
+      
+     </tbody>
+   </table>
+
+ </div>
+

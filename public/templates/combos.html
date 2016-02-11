@@ -1,64 +1,51 @@
-<div layout="row">
-         <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm></div>
-         <div layout="column" flex layout-padding layout-margin>
-             <md-content flex class="md-display-1">Combos</md-content>
-             <md-divider class="bottom-margin bottom-padding"></md-divider>
 
+  <div class="col-md-12">
 
-  <md-button class="md-icon-button" ng-init="addShow = true" ng-click="addShow = !addShow">
-    <md-icon md-svg-src="{{add_path}}"></md-icon>
-  </md-button>
-
-<form role="form" name="comboAddForm" ng-submit="addCombo(addCross)" ng-show="addShow" ng-init="addCross=false">
-  <div layout="row" layout-padding layout-align="center center">
-    <md-button class="md-icon-button">
-      <md-icon md-svg-src="{{avatar_path}}"></md-icon>
-    </md-button>
-    <md-input-container flex>
-      <label>name</label>
-      <input type="text" ng-model="combo.name" />
-    </md-input-container>
-     <md-input-container flex>
-      <label>group size</label>
-      <input type="text" ng-model="combo.group_size">
-    </md-input-container>
-    <md-input-container flex>
-      <label>Category</label>
-      <md-select ng-model="combo.category">
-        <md-option ng-repeat="category in categories" value="{{category.name}}">{{category.name}}
-        </md-option>
-      </md-select>
-    </md-input-container>
-    <md-input-container flex>
-      <label>description</label>
-      <input ng-model="combo.description" />
-    </md-input-container>
-    <md-input-container flex>
-      <md-switch ng-model="combo.active">
-      </md-switch>
-    </md-input-container>
-    <md-input-container flex>
-      <label>Packaging Centre</label>
-      <md-select ng-model="combo.packaging_centre_id">
-        <md-option ng-repeat="packaging_centre in packaging_centres" value="{{packaging_centre.id}}">{{packaging_centre.name}}
-        </md-option>
-      </md-select>
-    </md-input-container>
-    <md-button class="md-icon-button" ng-click="addCross=false">
-      <md-icon md-svg-src="{{done_path}}"></md-icon>
-    </md-button>
-    <md-button class="md-icon-button" ng-click="addShow = !addShow; addCross=true">
-      <md-icon md-svg-src="{{cross_path}}"></md-icon>
-    </md-button>
-  </div>
-</form>
-
-      <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingCombos">
-         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-      </div>
-      <combo-list ng-repeat="combo in combos"> </combo-list>
-        <!-- Combo ends -->
+      <table class="table table-striped table-hover table-panel">
+        <thead>
+        <tr>
+          <span class="progress" ng-show="file.progress > 0 && file.progress != 100">{{file.progress + '%'}}</span>
+          <th style="width:40px">#</th>
+          <th style="width:40px" ng-click="toggleActiveOption()"><i class="{{getIconForActive(combo)}}"></i></th>
+          <th>
+            <div class="form-group label-floating is-empty">
+              <label class="control-label">Name</label>
+              <input class="form-control" type="text" ng-model="combo.name">
+              <span class="material-input"></span>
+            </div>
+          </th>
+         <th style="width:40px">
+            <div class="form-group label-floating is-empty">
+              <label class="control-label">Size</label>
+              <input class="form-control" type="number" min="1" max="50" ng-model="combo.group_size">
+              <span class="material-input"></span>
+            </div>
+          </th>
+          <th style="width:40px" ng-click="toggleCategoryOption()"><i class="{{getIconForCategory(combo)}}"></i></th>
+          <th style="width: 150px">
+            <div class="form-group label-floating is-empty">
+              <span class="dropdown custom-dropdown">
+                <a data-target="#" class="dropdown-toggle custom-dropdown-toggle" data-toggle="dropdown" ng-init="selectedPackagingCentre = {};">
+                    <span ng-hide="selectedPackagingCentre.name">Centre</span>{{selectedPackagingCentre.name}}
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu" id="delivery-location-dropdown">
+                  <li ng-repeat="packaging_centre in packaging_centres" ng-click="selectPackagingCentre(packaging_centre)">{{packaging_centre.name}}</li>
+                </ul>
+              </span>
+              <span class="material-input"></span>
+            </div>
+          </th>
+          <th style="width:40px"><i class="material-icons" ngf-select="uploadFiles($file, $invalidFiles)"
+                                    accept="image/*" ngf-max-size="40MB">image</i></th>
+          <th style="width:40px" ng-click="addCombo()"><i class="material-icons">add_circle_outline</i></th>
+          <th style="width:40px"></th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr combo ng-repeat-start="combo in combos" ng-init="comboDishShow = false"> </tr>
+          <tr class="expanded" combo-dishes ng-show="comboDishShow" ng-repeat-end> </tr>
+        </tbody>
+      </table>
 
     </div>
-    <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm> </div>
-  </div>

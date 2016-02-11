@@ -35,7 +35,7 @@ angular.module('foodmashApp.controllers')
 		};
 
 		function routToCorrectPath(){
-			if($rootScope.storeLocation && $rootScope.storeLocation == "/checkout"){
+			if($rootScope.storeLocation && $rootScope.storeLocation == "/cart"){
 				$location.path($rootScope.storeLocation);
 			}else{
 				$location.path('/');

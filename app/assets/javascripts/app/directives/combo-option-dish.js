@@ -13,6 +13,7 @@ angular.module('foodmashApp.directives')
 		controller: ['$scope', 'ComboOptionDish', '$q', 'Dish', 'toaster', function($scope, ComboOptionDish, $q, Dish, toaster){
 
 			$scope.updatedComboOptionDish = new ComboOptionDish;
+			$scope.dishes = [];
 
 			$scope.setUpdate = function(combo_option_dish){
 				$scope.updatedComboOptionDish = angular.copy(combo_option_dish);

@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('comboCard', ['toaster','CartService', '$mdDialog', function(toaster, CartService, $mdDialog){
+.directive('comboCard', ['toaster','CartService', '$location', 'ComboService', function(toaster, CartService, $location, ComboService){
 
 	return {
 
@@ -10,39 +10,84 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/combo-card.html',
 
-		controller: ['$scope', 'toaster','CartService', '$mdDialog', function($scope, toaster, CartService, $mdDialog){
+		controller: ['$scope', 'toaster','CartService', '$location', 'ComboService', function($scope, toaster, CartService, $location, ComboService){
 
 			$scope.selectedDishes = [];
 			$scope.filling = false;
 
-			setQuantityForComboItems();
 			setQuantityForCombo();
+			setQuantityForComboItems();
+			pushDefaultComboOption($scope.combo);
+
+			$scope.routeToComboDescription = function(combo){
+				ComboService.setComboForDescription(combo);
+				$location.path("/combo-description");
+			};
 
 			$scope.selectDish = function(combo, combo_option, dish){
-				var selectedDish = {"product": {}, "category": {}, "item": {}};
+				var selectedDish = {"product": {}, "item": {}};
 				selectedDish["product"]["id"] = combo.id;
 				selectedDish["category_id"] = combo_option.id;
 				selectedDish["category_type"] = "ComboOption";
-				selectedDish["item"]["id"] = parseInt(dish_id, 10);
+				selectedDish["item"]["id"] = parseInt(dish.id, 10);
 				selectedDish["item"]["name"] = dish.name;
 				selectedDish["item"]["description"] = dish.description;
 				selectedDish["item"]["price"] = parseFloat(dish.price);
 				selectedDish["added_at"] = Date.now();
-				selectedDish["quantity"] = combo_option.quantity;
+				selectedDish["quantity"] = 1;
 				checkAndPush(selectedDish)
 			};
 
-			$scope.addToCart = function(combo){
-				pushAllComboDishes(combo);
-				CartService.addToCart(combo, $scope.selectedDishes);
-				setQuantityForCombo();
-				toaster.pop('success' ,'Added to cart!');
+			$scope.removeSelectedDish = function(combo_option, combo_option_dish){
+				if($scope.checkIfSelected(combo_option, combo_option_dish)){
+					for(var i=0; i<$scope.selectedDishes.length; i++){
+						if(combo_option.id == $scope.selectedDishes[i]["category_id"] && combo_option_dish.dish.id == $scope.selectedDishes[i]["item"]["id"]){
+							$scope.selectedDishes[i]["quantity"] -= 1;
+							if($scope.selectedDishes[i]["quantity"] == 0){
+								$scope.selectedDishes.splice(i, 1);
+							}
+						}
+					}
+				}
+			};
+
+			$scope.toggleDish = function(combo, combo_option, combo_option_dish){
+				if($scope.checkIfSelected(combo_option, combo_option_dish)){
+					for(var i=0; i<$scope.selectedDishes.length; i++){
+						if(combo_option.id == $scope.selectedDishes[i]["category_id"] && combo_option_dish.dish.id == $scope.selectedDishes[i]["item"]["id"]){
+							$scope.selectedDishes.splice(i, 1);
+						}
+					}
+				}else{
+					$scope.selectDish(combo, combo_option, combo_option_dish.dish);
+				}
+			};
+
+			$scope.checkIfSelected = function(combo_option, combo_option_dish){
+				for(var i=0; i<$scope.selectedDishes.length; i++){
+					if(combo_option.id == $scope.selectedDishes[i]["category_id"] && combo_option_dish.dish.id == $scope.selectedDishes[i]["item"]["id"]){
+						return true;
+					}
+				}
+				return false;
+			};
+
+			$scope.showQuantityOfSelectedDish = function(combo_option, combo_option_dish){
+				for(var i=0; i<$scope.selectedDishes.length; i++){
+					if(combo_option.id == $scope.selectedDishes[i]["category_id"] && combo_option_dish.dish.id == $scope.selectedDishes[i]["item"]["id"]){
+						return $scope.selectedDishes[i]["quantity"];
+					}
+				}
+				return 0;
 			};
 
 			$scope.addCombo = function(combo){
 				pushAllComboDishes(combo);
 				CartService.addToCart(combo, $scope.selectedDishes);
+				$scope.selectedDishes = [];
 				setQuantityForCombo();
+				setQuantityForComboItems();
+				pushDefaultComboOption($scope.combo);
 				toaster.pop('success', 'Added to cart!');
 			};
 
@@ -51,7 +96,7 @@ angular.module('foodmashApp.directives')
 				if($scope.combo.quantity >= 1){
 					$scope.combo.quantity -= 1;
 				}
-				toaster.pop('success', 'Deleted from cart!');
+				toaster.pop('success', 'Removed from cart!');
 			};
 
 			$scope.addComboDish = function(combo_dish){
@@ -89,7 +134,7 @@ angular.module('foodmashApp.directives')
 					}
 				}
 				if(combo.combo_options){
-					if(l == combo.combo_options.length){
+					if(l >= combo.combo_options.length){
 						return false;
 					}else{
 						return true;
@@ -99,32 +144,10 @@ angular.module('foodmashApp.directives')
 				}
 			};
 
-			$scope.showDescriptionDialog = function(ev){
-			    $mdDialog.show({
-			        controller: DialogController,
-			        templateUrl: '/templates/combo-description.html',
-			        parent: angular.element(document.body),
-			        scope: $scope,
-			        preserveScope: true,
-			        targetEvent: ev,
-			        clickOutsideToClose:true
-			    });
-			};
-
-			function DialogController($scope, $mdDialog){
-			    $scope.hide = function(){
-			        $mdDialog.hide();
-			    };
-
-			    $scope.cancel = function(){
-			        $mdDialog.cancel();
-			    };
-			};
-
 			function checkAndPush(selectedDish){
 				for(var i = 0; i<$scope.selectedDishes.length; i++){
-					if(selectedDish["product"].id == $scope.selectedDishes[i]["product"].id && selectedDish["category"].id == $scope.selectedDishes[i]["category"].id && selectedDish["category"].type == $scope.selectedDishes[i]["category"].type){
-						$scope.selectedDishes[i] = selectedDish;
+					if(selectedDish["product"]["id"] == $scope.selectedDishes[i]["product"]["id"] && selectedDish["category_id"] == $scope.selectedDishes[i]["category_id"] && selectedDish["category_type"] == $scope.selectedDishes[i]["category_type"] && selectedDish["item"]["id"] == $scope.selectedDishes[i]["item"]["id"]){
+						$scope.selectedDishes[i]["quantity"] += 1;
 						return ;
 					}
 				}
@@ -134,7 +157,7 @@ angular.module('foodmashApp.directives')
 			function pushAllComboDishes(combo){
 				if(combo.combo_dishes){
 					for(var i=0; i<combo.combo_dishes.length; i++){
-						var selectedDish = {"product": {}, "category": {}, "item": {}};
+						var selectedDish = {"product": {}, "item": {}};
 						selectedDish["product"]["id"] = combo.id;
 						selectedDish["category_id"] = combo["combo_dishes"][i].id;
 						selectedDish["category_type"] = "ComboDish";
@@ -144,6 +167,24 @@ angular.module('foodmashApp.directives')
 						selectedDish["item"]["price"] = parseFloat(combo["combo_dishes"][i].dish.price);
 						selectedDish["added_at"] = Date.now();
 						selectedDish["quantity"] = combo["combo_dishes"][i].quantity;
+						$scope.selectedDishes.push(selectedDish);
+					}
+				}
+			};
+
+			function pushDefaultComboOption(combo){
+				if(combo.combo_options){
+					for(var i=0; i<combo.combo_options.length; i++){
+						var selectedDish = {"product": {}, "item": {}};
+						selectedDish["product"]["id"] = combo.id;
+						selectedDish["category_id"] = combo["combo_options"][i].id;
+						selectedDish["category_type"] = "ComboOption";
+						selectedDish["item"]["id"] = parseInt(combo["combo_options"][i].combo_option_dishes[0].dish.id, 10);
+						selectedDish["item"]["name"] = combo["combo_options"][i].combo_option_dishes[0].dish.name;
+						selectedDish["item"]["description"] = combo["combo_options"][i].combo_option_dishes[0].dish.description;
+						selectedDish["item"]["price"] = parseFloat(combo["combo_options"][i].combo_option_dishes[0].dish.price);
+						selectedDish["added_at"] = Date.now();
+						selectedDish["quantity"] = combo["combo_options"][i].quantity;
 						$scope.selectedDishes.push(selectedDish);
 					}
 				}

@@ -6,7 +6,7 @@ class Web::DishesController < ApplicationController
 	def index
 		@dishes = Dish.where(params.permit(:id, :restaurant_id, :name, :dish_type_id, :cuisine_id))
 		if @dishes 
-			render status: 200, json: @dishes.as_json(:include => [:restaurant, :dish_type, :cuisine])
+			render status: 200, json: @dishes.as_json(:include => [:dish_type, :cuisine])
 		else
 			render status: 404, json: {error: 'Dishes not found!'}
 		end
@@ -52,10 +52,10 @@ class Web::DishesController < ApplicationController
 	end
 
 	def dish_params
-		params.require(:dish).permit(:name, :price, :dish_type_id, :restaurant_id, :no_of_purchases, :picture, :available, :description, :cuisine_id, :label)
+		params.require(:dish).permit(:name, :price, :dish_type_id, :restaurant_id, :picture, :available, :description, :cuisine_id, :label)
 	end
 
 	def dish_update_params
-		params.require(:dish).permit(:name, :price, :dish_type_id, :restaurant_id, :no_of_purchases,:picture, :available, :description, :cuisine_id, :label)
+		params.require(:dish).permit(:name, :price, :dish_type_id, :restaurant_id,:picture, :available, :description, :cuisine_id, :label)
 	end
 end

@@ -45,8 +45,14 @@ gem 'twilio-ruby', '>= 4.2.1'
 # direct upload to S3 bucket 
 gem 'aws-sdk', '~> 2'
 
+gem "font-awesome-rails"
+
+gem 'rack-cors', :require => 'rack/cors'
+
 gem 'tzinfo-data'
 #for payment gateway integration
+
+gem 'material_icons'
 
 group :production do
   gem 'execjs'

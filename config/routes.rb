@@ -16,11 +16,8 @@ Rails.application.routes.draw do
 
     resources :combos do 
       collection do 
-        get 'getOfferCombos', to: 'combos#get_offer_combos'
-        get 'getMicroCombos', to: 'combos#get_micro_combos'
-        get 'getMediumCombos', to: 'combos#get_medium_combos'
-        get 'getMegaCombos', to: 'combos#get_mega_combos'
         post 'getComboAvailability', to: 'combos#get_combo_availability'
+        get 'loadFromPackagingCentre', to: 'combos#load_from_packaging_centre'
       end
     end
 
@@ -56,6 +53,7 @@ Rails.application.routes.draw do
         get '/clear', to: 'carts#clear'
         get '/show', to: 'carts#show'
         post '/changeStatus', to: 'carts#change_status'
+        get '/purchasedCarts', to: 'carts#purchased_carts'
       end
     end
 
@@ -73,6 +71,7 @@ Rails.application.routes.draw do
     resources :payments, only: [:index] do 
       collection do 
         post '/getHash', to: 'payments#get_hash'
+        post '/checkPasswordForCod', to: 'payments#check_password_for_cod'
       end
     end
   end

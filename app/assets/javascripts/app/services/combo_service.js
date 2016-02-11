@@ -2,23 +2,23 @@
 
 angular.module('foodmashApp.services')
 
-.service('CombosService', ['$q', function($q){
-  var service = this;
-  var sideNavOptions = [
-     {pic_url: "https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/offers.svg", name: "Offers", icon_class: "nav-icon offers"},
-     {pic_url: "https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/for_1.svg", name: "Micro", icon_class: "nav-icon micro"},
-     {pic_url: "https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/for_2.svg", name: "Medium", icon_class: "nav-icon medium"},
-     {pic_url: "https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/for_3.svg", name: "Mega", icon_class: "nav-icon mega"}
-  ];
+.service('ComboService', ['$rootScope', '$q', function($rootScope, $q) {
+  
+   var service = this;
+   this.combo = {};
+   
+   this.setComboForDescription= function(combo) {
+      service.combo = combo;
+   };
 
-  this.loadSideNavOptions = function(){
-    var d = $q.defer();
-    if(sideNavOptions){
-      d.resolve(sideNavOptions);
-    }else{
-      d.resolve(null);
-    }
-    return d.promise;
-  };
-
-}]);
+   this.getComboForDescription = function(){
+      var d = $q.defer();
+      if(service.combo){
+        d.resolve(service.combo);
+      }else{
+        d.reject(service.combo);      
+      }
+      return d.promise;
+   };
+   
+ }]);

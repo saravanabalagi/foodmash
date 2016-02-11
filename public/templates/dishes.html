@@ -1,0 +1,74 @@
+
+<td></td>
+<td colspan="8">
+  <table class="table table-hover table-striped">
+    <thead>
+    <span class="progress" ng-show="file.progress > 0 && file.progress != 100">{{file.progress + '%'}}</span>
+      <th>#</th>
+      <th>
+        <div class="form-group label-floating is-empty">
+          <label class="control-label">Name</label>
+          <input class="form-control" type="text" ng-model="dish.name">
+          <span class="material-input"></span>
+        </div>
+      </th>
+      <th>
+         <div class="form-group label-floating is-empty">
+          <span class="dropdown custom-dropdown">
+            <a data-target="#" class="dropdown-toggle custom-dropdown-toggle" data-toggle="dropdown" ng-init="selectedDishType = {};">
+                <span ng-hide="selectedDishType.name">Dish Type</span>{{selectedDishType.name}}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" id="delivery-location-dropdown">
+              <li ng-repeat="dish_type in dish_types" ng-click="selectDishType(dish_type)">{{dish_type.name}}</li>
+            </ul>
+          </span>
+          <span class="material-input"></span>
+        </div>
+      </th>
+       <th>
+         <div class="form-group label-floating is-empty">
+          <span class="dropdown custom-dropdown">
+            <a data-target="#" class="dropdown-toggle custom-dropdown-toggle" data-toggle="dropdown" ng-init="selectedCuisine = {};">
+                <span ng-hide="selectedCuisine.name">Cuisine</span>{{selectedCuisine.name}}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" id="delivery-location-dropdown">
+              <li ng-repeat="cuisine in cuisines" ng-click="selectCuisine(cuisine)">{{cuisine.name}}</li>
+            </ul>
+          </span>
+          <span class="material-input"></span>
+        </div>
+      </th>
+       <th>
+         <div class="form-group label-floating is-empty">
+          <span class="dropdown custom-dropdown">
+            <a data-target="#" class="dropdown-toggle custom-dropdown-toggle" data-toggle="dropdown" ng-init="selectedLabel = {};">
+                <span ng-hide="selectedLabel.name">Label</span>{{selectedLabel.name}}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" id="delivery-location-dropdown">
+              <li ng-repeat="label in labels" ng-click="selectLabel(label)">{{label.name}}</li>
+            </ul>
+          </span>
+          <span class="material-input"></span>
+        </div>
+      </th>
+      <th>
+        <div class="form-group label-floating is-empty">
+          <label class="control-label">Price</label>
+          <input class="form-control" type="number" ng-model="dish.price">
+          <span class="material-input"></span>
+        </div>
+      </th>
+      <th style="width:40px"><i class="material-icons" ngf-select="uploadFiles($file, $invalidFiles)"
+                                    accept="image/*" ngf-max-size="40MB">image</i></th>
+      <th style="width:40px"></th>
+      <th style="width:40px" ng-click="addDish(restaurant.id)"><i class="material-icons">add_circle_outline</i></th>
+    </thead>
+    <tbody>
+      <tr dish ng-repeat="dish in dishes"></tr>
+    </tbody>
+  </table>
+</td>
+<td></td>

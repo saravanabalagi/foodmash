@@ -4,6 +4,9 @@ angular.module('foodmashApp.directives')
 
 .directive('userPanel', ['AuthService', 'UserService','toaster','$location', function(AuthService, UserService, toaster, $location) {
   return {
+
+    restrict: 'A',
+
     templateUrl: '/templates/user_panel.html',
 
     controller: ['$scope', 'AuthService', 'UserService','toaster','$location', function($scope, AuthService, UserService, toaster, $location) {
@@ -17,9 +20,6 @@ angular.module('foodmashApp.directives')
        		 $scope.currentUser = currentUser;
       });
 
-      $scope.openMenu = function($mdOpenMenu, ev){
-        $mdOpenMenu(ev);
-      };
 
       $scope.routeToPanel = function(){
         if(hasRole("super_admin")){
@@ -48,7 +48,7 @@ angular.module('foodmashApp.directives')
       };
 
       $scope.routToProfile = function(){
-        $location.path("/users/" + $scope.currentUser.id);
+        $location.path("/account");
       };
 
       $scope.logout = function() {

@@ -1,27 +1,63 @@
-<div layout="row" flex>
-  <md-sidenav layout="column" class="md-sidenav-left" md-component-id="sidenav" md-is-locked-open="$mdMedia('gt-md')">
-  <md-checkbox>Veg</md-checkbox>
-  <md-checkbox>Egg</md-checkbox>
-  <md-checkbox>Non-veg</md-checkbox>
-  <br />
-  <h4>Sort By</h4>
-	  <md-radio-group ng-model="data.group1">
-	    <md-radio-button value="Price Ascending" class="md-primary">Price Ascending</md-radio-button>
-	    <md-radio-button value="Price Descending" class="md-primary">Price descending</md-radio-button>
-	    <md-radio-button value="Popularity" class="md-primary">Popularity</md-radio-button>
-	  </md-radio-group>
-    <br />
-   <h4>Price Range</h4>
-   <md-slider layout-margin class="md-primary" flex min="0" max="255"></md-slider>
-  </md-sidenav>
-  <div class="main-pane" layout="column" flex ng-cloak>
-      <md-tabs flex md-border-bottom class="combo-layout" md-center-tabs>
-        <md-tab ng-repeat="option in sideNavOptions" label="{{option.name}}" ng-click="selectOption(option)">
-          <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingComboCards">
-             <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-          </div>
-          <combo-card ng-repeat="combo in combos"></combo-card>
-        </md-tab>
-      </md-tabs>
+<div class="sidebar-wrapper sidebar-open">
+  <div class="sidebar">
+    <section class="sidebar-section">
+      <h5>Type</h5>
+      <ul class="sidebar-nav group-size">
+        <li ng-repeat="option in mainOptions" ng-class="{active: checkIfMainOptionSelected(option)}" ng-click="addOrRemoveMainFilters(option)">
+         <a>
+           <span>{{option.name}}</span>
+           <i class="{{option.icon_class}}"></i>
+           <div class="ripple-container"></div>
+         </a>
+        </li>
+      </ul>
+    </section>
+    <section class="sidebar-section">
+      <h5>Size</h5>
+      <ul class="sidebar-nav group-size">
+        <li ng-repeat="option in sizeOptions" ng-class="{active: checkIfSizeOptionSelected(option)}" ng-click="addOrRemoveSizeFilters(option)">
+          <a>
+            <span>{{option.name}}</span>
+            <i class="{{option.icon_class}}" style="{{option.style}}"></i>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <section class="sidebar-section">
+      <h5>Preference</h5>
+      <ul class="sidebar-nav type">
+        <li ng-repeat="option in preferenceOptions" ng-class="{active: checkIfPreferenceOptionSelected(option)}" 
+        ng-click="addOrRemovePreferenceFilters(option)">
+          <a>
+            <span>{{option.name}}</span>
+            <i class="{{option.icon_class}}"></i>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <section class="sidebar-section">
+      <h5>Price</h5>
+      <ul class="sidebar-nav price">
+        <li onclick="$(this).toggleClass('active')">
+          <a>
+            <span>Low to High</span>
+            <i class="fa fa-sort-amount-asc pull-right"></i>
+          </a>
+        </li>
+        <li onclick="$(this).toggleClass('active')">
+          <a>
+            <span>High to Low</span>
+            <i class="fa fa-sort-amount-desc pull-right"></i>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="row">
+      <combo-card ng-repeat="combo in combos | filter:search"></combo-card>
   </div>
 </div>

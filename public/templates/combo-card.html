@@ -1,38 +1,30 @@
-<div layout="row" flex class="combo" ng-click="showDescriptionDialog($event)">
-    <div class="combo-img-container">
-       <img ng-src="{{combo.picture}}" alt="Combo Picture" height="200" width="225" />
-        <div class="combo-img-overlay" ng-hide="true"></div>
-        <md-icon md-svg-icon="{{avatar_path}}" class="combo-img-popup" ng-hide="true"></md-icon>
+
+   <div class="col-sm-6 col-md-4">
+    <div class="thumbnail combo-card">
+      <div class="img-wrapper">
+          <img src="{{combo.picture}}" />
+      </div>
+      <div class="caption">
+        <h4>{{combo.name}}</h4>
+        <p>{{combo.description}}</p>
+        <ul class="combo-contents">
+            <li ng-repeat="combo_dish in combo.combo_dishes">
+                <i class="icon-label {{combo_dish.dish.label}}"></i>
+                <span>{{combo_dish.dish.name}}</span>
+            </li>
+            <li ng-repeat="combo_option in combo.combo_options">
+                <span ng-repeat="combo_option_dish in combo_option.combo_option_dishes">{{combo_option_dish.dish.name}} / </span>
+            </li>
+        </ul>
+        <p>
+          <span class="quantity-counter">
+            <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="removeCombo(combo)"><i class="material-icons">remove</i> </a>
+            <span class="quantity">{{combo.quantity}}</span>
+            <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="addCombo(combo)"><i class="material-icons">add</i> </a>
+          </span>
+          <a ng-click="addCombo(combo)" class="btn btn-success" role="button" style="float:right" data-toggle=snackbar data-content="Added to cart" data-timeout="3000"><i class="fa fa-shopping-cart"></i>Buy</a>
+          <a ng-click="routeToComboDescription(combo)" class="btn btn-primary" role="button" style="float:right; margin-right: 10px"><i class="fa fa-eye"></i>View</a> 
+        </p>
+      </div>
     </div>
-    <div class="combo-container" layout="column" flex>
-        <div layout="row">
-            <div class="combo-price"><span class="rupee">{{combo.price}}</span></div>
-            <md-icon class="combo-label" md-svg-src="{{offers_path}}"></md-icon>
-        </div>
-        <div class="combo-desc" layout="column" flex>
-            <div class="combo-name">{{combo.name}}</div>
-            <ul class="combo-contents">
-                <li ng-repeat="combo_dish in combo.combo_dishes">{{combo_dish.dish.name}}</li>
-                <li ng-repeat="combo_option in combo.combo_options">
-                    <span ng-repeat="combo_option_dish in combo_option.combo_option_dishes">{{combo_option_dish.dish.name}} / </span>
-                </li>
-                <!-- Doesn't work <li ng-repeat="combo_option in combo.combo_options">{{combo_option.getContents}}</li>-->
-            </ul>
-        </div>
-        <div class="combo-buy" ng-hide="combo.quantity">
-            <md-button class="md-primary md-raised" ng-click="addToCart(combo)" ng-disabled="checkComboSelection(combo)">
-                <md-icon md-svg-src="{{cart_path}}"></md-icon>
-                <span>Add to Cart</span>
-            </md-button>
-        </div>
-        <div class="combo-quantity-container" layout="row" layout-align="start center" ng-show="combo.quantity">
-            <md-button class="md-icon-button" ng-click="removeCombo(combo)">
-                <md-icon md-svg-src="{{minus_path}}" aria-label="Decrease"></md-icon>
-            </md-button>
-            <span class="combo-quantity">{{combo.quantity}}</span>
-            <md-button class="md-icon-button" ng-click="addCombo(combo)">
-                <md-icon md-svg-src="{{plus_path}}" aria-label="Increase"></md-icon>
-            </md-button>
-        </div>
-    </div>
-</div>
+  </div>

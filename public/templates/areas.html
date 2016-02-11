@@ -1,48 +1,43 @@
-<!-- Areas -->
 
-        <div layout="row">
-          <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm></div>
-          <div layout="column" flex>
-              <div layout-padding layout-margin>
-                <md-content flex class="md-display-1">Areas</md-content>
-                <md-divider class="bottom-margin bottom-padding"></md-divider>
-              </div>
-              
-              <!-- add new -->
-               <form flex layout="row" name="addAreaForm" ng-submit="addArea(addCross)" ng-init="addCross=false">
-                <md-input-container flex>
-                    <label>Area</label>
-                    <input ng-model="area.name" type="text" />
-                </md-input-container>
-                <md-input-container flex>
-                  <label>Packaging Centre</label>
-                  <md-select ng-model="area.packaging_centre_id">
-                    <md-option ng-repeat="packaging_centre in packaging_centres" value="{{packaging_centre.id}}">{{packaging_centre.name}}
-                    </md-option>
-                  </md-select>
-                </md-input-container>
-                <div layout="row" layout-align="center center" layout-padding>
-                  <md-button class="md-icon-button" layout-padding ng-click="addCross=false">
-                    <md-icon md-svg-src="{{done_path}}"></md-icon>
-                  </md-button>
-                  <md-button class="md-icon-button" layout-padding ng-click="addCross=true">
-                    <md-icon md-svg-src="{{cross_path}}"></md-icon>
-                  </md-button>
-                </div>
-               </form>
-              <!-- add new ends -->
-
-              <!-- for loop for listing -->
-
-              <!-- item  -->
-              <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingAreas">
-                 <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-              </div>
-              <area ng-repeat="area in areas"> </area>
-              <!-- item ends -->
-              <!-- for loop ends -->
-              
-          </div>
-          <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm> </div>
+<td></td>
+<td colspan="8">
+  <table class="table table-hover table-striped">
+    <thead>
+      <th>#</th>
+      <th>
+        <div class="form-group label-floating is-empty">
+          <label class="control-label">Name</label>
+          <input class="form-control" type="text" ng-model="area.name">
+          <span class="material-input"></span>
         </div>
-<!--  Areas ends-->
+      </th>
+       <th>
+        <div class="form-group label-floating is-empty">
+          <label class="control-label">Pincode</label>
+          <input class="form-control" type="number" ng-model="area.pincode">
+          <span class="material-input"></span>
+        </div>
+      </th>
+      <th>
+         <div class="form-group label-floating is-empty">
+          <span class="dropdown custom-dropdown">
+            <a data-target="#" class="dropdown-toggle custom-dropdown-toggle" data-toggle="dropdown" ng-init="selectedPackagingCentre = {};">
+                <span ng-hide="selectedPackagingCentre.name">Packaging Centre</span>{{selectedPackagingCentre.name}}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" id="delivery-location-dropdown">
+              <li ng-repeat="packaging_centre in packaging_centres" ng-click="selectPackagingCentre(packaging_centre)">{{packaging_centre.name}}</li>
+            </ul>
+          </span>
+          <span class="material-input"></span>
+        </div>
+      </th>
+      <th style="width:40px"></th>
+      <th style="width:40px" ng-click="addArea(city.id)"><i class="material-icons">add_circle_outline</i></th>
+    </thead>
+    <tbody>
+      <tr area ng-repeat="area in areas"></tr>
+    </tbody>
+  </table>
+</td>
+<td></td>

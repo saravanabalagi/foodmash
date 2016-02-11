@@ -18,41 +18,11 @@ angular.module('foodmashApp.resources')
 		return d.promise;
 	};
 
-	resource.loadOfferCombos = function(){
+	resource.loadFromPackagingCentre = function(){
 		var self = this;
 		var d = $q.defer();
-		resource.$get(self.$url('getOfferCombos')).then(function(offerCombos){
-			d.resolve(offerCombos);
-		}, 
-		function(err){ d.reject(err); });
-		return d.promise;
-	};
-
-	resource.loadMicroCombos = function(){
-		var self = this;
-		var d = $q.defer();
-		resource.$get(self.$url('getMicroCombos')).then(function(offerCombos){
-			d.resolve(offerCombos);
-		}, 
-		function(err){ d.reject(err); });
-		return d.promise;
-	};
-
-	resource.loadMediumCombos = function(){
-		var self = this;
-		var d = $q.defer();
-		resource.$get(self.$url('getMediumCombos')).then(function(offerCombos){
-			d.resolve(offerCombos);
-		}, 
-		function(err){ d.reject(err); });
-		return d.promise;
-	};
-
-	resource.loadMegaCombos = function(){
-		var self = this;
-		var d = $q.defer();
-		resource.$get(self.$url('getMegaCombos')).then(function(offerCombos){
-			d.resolve(offerCombos);
+		resource.$get(self.$url('loadFromPackagingCentre')).then(function(loadedFromPackagingCentre){
+			d.resolve(loadedFromPackagingCentre);
 		}, 
 		function(err){ d.reject(err); });
 		return d.promise;
