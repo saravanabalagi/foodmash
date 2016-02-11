@@ -13,7 +13,13 @@ angular.module('foodmashApp.directives')
 		controller: ['$scope', 'Combo', '$q', 'toaster', '$location', 'Upload', 'Aws', 'PackagingCentre', function($scope, Combo, $q, toaster, $location, Upload, Aws, PackagingCentre){
 
 			$scope.updatedCombo = new Combo;
-			$scope.categories = [{name: 'regular'}, {name: 'budget'}, {name: 'corporate'}, {name: 'health'}];
+			$scope.categoryOptionsForUpdate = 
+			[
+				{name: "Regular", icon_class: "fa fa-cutlery"},
+				{name: "Budget", icon_class: "fa fa-coffee"},
+				{name: "Corporate", icon_class: "fa fa-sitemap"},
+				{name: "Health", icon_class: "fa fa-heartbeat"}
+			];
 			$scope.packaging_centres = [];
 
 			$scope.routeToCombo = function(combo){
@@ -21,7 +27,7 @@ angular.module('foodmashApp.directives')
 			};
 
 			$scope.toggleCategoryOptionForUpdate = function(){
-				$scope.toggleCategoryOptionForUpdate.counter+=1;
+				$scope.toggleCategoryOptionForUpdate.counter += 1;
 				$scope.updatedCombo.category = $scope.categoryOptions[$scope.toggleCategoryOptionForUpdate.counter % 4].name;
 			};
 
@@ -59,7 +65,11 @@ angular.module('foodmashApp.directives')
 
 			$scope.setUpdate = function(combo){
 				$scope.updatedCombo = angular.copy(combo);
-				$scope.toggleCategoryOptionForUpdate.counter = $scope.categoryOptions.filter(function(co){if($scope.updatedCombo.category == co.name){return $scope.categoryOptions.indexOf(co);} });
+				$scope.categoryOptions.filter(function(co){
+					if($scope.updatedCombo.category == co.name){
+						$scope.toggleCategoryOptionForUpdate.counter = $scope.categoryOptions.indexOf(co);
+					} 
+				});
 				$scope.toggleActiveOptionForUpdate.counter = $scope.updatedCombo.active == true ? 1 : 0;
 			};
 
