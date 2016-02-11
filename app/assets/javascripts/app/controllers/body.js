@@ -16,6 +16,18 @@ angular.module('foodmashApp.controllers')
 	 	 	$location.path("/");
 	 	};
 
+	 	$scope.routeToTermsAndConditions = function(){
+	 		$location.path("/terms-and-conditions");
+	 	};
+
+	 	$scope.routeToPrivacyPolicy = function(){
+	 		$location.path("/privacy-policy");
+	 	};
+
+	 	$scope.routeToRefundPolicy = function(){
+	 		$location.path("/refund-policy");
+	 	};
+
 
 }]);
 

@@ -1,23 +1,28 @@
 
    <div class="col-sm-6 col-md-4">
     <div class="thumbnail combo-card">
-      <img src="{{combo.picture}}" />
+      <div class="img-wrapper">
+          <img src="{{combo.picture}}" />
+      </div>
       <div class="caption">
-        <h3>{{combo.name}}</h3>
+        <h4>{{combo.name}}</h4>
         <p>{{combo.description}}</p>
         <ul class="combo-contents">
-            <li ng-repeat="combo_dish in combo.combo_dishes">{{combo_dish.dish.name}}</li>
+            <li ng-repeat="combo_dish in combo.combo_dishes">
+                <i class="icon-label {{combo_dish.dish.label}}"></i>
+                <span>{{combo_dish.dish.name}}</span>
+            </li>
             <li ng-repeat="combo_option in combo.combo_options">
                 <span ng-repeat="combo_option_dish in combo_option.combo_option_dishes">{{combo_option_dish.dish.name}} / </span>
             </li>
         </ul>
         <p>
-          <span class="quantity-counter" ng-show="combo.quantity">
+          <span class="quantity-counter">
             <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="removeCombo(combo)"><i class="material-icons">remove</i> </a>
             <span class="quantity">{{combo.quantity}}</span>
             <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="addCombo(combo)"><i class="material-icons">add</i> </a>
           </span>
-          <a ng-click="addCombo(combo)" class="btn btn-success" role="button" style="float:right" data-toggle=snackbar data-content="Added to cart" data-timeout="3000" ng-hide="combo.quantity"><i class="fa fa-shopping-cart"></i>Buy</a> 
+          <a ng-click="addCombo(combo)" class="btn btn-success" role="button" style="float:right" data-toggle=snackbar data-content="Added to cart" data-timeout="3000"><i class="fa fa-shopping-cart"></i>Buy</a>
           <a ng-click="routeToComboDescription(combo)" class="btn btn-primary" role="button" style="float:right; margin-right: 10px"><i class="fa fa-eye"></i>View</a> 
         </p>
       </div>

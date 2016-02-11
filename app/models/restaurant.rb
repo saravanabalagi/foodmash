@@ -1,5 +1,6 @@
 class Restaurant < ActiveRecord::Base
 	resourcify
+	belongs_to :area
 	has_many :dishes, dependent: :destroy
 	has_many :dish_types, through: :dishes
 	belongs_to :area

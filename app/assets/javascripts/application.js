@@ -35,8 +35,18 @@ $(document).ready( function() {
     $('[data-toggle="popover"]').popover();
 
     $('.rupee').html("&#8377; ");
+
+    //After combo-cards get loaded
+    $(".thumbnail > .img-wrapper").each(function() { $(this).height($(this).width()*0.75); });
+    $(".thumbnail.combo-card .img-wrapper > img").each(function() {
+        if($(this).height()>$(this).width()*0.75) {
+            $(this).css("width","100%");
+            $(this).css("height","auto");
+        }
+    });
     $('.combo-card').matchHeight();
-    $('.thumbnail img').matchHeight();
+    //After combo-cards get loaded
+
 
     $('body').swipe( {
         //Generic swipe handler for all directions
@@ -49,7 +59,7 @@ $(document).ready( function() {
         $(this).parents(".dropdown").find('> a').html($(this).text() + ' <span class="caret"></span>');
     });
 
-    $(".footer-push").height($("footer").height());
+    $(".footer-push").height($("footer").height());;
     $("footer").css("margin-top","-"+$("footer").outerHeight()+"px");
 
     $(".back-to-top").hide();

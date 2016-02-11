@@ -30,6 +30,16 @@ angular.module('foodmashApp.directives')
 				$scope.updatedRestaurant.area_id = area.id;
 			};
 
+			Areas.query().then(function(areas){
+				if(areas.length > 0){
+				  $scope.areas = areas;		
+				}else{
+				  $scope.areas = new Array;
+				}
+			}, function(err){
+				$scope.areas = null;
+			});
+
 			$scope.routeToRestaurant = function(restaurant){
 				$location.path("/restaurants/" + restaurant.id);
 			};
