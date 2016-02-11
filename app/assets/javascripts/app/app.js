@@ -86,6 +86,15 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 			controller: 'LoginController',
 			templateUrl: '/templates/login.html'
 		})
+		.when('/terms-and-conditions', {
+			templateUrl: '/templates/terms-and-conditions.html'
+		})
+		.when('/privacy-policy', {
+			templateUrl: '/templates/privacy-policy.html'
+		})
+		.when('/refund-policy', {
+			templateUrl: '/templates/refund-policy.html'
+		})
 		.when('/', 
 		{
 			controller: 'MainController',
