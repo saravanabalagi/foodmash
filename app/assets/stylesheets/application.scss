@@ -1388,9 +1388,20 @@ footer {
         }
         .caption { .quantity-counter { display: none; } }
       }
-      > img {
+      > .img-wrapper {
+        position: relative;
         width: 100%;
-        height: auto;
+        overflow: hidden;
+        > img {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          height: 100%;
+          width: auto;
+          -webkit-transform: translate(-50%,-50%);
+          -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+        }
       }
       margin-bottom: 0;
       position: relative;
@@ -1406,10 +1417,22 @@ footer {
 .thumbnail.combo-dish {
   clear: both;
   overflow: auto;
-  > img {
-    height:240px;
-    width:320px;
+  > .img-wrapper {
+    position: relative;
+    width: 320px;
+    height: 240px;
+    overflow: hidden;
     float: left;
+    > img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height: 100%;
+      width: auto;
+      -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+      transform: translate(-50%,-50%);
+    }
   }
   .caption {
     height: 240px;
@@ -1428,9 +1451,8 @@ footer {
   .thumbnail.combo-dish {
     overflow: inherit;
     position: relative;
-    > img {
+    > .img-wrapper {
       float: none;
-      height: auto;
       width: 100%;
     }
     .caption {

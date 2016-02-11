@@ -3,7 +3,9 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2" ng-repeat="combo_dish in combo.combo_dishes">
       <div class="thumbnail combo-dish">
-        <img src="{{combo_dish.dish.picture}}">
+        <div class="img-wrapper">
+          <img src="{{combo_dish.dish.picture}}">
+        </div>
         <div class="caption">
           <h4>{{combo_dish.dish.name}}</h4>
           <p>{{combo_dish.dish.description}}</p>
@@ -22,7 +24,9 @@
   <div class="combo-option-row" ng-repeat="combo_option in combo.combo_options">
     <div class="combo-option-wrapper" ng-repeat="combo_option_dish in combo_option.combo_option_dishes">
       <div class="thumbnail combo-option selected">
-        <img src="{{combo_option_dish.dish.picture}}">
+        <div class="img-wrapper">
+          <img src="{{combo_option_dish.dish.picture}}">
+        </div>
         <div class="caption">
           <h4>{{combo_option_dish.dish.name}}</h4>
           <p>{{combo_option_dish.dish.description}}</p>
