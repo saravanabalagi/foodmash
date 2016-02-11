@@ -7,7 +7,10 @@
           <img src="{{combo_dish.dish.picture}}">
         </div>
         <div class="caption">
-          <h4>{{combo_dish.dish.name}}</h4>
+          <h4>
+            <i class="icon-label"></i>
+            <span>{{combo_dish.dish.name}}</span>
+          </h4>
           <p>{{combo_dish.dish.description}}</p>
           <p>
             <span class="quantity-counter">
@@ -28,7 +31,10 @@
           <img src="{{combo_option_dish.dish.picture}}">
         </div>
         <div class="caption">
-          <h4>{{combo_option_dish.dish.name}}</h4>
+          <h4>
+            <i class="icon-label"></i>
+            <span>{{combo_option_dish.dish.name}}</span>
+          </h4>
           <p>{{combo_option_dish.dish.description}}</p>
           <p>
             <a ng-click="toggleDish(combo, combo_option, combo_option_dish)" class="btn btn-primary btn-select-combo-option"><i class="fa fa-check-circle"></i>Choose</a> 
