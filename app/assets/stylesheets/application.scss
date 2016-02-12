@@ -132,6 +132,7 @@ body {
   -ms-user-select:none;
   -o-user-select:none;
   user-select:none;
+  transition: all 0.3s ease-in-out;
 }
 
 h1, h2, h3 { font-family: "Segoe UI Light", sans-serif; }
@@ -1496,7 +1497,8 @@ footer {
   -moz-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.10);
   -ms-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.10);
   box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.10);
-  h3 {
+  > h3 {
+    font-family: "Myriad Pro";
     position: relative;
     &:after {
       content: "";
@@ -1508,6 +1510,7 @@ footer {
       left: 0;
     }
   }
+  .caption { padding: 20px 9px 9px 9px; }
 }
 /*CSS for legalese ends*/
 
