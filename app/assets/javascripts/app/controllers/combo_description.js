@@ -163,10 +163,12 @@ angular.module('foodmashApp.controllers')
 				selectedDish["product"]["id"] = combo.id;
 				selectedDish["category_id"] = combo["combo_options"][i].id;
 				selectedDish["category_type"] = "ComboOption";
-				selectedDish["item"]["id"] = parseInt(combo["combo_options"][i].combo_option_dishes[0].dish.id, 10);
-				selectedDish["item"]["name"] = combo["combo_options"][i].combo_option_dishes[0].dish.name;
-				selectedDish["item"]["description"] = combo["combo_options"][i].combo_option_dishes[0].dish.description;
-				selectedDish["item"]["price"] = parseFloat(combo["combo_options"][i].combo_option_dishes[0].dish.price);
+				if(combo["combo_options"][i].combo_option_dishes.length > 0){
+					selectedDish["item"]["id"] = parseInt(combo["combo_options"][i].combo_option_dishes[0].dish.id, 10);
+					selectedDish["item"]["name"] = combo["combo_options"][i].combo_option_dishes[0].dish.name;
+					selectedDish["item"]["description"] = combo["combo_options"][i].combo_option_dishes[0].dish.description;
+					selectedDish["item"]["price"] = parseFloat(combo["combo_options"][i].combo_option_dishes[0].dish.price);
+				}
 				selectedDish["added_at"] = Date.now();
 				selectedDish["quantity"] = combo["combo_options"][i].quantity;
 				$scope.selectedDishes.push(selectedDish);
