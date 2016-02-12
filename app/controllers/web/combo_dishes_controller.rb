@@ -39,7 +39,7 @@ class Web::ComboDishesController < ApplicationController
 	
 	private
 	def combo_dish_params
-		params.require(:combo_dish).permit(:combo_id, :dish_id, :dish_type_id, :priority)
+		params.require(:combo_dish).permit(:combo_id, :dish_id, :dish_type_id, :priority, :min_count)
 	end
 
 	def get_combo_dish
@@ -47,6 +47,6 @@ class Web::ComboDishesController < ApplicationController
 	end
 
 	def combo_dish_update_params
-		params.require(:combo_dish).permit(:combo_id, :dish_id, :dish_type_id, :priority)
+		params.require(:combo_dish).permit(:combo_id, :dish_id, :dish_type_id, :priority, :min_count)
 	end
 end

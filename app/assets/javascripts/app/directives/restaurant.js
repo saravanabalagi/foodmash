@@ -69,14 +69,14 @@ angular.module('foodmashApp.directives')
 
 						file.upload.then(function(response){
 							$scope.restaurant.logo = 'https://foodmash.s3.amazonaws.com/' + response.config.data.key;
-							$scope.restaurant.update().then(function(response){
-								toaster.pop('success', 'Restaurant was updated!');
+							$scope.updatedRestaurant.update().then(function(response){
+								toaster.pop('success', 'Restaurant logo pic was updated!');
 								var index = $scope.restaurants.indexOf(restaurant);
 								if(angular.isNumber(index) && index >= 0){
-									$scope.restaurants[index] = $scope.restaurant;
+									$scope.restaurants[index] = $scope.updatedRestaurant;
 								}
 							}, function(err){
-								toaster.pop('error', 'Restaurant was not updated!');
+								toaster.pop('error', 'Restaurant logo pic was not updated!');
 							});
 						});
 					});

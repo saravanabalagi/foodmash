@@ -7,21 +7,28 @@
         <div class="form-group label-floating is-empty">
           <span class="dropdown custom-dropdown">
             <a data-target="#" class="dropdown-toggle custom-dropdown-toggle" data-toggle="dropdown" ng-init="selectedDishType = {};">
-                <span ng-hide="selectedDishType.name">Dish Type</span>{{selectedDishType.name}}
+                <span ng-hide="selectedDishTypeForComboOption.name">Dish Type</span>{{selectedDishTypeForComboOption.name}}
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu" id="delivery-location-dropdown">
-              <li ng-repeat="dish_type in dish_types" ng-click="selectDishType(dish_type)">{{dish_type.name}}</li>
+              <li ng-repeat="dish_type in dish_types" ng-click="selectDishTypeForComboOption(dish_type)">{{dish_type.name}}</li>
             </ul>
           </span>
           <span class="material-input"></span>
         </div>
       </th>
+      <th style="width:40px">
+         <div class="form-group label-floating is-empty">
+           <label class="control-label">Count</label>
+           <input class="form-control" type="number" min="1" max="50" ng-model="combo_option.min_count">
+           <span class="material-input"></span>
+         </div>
+       </th>
       <th style="width:40px"></th>
       <th style="width:40px" ng-click="addComboOption(combo.id)"><i class="material-icons">add_circle_outline</i></th>
     </thead>
     <tbody>
-      <tr combo-dish ng-repeat="combo_dish in combo_dishes"></tr>
+      <tr combo-option ng-repeat="combo_option in combo_options"></tr>
     </tbody>
   </table>
 </td>

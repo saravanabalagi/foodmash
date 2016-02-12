@@ -44,10 +44,10 @@ class Web::ComboOptionsController < ApplicationController
 	end
 
 	def combo_option_params
-		params.require(:combo_option).permit(:name, :combo_id, :dish_type_id, :description, :priority)
+		params.require(:combo_option).permit(:name, :combo_id, :dish_type_id, :description, :priority, :min_count)
 	end
 
 	def combo_option_update_params
-		params.require(:combo_option).permit(:name, :combo_id, :dish_type_id, :description, :priority)
+		params.require(:combo_option).permit(:name, :combo_id, :dish_type_id, :description, :priority, :min_count)
 	end
 end

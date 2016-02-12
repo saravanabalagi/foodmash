@@ -1,0 +1,29 @@
+
+
+<td ng-hide="updateShow" ng-init="updateShow=false">{{$index + 1}}</td>
+<td ng-hide="updateShow">{{combo_option.dish_type.name}}</td>
+<td ng-hide="updateShow">{{combo_option.min_count}}</td>
+<td ng-hide="updateShow" ng-click="updateShow=!updateShow; setUpdate(combo_option)"><i class="icon-edit"></i></td>
+<td ng-hide="updateShow" ng-click="deleteComboOption(combo_option)"><i class="icon-trash"></i></td>
+
+ <td ng-show="updateShow">{{$index + 1}}</td>
+ <td ng-show="updateShow">
+   <div class="form-group label-floating is-empty">
+     <span class="dropdown location-dropdown">
+     <a data-target="#" class="dropdown-toggle" data-toggle="dropdown" ng-init="selectedDishTypeForComboOptionUpdate = {};">{{selectedDishTypeForComboOptionUpdate.name || updatedComboOption.dish_type.name}}
+       <b class="caret"></b></a>
+       <ul class="dropdown-menu" id="delivery-location-dropdown">
+         <li ng-repeat="dish_type in dish_types" ng-click="selectDishTypeForComboOptionUpdate(dish_type)">{{dish_type.name}}</li>
+       </ul>
+     </span>
+   </div>
+ </td>
+ <td style="width:40px" ng-show="updateShow">
+    <div class="form-group label-floating is-empty">
+      <label class="control-label">Count</label>
+      <input class="form-control" type="number" min="1" max="50" ng-model="updatedComboOption.min_count">
+      <span class="material-input"></span>
+    </div>
+ </td>
+ <td ng-show="updateShow" ng-click="updateShow = !updateShow"><i class="fa fa-times-circle"></i></td>
+ <td ng-show="updateShow" ng-click="updateComboOption(combo_option)"><i class="fa fa-check-circle"></i></td>

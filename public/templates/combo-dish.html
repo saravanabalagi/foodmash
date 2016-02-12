@@ -14,7 +14,7 @@
      <a data-target="#" class="dropdown-toggle" data-toggle="dropdown" ng-init="selectedRestaurantForUpdate = {};">{{selectedRestaurantForUpdate.name || updatedComboDish.dish.restaurant.name}}
        <b class="caret"></b></a>
        <ul class="dropdown-menu" id="delivery-location-dropdown">
-         <li ng-repeat="restaurant in restaurants_for_update" ng-click="selectRestaurantForUpdate(restaurant)"><a>{{restaurant.name}}</a></li>
+         <li ng-repeat="restaurant in restaurants" ng-click="selectRestaurantForUpdate(restaurant)">{{restaurant.name}}</li>
        </ul>
      </span>
    </div>
@@ -25,18 +25,25 @@
      <a data-target="#" class="dropdown-toggle" data-toggle="dropdown" ng-init="selectedDishTypeForUpdate = {};">{{selectedDishTypeForUpdate.name || updatedComboDish.dish.dish_type.name}}
        <b class="caret"></b></a>
        <ul class="dropdown-menu" id="delivery-location-dropdown">
-         <li ng-repeat="dish_type in dish_types_for_update" ng-click="selectDishTypeForUpdate(dish_type)"><a>{{dish_type.name}}</a></li>
+         <li ng-repeat="dish_type in dish_types" ng-click="selectDishTypeForUpdate(dish_type)">{{dish_type.name}}</li>
        </ul>
      </span>
    </div>
  </td>
- <td ng-hide="loadingDishesForUpdate">
+ <td style="width:40px" ng-show="updateShow">
+    <div class="form-group label-floating is-empty">
+      <label class="control-label">Count</label>
+      <input class="form-control" type="number" min="1" max="50" ng-model="updatedComboDish.min_count">
+      <span class="material-input"></span>
+    </div>
+  </td>
+ <td ng-show="!loadingDishesForUpdate && updateShow">
    <div class="form-group label-floating is-empty">
      <span class="dropdown location-dropdown">
      <a data-target="#" class="dropdown-toggle" data-toggle="dropdown" ng-init="selectedDishForUpdate = {};">{{selectedDishForUpdate.name || updatedComboDish.dish.name}}
        <b class="caret"></b></a>
        <ul class="dropdown-menu" id="delivery-location-dropdown">
-         <li ng-repeat="dish in dishes_for_update" ng-click="selectDishForUpdate(dish)"><a>{{dish.name}}</a></li>
+         <li ng-repeat="dish in dishes_for_update" ng-click="selectDishForUpdate(dish)">{{dish.name}}</li>
        </ul>
      </span>
    </div>

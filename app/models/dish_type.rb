@@ -1,7 +1,7 @@
 class DishType < ActiveRecord::Base
-	before_save {|dish_type| write_attribute(:name, dish_type.name.titleize)}
 	has_many :combo_options
 	has_many :dishes
 	has_many :combo_dishes
+	validates_presence_of :name
 	validates_uniqueness_of :name
 end

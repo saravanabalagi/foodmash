@@ -7,6 +7,7 @@
 <td ng-hide="updateShow" ng-init="upadteShow=false" ng-click="updateShow=!updateShow; setUpdate(restaurant)"><i class="icon-edit"></i></td>
 <td ng-hide="updateShow"><i class="icon-trash" ng-click="deleteRestaurant(restaurant)"></i></td>
 
+ <span class="progress" ng-show="file.progress > 0 && file.progress != 100">{{file.progress + '%'}}</span>
  <td ng-show="updateShow">{{$index + 1}}</td>
  <td ng-show="updateShow">
      <input class="form-control" type="text" ng-model="updatedRestaurant.name">
@@ -29,7 +30,8 @@
  <td ng-show="updateShow">
     <input class="form-control" type="text" ng-model="updatedRestaurant.description">
  </td>
- <td ng-show="updateShow"><i class="material-icons">image</i></td>
+ <td ng-show="updateShow"><i class="material-icons" ngf-select="uploadFiles($file, $invalidFiles, restaurant)"
+                             accept="image/*" ngf-max-size="40MB">image</i></td>
  <td ng-show="updateShow" ng-click="updateShow = !updateShow"><i class="fa fa-times-circle"></i></td>
  <td ng-show="updateShow" ng-click="updateRestaurant(restaurant)"><i class="fa fa-check-circle"></i></td>
 

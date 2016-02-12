@@ -4,6 +4,7 @@ class Restaurant < ActiveRecord::Base
 	has_many :dishes, dependent: :destroy
 	has_many :dish_types, through: :dishes
 	belongs_to :area
+	validates_presence_of :area_id, :name
 
 
 	def get_carts_for_restaurant

@@ -10,6 +10,7 @@ class Dish < ActiveRecord::Base
   validates :restaurant_id, presence: true
   validates :dish_type_id, presence: true
   validates :label, presence: true
+  validates :price, presence: true
   before_destroy :ensure_dish_not_referenced
   after_save :update_combos_on_save
 

@@ -2,24 +2,22 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('comboOptions', ['ComboOption', '$q', 'toaster', 'DishType', 'Dish', 'Restaurant', function(ComboOption, $q, toaster, DishType, Dish, Restaurant){
+.directive('comboOptions', ['ComboOption', '$q', 'toaster', 'DishType', 'Dish', function(ComboOption, $q, toaster, DishType, Dish){
 
 	return {
 
 		restrict: 'A',
 
-		templateUrl: '/templates/combo-dishes.html',
+		templateUrl: '/templates/combo-options.html',
 
-		controller: ['$scope', 'ComboOption', '$q', 'toaster', 'DishType', 'Dish', 'Restaurant', function($scope, ComboOption, $q, toaster, DishType, Dish, Restaurant){
+		controller: ['$scope', 'ComboOption', '$q', 'toaster', 'DishType', 'Dish', function($scope, ComboOption, $q, toaster, DishType, Dish){
 
 			$scope.dish_types = [];
-			$scope.restaurants = [];
 			$scope.combo_options = [];
 			$scope.combo_option = new ComboOption;
-			$scope.dish_types = [];
 			$scope.loadingDishesTypes = true;
 
-			DishType.query().then(function(dish_types){
+			DishType.query({combo_id: $scope.combo.id}).then(function(dish_types){
 				if(dish_types.length > 0){
 					$scope.dish_types = dish_types;
 				}else{
@@ -42,8 +40,8 @@ angular.module('foodmashApp.directives')
 				}
 			});
 
-			$scope.selectDishType = function(dish_type){
-				$scope.selectedDishType = dish_type;
+			$scope.selectDishTypeForComboOption = function(dish_type){
+				$scope.selectedDishTypeForComboOption = dish_type;
 				$scope.combo_option.dish_type_id = dish_type.id;
 			};
 
@@ -52,7 +50,7 @@ angular.module('foodmashApp.directives')
 				$scope.combo_option.combo_id = combo_id;
 				$scope.combo_option.save().then(function(response){
 					toaster.pop('success', 'Combo Option was created!');
-					$scope.combo_optiones.unshift($scope.combo_option);
+					$scope.combo_options.unshift($scope.combo_option);
 					$scope.combo_option = new ComboOption;
 					d.resolve(response);
 				}, function(err){

@@ -13,19 +13,6 @@ angular.module('foodmashApp.directives')
 		controller: ['$scope', 'toaster', 'Areas', '$q', 'PackagingCentre', function($scope, toaster, Areas, $q, PackagingCentre){
 
 			$scope.updatedArea = new Areas;
-			$scope.packaging_centres_for_update = [];
-			$scope.loadingPackagingCentresForUpdate = true;
-
-			PackagingCentre.query().then(function(packaging_centres_for_update){
-				if(packaging_centres_for_update.length > 0){
-					$scope.packaging_centres_for_update = packaging_centres_for_update;
-				}else{
-					$scope.packaging_centres_for_update = null;
-				}
-				$scope.loadingPackagingCentresForUpdate = false;
-			}, function(err){
-				$scope.packaging_centres_for_update = null;
-			});
 
 			$scope.setUpdate = function(area){
 				$scope.updatedArea = angular.copy(area);

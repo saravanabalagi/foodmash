@@ -12,31 +12,7 @@ angular.module('foodmashApp.directives')
 
 		controller: ['$scope', 'Dish', '$q', 'toaster', 'DishType', 'Cuisine','Upload', 'Aws', function($scope, Dish, $q, toaster, DishType, Cuisine, Upload, Aws){
 
-			$scope.cuisines_for_update = [];
-			$scope.dish_types_for_update = [];
 			$scope.updatedDish = new Dish;
-			$scope.labels_for_update = [{name: "Veg", value: "veg"}, {name: "Egg", value: "egg"}, {name: "Non Veg", value: "non-veg"}];
-			$scope.file = {};
-
-			DishType.query().then(function(dish_types_for_update){
-				if(dish_types_for_update.length > 0){
-				  $scope.dish_types_for_update = dish_types_for_update;		
-				}else{
-				  $scope.dish_types_for_update = null;
-				}
-			}, function(err){
-				$scope.dish_types_for_update = null;
-			});
-
-			Cuisine.query().then(function(cuisines_for_update){
-				if(cuisines_for_update.length > 0){
-				  $scope.cuisines_for_update = cuisines_for_update;		
-				}else{
-				  $scope.cuisines_for_update = null;
-				}
-			}, function(err){
-				$scope.cuisines_for_update = null;
-			});
 
 			$scope.setUpdate = function(dish){
 				$scope.updatedDish = angular.copy(dish);

@@ -13,30 +13,8 @@ angular.module('foodmashApp.directives')
 		controller: ['$scope', 'ComboDish', '$q', 'toaster', 'DishType', 'Dish', 'Restaurant', function($scope, ComboDish, $q, toaster, DishType, Dish, Restaurant){
 
 			$scope.updatedComboDish = new ComboDish;	
-			$scope.dish_types_for_update = [];
-			$scope.restaurants_for_update = [];
 			$scope.dishes_for_update = [];
 			$scope.loadingDishesForUpdate = true;
-
-			DishType.query().then(function(dish_types_for_update){
-				if(dish_types_for_update.length > 0){
-					$scope.dish_types_for_update = dish_types_for_update;
-				}else{
-					$scope.dish_types_for_update = null;
-				}
-			}, function(err){
-				$scope.dish_types_for_update = null;
-			});
-
-			Restaurant.query({packaging_centre_id: $scope.combo.packaging_centre_id}).then(function(restaurants_for_update){
-				if(restaurants_for_update.length > 0){
-					$scope.restaurants_for_update = restaurants_for_update;
-				}else{
-					$scope.restaurants_for_update = null;
-				}
-			}, function(err){	
-				$scope.restaurants_for_update = null;
-			});
 
 			$scope.selectRestaurantForUpdate = function(restaurant){
 				$scope.selectedRestaurantForUpdate = restaurant;

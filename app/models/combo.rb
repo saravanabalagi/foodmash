@@ -1,16 +1,15 @@
 class Combo < ActiveRecord::Base
-	before_save {|combo| write_attribute(:category, combo.category.titleize)}
 	belongs_to :packaging_centre
 	has_many :combo_dishes, dependent: :destroy
 	has_many :combo_options, dependent: :destroy
 	has_many :combo_option_dishes, through: :combo_options, dependent: :destroy
-	validates :price, presence: true, numericality: {greater_than: -1}
-	validates_presence_of :name, :group_size
 	has_many :orders, as: :product
-	before_destroy :ensure_combo_not_referenced
+	validates :price, presence: true, numericality: {greater_than: -1}
+	validates_presence_of :name, :group_size, :packaging_centre_id, :category
 	before_save :check_for_availability
 	before_save :update_label
 	before_save :calculate_price
+	before_destroy :ensure_combo_not_referenced
 
 	private
 
