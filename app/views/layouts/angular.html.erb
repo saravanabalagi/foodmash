@@ -10,14 +10,22 @@
     <%= stylesheet_link_tag "application", :media => "all" %>
     <script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
-  <body ng-controller="BodyController" ng-cloak>
+
+  <!--review this line-->
+  <!--review this line-->
+  <!--review this line-->
+  <!--review this line-->
+  <body class="sidebar-body" ng-controller="BodyController" ng-cloak>
+  <!--review this line-->
+  <!--review this line-->
+  <!--review this line-->
+  <!--review this line-->
 
     <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
       <div class="container-fluid">
         <div class="navbar-header pull-left">
           <ul class="nav navbar-nav sidebar-options-wrapper pull-left">
-            <li class="sidebar-options" onclick="
-            $('.sidebar-wrapper').toggleClass('slide-and-hide');$('.sidebar-wrapper').toggleClass('slider-open')"><a><i class="fa fa-bars"></i></a></li>
+            <li class="sidebar-options" onclick="sidebarToggle()"><a><i class="fa fa-bars"></i></a></li>
           </ul>
           <a class="navbar-brand" ng-click="routeToRoot()">
             <img src="{{logo_transparent}}" />

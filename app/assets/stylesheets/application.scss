@@ -123,7 +123,6 @@ body {
   background-color: #F5F5F5;
   height: 100%;
   padding: 15px 0 0 0;
-  padding-right: 0 !important;
   color:#111;
   font-family: "Segoe UI", sans-serif;
   font-weight: 100;
@@ -1266,48 +1265,48 @@ footer {
   }
 }
 @media(max-width:435px) {
-  body { padding-left: 0 }
+  body.sidebar-body { padding-left: 0 }
   .sidebar-wrapper { left: -200px; width: 200px; }
 }
 @media(min-width:436px) {
-  body { padding-left: 150px; }
+  body.sidebar-body { padding-left: 150px; }
   .sidebar-wrapper { width: 150px; }
   .sidebar-options-wrapper { display:none; }
 }
 @media(min-width:530px) {
-  body { padding-left: 200px; }
+  body.sidebar-body { padding-left: 200px; }
   .sidebar-wrapper { width: 200px; }
 }
 @media(min-width:768px) {
-  body { padding-left:150px; }
+  body.sidebar-body { padding-left:150px; }
   .sidebar-wrapper { top: 50px; width:150px; }
   .sidebar-wrapper + .container { width: 600px }
   .navbar-search-form { padding: 0; }
 }
 @media(min-width:880px) {
-  body { padding-left:200px; }
+  body.sidebar-body { padding-left:200px; }
   .sidebar-wrapper { width: 200px; }
 }
 @media(min-width:992px) {
-  body { padding-left:150px }
+  body.sidebar-body { padding-left:150px }
   .sidebar-wrapper { width: 150px }
   .sidebar-wrapper + .container { width: 820px }
 }
 @media(min-width:1050px) {
-  body { padding-left:200px; }
+  body.sidebar-body { padding-left:200px; }
   .sidebar-wrapper { width: 200px; }
 }
 @media (min-width: 1200px) {
-  body { padding-left:150px }
+  body.sidebar-body { padding-left:150px }
   .sidebar-wrapper { width: 150px }
   .sidebar-wrapper + .container { width: 1020px; }
 }
 @media (min-width: 1300px) {
-  body { padding-left: 200px; }
+  body.sidebar-body { padding-left: 200px; }
   .sidebar-wrapper { width: 200px; }
 }
 
-.sidebar-wrapper.slide-and-hide { left:-200px; }
+.sidebar-wrapper.slide-and-hide { left:-200px !important; }
 .sidebar-wrapper.slider-open { left:0px; }
 /*CSS for sidebar ends*/
 
@@ -1489,3 +1488,27 @@ footer {
 
 .add-to-cart-wrapper { text-align: center; }
 /*CSS for combo-description ends*/
+
+/*CSS for legalese ends*/
+.thumbnail.legalese {
+  padding: 20px;
+  -webkit-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.10);
+  -moz-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.10);
+  -ms-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.10);
+  h3 {
+    position: relative;
+    &:after {
+      content: "";
+      height: 1px;
+      width: 100%;
+      background-color: rgba(0,0,0,0.1);
+      position: absolute;
+      bottom: -15px;
+      left: 0;
+    }
+  }
+}
+/*CSS for legalese ends*/
+
+
