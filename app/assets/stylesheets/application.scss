@@ -119,7 +119,7 @@ html {
   margin: 0;
 }
 body {
-  &:not(.no-bg) { background: image-url("bg.png"); }
+  .bg { background: image-url("bg.png"); }
   position: relative;
   background-color: #F5F5F5;
   height: 100%;
