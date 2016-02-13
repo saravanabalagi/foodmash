@@ -14,13 +14,21 @@ angular.module('foodmashApp.controllers')
 	$scope.load = function(){
 		angular.element(document).ready(function (){
 			$(function(){
-				 $(".thumbnail.combo-option > .img-wrapper").each(function() { $(this).height($(this).width()*0.75); });
-                 $(".thumbnail.combo-dish .img-wrapper > img, .thumbnail.combo-option .img-wrapper > img").load(function() {
-                    if($(this).height()>$(this).width()*0.75) {
-                       $(this).css("width","100%");
-                       $(this).css("height","auto");
+                $(".thumbnail.combo-option > .img-wrapper").each(function() { $(this).height($(this).width()*0.75); });
+                $(".thumbnail.combo-dish .img-wrapper > img, .thumbnail.combo-option .img-wrapper > img").each(function() {
+                    if($(this).width()!=0
+                        && $(this).height()!=0
+                        && $(this).height()>$(this).width()*0.75) {
+                        $(this).css("height","auto");
+                        $(this).css("width","100%");
                     }
-                 });
+                });
+                $(".thumbnail.combo-dish .img-wrapper > img, .thumbnail.combo-option .img-wrapper > img").load(function() {
+                if($(this).height()>$(this).width()*0.75) {
+                   $(this).css("width","100%");
+                   $(this).css("height","auto");
+                }
+                });
                 $('.thumbnail img').matchHeight();
 			});
 		});
