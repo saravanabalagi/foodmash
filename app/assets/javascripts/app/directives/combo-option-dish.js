@@ -6,51 +6,55 @@ angular.module('foodmashApp.directives')
 
 	return {
 
-		restrict: 'E', 
+		restrict: 'A', 
 
 		templateUrl: '/templates/combo-option-dish.html',
 
 		controller: ['$scope', 'ComboOptionDish', '$q', 'Dish', 'toaster', function($scope, ComboOptionDish, $q, Dish, toaster){
 
 			$scope.updatedComboOptionDish = new ComboOptionDish;
-			$scope.dishes = [];
+			$scope.dishes_for_update = [];
+			$scope.loadingDishesForComboOptionDishUpdate = true;
 
-			$scope.setUpdate = function(combo_option_dish){
-				$scope.updatedComboOptionDish = angular.copy(combo_option_dish);
-				$scope.loadDishes(combo_option_dish.combo_option);
+			$scope.selectRestaurantForComboOptionDishesUpdate = function(restaurant){
+				$scope.selectedRestaurantForComboOptionDishesUpdate = restaurant;
+				$scope.loadDishesForUpdate(restaurant.id);
 			};
 
-			$scope.loadDishes = function(combo_option){
+			$scope.selectDishForComboOptionDishesUpdate = function(dish){
+				$scope.selectedDishForComboOptionDishesUpdate = dish;
+				$scope.updatedComboOptionDish.dish_id = dish.id;
+			};
+
+			$scope.loadDishesForUpdate = function(restaurant_id){
 				var d = $q.defer();
-				Dish.query({dish_type_id: combo_option.dish_type_id}).then(function(dishes){
+				Dish.query({dish_type_id: $scope.combo_option.dish_type_id, restaurant_id: restaurant_id}).then(function(dishes){
 					if(dishes.length > 0){
-						$scope.dishes = dishes;
+						$scope.dishes_for_update = dishes;
 					}else{
-						$scope.dishes = null;
+						$scope.dishes_for_update = null;
 					}
+					$scope.loadingDishesForComboOptionDishUpdate = false;
 				}, function(err){
-					$scope.dishes = null;
+					$scope.dishes_for_update = null;
 				});
 				return d.promise;
 			};
 
+			$scope.setUpdate = function(combo_option_dish){
+				$scope.updatedComboOptionDish = angular.copy(combo_option_dish);
+			};
+
 			$scope.updateComboOptionDish = function(comboOptionDishUpdateCross){
 				var d = $q.defer();
-				if(!comboOptionDishUpdateCross){
-					if(!$scope.comboOptionDishUpdateForm.$pristine){
-						$scope.updatedComboOptionDish.update().then(function(response){
-							toaster.pop('success', 'Updated Combo Option Dish!');
-							$scope.combo_option_dish = $scope.updatedComboOptionDish;
-							d.resolve(response);
-						}, function(err){
-							toaster.pop('error', 'Could not update the Combo Option Dish!');
-							d.reject(err);
-						});
-					}else{
-						$scope.updatedComboOptionDish = new ComboOptionDish;
-						d.resolve(null);
-					}
-				}	
+				$scope.updatedComboOptionDish.update().then(function(response){
+					toaster.pop('success', 'Updated Combo Option Dish!');
+					$scope.combo_option_dish = $scope.updatedComboOptionDish;
+					d.resolve(response);
+				}, function(err){
+					toaster.pop('error', 'Could not update the Combo Option Dish!');
+					d.reject(err);
+				});
 				return d.promise;
 			};
 

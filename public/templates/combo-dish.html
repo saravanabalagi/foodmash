@@ -3,6 +3,7 @@
 <td ng-hide="updateShow" ng-init="updateShow=false">{{$index + 1}}</td>
 <td ng-hide="updateShow">{{combo_dish.dish.restaurant.name}}</td>
 <td ng-hide="updateShow">{{combo_dish.dish.dish_type.name}}</td>
+<td ng-hide="updateShow">{{combo_dish.dish.min_count}}</td>
 <td ng-hide="updateShow">{{combo_dish.dish.name}}</td>
 <td ng-hide="updateShow" ng-click="updateShow=!updateShow; setUpdate(combo_dish)"><i class="icon-edit"></i></td>
 <td ng-hide="updateShow" ng-click="deleteComboDish(combo_dish)"><i class="icon-trash"></i></td>

@@ -5,7 +5,6 @@ angular.module('foodmashApp.controllers')
 .controller('ComboDescriptionController', ['$scope', '$location', 'toaster', 'CartService', 'ComboService', function($scope, $location, toaster, CartService, ComboService){
 
 	$scope.selectedDishes = [];
-	$scope.filling = false;
 	$scope.combo = {};
 
 	$scope.routeToRoot = function(){

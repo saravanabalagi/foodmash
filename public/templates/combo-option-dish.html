@@ -1,36 +1,32 @@
-<div> 
 
-    <div layout="row" layout-padding layout-align="center center" ng-init="comboOptionDishUpdateShow=false" ng-hide="comboOptionDishUpdateShow">
-      
-      <md-content flex>{{combo_option_dish.dish.name}}   ({{combo_option_dish.dish.restaurant.name}} : {{combo_option_dish.dish.restaurant.branch}})</md-content>
-      <div layout="row" layout-align="center center">
-        <md-button class="md-icon-button" ng-click="setUpdate(combo_option_dish); comboOptionDishUpdateShow=!comboOptionDishUpdateShow">
-          <md-icon md-svg-src="{{edit_path}}"></md-icon>
-        </md-button>
-        <md-button class="md-icon-button" ng-click="deleteComboOptionDish(combo_option_dish, combo_option_dishes)">
-          <md-icon md-svg-src="{{bin_path}}"></md-icon>
-        </md-button>
-      </div>
-    </div>
 
-    <form role="form" name="comboOptionDishUpdateForm" ng-submit="updateComboOptionDish(comboOptionDishUpdateCross)" ng-init="comboOptionDishUpdateCross = false" ng-show="comboOptionDishUpdateShow">
-      <div layout="row" layout-padding layout-align="center center">
-        <md-button class="md-icon-button">
-          <md-icon md-svg-src="{{avatar_path}}"></md-icon>
-        </md-button>
-        <md-input-container flex>
-          <label>Dish</label>
-          <md-select ng-model="updatedComboOptionDish.dish_id">
-            <md-option ng-repeat="dish in dishes" value="{{dish.id}}">{{dish.name}}   ({{dish.restaurant.name}} : {{dish.restaurant.branch}})</md-option>
-          </md-select>
-        </md-input-container>
-        <md-button class="md-icon-button" ng-click="comboOptionDishUpdateShow = !comboOptionDishUpdateShow; comboOptionDishUpdateCross = false">
-          <md-icon md-svg-src="{{done_path}}"></md-icon>
-        </md-button>
-        <md-button class="md-icon-button" ng-click="comboOptionDishUpdateShow = !comboOptionDishUpdateShow; comboOptionDishUpdateCross = true">
-          <md-icon md-svg-src="{{cross_path}}"></md-icon>
-        </md-button>
-      </div>
-    </form>
+<td ng-hide="updateShow" ng-init="updateShow=false">{{$index + 1}}</td>
+<td ng-hide="updateShow">{{combo_option_dish.dish.name}}</td>
+<td ng-hide="updateShow" ng-click="updateShow=!updateShow; setUpdate(combo_option_dish)"><i class="icon-edit"></i></td>
+<td ng-hide="updateShow" ng-click="deleteComboOptionDish(combo_option_dish)"><i class="icon-trash"></i></td>
 
-</div>
+ <td ng-show="updateShow">{{$index + 1}}</td>
+ <td ng-show="updateShow">
+   <div class="form-group label-floating is-empty">
+     <span class="dropdown location-dropdown">
+     <a data-target="#" class="dropdown-toggle" data-toggle="dropdown" ng-init="selectedRestaurantForComboOptionDishesUpdate = {};">{{selectedRestaurantForComboOptionDishesUpdate.name}}
+       <b class="caret"></b></a>
+       <ul class="dropdown-menu" id="delivery-location-dropdown">
+         <li ng-repeat="restaurant in restaurants" ng-click="selectRestaurantForComboOptionDishesUpdate(restaurant)">{{restaurant.name}}</li>
+       </ul>
+     </span>
+   </div>
+ </td>
+ <td ng-show="!loadingDishesForComboOptionDishUpdate && updateShow">
+   <div class="form-group label-floating is-empty">
+     <span class="dropdown location-dropdown">
+     <a data-target="#" class="dropdown-toggle" data-toggle="dropdown" ng-init="selectedDishForComboOptionDishesUpdate = {};">{{selectedDishForComboOptionDishesUpdate.name || updatedComboOptionDish.dish.name}}
+       <b class="caret"></b></a>
+       <ul class="dropdown-menu" id="delivery-location-dropdown">
+         <li ng-repeat="dish in dishes_for_update" ng-click="selectDishForComboOptionDishesUpdate(dish)">{{dish.name}}</li>
+       </ul>
+     </span>
+   </div>
+ </td>
+ <td ng-show="updateShow" ng-click="updateShow = !updateShow"><i class="fa fa-times-circle"></i></td>
+ <td ng-show="updateShow" ng-click="updateComboOptionDish(combo_option_dish)"><i class="fa fa-check-circle"></i></td>

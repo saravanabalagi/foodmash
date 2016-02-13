@@ -28,7 +28,8 @@
       <th style="width:40px" ng-click="addComboOption(combo.id)"><i class="material-icons">add_circle_outline</i></th>
     </thead>
     <tbody>
-      <tr combo-option ng-repeat="combo_option in combo_options"></tr>
+      <tr combo-option ng-repeat-start="combo_option in combo_options" ng-init="comboOptionDishShow=false"></tr>
+       <tr class="expanded" combo-option-dishes ng-show="comboOptionDishShow" ng-repeat-end></tr>
     </tbody>
   </table>
 </td>

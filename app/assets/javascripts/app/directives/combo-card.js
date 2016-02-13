@@ -13,7 +13,6 @@ angular.module('foodmashApp.directives')
 		controller: ['$scope', 'toaster','CartService', '$location', 'ComboService', function($scope, toaster, CartService, $location, ComboService){
 
 			$scope.selectedDishes = [];
-			$scope.filling = false;
 
 			setQuantityForCombo();
 			setQuantityForComboItems();
