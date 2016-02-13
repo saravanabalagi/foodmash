@@ -5,8 +5,8 @@
         <thead>
         <tr>
           <span class="progress" ng-show="file.progress > 0 && file.progress != 100">{{file.progress + '%'}}</span>
-          <th style="width:40px">#</th>
-          <th style="width:40px" ng-click="toggleActiveOption()"><i class="{{getIconForActive(combo)}}"></i></th>
+          <th class="th-xs">#</th>
+          <th class="th-xs" ng-click="toggleActiveOption()"><i class="{{getIconForActive(combo)}}"></i></th>
           <th>
             <div class="form-group label-floating is-empty">
               <label class="control-label">Name</label>
@@ -14,14 +14,14 @@
               <span class="material-input"></span>
             </div>
           </th>
-         <th style="width:40px">
+         <th class="th-xs">
             <div class="form-group label-floating is-empty">
               <label class="control-label">Size</label>
               <input class="form-control" type="number" min="1" max="50" ng-model="combo.group_size">
               <span class="material-input"></span>
             </div>
           </th>
-          <th style="width:40px" ng-click="toggleCategoryOption()"><i class="{{getIconForCategory(combo)}}"></i></th>
+          <th class="th-xs" ng-click="toggleCategoryOption()"><i class="{{getIconForCategory(combo)}}"></i></th>
           <th style="width: 150px">
             <div class="form-group label-floating is-empty">
               <span class="dropdown custom-dropdown">
@@ -36,10 +36,10 @@
               <span class="material-input"></span>
             </div>
           </th>
-          <th style="width:40px"><i class="material-icons" ngf-select="uploadFiles($file, $invalidFiles)"
+          <th class="th-xs"><i class="material-icons" ngf-select="uploadFiles($file, $invalidFiles)"
                                     accept="image/*" ngf-max-size="40MB">image</i></th>
-          <th style="width:40px" ng-click="addCombo()"><i class="material-icons">add_circle_outline</i></th>
-          <th style="width:40px"></th>
+          <th class="th-xs" ng-click="addCombo()"><i class="material-icons">add_circle_outline</i></th>
+          <th class="th-xs"></th>
         </tr>
         </thead>
         <tbody>

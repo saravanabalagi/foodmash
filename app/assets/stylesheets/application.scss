@@ -340,6 +340,10 @@ footer {
 /*CSS for admin panel starts*/
 .table-panel {
   tr {
+    th {
+      &.th-xs { width: 40px; }
+      &.th-sm { width: 80px; }
+    }
     th,td {
       a {
         &.dropdown-toggle {

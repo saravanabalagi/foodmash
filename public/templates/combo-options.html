@@ -2,7 +2,7 @@
 <td colspan="7">
   <table class="table table-hover table-striped">
     <thead>
-      <th width="40px">#</th>
+      <th class="th-xs">#</th>
       <th>
         <div class="form-group label-floating is-empty">
           <span class="dropdown custom-dropdown">
@@ -17,17 +17,17 @@
           <span class="material-input"></span>
         </div>
       </th>
-      <th style="width:80px">
+      <th class="th-sm">
          <div class="form-group label-floating is-empty">
            <label class="control-label">Count</label>
            <input class="form-control" type="number" min="1" max="50" ng-model="combo_option.min_count">
            <span class="material-input"></span>
          </div>
        </th>
-      <th style="width:40px"><i class="material-icons" ngf-select="uploadFiles($file, $invalidFiles)"
+      <th class="th-xs"><i class="material-icons" ngf-select="uploadFiles($file, $invalidFiles)"
                                 accept="image/*" ngf-max-size="40MB">image</i></th>
-      <th style="width:40px" ng-click="addComboOption(combo.id)"><i class="material-icons">add_circle_outline</i></th>
-      <th style="width:40px"></th>
+      <th class="th-xs" ng-click="addComboOption(combo.id)"><i class="material-icons">add_circle_outline</i></th>
+      <th class="th-xs"></th>
     </thead>
     <tbody>
       <tr combo-option ng-repeat-start="combo_option in combo_options" ng-init="comboOptionDishShow=false"></tr>
