@@ -86,7 +86,6 @@ angular.module('foodmashApp.controllers')
 		pushAllComboDishes(combo);
 		CartService.addToCart(combo, $scope.selectedDishes);
 		$scope.selectedDishes = [];
-		setQuantityForCombo();
 		setQuantityForComboItems();
 		pushDefaultComboOption($scope.combo);
 		toaster.pop('success', 'Added to cart!');
