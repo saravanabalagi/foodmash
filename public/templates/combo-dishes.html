@@ -10,7 +10,7 @@
                 <span ng-hide="selectedRestaurant.name">Restaurant</span>{{selectedRestaurant.name}}
                 <b class="caret"></b>
             </a>
-            <ul class="dropdown-menu" id="delivery-location-dropdown">
+            <ul class="dropdown-menu">
               <li ng-repeat="restaurant in restaurants" ng-click="selectRestaurant(restaurant)">{{restaurant.name}}</li>
             </ul>
           </span>
@@ -24,7 +24,7 @@
                 <span ng-hide="selectedDishType.name">Dish Type</span>{{selectedDishType.name}}
                 <b class="caret"></b>
             </a>
-            <ul class="dropdown-menu" id="delivery-location-dropdown">
+            <ul class="dropdown-menu">
               <li ng-repeat="dish_type in dish_types" ng-click="selectDishType(dish_type)">{{dish_type.name}}</li>
             </ul>
           </span>
@@ -45,7 +45,7 @@
                 <span ng-hide="selectedDish.name">Dish</span>{{selectedDish.name}}
                 <b class="caret"></b>
             </a>
-            <ul class="dropdown-menu" id="delivery-location-dropdown">
+            <ul class="dropdown-menu">
               <li ng-repeat="dish in dishes" ng-click="selectDish(dish)">{{dish.name}}</li>
             </ul>
           </span>
