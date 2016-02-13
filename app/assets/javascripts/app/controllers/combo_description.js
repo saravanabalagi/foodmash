@@ -13,7 +13,6 @@ angular.module('foodmashApp.controllers')
 
 	ComboService.getComboForDescription().then(function(combo){
 		$scope.combo = combo;
-		setQuantityForCombo();
 	  	setQuantityForComboItems();
 	  	pushDefaultComboOption($scope.combo);
 	}, function(err){
@@ -173,19 +172,6 @@ angular.module('foodmashApp.controllers')
 				$scope.selectedDishes.push(selectedDish);
 			}
 		}
-	};
-
-	function setQuantityForCombo(){
-		CartService.getCartInfo().then(function(cart){
-			if($scope.combo){
-				$scope.combo.quantity = 0;
-				cart.orders.filter(function(order){
-					if(order.product.id == $scope.combo.id){
-						$scope.combo.quantity += order.quantity;
-					}
-				});
-			}
-		});
 	};
 
 	function setQuantityForComboItems(){
