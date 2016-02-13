@@ -20,7 +20,7 @@
             <li class="sidebar-options" onclick="sidebarToggle()"><a><i class="fa fa-bars"></i></a></li>
           </ul>
           <a class="navbar-brand" ng-click="routeToRoot()">
-            <img src="{{logo_transparent}}" />
+            <img src="<%= asset_path('logo_transparent.png') %>" />
             <span class="logo-white">Food</span><span class="logo-red">mash</span>
           </a>
         </div>
@@ -34,7 +34,7 @@
                 <i class="fa fa-shopping-cart fa-append fa-prepend fa-shopping-cart-custom"></i>
                 <span class="label label-default label-cart">
                   <span class="rupee">&#8377; </span>
-                  <span class="cart-total" ng-bind="cart.total">loading...</span>
+                  <span class="cart-total">{{cart.total || "loading..."}}</span>
                 </span>
               </a>
             </li>

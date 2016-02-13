@@ -4,11 +4,9 @@ angular.module('foodmashApp.controllers')
 
 .controller('BodyController', ['$scope', '$location', 'toaster', 'CartService', function($scope, $location, toaster, CartService){
 
-		$scope.logo_transparent = 'https://s3-ap-southeast-1.amazonaws.com/foodmash/assets/logo_transparent.png';
+		$scope.logo_transparent = 'https://s3-ap-southeast-1.amazonaws.com/foodmash-india/assets/logo_transparent.png';
 
 		CartService.setCartGlobally();
-
-		console.log($location.path());
 
 		$scope.checkIfSideBarPresent = function(){
 			var current_path = $location.path();
