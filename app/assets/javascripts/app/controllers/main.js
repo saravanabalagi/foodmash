@@ -8,6 +8,21 @@ angular.module('foodmashApp.controllers')
 		$scope.selected = new Set();
 		$scope.loadingComboCards = true;
 
+		$scope.load = function(){
+			 angular.element(document).ready(function (){
+			 	$(function(){
+			 		  $(".thumbnail > .img-wrapper").each(function() { $(this).height($(this).width()*0.75); });
+			 		  $(".thumbnail.combo-card .img-wrapper > img").each(function() {
+			 		      if($(this).height()>$(this).width()*0.75) {
+			 		          $(this).css("width","100%");
+			 		          $(this).css("height","auto");
+			 		      }
+			 		  });
+			 		  $('.combo-card').matchHeight();
+			 	});
+			 });
+		};
+
 		$scope.mainOptions = 
 		[
 			{name: "Regular", icon_class: "fa fa-cutlery pull-right", alias: 'Regular'},

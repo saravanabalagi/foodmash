@@ -58,6 +58,6 @@
 
 <div class="container">
   <div class="row">
-      <combo-card ng-repeat="combo in combos | filter:search"></combo-card>
+      <combo-card ng-repeat="combo in combos | filter:search" ng-init="load()"></combo-card>
   </div>
 </div>

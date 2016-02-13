@@ -11,6 +11,21 @@ angular.module('foodmashApp.controllers')
 		$location.path("/");
 	};
 
+	$scope.load = function(){
+		angular.element(document).ready(function (){
+			$(function(){
+				 $(".thumbnail.combo-option > .img-wrapper").each(function() { $(this).height($(this).width()*0.75); });
+				   $(".thumbnail.combo-dish .img-wrapper > img, .thumbnail.combo-option .img-wrapper > img").each(function() {
+				       if($(this).height()>$(this).width()*0.75) {
+				           $(this).css("width","100%");
+				           $(this).css("height","auto");
+				       }
+				   });
+				    $('.thumbnail img').matchHeight();
+			});
+		});
+	};
+
 	ComboService.getComboForDescription().then(function(combo){
 		$scope.combo = combo;
 	  	setQuantityForComboItems();

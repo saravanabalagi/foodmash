@@ -36,37 +36,6 @@ $(document).ready( function() {
 
     $('.rupee').html("&#8377; ");
 
-    //Review these lines
-    //Review these lines
-    //Review these lines
-    //Review these lines
-    //After combo-cards get loaded
-    $(".thumbnail > .img-wrapper").each(function() { $(this).height($(this).width()*0.75); });
-    $(".thumbnail.combo-card .img-wrapper > img").each(function() {
-        if($(this).height()>$(this).width()*0.75) {
-            $(this).css("width","100%");
-            $(this).css("height","auto");
-        }
-    });
-    $('.combo-card').matchHeight();
-    //After combo-cards get loaded
-
-    //After combo-description get loaded
-    $(".thumbnail.combo-option > .img-wrapper").each(function() { $(this).height($(this).width()*0.75); });
-    $(".thumbnail.combo-dish .img-wrapper > img, .thumbnail.combo-option .img-wrapper > img").each(function() {
-        if($(this).height()>$(this).width()*0.75) {
-            $(this).css("width","100%");
-            $(this).css("height","auto");
-        }
-    });
-    //After combo-description get loaded
-    //Review these lines
-    //Review these lines
-    //Review these lines
-    //Review these lines
-    //Review these lines
-
-
     $('body').swipe( {
         //Generic swipe handler for all directions
         swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
