@@ -1,38 +1,3 @@
-
-<!-- div layout="row" layout-padding layout-align="center center" ng-init="show=false;updateCross=false" ng-hide="show">
-  <md-content flex>{{user.name}}</md-content>
-  <md-content flex>{{user.email}}</md-content>
-  <md-content flex>{{user.mobile_no}}</md-content>
-  <div layout="row" layout-align="center center">
-    <md-button class="md-icon-button" ng-click="show = !show;setUpdate(user)">
-      <md-icon md-svg-src="{{edit_path}}"></md-icon>
-    </md-button>
-  </div>
-</div>
-
-
-<form role="form" name="profileUpdateForm" ng-submit="updateProfile(updateCross)">
-  <div layout="row" layout-padding layout-align="center center" ng-show="show">
-    <md-input-container flex>
-      <input type="text" ng-model="updatedUser.name">
-    </md-input-container>
-    <md-input-container flex>
-      <input type="text" ng-model="updatedUser.email">
-    </md-input-container>
-    <md-input-container flex>
-      <input type="text" ng-model="updatedUser.mobile_no">
-    </md-input-container>
-    <md-button class="md-icon-button" ng-click="show=!show;updateCross=false">
-     <md-icon md-svg-src="{{done_path}}"></md-icon>
-    </md-button>
-    <md-button class="md-icon-button" ng-click="show=!show;updateCross=true">
-     <md-icon md-svg-src="{{cross_path}}"></md-icon>
-    </md-button>
-  </div>
-</form> -->
-
-
-
     <div class="col-md-6 order-history">
       <form class="user-info" name="profileUpdateForm" ng-submit="updateProfile()">
         <div>
