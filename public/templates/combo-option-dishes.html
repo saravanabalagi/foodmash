@@ -1,8 +1,8 @@
 <td></td>
-<td colspan="7">
+<td colspan="4">
   <table class="table table-hover table-striped">
     <thead>
-      <th>#</th>
+      <th style="width: 40px">#</th>
       <th>
         <div class="form-group label-floating is-empty">
           <span class="dropdown custom-dropdown">
@@ -10,29 +10,31 @@
                 <span ng-hide="selectedRestaurantForComboOptionDishes.name">Restaurant</span>{{selectedRestaurantForComboOptionDishes.name}}
                 <b class="caret"></b>
             </a>
-            <ul class="dropdown-menu" id="delivery-location-dropdown">
+            <ul class="dropdown-menu">
               <li ng-repeat="restaurant in restaurants" ng-click="selectRestaurantForComboOptionDishes(restaurant)">{{restaurant.name}}</li>
             </ul>
           </span>
           <span class="material-input"></span>
         </div>
       </th>
-      <th ng-hide="loadingDishesForComboOptionDishes">
+      <th>
         <div class="form-group label-floating is-empty">
           <span class="dropdown custom-dropdown">
             <a data-target="#" class="dropdown-toggle custom-dropdown-toggle" data-toggle="dropdown" ng-init="selectedDishForComboOptionDishes = {};">
                 <span ng-hide="selectedDishForComboOptionDishes.name">Dish</span>{{selectedDishForComboOptionDishes.name}}
                 <b class="caret"></b>
             </a>
-            <ul class="dropdown-menu" id="delivery-location-dropdown">
+            <ul class="dropdown-menu" ng-hide="loadingDishesForComboOptionDishes">
               <li ng-repeat="dish in dishes" ng-click="selectDishForComboOptionDishes(dish)">{{dish.name}}</li>
             </ul>
           </span>
           <span class="material-input"></span>
         </div>
       </th>
-      <th style="width:40px"></th>
+      <th style="width:40px"><i class="material-icons" ngf-select="uploadFiles($file, $invalidFiles)"
+                                accept="image/*" ngf-max-size="40MB">image</i></th>
       <th style="width:40px" ng-click="addComboOptionDish(combo_option.id)"><i class="material-icons">add_circle_outline</i></th>
+      <th style="width:40px"></th>
     </thead>
     <tbody>
       <tr combo-option-dish ng-repeat="combo_option_dish in combo_option_dishes"></tr>

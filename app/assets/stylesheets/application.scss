@@ -401,8 +401,10 @@ footer {
     }
     &.expanded {
       background-color: transparent !important;
-      td > table {
-        margin-top: 5px;
+      table { margin:0; background-color: transparent !important; }
+      > td {
+        padding: 0;
+        border: 0;
         background-color: transparent !important;
       }
       tr:nth-child(2n){ background-color: rgba(232,244,232,1); }
