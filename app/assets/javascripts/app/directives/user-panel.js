@@ -7,7 +7,7 @@ angular.module('foodmashApp.directives')
 
     restrict: 'A',
 
-    templateUrl: '/templates/user_panel.html',
+    templateUrl: '/templates/user-panel.html',
 
     controller: ['$scope', 'AuthService', 'UserService','toaster','$location', function($scope, AuthService, UserService, toaster, $location) {
 
@@ -49,6 +49,10 @@ angular.module('foodmashApp.directives')
 
       $scope.routToProfile = function(){
         $location.path("/account");
+      };
+
+      $scope.routeToContactUs = function(){
+        $location.path("/contact-us");
       };
 
       $scope.logout = function() {

@@ -8,7 +8,7 @@ angular.module('foodmashApp.directives')
 
 		restrict: 'E',
 
-		templateUrl: '/templates/user_roles.html',
+		templateUrl: '/templates/user-roles.html',
 
 		controller: ['$scope', '$q', 'toaster','User', function($scope, $q, toaster, User){
 

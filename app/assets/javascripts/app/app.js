@@ -95,6 +95,12 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 		.when('/refund-policy', {
 			templateUrl: '/templates/refund-policy.html'
 		})
+		.when('/about-us', {
+			templateUrl: '/templates/about-us.html'
+		})
+		.when('/contact-us', {
+			templateUrl: '/templates/contact-us.html'
+		})
 		.when('/', 
 		{
 			controller: 'MainController',

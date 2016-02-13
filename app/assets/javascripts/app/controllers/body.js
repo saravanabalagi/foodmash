@@ -28,6 +28,9 @@ angular.module('foodmashApp.controllers')
 	 		$location.path("/refund-policy");
 	 	};
 
+	 	$scope.routeToAboutUs = function(){
+	 		$location.path("/about-us");
+	 	};
 
 }]);
 
