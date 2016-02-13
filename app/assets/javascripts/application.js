@@ -36,6 +36,10 @@ $(document).ready( function() {
 
     $('.rupee').html("&#8377; ");
 
+    //Review these lines
+    //Review these lines
+    //Review these lines
+    //Review these lines
     //After combo-cards get loaded
     $(".thumbnail > .img-wrapper").each(function() { $(this).height($(this).width()*0.75); });
     $(".thumbnail.combo-card .img-wrapper > img").each(function() {
@@ -47,11 +51,31 @@ $(document).ready( function() {
     $('.combo-card').matchHeight();
     //After combo-cards get loaded
 
+    //After combo-description get loaded
+    $(".thumbnail.combo-option > .img-wrapper").each(function() { $(this).height($(this).width()*0.75); });
+    $(".thumbnail.combo-dish .img-wrapper > img, .thumbnail.combo-option .img-wrapper > img").each(function() {
+        if($(this).height()>$(this).width()*0.75) {
+            $(this).css("width","100%");
+            $(this).css("height","auto");
+        }
+    });
+    //After combo-description get loaded
+    //Review these lines
+    //Review these lines
+    //Review these lines
+    //Review these lines
+    //Review these lines
+
 
     $('body').swipe( {
         //Generic swipe handler for all directions
         swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
-            $('.sidebar-wrapper').toggleClass("slide-and-hide");
+            var sidebar = $('.sidebar-wrapper');
+            if(!$('body').hasClass('sidebar-body')
+            || ($(document).width()>435)) return;
+            else if(((!sidebar.hasClass('slider-open')))&&(direction!='right')
+                || ((sidebar.hasClass('slider-open')))&&(direction!='left')) return;
+            sidebarToggle();
         }
     });
 
@@ -135,16 +159,18 @@ $(document).ready( function() {
     });
     // JS for combo-description
 
-});
+    $(window).load( function() {
 
-$(window).load( function() {
+        if(!$('#choose-delivery-location-continue').length) { $(".loader").fadeOut("slow"); }
 
-    if(!$('#choose-delivery-location-continue').length) { $(".loader").fadeOut("slow"); }
-
-});
-
-$(window).resize( function(event) {
-
-    $.fn.matchHeight._update();
+    });
 
 });
+
+function sidebarToggle() {
+    var sidebar = $('.sidebar-wrapper');
+    if(sidebar.hasClass('slider-open')) sidebar.addClass("slide-and-hide").removeClass("slider-open");
+    else sidebar.addClass("slider-open").removeClass("slide-and-hide");
+}
+
+
