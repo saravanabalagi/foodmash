@@ -1334,6 +1334,7 @@ footer {
     > p {
       font-size: 13px;
       &:last-child {
+        text-align: right;
         position: absolute;
         margin: 0;
         bottom: 0;
@@ -1353,6 +1354,8 @@ footer {
     }
   }
   .quantity-counter {
+    display: inline-block;
+    padding: 15px;
     > a.btn-fab.btn-fab-nano i {
       -webkit-transform: translate(-6px,-7px);
       -moz-transform: translate(-6px,-7px);
@@ -1360,25 +1363,6 @@ footer {
       transform: translate(-6px,-7px);
     }
     .quantity { padding: 0px 5px; vertical-align: middle }
-  }
-}
-.thumbnail.combo-option {
-  .quantity-counter {
-    position: absolute;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-  }
-}
-.thumbnail.combo-dish {
-  .caption > p:last-child {
-    text-align: right;
-    .quantity-counter {
-      display: inline-block;
-      padding: 15px;
-    }
   }
 }
 
@@ -1396,6 +1380,7 @@ footer {
     text-align: left;
     display: inline-block;
     font-size: 15px;
+    width: 100%;
     max-width: 33.33333%;
     overflow: hidden;
     .thumbnail.combo-option {
