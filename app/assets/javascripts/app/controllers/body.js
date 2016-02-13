@@ -8,6 +8,17 @@ angular.module('foodmashApp.controllers')
 
 		CartService.setCartGlobally();
 
+		console.log($location.path());
+
+		$scope.checkIfSideBarPresent = function(){
+			var current_path = $location.path();
+			if(current_path == '/' || current_path == '/panel'){
+				return true;
+			}else{
+				return false;
+			}
+		};
+
 		$scope.routeToCart = function(){
 			$location.path("/cart");
 		};

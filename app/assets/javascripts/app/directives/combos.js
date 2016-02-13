@@ -102,7 +102,7 @@ angular.module('foodmashApp.directives')
 				if(file){
 					Aws.loadAWS().then(function(aws){
 						file.upload = Upload.upload({
-						    url: 'https://foodmash.s3.amazonaws.com/', //S3 upload url including bucket name
+						    url: 'https://foodmash-india.s3.amazonaws.com/', //S3 upload url including bucket name
 						    method: 'POST',
 						    data: {
 						        key: 'images/combos/' + Date.now() + '/' + file.name, // the key to store the file on S3, could be file name or customized
@@ -118,7 +118,7 @@ angular.module('foodmashApp.directives')
 						file.upload.progress(function(e){ file.progress = Math.min(100, parseInt(100.0 * e.loaded/e.total)); });
 
 						file.upload.then(function(response){
-							$scope.combo.picture = 'https://foodmash.s3.amazonaws.com/' + response.config.data.key;
+							$scope.combo.picture = 'https://foodmash-india.s3.amazonaws.com/' + response.config.data.key;
 							toaster.pop('success', 'Combo pic uploaded!');
 						});
 					});

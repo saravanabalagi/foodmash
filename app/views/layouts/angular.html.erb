@@ -11,16 +11,8 @@
     <script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
 
-  <!--review this line-->
-  <!--review this line-->
-  <!--review this line-->
-  <!--review this line-->
-  <body class="sidebar-body" ng-controller="BodyController" ng-cloak>
-  <!--review this line-->
-  <!--review this line-->
-  <!--review this line-->
-  <!--review this line-->
-
+  <body ng-class="{'sidebar-body': checkIfSideBarPresent()}" ng-controller="BodyController" ng-cloak>
+  
     <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
       <div class="container-fluid">
         <div class="navbar-header pull-left">
@@ -76,15 +68,7 @@
         <span ng-click="routeToTermsAndConditions()">&nbsp;Terms & Conditions&nbsp;</span>
         <span ng-click="routeToPrivacyPolicy()">&nbsp;Privacy Policy&nbsp;</span>
         <span ng-click="routeToRefundPolicy()">&nbsp;Refund Policy&nbsp;</span>
-        <!--review this line-->
-        <!--review this line-->
-        <!--review this line-->
-        <!--review this line-->
         <span ng-click="routeToAboutUs()">&nbsp;About Us&nbsp;</span>
-        <!--review this line-->
-        <!--review this line-->
-        <!--review this line-->
-        <!--review this line-->
       </div>
       <div class="footer-social-links">
         <span><i class="fa fa-facebook"></i></span>
