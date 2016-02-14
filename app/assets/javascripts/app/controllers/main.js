@@ -186,6 +186,11 @@ angular.module('foodmashApp.controllers')
 				$scope.selected.delete(option);
 				if($scope.selected.size == 0){
 					$scope.combos = $scope.loadedFromPackagingCentre;
+					$scope.combos.filter(function(combo){
+						if(combo.filter){
+							combo.filter -= 1;
+						}
+					});
 				}else{
 					$filter('filter')($scope.loadedFromPackagingCentre, {label: option.alias}, true).filter(function(combo){
 						if($scope.combos.indexOf(combo) != -1){
@@ -217,6 +222,7 @@ angular.module('foodmashApp.controllers')
 				}
 				$scope.selected.add(option);
 			}
+			console.log($scope.combos);
 	 	};
 
 }]);
