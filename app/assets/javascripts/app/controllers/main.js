@@ -22,7 +22,6 @@ angular.module('foodmashApp.controllers')
                     });
                     $(".thumbnail.combo-card .img-wrapper > img").load(function() {
                       if($(this).height()>$(this).width()*0.75) {
-                          console.log($(this).width() + ", " + $(this).height());
                           $(this).css("width","100%");
                           $(this).css("height","auto");
                       }
