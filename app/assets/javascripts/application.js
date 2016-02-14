@@ -37,7 +37,6 @@ $(document).ready( function() {
     $('.rupee').html("&#8377; ");
 
     $('body').swipe( {
-        //Generic swipe handler for all directions
         swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
             var sidebar = $('.sidebar-wrapper');
             if(!$('body').hasClass('sidebar-body')

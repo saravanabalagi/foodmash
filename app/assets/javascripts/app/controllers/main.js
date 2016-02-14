@@ -11,14 +11,23 @@ angular.module('foodmashApp.controllers')
 		$scope.load = function(){
 			 angular.element(document).ready(function (){
 			 	$(function(){
-			 		  $(".thumbnail > .img-wrapper").each(function() { $(this).height($(this).width()*0.75); });
-			 		  $(".thumbnail.combo-card .img-wrapper > img").each(function() {
-			 		      if($(this).height()>$(this).width()*0.75) {
-			 		          $(this).css("width","100%");
-			 		          $(this).css("height","auto");
-			 		      }
-			 		  });
-			 		  $('.combo-card').matchHeight();
+                    $(".thumbnail > .img-wrapper").each(function() { $(this).height($(this).width()*0.75); });
+                    $(".thumbnail.combo-card .img-wrapper > img").each(function() {
+                        if($(this).width()!=0
+                            && $(this).height()!=0
+                            && $(this).height()>$(this).width()*0.75) {
+                            $(this).css("width","100%");
+                            $(this).css("height","auto");
+                        }
+                    });
+                    $(".thumbnail.combo-card .img-wrapper > img").load(function() {
+                      if($(this).height()>$(this).width()*0.75) {
+                          console.log($(this).width() + ", " + $(this).height());
+                          $(this).css("width","100%");
+                          $(this).css("height","auto");
+                      }
+                    });
+                    $('.combo-card').matchHeight();
 			 	});
 			 });
 		};

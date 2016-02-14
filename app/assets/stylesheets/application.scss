@@ -28,6 +28,7 @@ $logo-red-text: rgba(255,10,0,1);
 $logo-red: rgba(200,10,0,1);
 
 $white: rgba(255,255,255,1);
+$heading-grey: rgb(221, 221, 221);
 $highlight-blue: rgba(239,249,255,1);
 
 $success-green: #349C27;
@@ -118,8 +119,8 @@ html {
   margin: 0;
 }
 body {
+  .bg { background: image-url("bg.png"); }
   position: relative;
-  background: image-url("bg.png");
   background-color: #F5F5F5;
   height: 100%;
   padding: 15px 0 0 0;
@@ -339,7 +340,12 @@ footer {
 
 /*CSS for admin panel starts*/
 .table-panel {
+  thead > tr { background-color: $heading-grey; }
   tr {
+    th {
+      &.th-xs { width: 40px; }
+      &.th-sm { width: 80px; }
+    }
     th,td {
       a {
         &.dropdown-toggle {
@@ -401,8 +407,10 @@ footer {
     }
     &.expanded {
       background-color: transparent !important;
-      td > table {
-        margin-top: 5px;
+      table { margin:0; background-color: transparent !important; }
+      > td {
+        padding: 0;
+        border: 0;
         background-color: transparent !important;
       }
       tr:nth-child(2n){ background-color: rgba(232,244,232,1); }
@@ -1334,6 +1342,7 @@ footer {
     > p {
       font-size: 13px;
       &:last-child {
+        text-align: right;
         position: absolute;
         margin: 0;
         bottom: 0;
@@ -1353,6 +1362,8 @@ footer {
     }
   }
   .quantity-counter {
+    display: inline-block;
+    padding: 15px;
     > a.btn-fab.btn-fab-nano i {
       -webkit-transform: translate(-6px,-7px);
       -moz-transform: translate(-6px,-7px);
@@ -1360,25 +1371,6 @@ footer {
       transform: translate(-6px,-7px);
     }
     .quantity { padding: 0px 5px; vertical-align: middle }
-  }
-}
-.thumbnail.combo-option {
-  .quantity-counter {
-    position: absolute;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-  }
-}
-.thumbnail.combo-dish {
-  .caption > p:last-child {
-    text-align: right;
-    .quantity-counter {
-      display: inline-block;
-      padding: 15px;
-    }
   }
 }
 
@@ -1396,6 +1388,7 @@ footer {
     text-align: left;
     display: inline-block;
     font-size: 15px;
+    width: 100%;
     max-width: 33.33333%;
     overflow: hidden;
     .thumbnail.combo-option {

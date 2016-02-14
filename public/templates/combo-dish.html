@@ -3,8 +3,9 @@
 <td ng-hide="updateShow" ng-init="updateShow=false">{{$index + 1}}</td>
 <td ng-hide="updateShow">{{combo_dish.dish.restaurant.name}}</td>
 <td ng-hide="updateShow">{{combo_dish.dish.dish_type.name}}</td>
-<td ng-hide="updateShow">{{combo_dish.min_count}}</td>
 <td ng-hide="updateShow">{{combo_dish.dish.name}}</td>
+<td ng-hide="updateShow">{{combo_dish.min_count}}</td>
+<td ng-hide="updateShow" style="width:40px"><i class="material-icons">image</i></td>
 <td ng-hide="updateShow" ng-click="updateShow=!updateShow; setUpdate(combo_dish)"><i class="icon-edit"></i></td>
 <td ng-hide="updateShow" ng-click="deleteComboDish(combo_dish)"><i class="icon-trash"></i></td>
 
@@ -14,7 +15,7 @@
      <span class="dropdown location-dropdown">
      <a data-target="#" class="dropdown-toggle" data-toggle="dropdown" ng-init="selectedRestaurantForUpdate = {};">{{selectedRestaurantForUpdate.name || updatedComboDish.dish.restaurant.name}}
        <b class="caret"></b></a>
-       <ul class="dropdown-menu" id="delivery-location-dropdown">
+       <ul class="dropdown-menu">
          <li ng-repeat="restaurant in restaurants" ng-click="selectRestaurantForUpdate(restaurant)">{{restaurant.name}}</li>
        </ul>
      </span>
@@ -25,29 +26,27 @@
      <span class="dropdown location-dropdown">
      <a data-target="#" class="dropdown-toggle" data-toggle="dropdown" ng-init="selectedDishTypeForUpdate = {};">{{selectedDishTypeForUpdate.name || updatedComboDish.dish.dish_type.name}}
        <b class="caret"></b></a>
-       <ul class="dropdown-menu" id="delivery-location-dropdown">
+       <ul class="dropdown-menu">
          <li ng-repeat="dish_type in dish_types" ng-click="selectDishTypeForUpdate(dish_type)">{{dish_type.name}}</li>
        </ul>
      </span>
    </div>
  </td>
- <td style="width:40px" ng-show="updateShow">
-    <div class="form-group label-floating is-empty">
-      <label class="control-label">Count</label>
-      <input class="form-control" type="number" min="1" max="50" ng-model="updatedComboDish.min_count">
-      <span class="material-input"></span>
-    </div>
-  </td>
- <td ng-show="!loadingDishesForUpdate && updateShow">
+ <td ng-show="updateShow">
    <div class="form-group label-floating is-empty">
      <span class="dropdown location-dropdown">
      <a data-target="#" class="dropdown-toggle" data-toggle="dropdown" ng-init="selectedDishForUpdate = {};">{{selectedDishForUpdate.name || updatedComboDish.dish.name}}
        <b class="caret"></b></a>
-       <ul class="dropdown-menu" id="delivery-location-dropdown">
+       <ul class="dropdown-menu" ng-hide="loadingDishesForUpdate">
          <li ng-repeat="dish in dishes_for_update" ng-click="selectDishForUpdate(dish)">{{dish.name}}</li>
        </ul>
      </span>
    </div>
  </td>
+ <td style="width:40px" ng-show="updateShow">
+    <input class="form-control" type="number" min="1" max="50" ng-model="updatedComboDish.min_count">
+ </td>
+ <td ng-show="updateShow"><i class="material-icons" ngf-select="uploadFiles($file, $invalidFiles, combo)"
+                            accept="image/*" ngf-max-size="40MB">image</i></td>
  <td ng-show="updateShow" ng-click="updateShow = !updateShow"><i class="fa fa-times-circle"></i></td>
  <td ng-show="updateShow" ng-click="updateComboDish(combo_dish)"><i class="fa fa-check-circle"></i></td>
