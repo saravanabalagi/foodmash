@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('CartController', ['$scope', '$q', 'toaster','$location','CartService','$timeout','$rootScope', 'DeliveryAddress', function($scope, $q, toaster, $location, CartService, $timeout, $rootScope, DeliveryAddress){
+.controller('CartController', ['$scope', '$q', 'toaster','$location','CartService','$rootScope', 'DeliveryAddress', 'Cart', function($scope, $q, toaster, $location, CartService, $rootScope, DeliveryAddress, Cart){
 
 	$scope.cart = {};
 	$scope.filling = false;
@@ -72,28 +72,23 @@ angular.module('foodmashApp.controllers')
 			return ;
 		}
 		if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser){
-			$scope.processPayment();
+			$scope.processCart();
 		}
 	};
 
-	$scope.processPayment = function(){
-		
+	$scope.processCart = function(){
+		var d = $q.defer();
+		Cart.purchase($scope.cart).then(function(cart){
+			toaster.pop('success', 'Cart was submitted!');
+			$location.path('/');
+			CartService.refreshCart();
+			d.resolve(cart);
+		}, function(err){
+			toaster.pop('error', 'Cart was not submitted!');
+			d.reject(err);
+		});
+		return d.promise;
 	};
-
-	// $scope.processCart = function(){
-	// 	$scope.cart.delivery_address_id = parseInt($scope.cart_delivery_address_id, 10);
-	// 	var d = $q.defer();
-	// 	Cart.addToCart($scope.cart).then(function(cart){
-	// 		toaster.pop('success', 'Cart was submitted!');
-	// 		CartService.setCartInfo(cart);
-	// 		$location.path("/cartPayment");
-	// 		d.resolve(cart);
-	// 	}, function(err){
-	// 		toaster.pop('error', 'Cart was not submitted!');
-	// 		d.reject(err);
-	// 	});
-	// 	return d.promise;
-	// };
 
 	$scope.addDeliveryAddress = function(addCross){
 		var d = $q.defer();
@@ -133,24 +128,6 @@ angular.module('foodmashApp.controllers')
 		return d.promise;
 	};
 
-	$scope.routeToRoot = function(){
-		$location.path("/");
-	};
-
-	$scope.routeToCheckout = function(){
-		if($rootScope.currentUser){
-			$location.path("/checkout");
-		}else{
-			$rootScope.storeLocation = "/checkout";
-			toaster.pop('warning', 'Need to login first!');
-			$location.path("/login");
-		}
-	};
-
-	$scope.checkForOrders = function(){
-		return $scope.cart.orders.length == 0;
-	};
-
 	$scope.updateCartInfo = function(){
 		var total = 0;
 		$scope.cart.orders.filter(function(order){ 
@@ -161,9 +138,9 @@ angular.module('foodmashApp.controllers')
 	};
 
 	function calcTaxAndGrandTotal(){
-		$scope.cart.tax = parseFloat(($scope.cart.total * 0.02).toFixed(2));
-		if($scope.cart.total && $scope.cart.tax){
-			$scope.cart.grand_total = $scope.cart.total + $scope.cart.tax + 50.00;
+		$scope.cart.vat = parseFloat(($scope.cart.total * 0.02).toFixed(2));
+		if($scope.cart.total && $scope.cart.vat){
+			$scope.cart.grand_total = $scope.cart.total + $scope.cart.vat + 40.00;
 		}else{
 			$scope.cart.grand_total = 0;			
 		}

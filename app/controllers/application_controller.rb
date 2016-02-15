@@ -31,6 +31,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def invalid_data
+    render status: 200, json: {success: false, error: "Invalid or expired data!"}
+  end
+
   def forbidden_request
     render status: 403, json: {error: "Not allowed to make that request!"}    
   end

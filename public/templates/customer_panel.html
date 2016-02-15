@@ -1,19 +1,156 @@
-<div layout="row">
-     <div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm></div>
-     <div layout="column" flex layout-padding layout-margin>
-         <md-content flex class="md-display-1">Orders</md-content>
-         <md-divider class="bottom-margin bottom-padding"></md-divider>
+<div class="sidebar-wrapper sidebar-open">
+    <div class="sidebar">
+      <section class="sidebar-section">
+        <h5>Order History</h5>
+        <ul class="sidebar-nav group-size">
+          <li >
+            <a>
+              <span>Current</span>
+              <i class="fa fa-inbox pull-right"></i>
+            </a>
+          </li>
+          <li >
+            <a>
+              <span>Delivered</span>
+              <i class="fa fa-archive pull-right"></i>
+            </a>
+          </li>
+        </ul>
+      </section>
+      <section class="sidebar-section">
+        <h5>Order Date</h5>
+        <ul class="sidebar-nav price">
+          <li onclick="$(this).toggleClass('active')" class="active">
+            <a>
+              <span>Newest Fisrt</span>
+              <i class="fa fa-sort-amount-asc pull-right"></i>
+            </a>
+          </li>
+          <li onclick="$(this).toggleClass('active')">
+            <a>
+              <span>Oldest First</span>
+              <i class="fa fa-sort-amount-desc pull-right"></i>
+            </a>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </div>
 
-  	<div layout="row" layout-sm="column" layout-align="space-around" ng-hide="!loadingPurchasedCarts">
-    	<md-progress-circular md-mode="indeterminate"></md-progress-circular>
-  	</div>
-  	<div layout="row" layout-padding layout-align="center center" ng-repeat="order in carts">
-  	    <md-content flex>{{order.order_id}}</md-content>
-  	    <md-content flex>{{order.aasm_state}}</md-content>
-  	    <md-content flex>{{order.payment_method}}</md-content>
-  	    <md-content flex>{{order.total}}</md-content>
-  	 </div>
+  <div class="container">
+    <div class="row">
 
-</div>
-<div flex-md="15" flex-lg="20" flex-gt-lg="25" hide-sm> </div>
-</div>
+      <div class="col-md-6 order-history">
+
+        <table class="table table-striped table-hover table-order-history">
+          <thead>
+          <tr>
+            <th><i class="fa fa-fw fa-check-circle"></i></th>
+            <th>
+              <div class="form-group label-floating is-empty">
+                <label class="control-label" for="focusedInput1">Order ID</label>
+                <input class="form-control" id="focusedInput1" type="text">
+                <span class="material-input"></span>
+              </div>
+            </th>
+            <th>
+              <div class="form-group label-floating is-empty">
+                <label class="control-label" for="focusedInput1">Price</label>
+                <input class="form-control" id="focusedInput1" type="text" style="width:50px">
+                <span class="material-input"></span>
+              </div>
+            </th>
+            <th>
+              <div class="form-group label-floating is-empty">
+                <label class="control-label" for="focusedInput1">Date</label>
+                <input class="form-control" id="focusedInput1" type="text" style="min-width:115px">
+                <span class="material-input"></span>
+              </div>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="cart in carts" ng-click="selectCart(cart)" ng-class="{'active' : selectedCart == cart}">
+            <td><i class="fa fa-fw fa-clock-o"></i></td>
+            <td>{{cart.order_id}}</td>
+            <td>{{cart.grand_total}}</td>
+            <td>{{cart.updated_at}}</td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+      <div class="col-md-6 order-description">
+        <h3>{{selectedCart.order_id}}</h3>
+        <div class="order-status-wrapper">Order status: <span class="order-status">{{selectedStatus.alias}}</span></div>
+
+        <div class="order-status-meter-wrapper">
+          <div class="progress progress-striped active order-status-meter">
+            <div class="progress-bar" style="{{selectedStatus.percent}}"></div>
+          </div>
+          <i ng-repeat="status in statuses" class="{{status.icon_class}}" ng-class="{'completed' : checkIfCompleted(status)}"></i>
+        </div>
+
+        <div class="order-header">
+          <span class="order-date">{{selectedCart.updated_at}}<span class="order-time">{{}}</span></span>
+          <span class="order-amount-wrapper">
+            <span class="order-amount">{{selectedCart.grand_total}}</span>
+            <i class="fa fa-question-circle" title="Payment Method" data-placement="bottom" data-content="Credit Card ending with x574" data-toggle="popover" data-trigger="hover"></i>
+          </span>
+        </div>
+        <div class="order-contents" ng-show="selectedCart">
+          <table class="table table-striped table-order-description">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Order Contents</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="order in selectedCart.orders">
+                <td>{{$index + 1}}</td>
+                <td>
+                  <div class="combo">
+                    <span class="combo-name">{{order.product.name}}</span>
+                    <span ng-repeat="order_item in order.order_items">{{order_item.quantity}}x {{order_item.item.name}}</span>
+                  </div>
+                </td>
+                <td>x{{order.quantity}}</td>
+                <td><span class="rupee"></span>{{order.product.price}}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td></td>
+                <td>Total</td>
+                <td></td>
+                <td><span class="rupee"></span>{{selectedCart.total}}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>Vat</td>
+                <td>2%</td>
+                <td><span class="rupee"></span>{{selectedCart.vat}}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>Delivery</td>
+                <td></td>
+                <td><span class="rupee"></span>40</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>Grand Total</td>
+                <td></td>
+                <td><span class="rupee"></span>{{selectedCart.grand_total}}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>

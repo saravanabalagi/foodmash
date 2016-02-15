@@ -89,6 +89,8 @@ class Cart < ActiveRecord::Base
 			end
 		end
 			self.delivery_address_id = cart[:delivery_address_id] if cart[:delivery_address_id]
+			self.vat = cart[:vat]
+			self.grand_total = cart[:grand_total]
 			self.save!
 	end
 
