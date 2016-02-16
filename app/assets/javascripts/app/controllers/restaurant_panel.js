@@ -6,6 +6,18 @@ angular.module('foodmashApp.controllers')
 
 	$scope.user = $rootScope.currentUser;
 	$scope.roles = $rootScope.currentUser.roles;
+	$scope.restaurant = {};
+	$scope.carts = [];
+	$scope.selectedCart = {};
+	$scope.selectedStatus = {};
+	$scope.loadingCarts = true;
+	$scope.selectedOrderItems = [];
+	$scope.statuses = [
+		{name: "purchased", alias: "Placed Order", icon_class: "fa fa-clock-o", percent: 'width:0%'},
+		{name: "ordered", alias: "Acknowledged", icon_class: "fa fa-check-circle", percent: 'width:35%'},
+		{name: "cooked", alias: "Cooked", icon_class: "fa fa-cutlery", percent: 'width:65%'},
+		{name: "collected", alias: "Collected", icon_class: "fa fa-truck", percent: 'width:100%'}
+	];
 
 	$scope.roles.filter(function(role){
 		if(role.name == "restaurant_admin"){
@@ -29,5 +41,47 @@ angular.module('foodmashApp.controllers')
 			});
 		}
 	});
+
+	$scope.checkIfCompleted = function(status){
+		if($scope.statuses.indexOf(status) <= $scope.statuses.indexOf($scope.selectedStatus)){
+			return true;
+		}
+		return false;
+	};
+
+	$scope.selectCart = function(cart){
+		$scope.selectedCart = cart;
+		getSuitableStatus(cart.aasm_state);
+		getOrderItems(cart);
+	};
+
+	$scope.getStatusIcon = function(status){
+		$scope.statuses.filter(function(s){
+			if(s.name == status){
+				console.log('fa fa-fw ' + s.icon_class.split(" ")[1]);
+				return 'fa fa-fw ' + s.icon_class.split(" ")[1];
+			}
+		});
+		return '';
+	};
+
+	function getSuitableStatus(status){
+		$scope.statuses.filter(function(s){
+			if(s.name == status){
+				$scope.selectedStatus = s;
+			}
+		});
+	};
+
+	function getOrderItems(cart){
+		$scope.selectedOrderItems = [];
+		cart.orders.filter(function(order){
+			order.order_items.filter(function(order_item){
+				if(order_item.item.restaurant.id == $scope.restaurant.id){
+					$scope.selectedOrderItems.push(order_item);
+				};
+			});
+		});
+	};
 
 }]);

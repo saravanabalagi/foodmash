@@ -19,7 +19,6 @@ angular.module('foodmashApp.directives')
 					User.findByEmail($scope.email).then(function(users){
 						if(users.length > 0){
 							$scope.users = users;
-							console.log(users);
 						}else{
 							$scope.users = null;
 						}

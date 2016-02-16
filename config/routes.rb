@@ -165,13 +165,17 @@ Rails.application.routes.draw do
         end
       end
 
-      #contact_us
-      resources :contact_us do 
+      #cities 
+      resources :cities, only: [:index] do 
+      end
+
+      resources :legalese, only: [:index] do 
         collection do 
-          post '/', to: 'contact_us#index'
-          post '/create', to: 'contact_us#create'
-          patch '/', to: 'contact_us#update'
-          post '/destroy', to: 'contact_us#destroy'
+          get '/termsAndConditions', to: 'legalese#terms_and_conditions'
+          get '/privacyPolicy', to: 'legalese#privacy_policy'
+          get '/refundPolicy', to: 'legalese#refund_policy'
+          get '/contactUs', to: 'legalese#contact_us'
+          get '/aboutUs', to: 'legalese#about_us'
         end
       end
     end

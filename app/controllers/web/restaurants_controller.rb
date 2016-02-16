@@ -71,7 +71,7 @@ class Web::RestaurantsController < ApplicationController
 	def get_carts_for_restaurant
 		@carts = @restaurant.get_carts_for_restaurant
 		if @carts
-			render status: 200, json: @carts.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name, :description]}}], only: [:id, :quantity, :category_id, :category_type]} } ,:product => {only: [:id, :name, :price, :description]}], only: [:id, :quantity, :total, :updated_at]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at])
+			render status: 200, json: @carts.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {:include => {:restaurant => {only: [:id, :name, :area_id]}}, only: [:id, :name, :price]}}], only: [:id, :quantity, :category_id, :category_type]} } ,:product => {only: [:id, :name, :price]}], only: [:id, :quantity, :total, :updated_at]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at])
 		else
 			render status: 422, json: {error: "Could not fetch carts!"}
 		end

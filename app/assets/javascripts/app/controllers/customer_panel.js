@@ -39,6 +39,16 @@ angular.module('foodmashApp.controllers')
 		getSuitableStatus(cart.aasm_state);
 	};
 
+	$scope.getStatusIcon = function(status){
+		$scope.statuses.filter(function(s){
+			if(s.name == status){
+				console.log('fa fa-fw ' + s.icon_class.split(" ")[1]);
+				return 'fa fa-fw ' + s.icon_class.split(" ")[1];
+			}
+		});
+		return '';
+	};
+
 	function getSuitableStatus(status){
 		$scope.statuses.filter(function(s){
 			if(s.name == status){
