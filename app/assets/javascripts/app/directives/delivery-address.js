@@ -2,13 +2,13 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('deliveryAddressList', ['DeliveryAddress', '$q', 'toaster','$rootScope', function(DeliveryAddress, $q, toaster, $rootScope){
+.directive('deliveryAddress', ['DeliveryAddress', '$q', 'toaster','$rootScope', function(DeliveryAddress, $q, toaster, $rootScope){
 
 	return {
 
 		restrict: 'A',
 
-		templateUrl: '/templates/delivery-address-list.html',
+		templateUrl: '/templates/delivery-address.html',
 
 		controller: ['$scope', 'DeliveryAddress', '$q', 'toaster', '$rootScope', function($scope, DeliveryAddress, $q, toaster, $rootScope){
 

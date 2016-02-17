@@ -58,7 +58,7 @@ angular.module('foodmashApp.controllers')
 	$scope.getStatusIcon = function(status){
 		$scope.statuses.filter(function(s){
 			if(s.name == status){
-				console.log('fa fa-fw ' + s.icon_class.split(" ")[1]);
+				// console.log('fa fa-fw ' + s.icon_class.split(" ")[1]);
 				return 'fa fa-fw ' + s.icon_class.split(" ")[1];
 			}
 		});

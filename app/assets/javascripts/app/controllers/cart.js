@@ -90,8 +90,9 @@ angular.module('foodmashApp.controllers')
 		return d.promise;
 	};
 
-	$scope.addDeliveryAddress = function(addCross){
+	$scope.addDeliveryAddress = function(){
 		var d = $q.defer();
+		$scope.delivery_address.area_id = $rootScope.area.id;
 		$scope.delivery_address.save().then(function(response){
 			toaster.pop('success', 'Delivery Address was created!');
 			$scope.delivery_addresses.push($scope.delivery_address);

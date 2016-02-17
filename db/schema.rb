@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160215064811) do
+ActiveRecord::Schema.define(version: 20160217085834) do
 
   create_table "areas", force: :cascade do |t|
     t.string   "name"
@@ -100,13 +100,12 @@ ActiveRecord::Schema.define(version: 20160215064811) do
   create_table "delivery_addresses", force: :cascade do |t|
     t.integer  "user_id"
     t.text     "line1"
-    t.string   "city"
     t.datetime "created_at",                                          null: false
     t.datetime "updated_at",                                          null: false
     t.string   "contact_no"
     t.text     "line2"
     t.string   "name"
-    t.string   "area"
+    t.integer  "area_id"
     t.boolean  "primary",                             default: false
     t.decimal  "latitude",   precision: 10, scale: 6
     t.decimal  "longitude",  precision: 10, scale: 6
