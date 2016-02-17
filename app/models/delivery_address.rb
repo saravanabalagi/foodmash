@@ -1,5 +1,6 @@
 class DeliveryAddress < ActiveRecord::Base
 	belongs_to :user
+	belongs_to :area
 	has_many :carts
 	validates :user_id, presence: true
 	validates :contact_no, presence: true, numericality: {only_integer: true}
