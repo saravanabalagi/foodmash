@@ -49,7 +49,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 		})
 		.when('/packagingCentrePanel', {
 			controller: 'PackagingCentrePanelController',
-			templateUrl: '/templates/packaging_centre_panel.html',
+			templateUrl: '/templates/packaging-centre-panel.html',
 			resolve: {
 				panel: 
 				function(AuthorizeService){
@@ -59,7 +59,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 		})
 		.when('/restaurantPanel', {
 			controller: 'RestaurantPanelController',
-			templateUrl: '/templates/restaurant_panel.html',
+			templateUrl: '/templates/restaurant-panel.html',
 			resolve: {
 				panel: 
 				function(AuthorizeService){
@@ -69,7 +69,7 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 		})
 		.when('/customerPanel', {
 			controller: 'CustomerPanelController',
-			templateUrl: '/templates/customer_panel.html',
+			templateUrl: '/templates/customer-panel.html',
 			resolve: {
 				panel: 
 				function(AuthorizeService){

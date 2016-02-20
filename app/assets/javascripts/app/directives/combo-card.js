@@ -95,13 +95,13 @@ angular.module('foodmashApp.directives')
 			function setQuantityForComboItems(){
 				if($scope.combo.combo_dishes && $scope.combo.combo_dishes.length > 0){
 					for(var i=0;i<$scope.combo.combo_dishes.length;i++){
-						$scope.combo.combo_dishes[i].quantity = 1;
+						$scope.combo.combo_dishes[i].quantity = $scope.combo.combo_dishes[i].min_count;
 					}
 				}
 
 				if($scope.combo.combo_options && $scope.combo.combo_options.length > 0){
 					for(var i=0;i<$scope.combo.combo_options.length;i++){
-						$scope.combo.combo_options[i].quantity = 1;
+						$scope.combo.combo_options[i].quantity = $scope.combo.combo_options[i].min_count;
 					}
 				}
 			};

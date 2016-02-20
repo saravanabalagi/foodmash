@@ -8,7 +8,7 @@ angular.module('foodmashApp.directives')
 
 		restrict: 'E',
 
-		templateUrl: '/templates/packaging_centres.html',
+		templateUrl: '/templates/packaging-centres.html',
 
 		controller: ['$scope', 'toaster', 'PackagingCentre', '$q', '$location', function($scope, toaster, PackagingCentre, $q, $location){
 

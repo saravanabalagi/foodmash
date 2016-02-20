@@ -70,7 +70,6 @@ angular.module('foodmashApp.services')
 
 	this.refreshCart = function(){
 		refurbishCartFromServer();
-		$rootScope.cart = service.cart;
 	};
 
 	function refurbishCartFromServer(){

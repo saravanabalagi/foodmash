@@ -49,6 +49,14 @@ angular.module('foodmashApp.controllers')
 		return '';
 	};
 
+	$scope.calculateOrderPrice = function(order){
+		var price = 0.0;
+		order.order_items.filter(function(oi){
+			price += oi.quantity * oi.item.price * order.quantity;
+		});
+		return price;
+	};
+
 	function getSuitableStatus(status){
 		$scope.statuses.filter(function(s){
 			if(s.name == status){

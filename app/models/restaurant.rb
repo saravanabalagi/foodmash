@@ -18,7 +18,7 @@ class Restaurant < ActiveRecord::Base
 				end
 			end
 		end
-		return carts_list.flatten.select{|c| c.aasm_state == 'purchased'}
+		return carts_list.flatten.uniq.select{|c| c.aasm_state != 'not_started'}
 	end
 
 	def has_combos
