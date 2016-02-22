@@ -59,24 +59,28 @@ angular.module('foodmashApp.controllers')
 			$rootScope.combos_hash = null;
 		}
 
-		Combo.loadFromPackagingCentre().then(function(loadedFromPackagingCentre){
-			if(!$rootScope.combos_hash){
-				$scope.combos = loadedFromPackagingCentre.data.combos;
-				$scope.loadedFromPackagingCentre = loadedFromPackagingCentre.data.combos;
-				$rootScope.combos = $scope.combos;
-				$rootScope.combos_hash = loadedFromPackagingCentre.data.hash;
+		$scope.$watch('loadCombos', function(n, o){
+			if(n == true && $rootScope.area){
+				Combo.loadFromPackagingCentre({packaging_centre_id: $rootScope.area.packaging_centre_id}).then(function(loadedFromPackagingCentre){
+					if(!$rootScope.combos_hash){
+						$scope.combos = loadedFromPackagingCentre.data.combos;
+						$scope.loadedFromPackagingCentre = loadedFromPackagingCentre.data.combos;
+						$rootScope.combos = $scope.combos;
+						$rootScope.combos_hash = loadedFromPackagingCentre.data.hash;
+					}
+					else if($rootScope.combos_hash && loadedFromPackagingCentre.data.hash !== $rootScope.combos_hash){
+						$scope.combos = loadedFromPackagingCentre.data.combos;
+						$rootScope.combos = $scope.combos;
+						$rootScope.combos_hash = loadedFromPackagingCentre.data.hash;
+					}
+					$scope.loadingComboCards = false;
+				}, function(err){
+					$scope.combos = null;
+					$rootScope.combos = null;
+					$rootScope.combos_hash = null;
+					$scope.loadingComboCards = false;
+				});
 			}
-			else if($rootScope.combos_hash && loadedFromPackagingCentre.data.hash !== $rootScope.combos_hash){
-				$scope.combos = loadedFromPackagingCentre.data.combos;
-				$rootScope.combos = $scope.combos;
-				$rootScope.combos_hash = loadedFromPackagingCentre.data.hash;
-			}
-			$scope.loadingComboCards = false;
-		}, function(err){
-			$scope.combos = null;
-			$rootScope.combos = null;
-			$rootScope.combos_hash = null;
-			$scope.loadingComboCards = false;
 		});
 
 		$scope.lessThanOrEqualTo = function(actual, expected){

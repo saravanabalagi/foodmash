@@ -12,6 +12,15 @@ class Web::CitiesController < ApplicationController
 		end
 	end
 
+	def set_city
+		@cities = City.where(params.permit(:id, :name))
+		if @cities 
+			render status: 200, json: @cities.as_json(:include => :areas)
+		else
+			render status: 404, json: {error: 'Cities were not found!'}
+		end
+	end
+
 	def create
 		@city = City.new city_params
 		if @city.save! 

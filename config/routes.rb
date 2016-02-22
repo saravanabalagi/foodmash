@@ -35,7 +35,11 @@ Rails.application.routes.draw do
 
     resources :delivery_addresses
 
-     resources :cities
+     resources :cities do 
+        collection do 
+          get '/setCity', to: 'cities#set_city'
+        end
+     end
 
     resources :packaging_centres
 
@@ -171,11 +175,11 @@ Rails.application.routes.draw do
 
       resources :legalese, only: [:index] do 
         collection do 
-          get '/termsAndConditions', to: 'legalese#terms_and_conditions'
-          get '/privacyPolicy', to: 'legalese#privacy_policy'
-          get '/refundPolicy', to: 'legalese#refund_policy'
-          get '/contactUs', to: 'legalese#contact_us'
-          get '/aboutUs', to: 'legalese#about_us'
+          post '/termsAndConditions', to: 'legalese#terms_and_conditions'
+          post '/privacyPolicy', to: 'legalese#privacy_policy'
+          post '/refundPolicy', to: 'legalese#refund_policy'
+          post '/contactUs', to: 'legalese#contact_us'
+          post '/aboutUs', to: 'legalese#about_us'
         end
       end
     end

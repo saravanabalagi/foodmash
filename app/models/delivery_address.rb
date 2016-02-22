@@ -1,9 +1,10 @@
 class DeliveryAddress < ActiveRecord::Base
 	belongs_to :user
+	belongs_to :area
 	has_many :carts
 	validates :user_id, presence: true
 	validates :contact_no, presence: true, numericality: {only_integer: true}
-	validates_presence_of :pincode, :city, :area, :line1, primary: {default: false}
+	validates_presence_of :area_id, :line1, primary: {default: false}
 	before_save :falsify_true_records
 	before_save :make_primary_for_first_address
 	before_destroy :make_primary_for_first_address
