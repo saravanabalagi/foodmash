@@ -17,7 +17,7 @@
                 <span>{{combo_dish.dish.name}}</span>
             </li>
             <li ng-repeat="combo_option in combo.combo_options">
-                <span ng-repeat="combo_option_dish in combo_option.combo_option_dishes">{{combo_option_dish.dish.name}} / </span>
+                <span ng-repeat="combo_option_dish in combo_option.combo_option_dishes">{{combo_option_dish.dish.name}} {{$last? '' : ' / '}} </span>
             </li>
         </ul>
         <p>
