@@ -14,7 +14,7 @@
   <body ng-class="{'sidebar-body': checkIfSideBarPresent()}" ng-class="{'bg': addBodyBackground()}" ng-controller="BodyController" ng-cloak>
 
   <!-- Loading page -->
-  <div class="loader">
+  <div class="loader" ng-cloak>
     <div class="loader-wrapper">
       <img src="<%= asset_path('logo_transparent.png')%>" style="width:300px; height:auto;" />
       <div class="choose-delivery-location-wrapper">
