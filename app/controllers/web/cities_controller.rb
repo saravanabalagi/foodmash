@@ -1,7 +1,7 @@
 class Web::CitiesController < ApplicationController
 	respond_to :json
 	before_filter :get_city, only: [:update, :destroy]
-	load_and_authorize_resource skip_load_resource
+	load_and_authorize_resource skip_load_resource except: [:set_city]
 
 	def index
 		@cities = City.where(params.permit(:id, :name))

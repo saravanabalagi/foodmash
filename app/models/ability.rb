@@ -34,6 +34,8 @@ class Ability
       #abilities for customer
       can :read, Combo if user.has_role? :customer
 
+      can :read, City if user.has_role? :customer
+
       can :manage, Order do |order|
         user.id == order.cart.user_id and user.has_role? :customer
       end

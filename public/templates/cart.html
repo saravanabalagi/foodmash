@@ -79,7 +79,7 @@
         </thead>
         <tbody>
 
-          <tr delivery-address-list ng-repeat="delivery_address in delivery_addresses"
+          <tr delivery-address ng-repeat="delivery_address in delivery_addresses"
               ng-class="{active : isDeliveryAddressSelected(delivery_address)}">
           </tr>
 
@@ -94,11 +94,8 @@
                 <input type="text" placeholder="Full Name" id="new-address-name" ng-model="delivery_address.name" />
                 <input type="text" placeholder="Address Line 1" id="new-address-line-1" ng-model="delivery_address.line1" />
                 <input type="text" placeholder="Address Line 2" id="new-address-line-2" ng-model="delivery_address.line2" />
-                <!--Replace Kottur, Chennai-->
-                <!--Replace Kottur, Chennai-->
-                <input type="text" value="Kottur, Chennai" disabled />
-                <!--Replace Kottur, Chennai-->
-                <!--Replace Kottur, Chennai-->
+                <input type="text" value="{{area.name}}, {{city.name}}" disabled />
+                <input type="text" value="{{area.pincode}}" disabled />
                 <input type="text" placeholder="Contact No" ng-model="delivery_address.contact_no" />
               </div>
             </td>
