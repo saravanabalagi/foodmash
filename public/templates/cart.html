@@ -8,7 +8,7 @@
             <th>#</th>
             <th>In Cart</th>
             <th style="min-width: 90px">Quantity</th>
-            <th></th>
+            <th class="text-align-right">Price</th>
             <th style="width:35px"></th>
           </tr>
           </thead>
@@ -25,14 +25,14 @@
             <td></td>
             <td>Total</td>
             <td></td>
-            <td><span class="rupee"></span>{{cart.total}}</td>
+            <td class="text-align-right"><span class="rupee"></span>{{cart.total}}</td>
             <td></td>
           </tr>
           <tr>
             <td></td>
             <td>VAT</td>
             <td>2%</td>
-            <td><span class="rupee"></span>{{cart.vat}}</td>
+            <td class="text-align-right"><span class="rupee"></span>{{cart.vat}}</td>
             <td></td>
             <td></td>
           </tr>
@@ -40,14 +40,14 @@
             <td></td>
             <td>Aggregation + Delivery</td>
             <td></td>
-            <td><span class="rupee"></span>40</td>
+            <td class="text-align-right"><span class="rupee"></span>40</td>
             <td></td>
           </tr>
           <tr>
             <td></td>
             <td>Grand Total</td>
             <td></td>
-            <td><span class="rupee"></span>{{cart.grand_total}}</td>
+            <td class="text-align-right"><span class="rupee">₹ </span>{{cart.grand_total}}</td>
             <td></td>
           </tr>
           </tfoot>
@@ -79,28 +79,34 @@
         </thead>
         <tbody>
 
-      <tr delivery-address-list ng-repeat="delivery_address in delivery_addresses"
-          ng-class="{active : isDeliveryAddressSelected(delivery_address)}">
-      </tr>
+          <tr delivery-address-list ng-repeat="delivery_address in delivery_addresses"
+              ng-class="{active : isDeliveryAddressSelected(delivery_address)}">
+          </tr>
 
-      <tr class="add-new-address-wrapper">
-        <th></th>
-        <th colspan="3">Deliver to a new address</th>
-      </tr>
-      <tr class="new-address-wrapper">
-        <td><i class="fa fa-check-circle hidden"></i></td>
-        <td>
-          <div class="new-address" role="form" name="deliveryAddressAddForm">
-            <input type="text" placeholder="Full Name" id="new-address-name" ng-model="delivery_address.name" />
-            <input type="text" placeholder="Address Line 1" id="new-address-line-1" ng-model="delivery_address.line1" />
-            <input type="text" placeholder="Address Line 2" id="new-address-line-2" ng-model="delivery_address.line2" />
-            <input type="text" placeholder="Contact No" ng-model="delivery_address.contact_no" />
-          </div>
-        </td>
-        <td colspan="2" ng-click="addDeliveryAddress()"><i class="fa fa-check-circle"></i> Save</td>
-      </tr>
-      </tbody>
-    </table>
+          <tr class="add-new-address-wrapper">
+            <th></th>
+            <th colspan="3">Deliver to a new address</th>
+          </tr>
+          <tr class="new-address-wrapper">
+            <td><i class="fa fa-check-circle hidden"></i></td>
+            <td>
+              <div class="new-address" role="form" name="deliveryAddressAddForm">
+                <input type="text" placeholder="Full Name" id="new-address-name" ng-model="delivery_address.name" />
+                <input type="text" placeholder="Address Line 1" id="new-address-line-1" ng-model="delivery_address.line1" />
+                <input type="text" placeholder="Address Line 2" id="new-address-line-2" ng-model="delivery_address.line2" />
+                <!--Replace Kottur, Chennai-->
+                <!--Replace Kottur, Chennai-->
+                <input type="text" value="Kottur, Chennai" disabled />
+                <!--Replace Kottur, Chennai-->
+                <!--Replace Kottur, Chennai-->
+                <input type="text" placeholder="Contact No" ng-model="delivery_address.contact_no" />
+              </div>
+            </td>
+            <td colspan="2" ng-click="addDeliveryAddress()"><i class="fa fa-check-circle"></i> Save</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <div class="row">
