@@ -1,6 +1,5 @@
 class Api::V1::CombosController < ApiApplicationController
 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
-	prepend_before_filter :authenticate_user_from_token!
 	before_filter :set_or_create_cart
 	respond_to :json
 
