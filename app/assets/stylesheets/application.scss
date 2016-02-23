@@ -195,6 +195,11 @@ h3, .h3 {
 .icon-label.egg { color: $egg-yellow; }
 .icon-label.non-veg { color: $non-veg-red; }
 
+.text-align-left { text-align: left; }
+.text-align-right { text-align: right; }
+.text-align-center { text-align: center; }
+.text-align-justify { text-align: justify; }
+
 /*Navbar*/
 .navbar-inverse { background-color: #222 !important; }
 .navbar {
