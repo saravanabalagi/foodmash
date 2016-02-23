@@ -171,6 +171,9 @@ Rails.application.routes.draw do
 
       #cities 
       resources :cities, only: [:index] do 
+        collection do
+          post '/', to: 'cities#index'
+        end
       end
 
       resources :legalese, only: [:index] do 

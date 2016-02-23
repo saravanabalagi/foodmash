@@ -6,7 +6,7 @@ class Web::DeliveryAddressesController < ApplicationController
 	def index
 		@delivery_addresses = DeliveryAddress.where(params.permit(:user_id))
 		if @delivery_addresses 
-			render status: 200, json: @delivery_addresses.as_json
+			render status: 200, json: @delivery_addresses.as_json(:include => {:area => {:include => :city}})
 		else
 			render status: 404, json: {error: 'Delivery Addresses not found!'}
 		end
@@ -15,7 +15,7 @@ class Web::DeliveryAddressesController < ApplicationController
 	def create
 		@delivery_address = @current_user.delivery_addresses.build delivery_address_params if @current_user
 		if @delivery_address.save! 
-			render status: 201, json: @delivery_address.as_json
+			render status: 201, json: @delivery_address.as_json(:include => {:area => {:include => :city}})
 		else
 			render status: 422, json: @delivery_address.errors.as_json
 		end
@@ -23,7 +23,7 @@ class Web::DeliveryAddressesController < ApplicationController
 
 	def update
 		if @delivery_address && @delivery_address.update_attributes(delivery_address_update_params)
-			render status: 200, json: @delivery_address.as_json
+			render status: 200, json: @delivery_address.as_json(:include => {:area => {:include => :city}})
 		else
 			render status: 422, json: @delivery_address.errors.as_json
 		end

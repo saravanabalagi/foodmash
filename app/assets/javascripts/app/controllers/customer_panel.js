@@ -40,13 +40,14 @@ angular.module('foodmashApp.controllers')
 	};
 
 	$scope.getStatusIcon = function(status){
+		var icon_class = '';
 		$scope.statuses.filter(function(s){
 			if(s.name == status){
-				// console.log('fa fa-fw ' + s.icon_class.split(" ")[1]);
-				return 'fa fa-fw ' + s.icon_class.split(" ")[1];
+				icon_class = 'fa fa-fw ' + s.icon_class.split(" ")[1];
+				return icon_class;
 			}
 		});
-		return '';
+		return icon_class;
 	};
 
 	$scope.calculateOrderPrice = function(order){
