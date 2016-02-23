@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160217085834) do
+ActiveRecord::Schema.define(version: 20160223121600) do
 
   create_table "areas", force: :cascade do |t|
     t.string   "name"
@@ -105,10 +105,10 @@ ActiveRecord::Schema.define(version: 20160217085834) do
     t.string   "contact_no"
     t.text     "line2"
     t.string   "name"
+    t.integer  "area_id"
     t.boolean  "primary",                             default: false
     t.decimal  "latitude",   precision: 10, scale: 6
     t.decimal  "longitude",  precision: 10, scale: 6
-    t.integer  "area_id"
   end
 
   create_table "dish_types", force: :cascade do |t|
@@ -228,5 +228,13 @@ ActiveRecord::Schema.define(version: 20160217085834) do
   end
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
+
+  create_table "versions", force: :cascade do |t|
+    t.string   "name"
+    t.text     "changelog"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "force",      default: false
+  end
 
 end

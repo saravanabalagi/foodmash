@@ -176,6 +176,13 @@ Rails.application.routes.draw do
         end
       end
 
+      #versions
+      resources :versions do
+        collection do 
+          post '/', to: 'versions#index'
+        end
+      end
+
       resources :legalese, only: [:index] do 
         collection do 
           post '/termsAndConditions', to: 'legalese#terms_and_conditions'
