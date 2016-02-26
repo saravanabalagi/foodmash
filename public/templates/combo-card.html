@@ -10,10 +10,9 @@
       </div>
       <div class="caption">
         <h4>{{combo.name}}</h4>
-        <p>{{combo.description}}</p>
         <ul class="combo-contents">
             <li ng-repeat="combo_dish in combo.combo_dishes">
-                <i class="icon-label {{combo_dish.dish.label}}"></i>
+                <i class="icon-label {{combo_dish.dish.label}}" ng-class="{'veg' : combo_dish.dish.label == 'veg', 'egg' : combo_dish.dish.label == 'egg', 'non-veg' : combo_dish.dish.label == 'non_veg'}"></i>
                 <span>{{combo_dish.dish.name}}</span>
             </li>
             <li ng-repeat="combo_option in combo.combo_options">

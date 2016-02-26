@@ -41,6 +41,20 @@ angular.module('foodmashApp.directives')
 				toaster.pop('success', 'Removed from cart!');
 			};
 
+			$scope.checkLabel = function(label){
+				var label_class = '';
+				console.log(label);
+				switch(label){
+					case 'veg':
+						label_class = 'veg';
+					case 'egg': 
+						label_class = 'egg';
+					case 'non_veg':
+						label_class = 'non-veg';
+				};
+				return label_class;
+			};
+
 			function pushAllComboDishes(combo){
 				if(combo.combo_dishes.length > 0){
 					for(var i=0; i<combo.combo_dishes.length; i++){

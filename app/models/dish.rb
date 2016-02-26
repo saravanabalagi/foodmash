@@ -1,4 +1,5 @@
 class Dish < ActiveRecord::Base
+  before_save {|dish| write_attribute(:name, dish.name.titleize)}
   belongs_to :restaurant
   belongs_to :dish_type
   belongs_to :cuisine

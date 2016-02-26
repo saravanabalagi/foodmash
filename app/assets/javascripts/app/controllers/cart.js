@@ -5,8 +5,12 @@ angular.module('foodmashApp.controllers')
 .controller('CartController', ['$scope', '$q', 'toaster','$location','CartService','$rootScope', 'DeliveryAddress', 'Cart', function($scope, $q, toaster, $location, CartService, $rootScope, DeliveryAddress, Cart){
 
 	$scope.cart = {};
-	$scope.filling = false;
-
+	$scope.setup_details = {
+		"email": $rootScope.currentUser.email,
+		"productinfo": "a bunch of combos from Foodmash",
+		"firstname": $rootScope.currentUser.name.split(" ")[0]
+	};
+	$scope.delivery_charge = 0.0;
 	$scope.delivery_addresses = [];
 	$scope.delivery_address = new DeliveryAddress;
 	$scope.loadingDeliveryAddresses = true;
@@ -72,7 +76,9 @@ angular.module('foodmashApp.controllers')
 			return ;
 		}
 		if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser){
-			$scope.processCart();
+			$scope.setup_details["txnid"] = $scope.cart.order_id;
+			console.log($scope.setup_details);
+			// $scope.processCart();
 		}
 	};
 
@@ -108,7 +114,7 @@ angular.module('foodmashApp.controllers')
 
 	$scope.reload = function(){
 		var d = $q.defer();
-		DeliveryAddress.query({user_id: $rootScope.currentUser.id}).then(function(delivery_addresses){
+		DeliveryAddress.query({user_id: $rootScope.currentUser.id, area_id: $rootScope.area.id}).then(function(delivery_addresses){
 		if(delivery_addresses.length > 0){
 			$scope.delivery_addresses = delivery_addresses;
 			$rootScope.delivery_addresses = delivery_addresses;
@@ -141,7 +147,13 @@ angular.module('foodmashApp.controllers')
 	function calcTaxAndGrandTotal(){
 		$scope.cart.vat = parseFloat(($scope.cart.total * 0.02).toFixed(2));
 		if($scope.cart.total && $scope.cart.vat){
-			$scope.cart.grand_total = $scope.cart.total + $scope.cart.vat + 40.00;
+			if($scope.cart.total <= 200){
+				$scope.delivery_charge = 30.00;
+				$scope.cart.grand_total = $scope.cart.total + $scope.cart.vat + $scope.delivery_charge;
+			}else{
+				$scope.delivery_charge = 40.00;
+				$scope.cart.grand_total = $scope.cart.total + $scope.cart.vat + $scope.delivery_charge;
+			}
 		}else{
 			$scope.cart.grand_total = 0;			
 		}

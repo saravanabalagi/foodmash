@@ -191,7 +191,7 @@ class Cart < ActiveRecord::Base
 	end
 
 	def generate_order_id
-		self.order_id = "OD" + Digest::SHA1.hexdigest(Time.now.to_s)[0..9]
+		self.order_id = "OD" + Digest::SHA1.hexdigest(Time.now.to_s)[0..11]
 		self.save!
 		self.order_id
 	end

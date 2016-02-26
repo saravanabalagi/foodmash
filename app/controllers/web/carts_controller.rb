@@ -24,7 +24,7 @@ class Web::CartsController < ApplicationController
 
 	def purchase
 		# return invalid_data unless params[:cart][:cart][:payment_method]
-		if @cart and @cart.add_items_to_cart(params[:cart][:cart]) and @cart.purchase! and @cart.generate_order_id
+		if @cart and @cart.add_items_to_cart(params[:cart][:cart]) and @cart.purchase!
 			render status: 200, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name, :price]}}], only: [:id, :quantity, :category_id, :category_type]} } ,:product => {only: [:id, :name, :price]}], only: [:id, :quantity, :total, :updated_at]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at])
 		else
 			render status: 404, json: {success: false, error: "Could not fetch cart!"}
@@ -61,6 +61,7 @@ class Web::CartsController < ApplicationController
 		return permission_denied unless session
 	  if @current_user 
 	    @cart = @current_user.carts.where(aasm_state: 'not_started').first.presence || Cart.create(user_id: @current_user.id)
+	    @cart.generate_order_id if !@cart.order_id.present?
 	  end
 	end
 end
