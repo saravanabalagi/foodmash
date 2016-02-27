@@ -7,7 +7,7 @@ class Api::V1::DeliveryAddressesController < ApiApplicationController
 	def index
 		@delivery_addresses = @current_user.delivery_addresses.where(params.permit(:area_id))
 		if @delivery_addresses
-			render status: 200, json: {success: true, data: @delivery_addresses.as_json(:include => {:area => {:include => {:city => {only: [:id, :name]}}, only: [:id, :name, :pincode]}}, only: [:id, :line1, :line2, :contact_no, :latitude, :longitude, :primary, :name])}
+			render status: 200, json: {success: true, data: @delivery_addresses.as_json(only: [:id, :line1, :line2, :contact_no, :area_id, :latitude, :longitude, :primary, :name])}
 		else
 			render status: 404, json: {success: false, error: "Could not find user's previous addresses!"}
 		end
@@ -16,7 +16,7 @@ class Api::V1::DeliveryAddressesController < ApiApplicationController
 	def create 
 		@delivery_address = @current_user.delivery_addresses.build delivery_address_params
 		if @delivery_address.save!
-			render status: 201, json: {success: true, data: @delivery_addresses.as_json(:include => {:area => {:include => {:city => {only: [:id, :name]}}, only: [:id, :name, :pincode]}}, only: [:id, :line1, :line2, :contact_no, :latitude, :longitude, :primary, :name])}
+			render status: 201, json: {success: true, data: @delivery_addresses.as_json(only: [:id, :line1, :line2, :contact_no, :area_id, :latitude, :longitude, :primary, :name])}
 		else
 			render status: 200, json: {success: false, error: @delivery_address.errors}
 		end
@@ -24,7 +24,7 @@ class Api::V1::DeliveryAddressesController < ApiApplicationController
 
 	def update
 		if @delivery_address and @delivery_address.update_attributes! delivery_address_update_params
-			render status: 201, json: {success: true, data: @delivery_addresses.as_json(:include => {:area => {:include => {:city => {only: [:id, :name]}}, only: [:id, :name, :pincode]}}, only: [:id, :line1, :line2, :contact_no, :latitude, :longitude, :primary, :name])}
+			render status: 201, json: {success: true, data: @delivery_addresses.as_json(only: [:id, :line1, :line2, :contact_no, :area_id, :latitude, :longitude, :primary, :name])}
 		else
 			render status: 200, json: {success: false, error: "Could not update delivery address!"}
 		end
