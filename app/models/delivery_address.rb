@@ -8,6 +8,11 @@ class DeliveryAddress < ActiveRecord::Base
 	before_save :make_primary_for_first_address
 	before_destroy :make_primary_for_first_address
 
+	def self.make_primary(delivery_address_id)
+		delivery_address = DeliveryAddress.find delivery_address_id
+		delivery_address.primary = true
+		delivery_address.save!
+	end
 
 	private
 	def falsify_true_records
