@@ -1,9 +1,7 @@
 class Api::V1::CartsController < ApiApplicationController
 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 	prepend_before_filter :authenticate_user_from_token!
-	before_filter :set_or_create_cart, only: [:index, :add_cart, :destroy, :add_address, :purchase]
-	before_filter :set_order, only: :show
-	before_filter :set_cart_delivery_address, only: :add_address
+	before_filter :set_or_create_cart, only: [:index, :add_cart, :destroy, :purchase, :show]
 	respond_to :json
 
 	def history
@@ -59,19 +57,6 @@ class Api::V1::CartsController < ApiApplicationController
 	private 
 	def invalid_cart
 		render status: 200, json: {success: false, error: "Attempt to access invalid cart!"}
-	end
-
-	def set_cart
-		@cart = Cart.find params[:data][:id]
-	end
-
-	def set_order
-		@cart = Cart.find_by order_id: params[:data][:order_id]
-	end
-
-	def set_cart_delivery_address
-		return invalid_data unless params[:data][:delivery_address_id]
-		@cartDelAdd = CartDeliveryAddress.find_by(cart_id: @cart.id) || CartDeliveryAddress.new(cart_id: @cart.id, delivery_address_id: params[:data][:delivery_address_id]) if @cart
 	end
 
 	def set_or_create_cart

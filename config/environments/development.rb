@@ -40,8 +40,8 @@ Rails.application.configure do
     ssl:                   true
   }
 
-  ENV['key'] = 'i4GjyD'
-  ENV['salt'] = 'YPBylwsU'
+  ENV['key'] = 'gtKFFx'
+  ENV['salt'] = 'eCwWELxi'
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load

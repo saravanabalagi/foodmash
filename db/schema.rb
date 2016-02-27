@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160223121600) do
+ActiveRecord::Schema.define(version: 20160227122030) do
 
   create_table "areas", force: :cascade do |t|
     t.string   "name"
@@ -24,15 +24,29 @@ ActiveRecord::Schema.define(version: 20160223121600) do
 
   create_table "carts", force: :cascade do |t|
     t.integer  "user_id"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.string   "aasm_state"
-    t.float    "total",               default: 0.0, null: false
+    t.float    "total",                  default: 0.0, null: false
     t.string   "payment_method"
     t.string   "order_id"
     t.integer  "delivery_address_id"
     t.float    "vat"
-    t.float    "grand_total",         default: 0.0
+    t.float    "grand_total",            default: 0.0
+    t.string   "mihpayid"
+    t.string   "payment_status"
+    t.string   "payment_card_category"
+    t.string   "payment_source"
+    t.string   "pg_type"
+    t.string   "bank_ref_num"
+    t.string   "bankcode"
+    t.string   "payment_error"
+    t.string   "payment_error_message"
+    t.string   "payment_name_on_card"
+    t.string   "payment_card_no"
+    t.string   "issuing_bank"
+    t.string   "payment_card_type"
+    t.string   "payment_unmappedstatus"
   end
 
   create_table "cities", force: :cascade do |t|

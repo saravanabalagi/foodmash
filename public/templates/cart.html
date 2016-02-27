@@ -56,7 +56,7 @@
     </div>
 
     <div class="col-md-6 delivery-information" ng-if="currentUser">
-      <div class="contact-information-warpper">
+    <!--   <div class="contact-information-warpper">
         <div class="user-email-wrapper">
           <i class="fa fa-envelope"></i>
           <span class="user-email">{{currentUser.email}}</span>
@@ -67,7 +67,7 @@
           <input type="text" class="user-phone-prefix" value="+91" disabled="true" />
           <input type="text" class="user-phone" id="user-phone" disabled="true" value="{{currentUser.mobile_no}}" />
         </div>
-      </div>
+      </div> -->
       <table class="table table-striped table-hover table-addresses">
         <thead>
         <tr>
@@ -112,6 +112,22 @@
         Proceed to Pay
       </a>
     </div>
+  <form action=" https://test.payu.in/_payment/" method="post" ng-if="setup_details" target="_blank">
+    <input hidden name="firstname" value="{{setup_details.firstname}}" />
+    <input hidden name="email" value="{{setup_details.email}}" />
+    <input hidden name="amount" value="{{setup_details.amount}}" />
+    <input hidden name="surl" value="{{setup_details.surl}}" />
+    <input hidden name="furl" value="{{setup_details.furl}}" />
+    <input hidden name="key" value="{{setup_details.key}}" />
+    <input hidden name="salt" value="{{setup_details.salt}}" />
+    <input hidden name="phone" value="{{setup_details.phone}}" />
+    <input hidden name="productinfo" value="{{setup_details.productinfo}}" />
+    <input hidden name="txnid" value="{{setup_details.txnid}}" />
+    <input hidden name="hash" value="{{setup_details.hash}}" />
+    <input type="submit" value="submit" ng-click="processCart()" />
+  </form>
+    
+
   </div>
 
 </div>

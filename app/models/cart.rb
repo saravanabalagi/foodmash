@@ -36,6 +36,25 @@ class Cart < ActiveRecord::Base
 	  end
 	end
 
+	def add_fields_from_payu(params)
+		self.mihpayid = params["mihpayid"]
+		self.payment_method = params["mode"]
+		self.payment_status = params["status"]
+		self.payment_unmappedstatus = params["unmappedstatus"]
+		self.payment_card_category = params["cardCategory"]
+		self.payment_source = params["payment_source"]
+		self.pg_type = params["PG_TYPE"]
+		self.bank_ref_num = params["bank_ref_num"]
+		self.bankcode = params["bankcode"]
+		self.payment_error = params["error"]
+		self.payment_error_message = params["error_Message"]
+		self.payment_name_on_card = params["name_on_card"]
+		self.payment_card_no = params["cardnum"]
+		self.issuing_bank = params["issuing_bank"]
+		self.payment_card_type = params["card_type"]
+		self.save!
+	end
+
 	def change_status(status)
 		case status
 			when 'purchase' 

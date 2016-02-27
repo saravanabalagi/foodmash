@@ -74,6 +74,8 @@ Rails.application.routes.draw do
       collection do 
         post '/getHash', to: 'payments#get_hash'
         post '/checkPasswordForCod', to: 'payments#check_password_for_cod'
+        post '/success', to: 'payments#success'
+        post '/failure', to: 'payments#failure'
       end
     end
   end
@@ -167,6 +169,8 @@ Rails.application.routes.draw do
         collection do 
           post '/getHash', to: 'payments#get_hash'
           post '/checkPasswordForCod', to: 'payments#check_password_for_cod'
+          post '/success', to: 'payments#success'
+          post '/failure', to: 'payments#failure'
         end
       end
 

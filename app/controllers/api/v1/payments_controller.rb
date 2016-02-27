@@ -11,19 +11,18 @@ class Api::V1::PaymentsController < ApiApplicationController
 	def get_hash
 		details = {
 			firstname: @current_user.name.split.first,
-			productinfo: 'a bunch of combos from foodmash',
-			surl: 'www.foodmash.in/payments/success',
-			furl: 'www.foodmash.in/payments/failure',
-			amount: @cart.total,
-			txnid: @cart.generate_order_id,
+			productinfo: 'a bunch of combos from Foodmash',
+			surl: 'http://www.foodmash.herokuapp.com/payments/success',
+			furl: 'http://www.foodmash.herokuapp.com/payments/failure',
+			amount: @cart.grand_total,
+			txnid: @cart.order_id,
 			email: @current_user.email,
 			phone: @current_user.mobile_no,
 			udf1: '',
 			udf2: '',
 			udf3: '',
 			udf4: '',
-			udf5: '',
-			service_provider: 'payu_paisa'
+			udf5: ''
 		}
 		checksum = Payment.calculate_hash(details) || nil
 		if checksum.present?
@@ -33,11 +32,27 @@ class Api::V1::PaymentsController < ApiApplicationController
 		end
 	end
 
+	def success
+ 		if params.present? and @cart.add_fields_from_payu(params)
+			render status: 200, json: {message: 'Cart was successfully paid for!'}
+		else
+			render status: 422, json: {error: 'Cart was not successfully paid for!'}
+		end
+ 	end
+
+ 	def failure
+ 		if params.present? and @cart.add_fields_from_payu(params)
+			render status: 200, json: {message: 'Cart payment failed to process!'}
+		else
+			render status: 422, json: {error: 'Cart payment failure was not processed!'}
+		end
+ 	end
+
 	def check_password_for_cod
 		if current_user.valid_password? params[:payment][:password] and @cart.change_status('purchase') and @cart.set_payment_method('COD')
 			render status: 200, json: {success: true, message: 'Succesfully ordered!'}
 		else
-			render status: 422, json: {success: false, error: 'Password was incorrect!'}
+			render status: 200, json: {success: false, error: 'Password was incorrect!'}
 		end
 	end
 
