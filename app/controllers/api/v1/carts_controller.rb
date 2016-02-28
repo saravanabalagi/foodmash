@@ -23,7 +23,7 @@ class Api::V1::CartsController < ApiApplicationController
 
 	def purchase
 		return invalid_data unless params[:data][:payment_method]
-		if @cart and @cart.update_attributes! payment_method: params[:data][:payment_method] and @cart.purchase! and @cart.generate_order_id
+		if @cart and @cart.update_attributes! payment_method: params[:data][:payment_method] and @cart.purchase!
 			render status: 200, json: {success: true, data: {order_id: @cart.order_id}}
 		else
 			render status: 404, json: {success: false, error: "Could not fetch cart!"}
