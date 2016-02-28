@@ -43,10 +43,10 @@ class Web::DeliveryAddressesController < ApplicationController
 	end
 
 	def delivery_address_params
-		params.require(:delivery_address).permit(:name, :line1, :line2, :area_id, :contact_no, :primary)
+		params.require(:delivery_address).permit(:name, :line1, :line2, :area_id, :contact_no, :primary, :latitude, :longitude)
 	end
 
 	def delivery_address_update_params
-		params.require(:delivery_address).permit(:name, :line1, :line2, :area_id, :contact_no, :primary)
+		params.require(:delivery_address).permit(:name, :line1, :line2, :area_id, :contact_no, :primary, :latitude, :longitude)
 	end
 end

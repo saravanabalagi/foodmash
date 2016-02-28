@@ -44,10 +44,10 @@ class Api::V1::DeliveryAddressesController < ApiApplicationController
 	end
 
 	def delivery_address_params
-		params.require(:data).permit(:name, :line1, :line2, :area_id, :contact_no, :user_id)
+		params.require(:data).permit(:name, :line1, :line2, :area_id, :contact_no, :user_id, :latitude, :longitude)
 	end
 
 	def delivery_address_update_params
-		params.require(:data).permit(:name, :line1, :line2, :area_id, :contact_no, :user_id)
+		params.require(:data).permit(:name, :line1, :line2, :area_id, :contact_no, :user_id, :latitude, :longitude)
 	end
 end
