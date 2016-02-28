@@ -18,7 +18,7 @@ angular.module('foodmashApp.directives')
 
 			$scope.selectRestaurantForComboOptionDishesUpdate = function(restaurant){
 				$scope.selectedRestaurantForComboOptionDishesUpdate = restaurant;
-				$scope.loadDishesForUpdate(restaurant.id);
+                $scope.loadDishesForUpdate(restaurant.id);
 			};
 
 			$scope.selectDishForComboOptionDishesUpdate = function(dish){

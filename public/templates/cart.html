@@ -95,7 +95,6 @@
                 <input type="text" placeholder="Address Line 1" id="new-address-line-1" ng-model="delivery_address.line1" />
                 <input type="text" placeholder="Address Line 2" id="new-address-line-2" ng-model="delivery_address.line2" />
                 <input type="text" value="{{area.name}}, {{city.name}}" disabled />
-                <input type="text" value="{{area.pincode}}" disabled />
                 <input type="text" placeholder="Contact No" ng-model="delivery_address.contact_no" />
               </div>
             </td>
@@ -108,11 +107,26 @@
 
   <div class="row">
     <div class="proceed-to-pay-wrapper">
-      <a class="btn btn-raised btn-info" ng-click="proceedToPayment()">
-        Proceed to Pay
-      </a>
+      <span ng-init="isCodShown=false" ng-hide="isCodShown">
+        <a class="btn btn-raised btn-info" onclick="setTimeout(function(){$('#cod-password').focus();},300);" ng-click="isCodShown=true"> Cash on Delivery </a>
+        <a class="btn btn-raised btn-info" ng-click="processCart()" onclick="document.getElementById('payment-form').submit();"> Pay using Card </a>
+      </span>
+      <span ng-show="isCodShown">
+        <div class="form-group label-floating is-empty cod-wrapper">
+          <label class="control-label">Password</label>
+          <input class="form-control" type="password" id="cod-password">
+          <p class="help-block">Enter your password to confirm this order</p>
+          <span class="material-input"></span>
+        </div>
+        <div>
+          <a class="btn btn-raised btn-info" ng-click="isCodShown=false"> Cancel </a>
+          <a class="btn btn-raised btn-info" ng-click="proceedToPayment()"> Confirm </a>
+        </div>
+      </span>
     </div>
-  <form action=" https://test.payu.in/_payment/" method="post" ng-if="setup_details" target="_blank">
+  </div>
+
+  <form style="display: none" id="payment-form" action=" https://test.payu.in/_payment/" method="post" ng-if="setup_details" target="_blank">
     <input hidden name="firstname" value="{{setup_details.firstname}}" />
     <input hidden name="email" value="{{setup_details.email}}" />
     <input hidden name="amount" value="{{setup_details.amount}}" />
@@ -124,7 +138,7 @@
     <input hidden name="productinfo" value="{{setup_details.productinfo}}" />
     <input hidden name="txnid" value="{{setup_details.txnid}}" />
     <input hidden name="hash" value="{{setup_details.hash}}" />
-    <input type="submit" value="submit" ng-click="processCart()" />
+    <input hidden type="submit" value="submit" />
   </form>
     
 

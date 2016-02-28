@@ -40,6 +40,7 @@ $mild-blue-dark: rgba(186,203,235,1);
 $veg-green: #008E07;
 $non-veg-red: #d21a00;
 $egg-yellow: #E6CA10;
+$ambiguous-violet: #822fe6;
 
 @font-face {
   font-family: 'Segoe UI';
@@ -194,6 +195,8 @@ h3, .h3 {
 .icon-label.veg { color: $veg-green; }
 .icon-label.egg { color: $egg-yellow; }
 .icon-label.non-veg { color: $non-veg-red; }
+.icon-label.non-veg.veg,
+.icon-label.non-veg.veg.egg { color: $ambiguous-violet; }
 
 .text-align-left { text-align: left; }
 .text-align-right { text-align: right; }
@@ -512,6 +515,11 @@ footer {
   margin-top: 20px;
   text-align: center;
   margin-bottom: 20px;
+  .cod-wrapper {
+    width: 300px;
+    text-align: left;
+    margin: 30px auto 20px;
+  }
 }
 /*CSS for cart ends*/
 
@@ -705,9 +713,9 @@ footer {
   .order-status-meter-wrapper {
     margin: 20px 0 30px 0;
     position: relative;
-    -webkit-text-align: justify;
-    -moz-text-align: justify;
-    -ms-text-align: justify;
+    -webkit-text-align-last: justify;
+    -moz-text-align-last: justify;
+    -ms-text-align-last: justify;
     text-align-last: justify;
     i.fa {
       font-size: 20px;
@@ -1430,7 +1438,7 @@ footer {
           transform: translate(-50%,-50%);
         }
       }
-      margin-bottom: 0;
+      margin-bottom: 5px;
       position: relative;
       .caption {
         margin-bottom: 40px;
