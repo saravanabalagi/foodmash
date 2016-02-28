@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160228100936) do
+ActiveRecord::Schema.define(version: 20160228134540) do
 
   create_table "areas", force: :cascade do |t|
     t.string   "name"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20160228100936) do
     t.string   "payment_method"
     t.string   "order_id"
     t.integer  "delivery_address_id"
-    t.float    "vat"
+    t.float    "vat",                    default: 0.0
     t.float    "grand_total",            default: 0.0
     t.string   "mihpayid"
     t.string   "payment_status"
