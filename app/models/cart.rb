@@ -107,14 +107,15 @@ class Cart < ActiveRecord::Base
 				end
 			end
 		end
-			self.delivery_address_id = cart[:delivery_address_id] if cart[:delivery_address_id]
+			self.delivery_address_id = cart[:delivery_address_id]
 			self.vat = cart[:vat]
 			self.grand_total = cart[:grand_total]
+			self.delivery_charge = cart[:delivery_charge]
 			DeliveryAddress.make_primary(cart[:delivery_address_id])
 			self.save!
 	end
 
-	def add_cart(cart_items, delivery_address_id)
+	def add_cart(cart_items, delivery_address_id, vat, grand_total, delivery_charge)
 		if self.orders.present?
 			self.orders.each do |order|
 				if cart_items.present?
@@ -177,9 +178,10 @@ class Cart < ActiveRecord::Base
 				end
 			end
 		end
-		self.delivery_address_id = delivery_address_id if delivery_address_id
-		self.vat = cart_items[:vat] if cart_items[:vat]
-		self.grand_total = cart_items[:grand_total] if cart_items[:grand_total]
+		self.delivery_address_id = delivery_address_id 
+		self.vat = vat 
+		self.grand_total = grand_total 
+		self.delivery_charge = delivery_charge 
 		DeliveryAddress.make_primary(delivery_address_id)
 		self.save!
 	end

@@ -39,7 +39,7 @@ class Api::V1::CartsController < ApiApplicationController
 	end
 
 	def add_cart
-		if @cart and @cart.add_cart(params[:data][:cart], params[:data][:delivery_address_id])
+		if @cart and @cart.add_cart(params[:data][:cart], params[:data][:delivery_address_id], params[:data][:vat], params[:data][:grand_total], params[:data][:delivery_charge])
 			render status: 201, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description]}], only: [:id, :quantity, :total]} }, only: [:id, :total]) }
 		else
 			render status: 200, json: {success: false, error: "Could not add to cart!"}

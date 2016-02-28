@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('CartController', ['$scope', '$q', 'toaster','$location','CartService','$rootScope', 'DeliveryAddress', 'Cart', 'Payment', '$http', function($scope, $q, toaster, $location, CartService, $rootScope, DeliveryAddress, Cart, Payment, $http){
+.controller('CartController', ['$scope', '$q', 'toaster','$location','CartService','$rootScope', 'DeliveryAddress', 'Cart', 'Payment', '$http', '$httpParamSerializer', function($scope, $q, toaster, $location, CartService, $rootScope, DeliveryAddress, Cart, Payment, $http, $httpParamSerializer){
 
 	$scope.cart = {};
 	if($rootScope.currentUser){
@@ -15,7 +15,7 @@ angular.module('foodmashApp.controllers')
 			"furl": 'http://www.localhost:3000/web/payments/success'
 		};
 	}
-	$scope.delivery_charge = 0;
+	$scope.cart.delivery_charge = 0;
 	$scope.delivery_addresses = [];
 	$scope.delivery_address = new DeliveryAddress;
 	$scope.loadingDeliveryAddresses = true;
@@ -87,6 +87,7 @@ angular.module('foodmashApp.controllers')
 				$scope.setup_details.hash = response.hash;
 				$scope.setup_details.key = response.key;
 				$scope.setup_details.salt = response.salt;
+				$scope.processCart();
 			}, function(err){
 				toaster.pop('error', 'Could not generate hash');
 			});
@@ -95,15 +96,25 @@ angular.module('foodmashApp.controllers')
 
 	$scope.processCart = function(){
 		var d = $q.defer();
-		Cart.purchase($scope.cart).then(function(cart){
-			toaster.pop('success', 'Cart was submitted!');
-			$location.path('/');
-			CartService.refreshCart();
-			d.resolve(cart);
+		$http({
+			url: 'https://test.payu.in/_payment',
+			method: 'POST',
+			headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Access-Control-Allow-Origin': '*'},
+			data: $httpParamSerializer($scope.setup_details)
+		}).then(function(response){
+			console.log(response);
 		}, function(err){
-			toaster.pop('error', 'Cart was not submitted!');
-			d.reject(err);
+			console.log(err);
 		});
+		// Cart.purchase($scope.cart).then(function(cart){
+		// 	toaster.pop('success', 'Cart was submitted!');
+		// 	$location.path('/');
+		// 	CartService.refreshCart();
+		// 	d.resolve(cart);
+		// }, function(err){
+		// 	toaster.pop('error', 'Cart was not submitted!');
+		// 	d.reject(err);
+		// });
 		return d.promise;
 	};
 
@@ -158,15 +169,15 @@ angular.module('foodmashApp.controllers')
 	function calcTaxAndGrandTotal(){
 		$scope.cart.vat = $scope.cart.total * 0.02;
 		if($scope.cart.total == 0){
-			$scope.delivery_charge = 0;
+			$scope.cart.delivery_charge = 0;
 		}
 		if($scope.cart.total && $scope.cart.vat){
 			if($scope.cart.total < 200){
-				$scope.delivery_charge = 30;
-				$scope.cart.grand_total = ($scope.cart.total + $scope.cart.vat + $scope.delivery_charge).toFixed(2);
+				$scope.cart.delivery_charge = 30;
+				$scope.cart.grand_total = ($scope.cart.total + $scope.cart.vat + $scope.cart.delivery_charge).toFixed(2);
 			}else{
-				$scope.delivery_charge = 40;
-				$scope.cart.grand_total = ($scope.cart.total + $scope.cart.vat + $scope.delivery_charge).toFixed(2);
+				$scope.cart.delivery_charge = 40;
+				$scope.cart.grand_total = ($scope.cart.total + $scope.cart.vat + $scope.cart.delivery_charge).toFixed(2);
 			}
 		}else{
 			$scope.cart.grand_total = (0).toFixed(2);			
