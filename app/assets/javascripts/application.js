@@ -30,9 +30,6 @@
 $(document).ready( function() {
 
     $.material.init();
-    new WOW().init();
-    $('[data-toggle="tooltip"]').tooltip();
-    $('[data-toggle="popover"]').popover();
 
     $('.rupee').html("&#8377; ");
 

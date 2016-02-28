@@ -17,6 +17,14 @@ angular.module('foodmashApp.controllers')
     $scope.user = null;
   });
 
+  $scope.load = function(){
+      angular.element(document).ready(function (){
+        new WOW().init();
+        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="popover"]').popover();
+      });
+    };
+
   $scope.setUpdate = function(user){
      $scope.updatedUser = angular.copy(user);
    };

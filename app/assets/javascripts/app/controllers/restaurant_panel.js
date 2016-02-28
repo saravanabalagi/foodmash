@@ -42,6 +42,14 @@ angular.module('foodmashApp.controllers')
 		}
 	});
 
+	$scope.load = function(){
+	    angular.element(document).ready(function (){
+	      new WOW().init();
+	      $('[data-toggle="tooltip"]').tooltip();
+	      $('[data-toggle="popover"]').popover();
+	    });
+	 };
+
 	$scope.checkIfCompleted = function(status){
 		if($scope.statuses.indexOf(status) <= $scope.statuses.indexOf($scope.selectedStatus)){
 			return true;
