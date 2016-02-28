@@ -96,16 +96,16 @@ angular.module('foodmashApp.controllers')
 
 	$scope.processCart = function(){
 		var d = $q.defer();
-		$http({
-			url: 'https://test.payu.in/_payment',
-			method: 'POST',
-			headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Access-Control-Allow-Origin': '*'},
-			data: $httpParamSerializer($scope.setup_details)
-		}).then(function(response){
-			console.log(response);
-		}, function(err){
-			console.log(err);
-		});
+		// $http({
+		// 	url: 'https://test.payu.in/_payment',
+		// 	method: 'POST',
+		// 	headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Access-Control-Allow-Origin': '*'},
+		// 	data: $httpParamSerializer($scope.setup_details)
+		// }).then(function(response){
+		// 	console.log(response);
+		// }, function(err){
+		// 	console.log(err);
+		// });
 		// Cart.purchase($scope.cart).then(function(cart){
 		// 	toaster.pop('success', 'Cart was submitted!');
 		// 	$location.path('/');
