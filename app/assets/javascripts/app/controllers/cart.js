@@ -87,6 +87,7 @@ angular.module('foodmashApp.controllers')
 				$scope.setup_details.hash = response.hash;
 				$scope.setup_details.key = response.key;
 				$scope.setup_details.salt = response.salt;
+				console.log($scope.setup_details);
 				$scope.processCart();
 			}, function(err){
 				toaster.pop('error', 'Could not generate hash');

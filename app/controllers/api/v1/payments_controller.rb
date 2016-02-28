@@ -34,7 +34,7 @@ class Api::V1::PaymentsController < ApiApplicationController
 
 	def success
  		if params.present? and @cart.add_fields_from_payu(params)
-			render status: 200, json: {message: 'Cart was successfully paid for!'}
+			render status: 200, json: {message: 'Cart was successfully processed!'}
 		else
 			render status: 422, json: {error: 'Cart was not successfully paid for!'}
 		end
