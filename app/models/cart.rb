@@ -180,8 +180,8 @@ class Cart < ActiveRecord::Base
 		end
 		self.delivery_address_id = delivery_address_id 
 		self.vat = vat 
-		self.grand_total = grand_total 
 		self.delivery_charge = delivery_charge 
+		self.grand_total = self.total + self.delivery_charge + self.vat 
 		DeliveryAddress.make_primary(delivery_address_id)
 		self.save!
 	end

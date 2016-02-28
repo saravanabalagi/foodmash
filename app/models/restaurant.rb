@@ -1,6 +1,6 @@
 class Restaurant < ActiveRecord::Base
 	resourcify
-	before_save {|restaurant| write_attribute(:name, restaurant.name.titleize)}
+	before_save {|restaurant| write_attribute(:name, restaurant.name.split.each{|s| s[0] = s[0].upcase}.join(' '))}
 	belongs_to :area
 	has_many :dishes, dependent: :destroy
 	has_many :dish_types, through: :dishes

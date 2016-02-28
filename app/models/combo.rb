@@ -1,4 +1,5 @@
 class Combo < ActiveRecord::Base
+	before_save {|city| write_attribute(:name, city.name.split.each{|s| s[0] = s[0].upcase}.join(' '))}
 	belongs_to :packaging_centre
 	has_many :combo_dishes, dependent: :destroy
 	has_many :combo_options, dependent: :destroy

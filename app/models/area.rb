@@ -1,5 +1,5 @@
 class Area < ActiveRecord::Base
-	before_save {|area| write_attribute(:name, area.name.titleize)}
+	before_save {|area| write_attribute(:name, area.name.split.each{|s| s[0] = s[0].upcase}.join(' '))}
 	validates :name, presence: true, length: {minimum: 2}
 	validates :city_id, presence: true
 	validates :pincode, presence: true
