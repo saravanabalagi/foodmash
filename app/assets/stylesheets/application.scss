@@ -705,9 +705,9 @@ footer {
   .order-status-meter-wrapper {
     margin: 20px 0 30px 0;
     position: relative;
-    -webkit-text-align: justify;
-    -moz-text-align: justify;
-    -ms-text-align: justify;
+    -webkit-text-align-last: justify;
+    -moz-text-align-last: justify;
+    -ms-text-align-last: justify;
     text-align-last: justify;
     i.fa {
       font-size: 20px;
@@ -1430,7 +1430,7 @@ footer {
           transform: translate(-50%,-50%);
         }
       }
-      margin-bottom: 0;
+      margin-bottom: 5px;
       position: relative;
       .caption {
         margin-bottom: 40px;

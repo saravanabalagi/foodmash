@@ -120,10 +120,10 @@ ActiveRecord::Schema.define(version: 20160228134540) do
     t.string   "contact_no"
     t.text     "line2"
     t.string   "name"
-    t.integer  "area_id"
     t.boolean  "primary",                             default: false
     t.decimal  "latitude",   precision: 10, scale: 6
     t.decimal  "longitude",  precision: 10, scale: 6
+    t.integer  "area_id"
   end
 
   create_table "dish_types", force: :cascade do |t|
