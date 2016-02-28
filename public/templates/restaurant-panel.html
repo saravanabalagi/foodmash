@@ -109,7 +109,7 @@
           <div class="progress progress-striped active order-status-meter">
             <div class="progress-bar" style="{{selectedStatus.percent}}"></div>
           </div>
-          <i ng-repeat="status in statuses" class="{{status.icon_class}}" ng-class="{'completed' : checkIfCompleted(status)}"></i>
+          <i ng-repeat-start="status in statuses" class="{{status.icon_class}}" ng-class="{'completed' : checkIfCompleted(status)}"></i><span ng-repeat-end> </span>
         </div>
         <div class="order-status-update-wrapper">Update as <span class="btn btn-info btn-raised order-status-update">Ready</span></div>
         <div class="order-time-elapsed-wrapper">Time elapsed: <span class="order-time-elapsed">05:21</span></div>
