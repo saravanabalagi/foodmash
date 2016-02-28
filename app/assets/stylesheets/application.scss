@@ -40,6 +40,7 @@ $mild-blue-dark: rgba(186,203,235,1);
 $veg-green: #008E07;
 $non-veg-red: #d21a00;
 $egg-yellow: #E6CA10;
+$ambiguous-violet: #822fe6;
 
 @font-face {
   font-family: 'Segoe UI';
@@ -194,6 +195,8 @@ h3, .h3 {
 .icon-label.veg { color: $veg-green; }
 .icon-label.egg { color: $egg-yellow; }
 .icon-label.non-veg { color: $non-veg-red; }
+.icon-label.non-veg.veg,
+.icon-label.non-veg.veg.egg { color: $ambiguous-violet; }
 
 .text-align-left { text-align: left; }
 .text-align-right { text-align: right; }
