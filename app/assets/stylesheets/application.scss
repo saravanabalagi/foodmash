@@ -684,17 +684,6 @@ footer {
         td { background-color: transparent; }
         background-color: #666;
       }
-      /*&:after {
-          content: "";
-          display: inline-block;
-          position: absolute;
-          right: -20px;
-          top: 0;
-          bottom: 0;
-          border-left: 10px solid #333;
-          border-top: 10px solid transparent;
-          border-bottom: 10px solid transparent;
-      }*/
     }
     tr:last-child {
       text-align:center;
@@ -781,7 +770,7 @@ footer {
         color: #FFF;
         font-weight: 100;
       }
-      tr:last-child {
+      tr:last-child:not(.additional-notes-wrapper) {
         border-top: 2px solid rgba(128,128,128,0.15);
         border-bottom: 2px solid rgba(128,128,128,0.15);
         background-color: $success-green;
@@ -830,17 +819,6 @@ footer {
         td { background-color: transparent; }
         background-color: #666;
       }
-      /*&:after {
-          content: "";
-          display: inline-block;
-          position: absolute;
-          right: -20px;
-          top: 0;
-          bottom: 0;
-          border-left: 10px solid #333;
-          border-top: 10px solid transparent;
-          border-bottom: 10px solid transparent;
-      }*/
     }
     tr:last-child {
       text-align:center;
@@ -1009,17 +987,6 @@ footer {
         td { background-color: transparent; }
         background-color: #666;
       }
-      /*&:after {
-          content: "";
-          display: inline-block;
-          position: absolute;
-          right: -20px;
-          top: 0;
-          bottom: 0;
-          border-left: 10px solid #333;
-          border-top: 10px solid transparent;
-          border-bottom: 10px solid transparent;
-      }*/
     }
   }
 }
