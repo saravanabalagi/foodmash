@@ -19,6 +19,7 @@ angular.module('foodmashApp.controllers')
 	$scope.delivery_addresses = [];
 	$scope.delivery_address = new DeliveryAddress;
 	$scope.loadingDeliveryAddresses = true;
+	$scope.payment_method = "Payu";
 
 	CartService.getCartInfo().then(function(cart){
 		$scope.cart = cart;
@@ -65,6 +66,10 @@ angular.module('foodmashApp.controllers')
 		}
 	};
 
+	$scope.setCod = function(){
+		$scope.payment_method = 'COD';
+	};
+
 	$scope.proceedToPayment = function(){
 		if($scope.cart.total == 0){
 			toaster.pop('info', 'Cart is empty!');
@@ -80,42 +85,37 @@ angular.module('foodmashApp.controllers')
 			toaster.pop('info', 'Delivery Address needs to be selected!');
 			return ;
 		}
-		if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser){
+		if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'Payu'){
 			$scope.setup_details["txnid"] = $scope.cart.order_id;
 			$scope.setup_details.amount = $scope.cart.grand_total;
 			Payment.getHash($scope.setup_details).then(function(response){
 				$scope.setup_details.hash = response.hash;
 				$scope.setup_details.key = response.key;
 				$scope.setup_details.salt = response.salt;
-				console.log($scope.setup_details);
 				$scope.processCart();
 			}, function(err){
 				toaster.pop('error', 'Could not generate hash');
+			});
+		}else if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
+			Payment.checkPasswordForCod($scope.passwordForCod).then(function(response){
+				$scope.processCart();
+			}, function(err){
+				toaster.pop('error', 'Password incorrect!');
 			});
 		}
 	};
 
 	$scope.processCart = function(){
 		var d = $q.defer();
-		// $http({
-		// 	url: 'https://test.payu.in/_payment',
-		// 	method: 'POST',
-		// 	headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Access-Control-Allow-Origin': '*'},
-		// 	data: $httpParamSerializer($scope.setup_details)
-		// }).then(function(response){
-		// 	console.log(response);
-		// }, function(err){
-		// 	console.log(err);
-		// });
-		// Cart.purchase($scope.cart).then(function(cart){
-		// 	toaster.pop('success', 'Cart was submitted!');
-		// 	$location.path('/');
-		// 	CartService.refreshCart();
-		// 	d.resolve(cart);
-		// }, function(err){
-		// 	toaster.pop('error', 'Cart was not submitted!');
-		// 	d.reject(err);
-		// });
+		Cart.purchase($scope.cart).then(function(cart){
+			toaster.pop('success', 'Cart was submitted!');
+			$location.path('/');
+			CartService.refreshCart();
+			d.resolve(cart);
+		}, function(err){
+			toaster.pop('error', 'Cart was not submitted!');
+			d.reject(err);
+		});
 		return d.promise;
 	};
 

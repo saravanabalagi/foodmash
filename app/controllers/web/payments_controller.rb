@@ -1,8 +1,8 @@
 class Web::PaymentsController < ApplicationController
  	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
+ 	prepend_before_filter :authenticate_user_from_token!, except: [:success, :failure]
  	before_filter :set_current_cart, only: [:check_password_for_cod]
  	before_filter :set_payu_processed_cart, only: [:success, :failure]
- 	before_filter :authenticate_user_from_token!, except: [:success, :failure]
  	respond_to :json
 
  	def get_hash

@@ -108,13 +108,13 @@
   <div class="row">
     <div class="proceed-to-pay-wrapper">
       <span ng-init="isCodShown=false" ng-hide="isCodShown">
-        <a class="btn btn-raised btn-info" onclick="setTimeout(function(){$('#cod-password').focus();},300);" ng-click="isCodShown=true"> Cash on Delivery </a>
+        <a class="btn btn-raised btn-info" onclick="setTimeout(function(){$('#cod-password').focus();},300);" ng-click="isCodShown=true; setCod()"> Cash on Delivery </a>
         <a class="btn btn-raised btn-info" ng-click="processCart()" onclick="document.getElementById('payment-form').submit();"> Pay using Card </a>
       </span>
       <span ng-show="isCodShown">
         <div class="form-group label-floating is-empty cod-wrapper">
           <label class="control-label">Password</label>
-          <input class="form-control" type="password" id="cod-password">
+          <input class="form-control" type="password" id="cod-password" ng-model="passwordForCod">
           <p class="help-block">Enter your password to confirm this order</p>
           <span class="material-input"></span>
         </div>
