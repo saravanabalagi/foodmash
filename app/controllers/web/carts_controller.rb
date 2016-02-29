@@ -3,7 +3,7 @@ class Web::CartsController < ApplicationController
 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 	prepend_before_filter :authenticate_user_from_token!
 	before_filter :set_cart, only: :destroy
-	before_filter :set_or_create_cart, only: [:show, :change_status, :purchase]
+	before_filter :set_or_create_cart, only: [:show, :change_status, :add_to_cart]
 
 	def index
 		@carts = Cart.where(params.permit(:user_id, :id, :aasm_state)).where.not(aasm_state: 'not_started')
@@ -22,9 +22,9 @@ class Web::CartsController < ApplicationController
 		end
 	end
 
-	def purchase
+	def add_to_cart
 		# return invalid_data unless params[:cart][:cart][:payment_method]
-		if @cart and @cart.add_items_to_cart(params[:cart][:cart]) and @cart.purchase!
+		if @cart and @cart.add_items_to_cart(params[:cart][:cart])
 			render status: 200, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name, :price]}}], only: [:id, :quantity, :category_id, :category_type]} } ,:product => {only: [:id, :name, :price]}], only: [:id, :quantity, :total, :updated_at]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at])
 		else
 			render status: 404, json: {success: false, error: "Could not fetch cart!"}

@@ -11,8 +11,8 @@ angular.module('foodmashApp.controllers')
 			"productinfo": "a bunch of combos from Foodmash",
 			"firstname": $rootScope.currentUser.name.split(" ")[0],
 			"phone": $rootScope.currentUser.mobile_no,
-			"surl": 'foodmash.herokuapp.com/web/payments/success',
-			"furl": 'foodmash.herokuapp.com/web/payments/success'
+			"surl": 'www.foodmash.herokuapp.com/web/payments/success',
+			"furl": 'www.foodmash.herokuapp.com/web/payments/success'
 		};
 	}
 	$scope.cart.delivery_charge = 0;
@@ -104,6 +104,7 @@ angular.module('foodmashApp.controllers')
 				$scope.setup_details.hash = response.hash;
 				$scope.setup_details.key = response.key;
 				$scope.setup_details.salt = response.salt;
+				$scope.processCart();
 				angular.element(document).ready(function (){
 					$('#payu-payment-form').submit();
 				});
@@ -112,8 +113,9 @@ angular.module('foodmashApp.controllers')
 			});
 		}if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
 			if($scope.passwordForCod){
+				$scope.processCart();
 				Payment.checkPasswordForCod($scope.passwordForCod).then(function(response){
-					$scope.processCart();
+					toaster.pop('success', 'Cart was purchased!');
 				}, function(err){
 					toaster.pop('error', 'Password incorrect!');
 				});
@@ -125,7 +127,7 @@ angular.module('foodmashApp.controllers')
 
 	$scope.processCart = function(){
 		var d = $q.defer();
-		Cart.purchase($scope.cart).then(function(cart){
+		Cart.addToCart($scope.cart).then(function(cart){
 			toaster.pop('success', 'Cart was submitted!');
 			$location.path('/');
 			CartService.refreshCart();

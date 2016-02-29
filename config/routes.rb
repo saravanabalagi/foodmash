@@ -54,7 +54,7 @@ Rails.application.routes.draw do
     resources :carts, only: [:create, :destroy, :index] do 
       collection do 
         get '/show', to: 'carts#show'
-        post '/purchase', to: 'carts#purchase'
+        post '/addToCart', to: 'carts#add_to_cart'
         post '/changeStatus', to: 'carts#change_status'
       end
     end

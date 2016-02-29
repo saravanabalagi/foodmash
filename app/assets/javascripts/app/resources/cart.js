@@ -8,10 +8,10 @@ angular.module('foodmashApp.resources')
 		name: 'cart'
 	});
 
-	resource.purchase = function(cart){
+	resource.addToCart = function(cart){
 		var self = this;
 		var d = $q.defer();
-		resource.$post(self.$url('purchase'), {cart: cart}).then(function(response){
+		resource.$post(self.$url('addToCart'), {cart: cart}).then(function(response){
 			d.resolve(response);
 		}, function(err){
 			d.reject(err);
