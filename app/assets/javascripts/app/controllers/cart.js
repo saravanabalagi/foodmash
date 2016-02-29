@@ -11,8 +11,8 @@ angular.module('foodmashApp.controllers')
 			"productinfo": "a bunch of combos from Foodmash",
 			"firstname": $rootScope.currentUser.name.split(" ")[0],
 			"phone": $rootScope.currentUser.mobile_no,
-			"surl": 'http://www.foodmash.herokuapp.com/web/payments/success',
-			"furl": 'http://www.foodmash.herokuapp.com/web/payments/success'
+			"surl": 'http://foodmash.herokuapp.com/web/payments/success',
+			"furl": 'http://foodmash.herokuapp.com/web/payments/success'
 		};
 	}
 	$scope.cart.delivery_charge = 0;
