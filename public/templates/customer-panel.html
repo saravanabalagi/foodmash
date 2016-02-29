@@ -76,6 +76,9 @@
             <td>{{cart.total}}</td>
             <td>{{cart.updated_at}}</td>
           </tr>
+          <tr>
+            <td colspan="4">Not found? Check out <span>Delivered Orders</span></td>
+          </tr>
           </tbody>
         </table>
 
@@ -133,7 +136,7 @@
                 <td></td>
                 <td>Vat</td>
                 <td>2%</td>
-                <td><span class="rupee"></span>{{selectedCart.vat}}</td>
+                <td><span class="rupee"></span>{{selectedCart.vat.toFixed(2)}}</td>
               </tr>
               <tr>
                 <td></td>
@@ -145,7 +148,7 @@
                 <td></td>
                 <td>Grand Total</td>
                 <td></td>
-                <td><span class="rupee"></span>{{selectedCart.grand_total}}</td>
+                <td><span class="rupee"></span>{{selectedCart.grand_total.toFixed(2)}}</td>
               </tr>
             </tfoot>
           </table>

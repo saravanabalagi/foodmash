@@ -11,8 +11,8 @@ angular.module('foodmashApp.controllers')
 			"productinfo": "a bunch of combos from Foodmash",
 			"firstname": $rootScope.currentUser.name.split(" ")[0],
 			"phone": $rootScope.currentUser.mobile_no,
-			"surl": 'http://www.localhost:3000/web/payments/success',
-			"furl": 'http://www.localhost:3000/web/payments/success'
+			"surl": 'foodmash.herokuapp.com/web/payments/success',
+			"furl": 'foodmash.herokuapp.com/web/payments/success'
 		};
 	}
 	$scope.cart.delivery_charge = 0;
@@ -27,6 +27,14 @@ angular.module('foodmashApp.controllers')
 	}, function(cart){
 		$scope.cart = cart;
 	});
+
+	$scope.load = function(){
+	    angular.element(document).ready(function (){
+	      new WOW().init();
+	      $('[data-toggle="tooltip"]').tooltip();
+	      $('[data-toggle="popover"]').popover();
+	    });
+	 };
 
 	if($rootScope.currentUser && !$rootScope.delivery_addresses){
 		DeliveryAddress.query({user_id: $rootScope.currentUser.id, area_id: $rootScope.area.id}).then(function(delivery_addresses){
@@ -99,7 +107,6 @@ angular.module('foodmashApp.controllers')
 				angular.element(document).ready(function (){
 					$('#payu-payment-form').submit();
 				});
-				$scope.processCart();
 			}, function(err){
 				toaster.pop('error', 'Could not generate hash');
 			});

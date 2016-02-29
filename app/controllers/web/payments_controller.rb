@@ -15,7 +15,7 @@ class Web::PaymentsController < ApplicationController
  	end
 
  	def success
- 		if params.present? and @cart.add_fields_from_payu(params)
+ 		if params.present? and @cart.add_fields_from_payu(params) and @cart.purchase!
 			render status: 200, json: {message: 'Cart was successfully processed!'}
 		else
 			render status: 422, json: {error: 'Cart was not successfully paid for!'}
