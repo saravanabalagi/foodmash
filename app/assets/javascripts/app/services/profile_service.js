@@ -10,7 +10,7 @@ angular.module('foodmashApp.services')
    this.getUserForProfile = function(){
       var d = $q.defer();
       if(!service.user.name && $rootScope.currentUser){
-        User.query({user_id: $rootScope.currentUser.id}).then(function(users){
+        User.query({id: $rootScope.currentUser.id}).then(function(users){
           if(users.length > 0){
             service.user = users[0];
             d.resolve(service.user);
