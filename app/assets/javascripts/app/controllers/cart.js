@@ -70,6 +70,10 @@ angular.module('foodmashApp.controllers')
 		$scope.payment_method = 'COD';
 	};
 
+	$scope.setPayu = function(){
+		$scope.payment_method = 'Payu';
+	};
+
 	$scope.proceedToPayment = function(){
 		if($scope.cart.total == 0){
 			toaster.pop('info', 'Cart is empty!');
@@ -92,11 +96,14 @@ angular.module('foodmashApp.controllers')
 				$scope.setup_details.hash = response.hash;
 				$scope.setup_details.key = response.key;
 				$scope.setup_details.salt = response.salt;
+				angular.element(document).ready(function (){
+					$('#payu-payment-form').submit();
+				});
 				$scope.processCart();
 			}, function(err){
 				toaster.pop('error', 'Could not generate hash');
 			});
-		}else if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
+		}if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
 			Payment.checkPasswordForCod($scope.passwordForCod).then(function(response){
 				$scope.processCart();
 			}, function(err){
