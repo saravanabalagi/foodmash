@@ -5,7 +5,7 @@ angular.module('foodmashApp.services')
 .service('ComboService', ['$rootScope', '$q', function($rootScope, $q) {
   
    var service = this;
-   this.combo = {};
+   service.combo = {};
    
    this.setComboForDescription= function(combo) {
       service.combo = combo;

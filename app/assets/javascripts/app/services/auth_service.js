@@ -5,8 +5,8 @@ angular.module('foodmashApp.services')
 .service('AuthService', ['$rootScope', '$q', '$cookieStore', function($rootScope, $q, $cookieStore) {
   
    var service = this;
-   this._user = null;
-   this.auth_token = null;
+   service._user = null;
+   service.auth_token = null;
    
    this.setCurrentUser = function(u, auth_token) {
      u.auth_token = auth_token;
