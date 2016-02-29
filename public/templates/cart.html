@@ -109,7 +109,7 @@
     <div class="proceed-to-pay-wrapper">
       <span ng-init="isCodShown=false" ng-hide="isCodShown">
         <a class="btn btn-raised btn-info" onclick="setTimeout(function(){$('#cod-password').focus();},300);" ng-click="isCodShown=true; setCod()"> Cash on Delivery </a>
-        <a class="btn btn-raised btn-info" ng-click="setPayu(); proceedToPayment()"> Pay using Card </a>
+        <a class="btn btn-raised btn-info" ng-click="setPayu(); proceedToPayment()">Online Payment</a>
       </span>
       <span ng-show="isCodShown">
         <div class="form-group label-floating is-empty cod-wrapper">

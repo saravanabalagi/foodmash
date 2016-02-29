@@ -19,7 +19,7 @@ angular.module('foodmashApp.controllers')
 	$scope.delivery_addresses = [];
 	$scope.delivery_address = new DeliveryAddress;
 	$scope.loadingDeliveryAddresses = true;
-	$scope.payment_method = "Payu";
+	$scope.payment_method = "";
 
 	CartService.getCartInfo().then(function(cart){
 		$scope.cart = cart;
@@ -104,11 +104,15 @@ angular.module('foodmashApp.controllers')
 				toaster.pop('error', 'Could not generate hash');
 			});
 		}if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
-			Payment.checkPasswordForCod($scope.passwordForCod).then(function(response){
-				$scope.processCart();
-			}, function(err){
-				toaster.pop('error', 'Password incorrect!');
-			});
+			if($scope.passwordForCod){
+				Payment.checkPasswordForCod($scope.passwordForCod).then(function(response){
+					$scope.processCart();
+				}, function(err){
+					toaster.pop('error', 'Password incorrect!');
+				});
+			}else{
+				toaster.pop('error', 'Password field is empty!');
+			}
 		}
 	};
 
@@ -118,6 +122,7 @@ angular.module('foodmashApp.controllers')
 			toaster.pop('success', 'Cart was submitted!');
 			$location.path('/');
 			CartService.refreshCart();
+			setPrimaryAsDeliveryAddress();
 			d.resolve(cart);
 		}, function(err){
 			toaster.pop('error', 'Cart was not submitted!');
@@ -148,9 +153,7 @@ angular.module('foodmashApp.controllers')
 		if(delivery_addresses.length > 0){
 			$scope.delivery_addresses = delivery_addresses;
 			$rootScope.delivery_addresses = delivery_addresses;
-			$scope.delivery_addresses.filter(function(delivery_address){
-				setPrimaryAsDeliveryAddress();
-			});
+			setPrimaryAsDeliveryAddress();
 			d.resolve(null);
 		}else{
 			$scope.delivery_addresses = new Array;
