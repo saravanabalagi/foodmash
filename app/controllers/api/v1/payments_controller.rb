@@ -25,6 +25,8 @@ class Api::V1::PaymentsController < ApiApplicationController
 			udf5: ''
 		}
 		checksum = Payment.calculate_hash(details) || nil
+		print checksum
+		print details
 		if checksum.present?
 			render status: 200, json: {success: true, data: {hash: checksum}}
 		else
