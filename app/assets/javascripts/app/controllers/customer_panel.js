@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('CustomerPanelController', ['$scope','$location','toaster','$rootScope','Cart', function($scope, $location, toaster, $rootScope, Cart){
+.controller('CustomerPanelController', ['$scope','$location','toaster','$rootScope','Cart', 'CustomerPanelService', function($scope, $location, toaster, $rootScope, Cart, CustomerPanelService){
 
 	$scope.carts = [];
 	$scope.selectedCart = {};
@@ -15,25 +15,39 @@ angular.module('foodmashApp.controllers')
 		{name: "delivered", alias: "Delivered", icon_class: "fa fa-check-circle", percent: 'width:100%'}
 	];
 
-	Cart.query({user_id: $rootScope.currentUser.id}).then(function(carts){
-		if(carts.length > 0){
-			$scope.carts = carts;
-		}else{
+	if($scope.carts.length){
+		CustomerPanelService.getCartsForCustomer().then(function(carts){
+			if(carts.length > 0){
+				$scope.carts = carts;
+			}else{
+				$scope.carts = null;
+			}
+			$scope.loadingCarts = false;
+		}, function(err){
 			$scope.carts = null;
-		}
-		$scope.loadingCarts = false;
-	}, function(err){
-		$scope.carts = null;
-		$scope.loadingCarts = false;
-	});
+			$scope.loadingCarts = false;
+		});
+	}else{
+		CustomerPanelService.loadCartsForCustomer().then(function(carts){
+			if(carts.length > 0){
+				$scope.carts = carts;
+			}else{
+				$scope.carts = null;
+			}
+			$scope.loadingCarts = false;
+		}, function(err){
+			$scope.carts = null;
+			$scope.loadingCarts = false;
+		});
+	}
 
 	$scope.load = function(){
-	    angular.element(document).ready(function (){
-	      new WOW().init();
-	      $('[data-toggle="tooltip"]').tooltip();
-	      $('[data-toggle="popover"]').popover();
-	    });
-	  };
+      angular.element(document).ready(function(){
+        new WOW().init();
+        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="popover"]').popover();
+      });
+    };
 
 	$scope.checkIfCompleted = function(status){
 		if($scope.statuses.indexOf(status) <= $scope.statuses.indexOf($scope.selectedStatus)){

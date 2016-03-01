@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160228134540) do
+ActiveRecord::Schema.define(version: 20160301070935) do
 
   create_table "areas", force: :cascade do |t|
     t.string   "name"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20160228134540) do
     t.string   "issuing_bank"
     t.string   "payment_card_type"
     t.string   "payment_unmappedstatus"
-    t.float    "delivery_charge"
+    t.float    "delivery_charge",        default: 0.0
   end
 
   create_table "cities", force: :cascade do |t|
@@ -120,10 +120,10 @@ ActiveRecord::Schema.define(version: 20160228134540) do
     t.string   "contact_no"
     t.text     "line2"
     t.string   "name"
+    t.integer  "area_id"
     t.boolean  "primary",                             default: false
     t.decimal  "latitude",   precision: 10, scale: 6
     t.decimal  "longitude",  precision: 10, scale: 6
-    t.integer  "area_id"
   end
 
   create_table "dish_types", force: :cascade do |t|

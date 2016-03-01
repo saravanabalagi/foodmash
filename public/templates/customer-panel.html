@@ -20,7 +20,7 @@
       <section class="sidebar-section">
         <h5>Order Date</h5>
         <ul class="sidebar-nav price">
-          <li onclick="$(this).toggleClass('active')" class="active">
+          <li onclick="$(this).toggleClass('active')">
             <a>
               <span>Newest Fisrt</span>
               <i class="fa fa-sort-amount-asc pull-right"></i>
@@ -84,7 +84,7 @@
 
       </div>
 
-      <div class="col-md-6 order-description">
+      <div class="col-md-6 order-description" ng-show="selectedCart.order_id">
         <h3>{{selectedCart.order_id}}</h3>
         <div class="order-status-wrapper">Order status: <span class="order-status">{{selectedStatus.alias}}</span></div>
 
@@ -102,7 +102,7 @@
             <i class="fa fa-question-circle" title="Payment Method" data-placement="bottom" data-content="Credit Card ending with x574" data-toggle="popover" data-trigger="hover"></i>
           </span>
         </div>
-        <div class="order-contents" ng-show="selectedCart">
+        <div class="order-contents">
           <table class="table table-striped table-order-description">
             <thead>
               <tr>
@@ -142,7 +142,7 @@
                 <td></td>
                 <td>Delivery</td>
                 <td></td>
-                <td><span class="rupee"></span>40</td>
+                <td><span class="rupee"></span>{{selectedCart.delivery_charge}}</td>
               </tr>
               <tr>
                 <td></td>
