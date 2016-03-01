@@ -23,7 +23,7 @@ class Api::V1::SessionsController < ApiApplicationController
         	session_token: session_token,
 					user: {
 							email: resource.email,
-							mobile_no: resource.mobile_no
+							mobile_no: resource.mobile_no,
 							name: resource.name
 					}
         }
