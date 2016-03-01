@@ -24,6 +24,7 @@ class Api::V1::SessionsController < ApiApplicationController
 					user: {
 							email: resource.email,
 							mobile_no: resource.mobile_no
+							name: resource.name
 					}
         }
 			}

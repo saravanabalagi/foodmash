@@ -14,7 +14,7 @@ class Api::V1::PaymentsController < ApiApplicationController
 			productinfo: 'a bunch of combos from Foodmash',
 			surl: 'http://www.foodmash.herokuapp.com/payments/success',
 			furl: 'http://www.foodmash.herokuapp.com/payments/failure',
-			amount: @cart.grand_total,
+			amount: @cart.grand_total.to_s,
 			txnid: @cart.order_id,
 			email: @current_user.email,
 			phone: @current_user.mobile_no,

@@ -8,12 +8,17 @@ angular.module('foodmashApp.controllers')
 	$scope.selectedCart = {};
 	$scope.selectedStatus = {};
 	$scope.loadingCarts = true;
+	$scope.customerPanelOptions = [
+		{name: 'Current', icon_class: 'fa fa-inbox pull-right'},
+		{name: 'Delivered', icon_class: 'fa fa-archive pull-right'}
+	];
 	$scope.statuses = [
 		{name: "purchased", alias: "Placed Order", icon_class: "fa fa-clock-o", percent: 'width:0%'},
 		{name: "ordered", alias: "Being Aggregated", icon_class: "fa fa-dropbox", percent: 'width:35%'},
 		{name: "dispatched", alias: "Dispatched for Delivery", icon_class: "fa fa-truck", percent: 'width:65%'},
 		{name: "delivered", alias: "Delivered", icon_class: "fa fa-check-circle", percent: 'width:100%'}
 	];
+	$scope.selectedOption = $scope.customerPanelOptions[0];
 
 	CustomerPanelService.getCartsForCustomer().then(function(carts){
 		if(carts.length > 0){
@@ -33,6 +38,17 @@ angular.module('foodmashApp.controllers')
         $('[data-toggle="tooltip"]').tooltip();
         $('[data-toggle="popover"]').popover();
       });
+    };
+
+    $scope.selectOption = function(option){
+    	$scope.selectedOption = option;
+    };
+
+    $scope.checkIfSelected = function(option){
+    	if(option == $scope.selectedOption){
+    		return true;
+    	}
+    	return false;
     };
 
 	$scope.checkIfCompleted = function(status){
