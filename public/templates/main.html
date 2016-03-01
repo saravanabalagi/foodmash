@@ -3,7 +3,7 @@
     <section class="sidebar-section">
       <h5>Type</h5>
       <ul class="sidebar-nav group-size">
-        <li ng-repeat="option in mainOptions" ng-class="{active: checkIfMainOptionSelected(option)}" ng-click="addOrRemoveMainFilters(option)">
+        <li ng-repeat="option in mainOptions" ng-class="{active: checkIfOptionSelected(option)}" ng-click="addOrRemoveFilters(option)">
          <a>
            <span>{{option.name}}</span>
            <i class="{{option.icon_class}}"></i>
@@ -15,7 +15,7 @@
     <section class="sidebar-section">
       <h5>Size</h5>
       <ul class="sidebar-nav group-size">
-        <li ng-repeat="option in sizeOptions" ng-class="{active: checkIfSizeOptionSelected(option)}" ng-click="addOrRemoveSizeFilters(option)">
+        <li ng-repeat="option in sizeOptions" ng-class="{active: checkIfOptionSelected(option)}" ng-click="addOrRemoveFilters(option)">
           <a>
             <span>{{option.name}}</span>
             <i class="{{option.icon_class}}" style="{{option.style}}"></i>
@@ -26,8 +26,8 @@
     <section class="sidebar-section">
       <h5>Preference</h5>
       <ul class="sidebar-nav type">
-        <li ng-repeat="option in preferenceOptions" ng-class="{active: checkIfPreferenceOptionSelected(option)}" 
-        ng-click="addOrRemovePreferenceFilters(option)">
+        <li ng-repeat="option in preferenceOptions" ng-class="{active: checkIfOptionSelected(option)}" 
+        ng-click="addOrRemoveFilters(option)">
           <a>
             <span>{{option.name}}</span>
             <i class="{{option.icon_class}}"></i>

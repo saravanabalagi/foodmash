@@ -91,151 +91,59 @@ angular.module('foodmashApp.controllers')
 			}
 		};
 
-	 	$scope.checkIfMainOptionSelected = function(option){
+	 	$scope.checkIfOptionSelected = function(option){
 	 		if($scope.selected.has(option))
 	 			return true;
 	 		return false;
 	 	};
 
- 	 	$scope.addOrRemoveMainFilters = function(option){
- 			if($scope.selected.has(option)){
-				$scope.selected.delete(option);
-				if($scope.selected.size == 0){
-					$scope.combos = $scope.loadedFromPackagingCentre;
-					$scope.combos.filter(function(combo){
-						if(combo.filter){
-							combo.filter -= 1;
-						}
-					});
-				}else{
-					$filter('filter')($scope.loadedFromPackagingCentre, {category: option.alias}, true).filter(function(combo){
-						if($scope.combos.indexOf(combo) != -1){
-							var index = $scope.combos.indexOf(combo);
-							$scope.combos[index].filter -= 1;
-							if($scope.combos[index].filter == 0){
-								$scope.combos.splice(index, 1);
-							}
-						}
-					});
-				}
-			}else{
-				if($scope.selected.size == 0){
-					$scope.combos = $filter('filter')($scope.loadedFromPackagingCentre, {category: option.alias}, true);
-					$scope.combos.filter(function(combo){
-						combo.filter = 1;
-					});
-				}else{
-					$filter('filter')($scope.loadedFromPackagingCentre, {category: option.alias}, true).filter(function(combo){
-						if(combo.filter){
-							combo.filter += 1;
-						}else{
-							combo.filter = 1;
-						}
-						if($scope.combos.indexOf(combo) == -1){
-							$scope.combos.push(combo);
-						}
-					});
-				}
-				$scope.selected.add(option);
-			}
+ 	 	$scope.addOrRemoveFilters = function(option){
+ 	 		if($scope.selected.has(option)){
+ 	 			$scope.selected.delete(option);
+ 	 		}else{
+ 	 			$scope.selected.add(option);
+ 	 		}
+
+ 	 		if($scope.selected.size == 0){
+ 	 			$scope.combos = $scope.loadedFromPackagingCentre;
+ 	 		}else{
+ 	 			applyFilters();
+ 	 		}
  	 	};
 
-	 	$scope.checkIfSizeOptionSelected = function(option){
-			if($scope.selected.has(option))
-	 			return true;
-	 		return false;
+		function applyFilters(){
+			var filteredCombos = [];
+			$scope.loadedFromPackagingCentre.filter(function(combo){
+				var survive = true;
+				if(!checkForSelectedFilters($scope.mainOptions) && !checkIfTypeSelected($scope.mainOptions, combo.category)) survive = false;
+				if(!checkForSelectedFilters($scope.sizeOptions) && !checkIfTypeSelected($scope.sizeOptions, combo.group_size)) survive = false;
+				if(!checkForSelectedFilters($scope.preferenceOptions) && !checkIfTypeSelected($scope.preferenceOptions, combo.label)) survive = false;
+				if(survive) filteredCombos.push(combo);
+			});
+			$scope.combos = filteredCombos;
+		};
+
+	 	function checkIfTypeSelected(options, alias){
+	 		var isSelected = false;
+ 			options.filter(function(option){
+ 				if(option.alias == alias && $scope.selected.has(option)){
+ 					isSelected = true;
+ 				}
+ 				if(option.name == 'Mega' && alias >= option.alias && $scope.selected.has(option)){
+ 					isSelected = true;
+ 				}
+ 			});
+ 			return isSelected;
 	 	};
 
-	 	$scope.addOrRemoveSizeFilters = function(option){
-			if($scope.selected.has(option)){
-				$scope.selected.delete(option);
-				if($scope.selected.size == 0){
-					$scope.combos = $scope.loadedFromPackagingCentre;
-					$scope.combos.filter(function(combo){
-						if(combo.filter){
-							combo.filter -= 1;
-						}
-					});
-				}else{
-					$filter('filter')($scope.loadedFromPackagingCentre, {group_size: option.alias}).filter(function(combo){
-						if($scope.combos.indexOf(combo) != -1){
-							var index = $scope.combos.indexOf(combo);
-							$scope.combos[index].filter -= 1;
-							if($scope.combos[index].filter == 0){
-								$scope.combos.splice(index, 1);
-							}
-						}
-					});
-				}
-			}else{
-				if($scope.selected.size == 0){
-					$scope.combos = $filter('filter')($scope.loadedFromPackagingCentre, {group_size: option.alias});
-					$scope.combos.filter(function(combo){
-						combo.filter = 1;
-					});
-				}else{
-					$filter('filter')($scope.loadedFromPackagingCentre, {group_size: option.alias}).filter(function(combo){
-						if(combo.filter){
-							combo.filter += 1;
-						}else{
-							combo.filter = 1;
-						}
-						if($scope.combos.indexOf(combo) == -1){
-							$scope.combos.push(combo);
-						}
-					});
-				}
-				$scope.selected.add(option);
-			}
-	 	};
-
-	 	$scope.checkIfPreferenceOptionSelected = function(option){
-	 		if($scope.selected.has(option))
-	 			return true;
-	 		return false;
-	 	};
-
-	 	$scope.addOrRemovePreferenceFilters = function(option){
-			if($scope.selected.has(option)){
-				$scope.selected.delete(option);
-				if($scope.selected.size == 0){
-					$scope.combos = $scope.loadedFromPackagingCentre;
-					$scope.combos.filter(function(combo){
-						if(combo.filter){
-							combo.filter -= 1;
-						}
-					});
-				}else{
-					$filter('filter')($scope.loadedFromPackagingCentre, {label: option.alias}, true).filter(function(combo){
-						if($scope.combos.indexOf(combo) != -1){
-							var index = $scope.combos.indexOf(combo);
-							$scope.combos[index].filter -= 1;
-							if($scope.combos[index].filter == 0){
-								$scope.combos.splice(index, 1);
-							}
-						}
-					});
-				}
-			}else{
-				if($scope.selected.size == 0){
-					$scope.combos = $filter('filter')($scope.loadedFromPackagingCentre, {label: option.alias}, true);
-					$scope.combos.filter(function(combo){
-						combo.filter = 1;
-					});
-				}else{
-					$filter('filter')($scope.loadedFromPackagingCentre, {label: option.alias}, true).filter(function(combo){
-						if(combo.filter){
-							combo.filter += 1;
-						}else{
-							combo.filter = 1;
-						}
-						if($scope.combos.indexOf(combo) == -1){
-							$scope.combos.push(combo);
-						}
-					});
-				}
-				$scope.selected.add(option);
-			}
+	 	function checkForSelectedFilters(options){
+	 		var isSelected = true;
+ 			options.filter(function(option){
+ 				if($scope.selected.has(option)){
+ 					isSelected = false;
+ 				}
+ 			});
+ 			return isSelected;
 	 	};
 
 }]);
