@@ -18,7 +18,7 @@ class Web::PaymentsController < ApplicationController
  		if params.present? and @cart.add_fields_from_payu(params) and @cart.purchase!
 			render status: 200, json: {message: 'Cart was successfully processed!'}
 		else
-			render status: 422, json: {error: 'Cart was not successfully paid for!'}
+			render status: 422, json: {error: 'Cart was not successfully processed!'}
 		end
  	end
 
@@ -31,7 +31,7 @@ class Web::PaymentsController < ApplicationController
  	end
 
  	def check_password_for_cod
- 		if current_user.valid_password? params[:payment][:password] and @cart.set_payment_method('COD')
+ 		if current_user.valid_password? params[:payment][:password] and @cart.set_payment_method('COD') and @carts.purchase!
  			render status: 200, json: {message: 'Succesfully ordered!'}
  		else
  			render status: 422, json: {error: 'Password was incorrect!'}

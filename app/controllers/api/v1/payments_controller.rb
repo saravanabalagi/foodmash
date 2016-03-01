@@ -12,8 +12,8 @@ class Api::V1::PaymentsController < ApiApplicationController
 		details = {
 			firstname: @current_user.name.split.first,
 			productinfo: 'a bunch of combos from Foodmash',
-			surl: 'http://www.foodmash.herokuapp.com/payments/success',
-			furl: 'http://www.foodmash.herokuapp.com/payments/failure',
+			surl: 'http://www.foodmash.herokuapp.com/api/v1/payments/success',
+			furl: 'http://www.foodmash.herokuapp.com/api/v1/payments/failure',
 			amount: @cart.grand_total.to_s,
 			txnid: @cart.order_id,
 			email: @current_user.email,
@@ -25,8 +25,6 @@ class Api::V1::PaymentsController < ApiApplicationController
 			udf5: ''
 		}
 		checksum = Payment.calculate_hash(details) || nil
-		print checksum
-		print details
 		if checksum.present?
 			render status: 200, json: {success: true, data: {hash: checksum}}
 		else
@@ -35,10 +33,10 @@ class Api::V1::PaymentsController < ApiApplicationController
 	end
 
 	def success
- 		if params.present? and @cart.add_fields_from_payu(params)
+ 		if params.present? and @cart.add_fields_from_payu(params) and @cart.purchase!
 			render status: 200, json: {message: 'Cart was successfully processed!'}
 		else
-			render status: 422, json: {error: 'Cart was not successfully paid for!'}
+			render status: 422, json: {error: 'Cart was not successfully processed!'}
 		end
  	end
 
