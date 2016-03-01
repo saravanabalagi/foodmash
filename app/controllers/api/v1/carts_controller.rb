@@ -62,6 +62,7 @@ class Api::V1::CartsController < ApiApplicationController
 	def set_or_create_cart
 		if @current_user
 			@cart = @current_user.carts.where(aasm_state: 'not_started').first.presence || Cart.create(user_id: @current_user.id)
+			@cart.generate_order_id if !@cart.order_id.present?
 	   end
 	end
 end
