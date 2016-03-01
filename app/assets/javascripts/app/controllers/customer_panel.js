@@ -15,31 +15,17 @@ angular.module('foodmashApp.controllers')
 		{name: "delivered", alias: "Delivered", icon_class: "fa fa-check-circle", percent: 'width:100%'}
 	];
 
-	if($scope.carts.length){
-		CustomerPanelService.getCartsForCustomer().then(function(carts){
-			if(carts.length > 0){
-				$scope.carts = carts;
-			}else{
-				$scope.carts = null;
-			}
-			$scope.loadingCarts = false;
-		}, function(err){
+	CustomerPanelService.getCartsForCustomer().then(function(carts){
+		if(carts.length > 0){
+			$scope.carts = carts;
+		}else{
 			$scope.carts = null;
-			$scope.loadingCarts = false;
-		});
-	}else{
-		CustomerPanelService.loadCartsForCustomer().then(function(carts){
-			if(carts.length > 0){
-				$scope.carts = carts;
-			}else{
-				$scope.carts = null;
-			}
-			$scope.loadingCarts = false;
-		}, function(err){
-			$scope.carts = null;
-			$scope.loadingCarts = false;
-		});
-	}
+		}
+		$scope.loadingCarts = false;
+	}, function(err){
+		$scope.carts = null;
+		$scope.loadingCarts = false;
+	});
 
 	$scope.load = function(){
       angular.element(document).ready(function(){

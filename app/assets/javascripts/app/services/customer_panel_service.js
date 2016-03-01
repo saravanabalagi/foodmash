@@ -8,13 +8,24 @@ angular.module('foodmashApp.services')
    service.carts = [];
 
    this.getCartsForCustomer = function(){
-        var d = $q.defer();
-        if(service.carts.length){
-          d.resolve(service.carts);
-        }else{
-          d.reject(service.carts);
-        }
-        return d.promise;
+      var d = $q.defer();
+      if(!service.carts.length){
+        Cart.query({user_id: $rootScope.currentUser.id}).then(function(carts){
+          if(carts.length > 0){
+            service.carts = carts;
+            d.resolve(service.carts);
+          }else{
+            service.carts = null;
+            d.reject(service.carts);
+          }
+          }, function(err){
+            service.carts = null;
+            d.reject(service.carts);
+        });
+      }else{
+        d.resolve(service.carts);
+      }
+      return d.promise;
     };
    
    this.setCarts= function(carts){
