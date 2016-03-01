@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('CustomerPanelController', ['$scope','$location','toaster','$rootScope','Cart', 'CustomerPanelService', function($scope, $location, toaster, $rootScope, Cart, CustomerPanelService){
+.controller('CustomerPanelController', ['$scope','$location','toaster','$rootScope','Cart', 'CustomerPanelService', '$filter', function($scope, $location, toaster, $rootScope, Cart, CustomerPanelService, $filter){
 
 	$scope.carts = [];
 	$scope.selectedCart = {};
@@ -18,16 +18,18 @@ angular.module('foodmashApp.controllers')
 		{name: "dispatched", alias: "Dispatched for Delivery", icon_class: "fa fa-truck", percent: 'width:65%'},
 		{name: "delivered", alias: "Delivered", icon_class: "fa fa-check-circle", percent: 'width:100%'}
 	];
-	$scope.selectedOption = $scope.customerPanelOptions[0];
 
 	CustomerPanelService.getCartsForCustomer().then(function(carts){
 		if(carts.length > 0){
+			$scope.loadedCarts = carts;
 			$scope.carts = carts;
 		}else{
+			$scope.loadedCarts = null;
 			$scope.carts = null;
 		}
 		$scope.loadingCarts = false;
 	}, function(err){
+		$scope.loadedCarts = null;
 		$scope.carts = null;
 		$scope.loadingCarts = false;
 	});
@@ -42,6 +44,19 @@ angular.module('foodmashApp.controllers')
 
     $scope.selectOption = function(option){
     	$scope.selectedOption = option;
+    	switch(option.name){
+    		case 'Current': 
+    			var deliveredCarts = $filter('filter')($scope.loadedCarts, {aasm_state: 'delivered'}, true);
+    			$scope.carts = $scope.loadedCarts;
+    			deliveredCarts.filter(function(cart){
+    				var index = $scope.carts.indexOf(cart);
+    				$scope.carts.splice(index, 1);
+    			});
+    		break;
+    		case 'Delivered': 
+    			$scope.carts = $filter('filter')($scope.loadedCarts, {aasm_state: 'delivered'}, true);
+    		break;
+    	};
     };
 
     $scope.checkIfSelected = function(option){
