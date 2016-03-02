@@ -86,7 +86,7 @@
           <div class="progress progress-striped active order-status-meter">
             <div class="progress-bar" style="{{selectedStatus.percent}}"></div>
           </div>
-          <i ng-repeat-start="status in statuses" class="{{status.icon_class}}" ng-class="{'completed' : checkIfCompleted(status)}"></i><span ng-repeat-end> </span>
+          <i ng-repeat-start="status in statuses" class="{{status.icon_class}}" ng-class="{'completed' : checkIfCompleted(status)}" data-toggle="tooltip" title="{{status.alias}}" data-delay="{'show': 1}" data-placement="bottom"></i><span ng-repeat-end> </span>
         </div>
 
         <div class="order-header">

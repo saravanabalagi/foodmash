@@ -31,6 +31,11 @@ angular.module('foodmashApp.controllers')
 			 });
 		};
 
+		$scope.sortOptions = [
+			{name: 'Low to High', icon_class: 'fa fa-sort-amount-asc pull-right', reverse: false, alias: 'Ascending'},
+			{name: 'High to Low', icon_class: 'fa fa-sort-amount-desc pull-right', reverse: true, alias: 'Descending'}
+		];
+
 		$scope.mainOptions = 
 		[
 			{name: "Regular", icon_class: "fa fa-cutlery pull-right", alias: 'Regular'},
@@ -82,6 +87,27 @@ angular.module('foodmashApp.controllers')
 				});
 			}
 		});
+
+		$scope.selectSortOption = function(option){
+			if($scope.selectedSortOption == option){
+				$scope.selectedSortOption = null;
+			}else{
+				$scope.selectedSortOption = option;
+			}
+			var orderBy = $filter('orderBy');
+			if($scope.selectedSortOption){
+				$scope.combos = orderBy($scope.combos, 'price', option.reverse);
+			}else{
+				$scope.combos = $scope.loadedFromPackagingCentre;
+			}
+		};
+
+		$scope.checkIfSortOptionSelected = function(option){
+			if(option == $scope.selectedSortOption){
+				return true;
+			};
+			return false;
+		};
 
 		$scope.lessThanOrEqualTo = function(actual, expected){
 			if(!isNaN(+expected)){

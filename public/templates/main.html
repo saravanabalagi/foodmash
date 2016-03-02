@@ -38,16 +38,10 @@
     <section class="sidebar-section">
       <h5>Price</h5>
       <ul class="sidebar-nav price">
-        <li onclick="$(this).toggleClass('active')">
+        <li ng-repeat="option in sortOptions" ng-click="selectSortOption(option)" ng-class="{'active': checkIfSortOptionSelected(option)}">
           <a>
-            <span>Low to High</span>
-            <i class="fa fa-sort-amount-asc pull-right"></i>
-          </a>
-        </li>
-        <li onclick="$(this).toggleClass('active')">
-          <a>
-            <span>High to Low</span>
-            <i class="fa fa-sort-amount-desc pull-right"></i>
+            <span>{{option.name}}</span>
+            <i class="{{option.icon_class}}"></i>
           </a>
         </li>
       </ul>
