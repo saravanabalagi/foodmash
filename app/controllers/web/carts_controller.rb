@@ -6,7 +6,7 @@ class Web::CartsController < ApplicationController
 	before_filter :set_or_create_cart, only: [:show, :change_status, :add_to_cart]
 
 	def index
-		@carts = Cart.where(params.permit(:user_id, :id, :aasm_state)).where.not(aasm_state: 'not_started')
+		@carts = Cart.where(params.permit(:user_id, :id, :aasm_state, :order_id)).where.not(aasm_state: 'not_started')
 		if @carts
 			render status: 200, json: @carts.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name, :price]}}], only: [:id, :quantity, :category_id, :category_type]} } ,:product => {only: [:id, :name, :price]}], only: [:id, :quantity, :total, :updated_at]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at, :grand_total, :vat, :delivery_charge])
 		else

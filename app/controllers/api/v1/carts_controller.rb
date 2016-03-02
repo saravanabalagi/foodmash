@@ -5,7 +5,7 @@ class Api::V1::CartsController < ApiApplicationController
 	respond_to :json
 
 	def history
-		@carts = @current_user.carts.where("aasm_state != ?", 'not_started') if @current_user
+		@carts = @current_user.carts.where(params.permit(:user_id, :id, :aasm_state, :order_id)).where("aasm_state != ?", 'not_started').permit() if @current_user
 		if @carts
 			render status: 200, json: {success: true, data: @carts.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description]}], only: [:id, :quantity, :total]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at]) }
 		else
