@@ -19,6 +19,12 @@ angular.module('foodmashApp.controllers')
 		{name: "delivered", alias: "Delivered", icon_class: "fa fa-check-circle", percent: 'width:100%'}
 	];
 
+	$scope.sortOptions = [
+		{name: 'Newest First', icon_class: 'fa fa-sort-amount-asc pull-right', reverse: true},
+		{name: 'Oldest First', icon_class: 'fa fa-sort-amount-desc pull-right', reverse: false}
+	];
+	$scope.selectedSortOption = $scope.sortOptions[1];
+
 	CustomerPanelService.getCartsForCustomer().then(function(carts){
 		if(carts.length > 0){
 			$scope.loadedCarts = carts;
@@ -28,10 +34,12 @@ angular.module('foodmashApp.controllers')
 			$scope.carts = null;
 		}
 		$scope.loadingCarts = false;
+		$scope.selectOption($scope.customerPanelOptions[0]);
 	}, function(err){
 		$scope.loadedCarts = null;
 		$scope.carts = null;
 		$scope.loadingCarts = false;
+		$scope.selectOption($scope.customerPanelOptions[0]);
 	});
 
 	$scope.load = function(){
@@ -40,6 +48,21 @@ angular.module('foodmashApp.controllers')
         $('[data-toggle="tooltip"]').tooltip();
         $('[data-toggle="popover"]').popover();
       });
+    };
+
+    $scope.selectSortOption = function(option){
+    	$scope.selectedSortOption = option;
+    	var orderBy = $filter('orderBy');
+    	if($scope.selectedSortOption){
+    		$scope.carts = orderBy($scope.carts, 'updated_at', option.reverse);
+    	}
+    };
+
+    $scope.checkIfSortOptionSelected = function(option){
+    	if(option == $scope.selectedSortOption){
+    		return true;
+    	};
+    	return false;
     };
 
     $scope.selectOption = function(option){

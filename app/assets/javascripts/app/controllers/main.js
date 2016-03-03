@@ -32,8 +32,8 @@ angular.module('foodmashApp.controllers')
 		};
 
 		$scope.sortOptions = [
-			{name: 'Low to High', icon_class: 'fa fa-sort-amount-asc pull-right', reverse: false, alias: 'Ascending'},
-			{name: 'High to Low', icon_class: 'fa fa-sort-amount-desc pull-right', reverse: true, alias: 'Descending'}
+			{name: 'Low to High', icon_class: 'fa fa-sort-amount-asc pull-right', reverse: false},
+			{name: 'High to Low', icon_class: 'fa fa-sort-amount-desc pull-right', reverse: true}
 		];
 
 		$scope.mainOptions = 
