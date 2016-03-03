@@ -9,8 +9,8 @@ angular.module('foodmashApp.controllers')
 	$scope.selectedStatus = {};
 	$scope.loadingCarts = true;
 	$scope.customerPanelOptions = [
-		{name: 'Current', icon_class: 'fa fa-inbox pull-right'},
-		{name: 'Delivered', icon_class: 'fa fa-archive pull-right'}
+		{name: 'Current', icon_class: 'fa fa-inbox pull-right', checkout: 'Delivered'},
+		{name: 'Delivered', icon_class: 'fa fa-archive pull-right', checkout: 'Current'}
 	];
 	$scope.statuses = [
 		{name: "purchased", alias: "Placed Order", icon_class: "fa fa-clock-o", percent: 'width:0%'},
