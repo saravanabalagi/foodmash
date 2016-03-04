@@ -23,9 +23,9 @@ Rails.application.configure do
   config.assets.compress = false
   # config.assets.js_compressor = :uglifier
 
-  ENV['BUCKET_NAME'] = 'foodmash'
-  ENV['ACCESS_KEY_ID'] = 'AKIAJLG73JKZDN45IN4Q'
-  ENV['SECRET_ACCESS_KEY'] = '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'
+  ENV['BUCKET_NAME'] = 'foodmash-india'
+  ENV['ACCESS_KEY_ID'] = 'AKIAIHVZIHUKB5JAAZJA'
+  ENV['SECRET_ACCESS_KEY'] = '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'
 
   # config.action_mailer.default_url_options = {host: 'localhost:3000'}
   config.action_mailer.delivery_method = :smtp
