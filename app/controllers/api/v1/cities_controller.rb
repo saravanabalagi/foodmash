@@ -2,7 +2,7 @@ class Api::V1::CitiesController < ApiApplicationController
 	respond_to :json
 
 	def index
-		@cities = City.where(params.require(:data).permit(:id, :name))
+		@cities = City.all
 		if @cities 
 			render status: 200, json:{success: true, data: @cities.as_json(:include => {:areas => {only: [:id, :packaging_centre_id, :name]}}, only: [:id, :name])}
 		else
