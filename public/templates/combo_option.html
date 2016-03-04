@@ -3,6 +3,7 @@
 <td ng-hide="updateShow" ng-init="updateShow=false">{{$index + 1}}</td>
 <td ng-hide="updateShow">{{combo_option.dish_type.name}}</td>
 <td ng-hide="updateShow">{{combo_option.min_count}}</td>
+<td ng-hide="updateShow">{{combo_option.priority}}</td>
 <td ng-hide="updateShow" ng-click="updateShow=!updateShow; setUpdate(combo_option)"><i class="icon-edit"></i></td>
 <td ng-hide="updateShow" ng-click="deleteComboDish(combo_option)"><i class="icon-trash"></i></td>
 
@@ -22,6 +23,13 @@
     <div class="form-group label-floating is-empty">
       <label class="control-label">Count</label>
       <input class="form-control" type="number" min="1" max="50" ng-model="updatedComboOption.min_count">
+      <span class="material-input"></span>
+    </div>
+  </td>
+  <td style="width:40px" ng-show="updateShow">
+    <div class="form-group label-floating is-empty">
+      <label class="control-label">Priority</label>
+      <input class="form-control" type="number" min="1" max="50" ng-model="updatedComboOption.priority">
       <span class="material-input"></span>
     </div>
   </td>

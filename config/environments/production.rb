@@ -36,9 +36,9 @@ Rails.application.configure do
   # yet still be able to expire them through the digest params.
   config.assets.digest = true
 
-  ENV['BUCKET_NAME'] = 'foodmash'
-  ENV['ACCESS_KEY_ID'] = 'AKIAJLG73JKZDN45IN4Q'
-  ENV['SECRET_ACCESS_KEY'] = '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'
+  ENV['BUCKET_NAME'] = 'foodmash-india'
+  ENV['ACCESS_KEY_ID'] = 'AKIAIHVZIHUKB5JAAZJA'
+  ENV['SECRET_ACCESS_KEY'] = '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'
 
   ENV['key'] = 'gtKFFx'
   ENV['salt'] = 'eCwWELxi'

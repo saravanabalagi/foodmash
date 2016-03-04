@@ -1,7 +1,7 @@
 <div class="container" ng-init="load()">
 
   <div class="row">
-    <div class="col-md-8 col-md-offset-2" ng-repeat="combo_dish in combo.combo_dishes">
+    <div class="col-md-8 col-md-offset-2" ng-repeat="combo_dish in combo.combo_dishes | orderBy: 'priority'">
       <div class="thumbnail combo-dish">
         <div class="img-wrapper">
           <img src="{{combo_dish.dish.picture}}">
@@ -24,7 +24,7 @@
     </div>
   </div>
 
-  <div class="combo-option-row" ng-repeat="combo_option in combo.combo_options">
+  <div class="combo-option-row" ng-repeat="combo_option in combo.combo_options | orderBy: 'priority'">
     <div class="combo-option-wrapper" ng-repeat="combo_option_dish in combo_option.combo_option_dishes">
       <div class="thumbnail combo-option selected">
         <div class="img-wrapper">
