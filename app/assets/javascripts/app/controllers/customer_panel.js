@@ -26,7 +26,7 @@ angular.module('foodmashApp.controllers')
 	$scope.selectedSortOption = $scope.sortOptions[1];
 
 	CustomerPanelService.getCartsForCustomer().then(function(carts){
-		if(carts.length > 0){
+		if(carts && carts.length > 0){
 			$scope.loadedCarts = carts;
 			$scope.carts = carts;
 		}else{
@@ -53,7 +53,7 @@ angular.module('foodmashApp.controllers')
     $scope.selectSortOption = function(option){
     	$scope.selectedSortOption = option;
     	var orderBy = $filter('orderBy');
-    	if($scope.selectedSortOption){
+    	if($scope.selectedSortOption && $scope.carts){
     		$scope.carts = orderBy($scope.carts, 'updated_at', option.reverse);
     	}
     };
@@ -69,15 +69,19 @@ angular.module('foodmashApp.controllers')
     	$scope.selectedOption = option;
     	switch(option.name){
     		case 'Current': 
+    		if($scope.loadedCarts){
     			var deliveredCarts = $filter('filter')($scope.loadedCarts, {aasm_state: 'delivered'}, true);
     			$scope.carts = $scope.loadedCarts;
     			deliveredCarts.filter(function(cart){
     				var index = $scope.carts.indexOf(cart);
     				$scope.carts.splice(index, 1);
     			});
+    		}
     		break;
     		case 'Delivered': 
+    		if($scope.loadedCarts){
     			$scope.carts = $filter('filter')($scope.loadedCarts, {aasm_state: 'delivered'}, true);
+    		}
     		break;
     	};
     };
@@ -110,6 +114,17 @@ angular.module('foodmashApp.controllers')
 			}
 		});
 		return icon_class;
+	};
+
+	$scope.getStatusAlias = function(status){
+		var alias = '';
+		$scope.statuses.filter(function(s){
+			if(s.name == status){
+				alias = s.alias;
+				return alias;
+			}
+		});
+		return alias;
 	};
 
 	$scope.calculateOrderPrice = function(order){

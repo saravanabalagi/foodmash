@@ -1,0 +1,81 @@
+<div class="sidebar-wrapper sidebar-open" ng-init="load()">
+    <div class="sidebar">
+      <section class="sidebar-section">
+        <h5>Order History</h5>
+        <ul class="sidebar-nav group-size">
+         <li ng-repeat="option in packagingPanelOptions" ng-click="selectOption(option)" ng-class="{'active' : checkIfSelected(option)}">
+            <a>
+              <span>{{option.name}}</span>
+              <i class="{{option.icon_class}}"></i>
+            </a>
+          </li>
+        </ul>
+      </section>
+      <section class="sidebar-section">
+        <h5>Order Date</h5>
+        <ul class="sidebar-nav price">
+           <li ng-repeat="option in sortOptions" ng-click="selectSortOption(option)" ng-class="{'active': checkIfSortOptionSelected(option)}">
+            <a>
+              <span>{{option.name}}</span>
+              <i class="{{option.icon_class}}"></i>
+            </a>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-12 order-history">
+
+        <table class="table table-striped table-hover table-order-history">
+          <thead>
+          <tr>
+            <th><i class="fa fa-fw fa-check-circle" ></i></th>
+            <th>
+              <div class="form-group label-floating is-empty">
+                <label class="control-label" for="focusedInput1">Order ID</label>
+                <input class="form-control" id="focusedInput1" type="text">
+                <span class="material-input"></span>
+              </div>
+            </th>
+            <th>
+              <div class="form-group label-floating is-empty">
+                <label class="control-label" for="focusedInput1">Price</label>
+                <input class="form-control" id="focusedInput1" type="text" style="width:50px">
+                <span class="material-input"></span>
+              </div>
+            </th>
+            <th>
+              <div class="form-group label-floating is-empty">
+                <label class="control-label" for="focusedInput1">Date</label>
+                <input class="form-control" id="focusedInput1" type="text" style="min-width:115px">
+                <span class="material-input"></span>
+              </div>
+            </th>
+            <!-- <th>Time elapsed</th> -->
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="cart in carts" ng-click="selectCart(cart)" ng-class="{'active' : selectedCart == cart}" ng-click="routeToPackagingCentrePanelOrder(cart)">
+            <td><i class="{{getStatusIcon(cart.aasm_state)}}" data-toggle="tooltip" title="{{getStatusAlias(cart.aasm_state)}}" data-delay="{'show': 1}" data-placement="left"></i></td>
+            <td class="order-id">{{cart.order_id}}</td>
+            <td class="order-amount">{{cart.grand_total}}</td>
+            <td>
+              <span class="order-date">{{cart.updated_at}}</span>
+              <span class="order-time"></span>
+            </td>
+            <!-- <td class="time-elapsed">05:21</td> -->
+          </tr>
+          <tr>
+            <td colspan="5">Not found? See <span>{{selectedOption.checkout}} Orders</span></td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+  </div>

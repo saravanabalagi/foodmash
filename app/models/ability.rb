@@ -23,6 +23,10 @@ class Ability
 
 
       #abilities for packaging_centre_admin
+      can [:read, :update], PackagingCentre do |packaging_centre|
+        PackagingCentre.with_role(:packaging_centre_admin, user).pluck(:id).include? packaging_centre.id
+      end
+
       can [:read, :update], Order do |order|
         PackagingCentre.with_role(:packaging_centre_admin, user).pluck(:id).include? order.product.packaging_centre_id
       end

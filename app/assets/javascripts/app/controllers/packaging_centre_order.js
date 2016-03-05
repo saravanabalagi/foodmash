@@ -2,26 +2,22 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('RestaurantPanelController', ['$scope','$location','toaster','$rootScope','Restaurant', '$filter', function($scope, $location, toaster, $rootScope, Restaurant, $filter){
+.controller('PackagingCentrePanelController', ['$scope','$location','toaster','$rootScope', 'PackagingCentre', '$filter', 'PackagingPanelService', function($scope, $location, toaster, $rootScope, PackagingCentre, $filter, PackagingPanelService){
 
 	$scope.user = $rootScope.currentUser;
 	$scope.roles = $rootScope.currentUser.roles;
-	$scope.restaurant = {};
-	$scope.carts = [];
-	$scope.selectedCart = {};
+	$scope.cart = {};
 	$scope.selectedStatus = {};
-	$scope.loadingCarts = true;
-	$scope.selectedOrderItems = [];
-	$scope.restaurantPanelOptions = [
+	$scope.packagingOrderOptions = [
 		{name: 'Current', icon_class: 'fa fa-inbox pull-right', checkout: 'Delivered'},
 		{name: 'Delivered', icon_class: 'fa fa-archive pull-right', checkout: 'Current'}
 	];
 
 	$scope.statuses = [
 		{name: "purchased", alias: "Placed Order", icon_class: "fa fa-clock-o", percent: 'width:0%'},
-		{name: "ordered", alias: "Acknowledged", icon_class: "fa fa-check-circle", percent: 'width:35%'},
-		{name: "cooked", alias: "Cooked", icon_class: "fa fa-cutlery", percent: 'width:65%'},
-		{name: "collected", alias: "Collected", icon_class: "fa fa-truck", percent: 'width:100%'}
+		{name: "ordered", alias: "Being Aggregated", icon_class: "fa fa-dropbox", percent: 'width:35%'},
+		{name: "dispatched", alias: "Dispatched for Delivery", icon_class: "fa fa-truck", percent: 'width:65%'},
+		{name: "delivered", alias: "Delivered", icon_class: "fa fa-check-circle", percent: 'width:100%'}
 	];
 
 	$scope.sortOptions = [
@@ -30,35 +26,24 @@ angular.module('foodmashApp.controllers')
 	];
 	$scope.selectedSortOption = $scope.sortOptions[1];
 
-	$scope.roles.filter(function(role){
-		if(role.name == "restaurant_admin"){
-			Restaurant.query({id: role.resource.id}).then(function(restaurants){
-				if(restaurants.length > 0){
-					$scope.restaurant = restaurants[0];
-
-					$scope.restaurant.getCartsForRestaurant().then(function(carts){
-						if(carts.length > 0){
-							$scope.loadedCarts = carts;
-							$scope.carts = carts;
-						}else{
-							$scope.loadedCarts = null;
-							$scope.carts = null;
-						}
-						$scope.selectOption($scope.restaurantPanelOptions[0]);
-					}, function(err){
-						$scope.loadedCarts = null;
-						$scope.carts = null;
-						$scope.selectOption($scope.restaurantPanelOptions[0]);
-					});
-
-				}else{
-					$scope.loadedCarts = null;
-					$scope.restaurant = null;
-					$scope.selectOption($scope.restaurantPanelOptions[0]);
-				}
-			});
-		}
+	PackagingPanelService.getPackagingCentreOrder().then(function(cart){
+		$scope.cart = cart;
+	}, function(err){
+		$scope.cart = null;
 	});
+
+	ComboService.getComboForDescription().then(function(combo){
+		$scope.combo = combo;
+	  	setQuantityForComboItems();
+	  	pushDefaultComboOption($scope.combo);
+	}, function(err){
+		$scope.combo = null;
+	});
+
+	$scope.routeToPackagingCentrePanelOrder = function(cart){
+		PackagingPanelService.setCartForOrderPage(cart);
+		$location.path('/packagingCentrePanel/Order');
+	};
 
 	$scope.load = function(){
 	    angular.element(document).ready(function (){
@@ -87,15 +72,19 @@ angular.module('foodmashApp.controllers')
 	 	$scope.selectedOption = option;
 	 	switch(option.name){
 	 		case 'Current': 
+	 		if($scope.loadedCarts){
 	 			var deliveredCarts = $filter('filter')($scope.loadedCarts, {aasm_state: 'delivered'}, true);
 	 			$scope.carts = $scope.loadedCarts;
 	 			deliveredCarts.filter(function(cart){
 	 				var index = $scope.carts.indexOf(cart);
 	 				$scope.carts.splice(index, 1);
 	 			});
+	 		}
 	 		break;
 	 		case 'Delivered': 
+	 		if($scope.loadedCarts){
 	 			$scope.carts = $filter('filter')($scope.loadedCarts, {aasm_state: 'delivered'}, true);
+	 		}
 	 		break;
 	 	};
 	 };
@@ -117,7 +106,28 @@ angular.module('foodmashApp.controllers')
 	$scope.selectCart = function(cart){
 		$scope.selectedCart = cart;
 		getSuitableStatus(cart.aasm_state);
-		getOrderItems(cart);
+	};
+
+	$scope.getStatusIcon = function(status){
+		var icon_class = '';
+		$scope.statuses.filter(function(s){
+			if(s.name == status){
+				icon_class = 'fa fa-fw ' + s.icon_class.split(" ")[1];
+				return icon_class;
+			}
+		});
+		return icon_class;
+	};
+
+	$scope.getStatusAlias = function(status){
+		var alias = '';
+		$scope.statuses.filter(function(s){
+			if(s.name == status){
+				alias = s.alias;
+				return alias;
+			}
+		});
+		return alias;
 	};
 
 	function getSuitableStatus(status){
@@ -125,17 +135,6 @@ angular.module('foodmashApp.controllers')
 			if(s.name == status){
 				$scope.selectedStatus = s;
 			}
-		});
-	};
-
-	function getOrderItems(cart){
-		$scope.selectedOrderItems = [];
-		cart.orders.filter(function(order){
-			order.order_items.filter(function(order_item){
-				if(order_item.item.restaurant.id == $scope.restaurant.id){
-					$scope.selectedOrderItems.push(order_item);
-				};
-			});
 		});
 	};
 

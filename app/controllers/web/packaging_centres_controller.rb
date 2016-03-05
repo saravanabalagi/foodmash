@@ -1,7 +1,7 @@
 class Web::PackagingCentresController < ApplicationController
 	respond_to :json
-	before_filter :get_packaging_centre, only: [:update, :destroy]
-	load_and_authorize_resource skip_load_resource
+	before_filter :get_packaging_centre, only: [:update, :destroy, :get_carts_for_centre]
+	load_and_authorize_resource skip_load_resource except: [:get_carts_for_centre]
 
 	def index
 		@packaging_centres = PackagingCentre.where(params.permit(:id, :name))
@@ -34,6 +34,15 @@ class Web::PackagingCentresController < ApplicationController
 		  head :ok
 		else
 		  render status: 404, json: {error: "Packaging Centre with id #{params[:id]} not found!"}
+		end
+	end
+
+	def get_carts_for_centre
+		@carts = @packaging_centre.get_carts_for_centre
+		if @carts
+			render status: 200, json: @carts.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {:include => {:restaurant => {only: [:id, :name, :area_id]}}, only: [:id, :name, :price]}}], only: [:id, :quantity, :category_id, :category_type]} } ,:product => {only: [:id, :name, :price]}], only: [:id, :quantity, :total, :updated_at]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at, :grand_total, :vat])
+		else
+			render status: 422, json: {error: "Could not fetch carts!"}
 		end
 	end
 

@@ -5,7 +5,7 @@ class Api::V1::DeliveryAddressesController < ApiApplicationController
 	respond_to :json
 
 	def index
-		@delivery_addresses = @current_user.delivery_addresses.where(params.require(:data).permit(:area_id))
+		@delivery_addresses = @current_user.delivery_addresses.where(params.permit(:area_id))
 		if @delivery_addresses
 			render status: 200, json: {success: true, data: @delivery_addresses.as_json(only: [:id, :line1, :line2, :contact_no, :area_id, :latitude, :longitude, :primary, :name])}
 		else

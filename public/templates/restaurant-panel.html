@@ -1,41 +1,12 @@
  <div class="sidebar-wrapper sidebar-open" ng-init="load()">
     <div class="sidebar">
       <section class="sidebar-section">
-        <h5>Order status</h5>
-        <ul class="sidebar-nav group-size">
-          <li onclick="$(this).toggleClass('active')" class="active">
-            <a>
-              <span>All</span>
-              <i class="fa fa-hashtag pull-right"></i>
-            </a>
-          </li>
-          <li onclick="$(this).toggleClass('active')">
-            <a>
-              <span>Pending</span>
-              <i class="fa fa-exclamation-triangle pull-right"></i>
-            </a>
-          </li>
-          <li onclick="$(this).toggleClass('active')">
-            <a>
-              <span>Completed</span>
-              <i class="fa fa-check-circle pull-right"></i>
-            </a>
-          </li>
-        </ul>
-      </section>
-      <section class="sidebar-section">
         <h5>Order History</h5>
         <ul class="sidebar-nav group-size">
-          <li onclick="$(this).toggleClass('active')" class="active">
+          <li ng-repeat="option in restaurantPanelOptions" ng-click="selectOption(option)" ng-class="{'active': checkIfSelected(option)}">
             <a>
-              <span>Recent</span>
-              <i class="fa fa-inbox pull-right"></i>
-            </a>
-          </li>
-          <li onclick="$(this).toggleClass('active')">
-            <a>
-              <span>Archived</span>
-              <i class="fa fa-archive pull-right"></i>
+              <span>{{option.name}}</span>
+              <i class="{{option.icon_class}}"></i>
             </a>
           </li>
         </ul>
@@ -43,16 +14,10 @@
       <section class="sidebar-section">
         <h5>Order Date</h5>
         <ul class="sidebar-nav price">
-          <li onclick="$(this).toggleClass('active')" class="active">
+          <li ng-repeat="option in sortOptions" ng-click="selectSortOption(option)" ng-class="{'active': checkIfSortOptionSelected(option)}">
             <a>
-              <span>Newest Fisrt</span>
-              <i class="fa fa-sort-amount-asc pull-right"></i>
-            </a>
-          </li>
-          <li onclick="$(this).toggleClass('active')">
-            <a>
-              <span>Oldest First</span>
-              <i class="fa fa-sort-amount-desc pull-right"></i>
+              <span>{{option.name}}</span>
+              <i class="{{option.icon_class}}"></i>
             </a>
           </li>
         </ul>
@@ -97,19 +62,22 @@
             <td>{{cart.total}}</td>
             <td>{{cart.updated_at}}</td>
           </tr>
+          <tr>
+            <td colspan="4">Not found? Check out <span>{{selectedOption.checkout}} Orders</span></td>
+          </tr>
           </tbody>
         </table>
 
       </div>
 
-      <div class="col-md-6 order-description">
+      <div class="col-md-6 order-description" ng-show="selectedCart.order_id">
         <h3>{{selectedCart.order_id}}</h3>
         <div class="order-status-wrapper">Order status: <span class="order-status">{{selectedStatus.alias}}</span></div>
         <div class="order-status-meter-wrapper">
           <div class="progress progress-striped active order-status-meter">
             <div class="progress-bar" style="{{selectedStatus.percent}}"></div>
           </div>
-          <i ng-repeat-start="status in statuses" class="{{status.icon_class}}" ng-class="{'completed' : checkIfCompleted(status)}"></i><span ng-repeat-end> </span>
+          <i ng-repeat-start="status in statuses" class="{{status.icon_class}}" ng-class="{'completed' : checkIfCompleted(status)}" data-toggle="tooltip" title="{{status.alias}}" data-delay="{'show': 1}" data-placement="bottom"></i><span ng-repeat-end> </span>
         </div>
         <div class="order-status-update-wrapper">Update as <span class="btn btn-info btn-raised order-status-update">Ready</span></div>
         <div class="order-time-elapsed-wrapper">Time elapsed: <span class="order-time-elapsed">05:21</span></div>
@@ -143,7 +111,7 @@
                 <td></td>
                 <td>Total</td>
                 <td></td>
-                <td><span class="rupee"></span>{{cart.total}}</td>
+                <td><span class="rupee"></span>{{selectedCart.total}}</td>
               </tr>
               <tr class="additional-notes-wrapper">
                 <td colspan="4">

@@ -5,4 +5,19 @@ class PackagingCentre < ActiveRecord::Base
 	has_many :areas
 	validates_presence_of :name
 	validates_uniqueness_of :name
+
+	def get_carts_for_centre
+		carts_list = []
+		if combos.present?
+			combos.each do |combo|
+				if combo.orders.present?
+					combo.orders.each do |order|
+						carts_list << order.cart
+					end
+				end
+			end
+		end
+		return carts_list.flatten.uniq.select{|c| c.aasm_state != 'not_started'}
+	end
+
 end

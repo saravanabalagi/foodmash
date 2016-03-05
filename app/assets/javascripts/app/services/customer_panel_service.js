@@ -9,7 +9,7 @@ angular.module('foodmashApp.services')
 
    this.getCartsForCustomer = function(){
       var d = $q.defer();
-      if(!service.carts.length){
+      if(service.carts && !service.carts.length){
         Cart.query({user_id: $rootScope.currentUser.id}).then(function(carts){
           if(carts.length > 0){
             service.carts = carts;

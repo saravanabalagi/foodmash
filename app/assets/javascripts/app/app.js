@@ -57,6 +57,16 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 				}
 			}
 		})
+		.when('/packagingCentrePanel/Order', {
+			controller: 'PackagingCentreOrderController',
+			templateUrl: '/templates/packaging-centre-order.html',
+			resolve: {
+				panel: 
+				function(AuthorizeService){
+					AuthorizeService.authorizeRouteForPackagingCentreAdmin();
+				}
+			}
+		})
 		.when('/restaurantPanel', {
 			controller: 'RestaurantPanelController',
 			templateUrl: '/templates/restaurant-panel.html',

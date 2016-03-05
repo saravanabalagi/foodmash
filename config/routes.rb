@@ -41,7 +41,11 @@ Rails.application.routes.draw do
         end
      end
 
-    resources :packaging_centres
+    resources :packaging_centres do 
+      collection do 
+        get '/:id/getCartsForCentre', to: 'packaging_centres#get_carts_for_centre'
+      end
+    end
 
     resources :areas
     
