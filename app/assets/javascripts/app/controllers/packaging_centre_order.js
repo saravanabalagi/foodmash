@@ -2,10 +2,8 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('PackagingCentrePanelController', ['$scope','$location','toaster','$rootScope', 'PackagingCentre', '$filter', 'PackagingPanelService', function($scope, $location, toaster, $rootScope, PackagingCentre, $filter, PackagingPanelService){
+.controller('PackagingCentreOrderController', ['$scope','$location','toaster','$rootScope', 'PackagingCentre', '$filter', 'PackagingPanelService', function($scope, $location, toaster, $rootScope, PackagingCentre, $filter, PackagingPanelService){
 
-	$scope.user = $rootScope.currentUser;
-	$scope.roles = $rootScope.currentUser.roles;
 	$scope.cart = {};
 	$scope.selectedStatus = {};
 	$scope.packagingOrderOptions = [
@@ -30,14 +28,6 @@ angular.module('foodmashApp.controllers')
 		$scope.cart = cart;
 	}, function(err){
 		$scope.cart = null;
-	});
-
-	ComboService.getComboForDescription().then(function(combo){
-		$scope.combo = combo;
-	  	setQuantityForComboItems();
-	  	pushDefaultComboOption($scope.combo);
-	}, function(err){
-		$scope.combo = null;
 	});
 
 	$scope.routeToPackagingCentrePanelOrder = function(cart){

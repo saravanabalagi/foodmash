@@ -59,7 +59,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="cart in carts" ng-click="selectCart(cart)" ng-class="{'active' : selectedCart == cart}" ng-click="routeToPackagingCentrePanelOrder(cart)">
+          <tr ng-repeat="cart in carts" ng-click="selectCart(cart); routeToPackagingCentreOrder(cart)" ng-class="{'active' : selectedCart == cart}">
             <td><i class="{{getStatusIcon(cart.aasm_state)}}" data-toggle="tooltip" title="{{getStatusAlias(cart.aasm_state)}}" data-delay="{'show': 1}" data-placement="left"></i></td>
             <td class="order-id">{{cart.order_id}}</td>
             <td class="order-amount">{{cart.grand_total}}</td>

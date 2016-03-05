@@ -7,11 +7,11 @@ angular.module('foodmashApp.services')
    var service = this;
    service.cart = {};
    
-   this.getPackagingCentreOrder = function(cart) {
+   this.setPackagingCentreOrder = function(cart){
       service.cart = cart;
    };
 
-   this.setPackagingCentreOrder = function(){
+   this.getPackagingCentreOrder = function(){
       var d = $q.defer();
       if(service.cart){
         d.resolve(service.cart);

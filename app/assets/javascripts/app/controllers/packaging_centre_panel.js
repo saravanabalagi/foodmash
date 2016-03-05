@@ -59,7 +59,7 @@ angular.module('foodmashApp.controllers')
 		}
 	});
 
-	$scope.routeToPackagingCentrePanelOrder = function(cart){
+	$scope.routeToPackagingCentreOrder = function(cart){
 		PackagingPanelService.setPackagingCentreOrder(cart);
 		$location.path('/packagingCentrePanel/Order');
 	};
