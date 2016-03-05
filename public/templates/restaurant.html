@@ -2,7 +2,7 @@
 <td ng-hide="updateShow" ng-click="dishesShow=!dishesShow">{{restaurant.name}}</td>
 <td ng-hide="updateShow">{{restaurant.address}}</td>
 <td ng-hide="updateShow">{{restaurant.area.name}}</td>
-<td ng-hide="updateShow">{{restaurant.description}}</td>
+<td ng-hide="updateShow">{{restaurant.landline}}</td>
 <td ng-hide="updateShow"><i class="material-icons">image</i></td>
 <td ng-hide="updateShow" ng-init="upadteShow=false" ng-click="updateShow=!updateShow; setUpdate(restaurant)"><i class="icon-edit"></i></td>
 <td ng-hide="updateShow"><i class="icon-trash" ng-click="deleteRestaurant(restaurant)"></i></td>
@@ -28,7 +28,7 @@
    </div>
  </td>
  <td ng-show="updateShow">
-    <input class="form-control" type="text" ng-model="updatedRestaurant.description">
+    <input class="form-control" type="text" ng-model="updatedRestaurant.landline">
  </td>
  <td ng-show="updateShow"><i class="material-icons" ngf-select="uploadFiles($file, $invalidFiles, restaurant)"
                              accept="image/*" ngf-max-size="40MB">image</i></td>

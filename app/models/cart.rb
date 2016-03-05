@@ -61,7 +61,7 @@ class Cart < ActiveRecord::Base
 				purchase!
 			when 'cancel' 
 				cancel!
-			when 'order_cart' 
+			when 'ordered' 
 				order_cart!
 			when 'dispatched' 
 				dispatch!

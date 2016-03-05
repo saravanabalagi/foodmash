@@ -10,7 +10,7 @@
           </div>
          <i ng-repeat-start="status in statuses" class="{{status.icon_class}}" ng-class="{'completed' : checkIfCompleted(status)}" data-toggle="tooltip" title="{{status.alias}}" data-delay="{'show': 1}" data-placement="bottom"></i><span ng-repeat-end> </span>
         </div>
-        <div class="order-status-update-wrapper">Update as <span class="btn btn-info btn-raised order-status-update">Being Packed</span></div>
+        <div class="order-status-update-wrapper">Update as <span class="btn btn-info btn-raised order-status-update" ng-click="updateStatus()">{{next_status.alias}}</span></div>
         <!-- <div class="order-time-elapsed-wrapper">Time elapsed: <span class="order-time-elapsed">05:21</span></div> -->
         <div class="order-header">
           <span class="order-date">{{cart.updated_at}} <span class="order-time">{{}}</span></span>
@@ -73,15 +73,15 @@
       </div>
 
       <div class="col-md-6 order-description">
-        <h3 class="customer-name">Johnny Flex </h3>
-        <div class="customer-contact-wrapper">Contact: <span class="customer-contact">+91 88888 77777</span></div>
-        <div class="customer-email-wrapper">Email: <span class="customer-email">johnnyflex@gmail.com</span></div>
+        <h3 class="customer-name">{{cart.user.name}}</h3>
+        <div class="customer-contact-wrapper">Contact: <span class="customer-contact">+91 {{cart.user.mobile_no}}</span></div>
+        <div class="customer-email-wrapper">Email: <span class="customer-email">{{cart.user.email}}</span></div>
 
-        <div class="restaurant-based-order-description">
+        <div class="restaurant-based-order-description" ng-repeat="pOrder in packaging_centre_orders">
           <div class="restaurant-order-header">
-            <span class="restaurant-name">Gokulam <span class="restaurant-branch">Kottur</span></span>
+            <span class="restaurant-name">{{pOrder.item.restaurant.name}} <span class="restaurant-branch">{{pOrder.item.restaurant.branch}}</span></span>
             <span class="restaurant-contact-wrapper">
-              <span class="restaurant-contact">+91 424 44044404</span>
+              <span class="restaurant-contact">+91 {{pOrder.item.restaurant.landline}}</span>
               <i class="fa fa-question-circle" title="Contact Details" data-placement="bottom" data-content="Address and other contact here" data-toggle="popover" data-trigger="hover"></i>
             </span>
           </div>
@@ -97,22 +97,10 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>1</td>
-                  <td>Schezwan Chicken Noodles</td>
-                  <td>x2</td>
-                  <td><span class="rupee"></span>199</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Garlic Chicken</td>
-                  <td>x4</td>
-                  <td><span class="rupee"></span>399</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Gobi Manchurian</td>
-                  <td>x5</td>
-                  <td><span class="rupee"></span>599</td>
+                  <td>{{$index + 1}}</td>
+                  <td>{{pOrder.item.name}}</td>
+                  <td>x {{pOrder.quantity}}</td>
+                  <td><span class="rupee"></span>{{pOrder.item.price}}</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -120,114 +108,14 @@
                   <td></td>
                   <td>Total</td>
                   <td></td>
-                  <td><span class="rupee"></span>997</td>
+                  <td><span class="rupee"></span>{{pOrder.quantity * pOrder.item.price}}</td>
                 </tr>
-                <tr class="additional-notes-wrapper">
+               <!--  <tr class="additional-notes-wrapper">
                   <td colspan="4">
                     <span><i class="fa fa-edit"></i></span>
-                    <span class="additional-notes">Make noodles more spicy</span>
+                    <span class="additional-notes"></span>
                   </td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-        </div>
-
-        <div class="restaurant-based-order-description">
-          <div class="restaurant-order-header">
-            <span class="restaurant-name">Eatalica <span class="restaurant-branch">RA Puram</span></span>
-            <span class="restaurant-contact-wrapper">
-              <span class="restaurant-contact">+91 424 44044404</span>
-              <i class="fa fa-question-circle" title="Contact Details" data-placement="bottom" data-content="Address and other contact here" data-toggle="popover" data-trigger="hover"></i>
-            </span>
-          </div>
-          <div class="order-contents">
-            <table class="table table-striped table-order-description">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Order Contents</th>
-                  <th>Quantity</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Schezwan Chicken Noodles</td>
-                  <td>x2</td>
-                  <td><span class="rupee"></span>199</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Garlic Chicken</td>
-                  <td>x4</td>
-                  <td><span class="rupee"></span>399</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Gobi Manchurian</td>
-                  <td>x5</td>
-                  <td><span class="rupee"></span>599</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td></td>
-                  <td>Total</td>
-                  <td></td>
-                  <td><span class="rupee"></span>997</td>
-                </tr>
-                <tr class="additional-notes-wrapper">
-                  <td colspan="4">
-                    <span><i class="fa fa-edit"></i></span>
-                    <span class="additional-notes">Make noodles more spicy</span>
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-        </div>
-
-        <div class="restaurant-based-order-description">
-          <div class="restaurant-order-header">
-            <span class="restaurant-name">Subway <span class="restaurant-branch">Nandanam</span></span>
-            <span class="restaurant-contact-wrapper">
-              <span class="restaurant-contact">+91 424 44044404</span>
-              <i class="fa fa-question-circle" title="Contact Details" data-placement="bottom" data-content="Address and other contact here" data-toggle="popover" data-trigger="hover"></i>
-            </span>
-          </div>
-          <div class="order-contents">
-            <table class="table table-striped table-order-description">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Order Contents</th>
-                  <th>Quantity</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Sub of the day</td>
-                  <td>x2</td>
-                  <td><span class="rupee"></span>399</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td></td>
-                  <td>Total</td>
-                  <td></td>
-                  <td><span class="rupee"></span>997</td>
-                </tr>
-                <tr class="additional-notes-wrapper">
-                  <td colspan="4">
-                    <span><i class="fa fa-edit"></i></span>
-                    <span class="additional-notes">Make noodles more spicy</span>
-                  </td>
-                </tr>
+                </tr> -->
               </tfoot>
             </table>
           </div>

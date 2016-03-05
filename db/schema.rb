@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160301070935) do
+ActiveRecord::Schema.define(version: 20160305080428) do
 
   create_table "areas", force: :cascade do |t|
     t.string   "name"
@@ -190,6 +190,7 @@ ActiveRecord::Schema.define(version: 20160301070935) do
     t.text     "description"
     t.string   "logo"
     t.integer  "area_id"
+    t.string   "landline"
   end
 
   create_table "roles", force: :cascade do |t|

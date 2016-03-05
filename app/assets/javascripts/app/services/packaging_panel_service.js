@@ -70,6 +70,15 @@ angular.module('foodmashApp.services')
       service.cart = cart;
    };
 
+   this.setUpdatedCart = function(cart){
+      service.packaging_centre.carts.filter(function(c){
+        if(c.id == cart.id){
+          var index = service.packaging_centre.carts.indexOf(c);
+          service.packaging_centre.carts[index] = cart;
+        }
+      });
+   };
+
    this.getPackagingCentreOrder = function(){
       var d = $q.defer();
       if(service.cart){

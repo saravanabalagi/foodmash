@@ -3,7 +3,7 @@ class Web::CartsController < ApplicationController
 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 	prepend_before_filter :authenticate_user_from_token!
 	before_filter :set_cart, only: :destroy
-	before_filter :set_or_create_cart, only: [:show, :change_status, :add_to_cart]
+	before_filter :set_or_create_cart, only: [:show, :add_to_cart]
 
 	def index
 		@carts = Cart.where(params.permit(:user_id, :id, :aasm_state, :order_id)).where.not(aasm_state: 'not_started')
@@ -32,8 +32,9 @@ class Web::CartsController < ApplicationController
 	end
 
 	def change_status
-		if @cart and @cart.change_status(params[:cart][:cart][:status])
-			render status: 201, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name, :price]}}], only: [:id, :quantity, :category_id, :category_type]} } ,:product => {only: [:id, :name, :price]}], only: [:id, :quantity, :total, :updated_at]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at])
+		@cart = Cart.find params[:cart][:id]
+		if @cart and @cart.change_status(params[:cart][:status])
+			render status: 201, json: @cart.as_json(:include => [{:orders => {:include => [{:order_items => {:include => [{:item => {:include => {:restaurant => {only: [:id, :name, :area_id, :landline]}}, only: [:id, :name, :price]}}], only: [:id, :quantity, :category_id, :category_type]} } ,:product => {only: [:id, :name, :price]}], only: [:id, :quantity, :total, :updated_at]} }, :user], only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at, :grand_total, :vat])
 		else
 			render status: 422, json: {error: "Could change status of cart!"}
 		end

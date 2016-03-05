@@ -2,14 +2,16 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('PackagingCentreOrderController', ['$scope','$location','toaster','$rootScope', 'PackagingCentre', '$filter', 'PackagingPanelService', function($scope, $location, toaster, $rootScope, PackagingCentre, $filter, PackagingPanelService){
+.controller('PackagingCentreOrderController', ['$scope','$location','toaster','$rootScope', 'PackagingCentre', '$filter', 'PackagingPanelService', '$q', 'Cart', function($scope, $location, toaster, $rootScope, PackagingCentre, $filter, PackagingPanelService, $q, Cart){
 
 	$scope.cart = {};
 	$scope.selectedStatus = {};
+	$scope.next_status = {};
 	$scope.packagingOrderOptions = [
 		{name: 'Current', icon_class: 'fa fa-inbox pull-right', checkout: 'Delivered'},
 		{name: 'Delivered', icon_class: 'fa fa-archive pull-right', checkout: 'Current'}
 	];
+	$scope.packaging_centre_orders = [];
 
 	$scope.statuses = [
 		{name: "purchased", alias: "Placed Order", icon_class: "fa fa-clock-o", percent: 'width:0%'},
@@ -26,6 +28,8 @@ angular.module('foodmashApp.controllers')
 
 	PackagingPanelService.getPackagingCentreOrder().then(function(cart){
 		$scope.cart = cart;
+		findNextStatus($scope.cart.aasm_state);
+		aggregatePackagingCentreOrders();
 	}, function(err){
 		$scope.cart = null;
 	});
@@ -87,15 +91,10 @@ angular.module('foodmashApp.controllers')
 	 };
 
 	$scope.checkIfCompleted = function(status){
-		if($scope.statuses.indexOf(status) <= $scope.statuses.indexOf($scope.selectedStatus)){
+		if($scope.statuses.indexOf(status) <= $scope.statuses.indexOf(getSuitableStatus($scope.cart.aasm_state))){
 			return true;
 		}
 		return false;
-	};
-
-	$scope.selectCart = function(cart){
-		$scope.selectedCart = cart;
-		getSuitableStatus(cart.aasm_state);
 	};
 
 	$scope.getStatusIcon = function(status){
@@ -131,11 +130,45 @@ angular.module('foodmashApp.controllers')
 		return percent;
 	};
 
+	$scope.updateStatus = function(){
+		var d = $q.defer();
+		Cart.changeStatus($scope.next_status.name, $scope.cart.id).then(function(cart){
+			toaster.pop('success', 'Cart status was successfully updated!');
+			$scope.cart = cart;
+			PackagingPanelService.setUpdatedCart(cart);
+			findNextStatus($scope.cart.aasm_state);
+			d.resolve(cart);
+		}, function(err){
+			toaster.pop('error', 'Cart status was not updated!');
+			d.reject(err);
+		});
+		return d.promise;
+	};
+
+	function findNextStatus(cart_status){
+		$scope.statuses.filter(function(status){
+			if(status.name == cart_status){
+				var index = $scope.statuses.indexOf(status);
+				$scope.next_status = $scope.statuses[index + 1];
+			}
+		});
+	};
+
 	function getSuitableStatus(status){
+		var get_status  = {};
 		$scope.statuses.filter(function(s){
 			if(s.name == status){
-				$scope.selectedStatus = s;
+				get_status = s;
 			}
+		});
+		return get_status;
+	};
+
+	function aggregatePackagingCentreOrders(){
+		$scope.cart.orders.filter(function(order){
+			order.order_items.filter(function(order_item){
+				$scope.packaging_centre_orders.push(order_item);
+			});
 		});
 	};
 
