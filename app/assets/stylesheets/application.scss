@@ -608,6 +608,15 @@ footer {
         }
       }
     }
+    > div.restaurant-logo-wrapper {
+      margin-bottom: 10px;
+      > img.restaurant-logo {
+        &:last-child { margin-right: 0; }
+        margin-right: 10px;
+        width: auto;
+        height: 30px;
+      }
+    }
     > p {
       font-size: 13px;
       &:last-child {
@@ -1344,6 +1353,14 @@ footer {
           background-color: rgba(0, 0, 0, 0.1);
         }
       }
+    }
+  }
+  .restaurant-logo-wrapper {
+    float: left;
+    padding: 10px;
+    > .restaurant-logo {
+      width: auto;
+      height: 30px;
     }
   }
   .quantity-counter {

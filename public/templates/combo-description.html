@@ -10,9 +10,20 @@
           <h4>
             <i class="icon-label"></i>
             <span>{{combo_dish.dish.name}}</span>
-          </h4>
+          </h4>bo
           <p>{{combo_dish.dish.description}}</p>
           <p>
+
+
+
+            <!--edit here-->
+            <span class="restaurant-logo-wrapper">
+              <img class="restaurant-logo" src="{{combo_dish.dish.restaurant.logo}}">
+            </span>
+
+
+
+
             <span class="quantity-counter">
               <a ng-click="removeComboDish(combo_dish)" class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="material-icons">remove</i> </a>
               <span class="quantity">{{combo_dish.quantity}}</span>
@@ -37,6 +48,9 @@
           </h4>
           <p>{{combo_option_dish.dish.description}}</p>
           <p>
+            <span class="restaurant-logo-wrapper">
+              <img class="restaurant-logo" src="{{combo_option_dish.dish.restaurant.logo}}">
+            </span>
             <a ng-click="toggleDish(combo, combo_option, combo_option_dish)" class="btn btn-primary btn-select-combo-option"><i class="fa fa-check-circle"></i>Choose</a> 
             <span class="quantity-counter" ng-show="checkIfSelected(combo_option, combo_option_dish)">
               <a ng-click="removeSelectedDish(combo_option, combo_option_dish)" class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="material-icons">remove</i> </a>

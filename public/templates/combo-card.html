@@ -20,6 +20,19 @@
                 <span ng-repeat="combo_option_dish in combo_option.combo_option_dishes">{{combo_option_dish.dish.name}} {{$last? '' : ' / '}} </span>
             </li>
         </ul>
+
+
+
+        <!--edit here-->
+        <div class="restaurant-logo-wrapper">
+          <img class="restaurant-logo" src="{{combo.picture}}">
+          <img class="restaurant-logo" src="{{combo.picture}}">
+          <img class="restaurant-logo" src="{{combo.picture}}">
+        </div>
+
+
+
+
         <p>
           <span class="quantity-counter" ng-show="combo.quantity">
             <a class="btn btn-border btn-fab btn-fab-nano" role="button" ng-click="removeCombo(combo)"><i class="material-icons">remove</i> </a>
