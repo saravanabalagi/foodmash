@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('PackagingCentrePanelController', ['$scope','$location','toaster','$rootScope', 'PackagingCentre', '$filter', 'PackagingPanelService', function($scope, $location, toaster, $rootScope, PackagingCentre, $filter, PackagingPanelService){
+.controller('PackagingCentrePanelController', ['$scope','$location','toaster','$rootScope', 'PackagingCentre', '$filter', 'PackagingPanelService', '$timeout', function($scope, $location, toaster, $rootScope, PackagingCentre, $filter, PackagingPanelService, $timeout){
 
 	$scope.user = $rootScope.currentUser;
 	$scope.roles = $rootScope.currentUser.roles;
@@ -64,6 +64,32 @@ angular.module('foodmashApp.controllers')
 	      $('[data-toggle="tooltip"]').tooltip();
 	      $('[data-toggle="popover"]').popover();
 	    });
+	    	(function tick(){
+	        	$scope.roles.filter(function(role){
+	        		if(role.name == "packaging_centre_admin"){
+	        			PackagingPanelService.loadCartsForPanel(role).then(function(packaging_centre){
+	        				if(packaging_centre && packaging_centre.carts && packaging_centre.carts.length > 0){
+	        					$scope.packaging_centre = packaging_centre;
+	        					$scope.loadedCarts = packaging_centre.carts;
+	        					$scope.carts = packaging_centre.carts ;
+	        				}else{
+	        					$scope.packaging_centre = null;
+	        					$scope.loadedCarts = null;
+	        					$scope.carts = null;
+	        				}
+	        				$scope.loadingCarts = false;
+	        				$scope.selectOption($scope.packagingPanelOptions[0]);
+	        			}, function(err){
+	        				$scope.loadedCarts = null;
+	        				$scope.packaging_centre = null;
+	        				$scope.carts = null;
+	        				$scope.loadingCarts = false;
+	        				$scope.selectOption($scope.packagingPanelOptions[0]);
+	        			});
+	        		}
+	        	});
+	            $timeout(tick, 30000);
+	        })();
 	 };
 
 	 $scope.selectSortOption = function(option){

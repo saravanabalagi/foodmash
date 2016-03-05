@@ -39,7 +39,7 @@ angular.module('foodmashApp.services')
       return d.promise;
    };
 
-   this.loadCartsForPanel = function(){
+   this.loadCartsForPanel = function(role){
       var d = $q.defer();
       PackagingCentre.query({id: role.resource.id}).then(function(packaging_centres){
          if(packaging_centres && packaging_centres.length > 0){
