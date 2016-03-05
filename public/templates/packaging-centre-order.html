@@ -3,22 +3,19 @@
 
       <div class="col-md-6 order-description">
         <h3>{{cart.order_id}}</h3>
-        <div class="order-status-wrapper">Order status: <span class="order-status">Order Placed</span></div>
+        <div class="order-status-wrapper">Order status: <span class="order-status">{{getStatusAlias(cart.aasm_state)}}</span></div>
         <div class="order-status-meter-wrapper">
           <div class="progress progress-striped active order-status-meter">
-            <div class="progress-bar" style="width: 45%"></div>
+            <div class="progress-bar" style="{{getStatusPercent(cart.aasm_state)}}"></div>
           </div>
-          <i class="fa fa-clock-o completed"></i>
-          <i class="fa fa-phone completed"></i>
-          <i class="fa fa-dropbox"></i>
-          <i class="fa fa-truck"></i>
+         <i ng-repeat-start="status in statuses" class="{{status.icon_class}}" ng-class="{'completed' : checkIfCompleted(status)}" data-toggle="tooltip" title="{{status.alias}}" data-delay="{'show': 1}" data-placement="bottom"></i><span ng-repeat-end> </span>
         </div>
         <div class="order-status-update-wrapper">Update as <span class="btn btn-info btn-raised order-status-update">Being Packed</span></div>
-        <div class="order-time-elapsed-wrapper">Time elapsed: <span class="order-time-elapsed">05:21</span></div>
+        <!-- <div class="order-time-elapsed-wrapper">Time elapsed: <span class="order-time-elapsed">05:21</span></div> -->
         <div class="order-header">
-          <span class="order-date">Jan 04, 2016 <span class="order-time">06:14pm</span></span>
+          <span class="order-date">{{cart.updated_at}} <span class="order-time">{{}}</span></span>
           <span class="order-amount-wrapper">
-            <span class="order-amount">5999</span>
+            <span class="order-amount">{{cart.grand_total}}</span>
             <i class="fa fa-question-circle" title="Payment Method" data-placement="bottom" data-content="Credit Card ending with x574" data-toggle="popover" data-trigger="hover"></i>
           </span>
         </div>
@@ -33,44 +30,16 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
+              <tr ng-repeat="order in cart.orders">
+                <td>{{$index + 1}}</td>
                 <td>
                   <div class="combo">
-                    <span class="combo-name">Spicy Lover</span>
-                    <span>1x Schezwan Chicken Noodles</span>
-                    <span>1x Masala French Fries</span>
-                    <span>1x Corn Balls</span>
+                    <span class="combo-name">{{order.product.name}}</span>
+                    <span ng-repeat="order_item in order.order_items">{{order_item.quantity}} x {{order_item.item.name}}</span>
                   </div>
                 </td>
-                <td>x4</td>
-                <td><span class="rupee"></span>799</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>
-                  <div class="combo">
-                    <span class="combo-name">Garlic Grind</span>
-                    <span>1x Schezwan Chicken Noodles</span>
-                    <span>1x Masala French Fries</span>
-                    <span>1x Corn Balls</span>
-                  </div>
-                </td>
-                <td>x4</td>
-                <td><span class="rupee"></span>1799</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>
-                  <div class="combo">
-                    <span class="combo-name">Schezwan Surprise</span>
-                    <span>1x Schezwan Chicken Noodles</span>
-                    <span>1x Masala French Fries</span>
-                    <span>1x Corn Balls</span>
-                  </div>
-                </td>
-                <td>x5</td>
-                <td><span class="rupee"></span>3299</td>
+                <td>x {{order.quantity}}</td>
+                <td><span class="rupee"></span>{{order.total}}</td>
               </tr>
             </tbody>
             <tfoot>
@@ -78,25 +47,25 @@
                 <td></td>
                 <td>Total</td>
                 <td></td>
-                <td><span class="rupee"></span>5697</td>
+                <td><span class="rupee"></span>{{cart.total}}</td>
               </tr>
               <tr>
                 <td></td>
-                <td>Tax</td>
-                <td>14.5%</td>
-                <td><span class="rupee"></span>252</td>
+                <td>Vat</td>
+                <td>2%</td>
+                <td><span class="rupee"></span>{{cart.vat}}</td>
               </tr>
               <tr>
                 <td></td>
-                <td>Delivery</td>
+                <td>Aggregation + Delivery</td>
                 <td></td>
-                <td><span class="rupee"></span>40</td>
+                <td><span class="rupee"></span>{{cart.delivery_charge}}</td>
               </tr>
               <tr>
                 <td></td>
                 <td>Grand Total</td>
                 <td></td>
-                <td><span class="rupee"></span>5999</td>
+                <td><span class="rupee"></span>{{cart.grand_total}}</td>
               </tr>
             </tfoot>
           </table>

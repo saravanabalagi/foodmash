@@ -31,30 +31,24 @@ angular.module('foodmashApp.controllers')
 
 	$scope.roles.filter(function(role){
 		if(role.name == "packaging_centre_admin"){
-			PackagingCentre.query({id: role.resource.id}).then(function(packaging_centres){
-				if(packaging_centres && packaging_centres.length > 0){
-					$scope.packaging_centre = packaging_centres[0];
-
-					$scope.packaging_centre.getCartsForCentre().then(function(carts){
-						if(carts && carts.length > 0){
-							$scope.loadedCarts = carts;
-							$scope.carts = carts;
-						}else{
-							$scope.loadedCarts = null;
-							$scope.carts = null;
-						}
-						$scope.selectOption($scope.packagingPanelOptions[0]);
-					}, function(err){
-						$scope.loadedCarts = null;
-						$scope.carts = null;
-						$scope.selectOption($scope.packagingPanelOptions[0]);
-					});
-
+			PackagingPanelService.getCartsForPanel(role).then(function(packaging_centre){
+				if(packaging_centre && packaging_centre.carts && packaging_centre.carts.length > 0){
+					$scope.packaging_centre = packaging_centre;
+					$scope.loadedCarts = packaging_centre.carts;
+					$scope.carts = packaging_centre.carts ;
 				}else{
-					$scope.loadedCarts = null;
 					$scope.packaging_centre = null;
-					$scope.selectOption($scope.packagingPanelOptions[0]);
+					$scope.loadedCarts = null;
+					$scope.carts = null;
 				}
+				$scope.loadingCarts = false;
+				$scope.selectOption($scope.packagingPanelOptions[0]);
+			}, function(err){
+				$scope.loadedCarts = null;
+				$scope.packaging_centre = null;
+				$scope.carts = null;
+				$scope.loadingCarts = false;
+				$scope.selectOption($scope.packagingPanelOptions[0]);
 			});
 		}
 	});

@@ -16,7 +16,12 @@ class Api::V1::RegistrationsController < ApiApplicationController
 	      success: true, 
         data: {
           user_token: resource.user_token,
-          session_token: session_token
+          session_token: session_token,
+          user: {
+              email: resource.email,
+              mobile_no: resource.mobile_no,
+              name: resource.name
+          }
         }
 	    }
 	  else

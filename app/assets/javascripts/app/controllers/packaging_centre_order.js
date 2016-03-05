@@ -120,6 +120,17 @@ angular.module('foodmashApp.controllers')
 		return alias;
 	};
 
+	$scope.getStatusPercent = function(status){
+		var percent = '';
+		$scope.statuses.filter(function(s){
+			if(s.name == status){
+				percent = s.percent;
+				return percent;
+			}
+		});
+		return percent;
+	};
+
 	function getSuitableStatus(status){
 		$scope.statuses.filter(function(s){
 			if(s.name == status){
