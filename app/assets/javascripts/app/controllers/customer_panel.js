@@ -23,7 +23,6 @@ angular.module('foodmashApp.controllers')
 		{name: 'Newest First', icon_class: 'fa fa-sort-amount-asc pull-right', reverse: true},
 		{name: 'Oldest First', icon_class: 'fa fa-sort-amount-desc pull-right', reverse: false}
 	];
-	$scope.selectedSortOption = $scope.sortOptions[1];
 
 	CustomerPanelService.getCartsForCustomer().then(function(carts){
 		if(carts && carts.length > 0){
@@ -35,11 +34,13 @@ angular.module('foodmashApp.controllers')
 		}
 		$scope.loadingCarts = false;
 		$scope.selectOption($scope.customerPanelOptions[0]);
+		$scope.selectSortOption($scope.sortOptions[1]);
 	}, function(err){
 		$scope.loadedCarts = null;
 		$scope.carts = null;
 		$scope.loadingCarts = false;
 		$scope.selectOption($scope.customerPanelOptions[0]);
+		$scope.selectSortOption($scope.sortOptions[1]);
 	});
 
 	$scope.load = function(){
@@ -54,7 +55,7 @@ angular.module('foodmashApp.controllers')
     	$scope.selectedSortOption = option;
     	var orderBy = $filter('orderBy');
     	if($scope.selectedSortOption && $scope.carts){
-    		$scope.carts = orderBy($scope.carts, 'updated_at', option.reverse);
+    		$scope.carts = orderBy($scope.carts, 'purchased_at', option.reverse);
     	}
     };
 

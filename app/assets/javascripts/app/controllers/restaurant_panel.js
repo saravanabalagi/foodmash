@@ -72,7 +72,7 @@ angular.module('foodmashApp.controllers')
 	 	$scope.selectedSortOption = option;
 	 	var orderBy = $filter('orderBy');
 	 	if($scope.selectedSortOption){
-	 		$scope.carts = orderBy($scope.carts, 'updated_at', option.reverse);
+	 		$scope.carts = orderBy($scope.carts, 'purchased_at', option.reverse);
 	 	}
 	 };
 

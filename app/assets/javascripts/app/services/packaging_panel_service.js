@@ -10,7 +10,9 @@ angular.module('foodmashApp.services')
 
    this.getCartsForPanel = function(role){
       var d = $q.defer();
+      console.log('inside get');
       if(!service.packaging_centre.name){
+        console.log('loading new in get');
         PackagingCentre.query({id: role.resource.id}).then(function(packaging_centres){
            if(packaging_centres && packaging_centres.length > 0){
              service.packaging_centre = packaging_centres[0];
@@ -28,6 +30,7 @@ angular.module('foodmashApp.services')
              });
 
            }else{
+            console.log('loading old in get');
             service.packaging_centre.carts = null;
              service.packaging_centre = null;
              d.reject(service.packaging_centre);
@@ -41,8 +44,10 @@ angular.module('foodmashApp.services')
 
    this.loadCartsForPanel = function(role){
       var d = $q.defer();
+      console.log('inside load');
       PackagingCentre.query({id: role.resource.id}).then(function(packaging_centres){
          if(packaging_centres && packaging_centres.length > 0){
+          console.log('loading new in load');
            service.packaging_centre = packaging_centres[0];
 
            service.packaging_centre.getCartsForCentre().then(function(carts){
@@ -58,6 +63,7 @@ angular.module('foodmashApp.services')
            });
 
          }else{
+          console.log('loading null in load');
           service.packaging_centre.carts = null;
            service.packaging_centre = null;
            d.reject(service.packaging_centre);
@@ -71,12 +77,14 @@ angular.module('foodmashApp.services')
    };
 
    this.setUpdatedCart = function(cart){
-      service.packaging_centre.carts.filter(function(c){
-        if(c.id == cart.id){
-          var index = service.packaging_centre.carts.indexOf(c);
-          service.packaging_centre.carts[index] = cart;
-        }
-      });
+      if(service.packaging_centre && service.packaging_centre.carts && service.packaging_centre.carts.length > 0){
+        service.packaging_centre.carts.filter(function(c){
+          if(c.id == cart.id){
+            var index = service.packaging_centre.carts.indexOf(c);
+            service.packaging_centre.carts[index] = cart;
+          }
+        });
+      }
    };
 
    this.getPackagingCentreOrder = function(){

@@ -60,7 +60,7 @@
           <tr ng-repeat="cart in carts" ng-click="selectCart(cart)" ng-class="{'active' : selectedCart == cart}">
             <td>{{cart.order_id}}</td>
             <td>{{cart.total}}</td>
-            <td>{{cart.updated_at}}</td>
+            <td>{{cart.purchased_at}}</td>
           </tr>
           <tr>
             <td colspan="4">Not found? Check out <span>{{selectedOption.checkout}} Orders</span></td>

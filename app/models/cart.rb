@@ -52,6 +52,7 @@ class Cart < ActiveRecord::Base
 		self.payment_card_no = params["cardnum"]
 		self.issuing_bank = params["issuing_bank"]
 		self.payment_card_type = params["card_type"]
+		self.purchase_at = Time.now
 		self.save!
 	end
 
@@ -223,6 +224,7 @@ class Cart < ActiveRecord::Base
 
 	def set_payment_method(payment_method)
 		self.payment_method = payment_method
+		self.purchased_at = Time.now
 		self.save!
 	end
 
