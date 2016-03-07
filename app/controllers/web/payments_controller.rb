@@ -31,7 +31,7 @@ class Web::PaymentsController < ApplicationController
  	end
 
  	def check_password_for_cod
- 		if current_user.valid_password? params[:payment][:password] and @cart.set_payment_method('COD') and @carts.purchase!
+ 		if current_user.valid_password? params[:payment][:password] and @cart.set_payment_method('COD') and @cart.purchase!
  			render status: 200, json: {message: 'Succesfully ordered!'}
  		else
  			render status: 422, json: {error: 'Password was incorrect!'}

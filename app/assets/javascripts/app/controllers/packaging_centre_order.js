@@ -144,11 +144,13 @@ angular.module('foodmashApp.controllers')
 	};
 
 	function aggregatePackagingCentreOrders(){
-		$scope.cart.orders.filter(function(order){
-			order.order_items.filter(function(order_item){
-				$scope.packaging_centre_orders.push(order_item);
+		if($scope.cart && $scope.cart.orders && $scope.cart.orders.length > 0){
+			$scope.cart.orders.filter(function(order){
+				order.order_items.filter(function(order_item){
+					$scope.packaging_centre_orders.push(order_item);
+				});
 			});
-		});
+		}
 	};
 
 }]);

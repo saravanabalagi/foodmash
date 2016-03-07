@@ -15,6 +15,7 @@ angular.module('foodmashApp.controllers')
 		{name: 'Current', icon_class: 'fa fa-inbox pull-right', checkout: 'Delivered'},
 		{name: 'Delivered', icon_class: 'fa fa-archive pull-right', checkout: 'Current'}
 	];
+	$scope.timeoutPromise = {};
 
 	$scope.statuses = [
 		{name: "purchased", alias: "Placed Order", icon_class: "fa fa-clock-o", percent: 'width:0%'},
@@ -91,9 +92,13 @@ angular.module('foodmashApp.controllers')
 	        			});
 	        		}
 	        	});
-	            $timeout(tick, 50000);
+	            $scope.timeoutPromise = $timeout(tick, 30000);
 	        })();
 	 };
+
+	 $scope.$on('$destroy', function(){
+	 	$timeout.cancel($scope.timeoutPromise);
+	 });
 
 	 $scope.selectSortOption = function(option){
 	 	$scope.selectedSortOption = option;

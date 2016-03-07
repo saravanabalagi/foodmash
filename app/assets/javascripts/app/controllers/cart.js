@@ -104,20 +104,26 @@ angular.module('foodmashApp.controllers')
 				$scope.setup_details.hash = response.hash;
 				$scope.setup_details.key = response.key;
 				$scope.setup_details.salt = response.salt;
-				$scope.processCart();
-				angular.element(document).ready(function (){
-					$('#payu-payment-form').submit();
+				$scope.processCart().then(function(response){
+					angular.element(document).ready(function (){
+						$('#payu-payment-form').submit();
+					});
+				}, function(err){
+					toaster.pop('error', 'Failed to process cart');
 				});
 			}, function(err){
 				toaster.pop('error', 'Could not generate hash');
 			});
 		}if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
 			if($scope.passwordForCod){
-				$scope.processCart();
-				Payment.checkPasswordForCod($scope.passwordForCod).then(function(response){
-					toaster.pop('success', 'Cart was purchased!');
+				$scope.processCart().then(function(response){
+					Payment.checkPasswordForCod($scope.passwordForCod).then(function(response){
+						toaster.pop('success', 'Cart was purchased!');
+					}, function(err){
+						toaster.pop('error', 'Password incorrect!');
+					});
 				}, function(err){
-					toaster.pop('error', 'Password incorrect!');
+					toaster.pop('error', 'Failed to process cart');
 				});
 			}else{
 				toaster.pop('error', 'Password field is empty!');

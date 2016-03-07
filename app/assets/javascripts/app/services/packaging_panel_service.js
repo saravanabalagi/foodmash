@@ -30,13 +30,13 @@ angular.module('foodmashApp.services')
              });
 
            }else{
-            console.log('loading old in get');
             service.packaging_centre.carts = null;
              service.packaging_centre = null;
              d.reject(service.packaging_centre);
            }
         });
       }else{
+        console.log('loading old in get');
         d.resolve(service.packaging_centre);
       }
       return d.promise;
