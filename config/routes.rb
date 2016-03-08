@@ -175,6 +175,7 @@ Rails.application.routes.draw do
           post '/purchaseByCod', to: 'payments#purchase_by_cod'
           post '/success', to: 'payments#success'
           post '/failure', to: 'payments#failure'
+          post '/getPaymentRelatedDetailsForMobileSdk', to: 'payments#get_payment_details_for_mobile_sdk'
         end
       end
 

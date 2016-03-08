@@ -25,12 +25,19 @@ class Api::V1::PaymentsController < ApiApplicationController
 			udf5: ''
 		}
 		checksum = Payment.calculate_hash(details) || nil
-		print checksum
-		print details
 		if checksum.present?
 			render status: 200, json: {success: true, data: {hash: checksum}}
 		else
 			render status: 200, json: {success:true, error: 'Was not able to calculate hash!'}
+		end
+	end
+
+	def get_payment_details_for_mobile_sdk
+		checksum = Payment.calculate_hash_for_mobile_sdk(params[:data])
+		if checksum.present?
+			render status: 200, json: {success: true, data: {hash: checksum}}
+		else
+			render status: 200, json: {success: false, error: 'Was not able to calculate hash'}
 		end
 	end
 

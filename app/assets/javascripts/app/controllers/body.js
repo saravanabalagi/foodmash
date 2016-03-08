@@ -80,5 +80,33 @@ angular.module('foodmashApp.controllers')
 	 		$location.path("/about-us");
 	 	};
 
+ 		$rootScope.addLoader = function(htmlElement,bgColor,color){
+ 	 		var bgString = "";
+ 	 		var colorString = "color:rgba(255,255,255,1)";
+
+ 	 		if(bgColor==='transparent') { bgString = ""; }
+ 	 		else if(bgColor==='white') { bgString = "background-color: rgba(255,255,255,0.975);"; }
+ 	 		else if(bgColor==='black') { bgString = "background-color: rgba(0,0,0,0.75);"; }
+
+ 	 		if(color === 'white') { colorString = "color:rgba(255,255,255,1);"; }
+ 	 		else if(color === 'black') { colorString = "color:rgba(0,0,0,1);"; }
+ 	 		else if(color === 'red')  { colorString = "color:rgba(255,10,0,1);"; }
+
+ 	 		var addLoaderDiv = "<div style='"+bgString+colorString+"z-index: 100;position: absolute;width: 100%;height: 100%;top: 0;bottom: 0;left: 0;right: 0;display: table;text-align:center;'><div style='display: table-cell;vertical-align: middle;'><i class='fa fa-circle-o-notch fa-spin'></i></div></div>";
+	 		angular.element(document).ready(function(){
+ 	 			var div = $('' + htmlElement.toString());
+ 	 			div.prepend(addLoaderDiv);
+ 	 			div.css("position", "relative");
+ 	 			// div.hide();
+ 	 		});
+ 	 	};
+
+ 	 	$rootScope.removeLoader = function(htmlElement){
+ 	 		angular.element(document).ready(function (){ 
+				$('' + htmlElement.toString()).each(function() { $(this).children().first().remove(); 
+					// $(this).show(); 
+				});
+ 	 		});
+ 	 	};
 }]);
 

@@ -7,6 +7,7 @@ class SessionsController < Devise::SessionsController
 	respond_to :json
 
 	 def create
+    byebug
     resource = User.find_for_database_authentication(email: params[:user][:email]) || User.find_for_database_authentication(mobile_no: params[:user][:mobile_no])
     return failure unless resource
     return failure unless resource.valid_password?(params[:user][:password])
