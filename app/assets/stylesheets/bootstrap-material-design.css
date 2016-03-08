@@ -93,7 +93,7 @@ button.btn:not(.btn-fab) .material-icons {
 }
 a.btn:not(.btn-fab) .fa,
 button.btn:not(.btn-fab) .fa {
-  padding-right: 8px;
+  margin-right: 8px;
   margin-left: -2px;
 }
 .form-horizontal .radio,
@@ -691,8 +691,10 @@ fieldset[disabled][disabled] .btn-group-vertical,
 .input-group-btn .btn[disabled][disabled],
 .btn-group[disabled][disabled],
 .btn-group-vertical[disabled][disabled] {
-  color: rgba(0, 0, 0, 0.26);
-  background: transparent;
+    color: rgb(255, 255, 255);
+    background: rgb(137, 137, 137);
+  /*color: rgba(0, 0, 0, 0.26);*/
+  /*background: transparent;*/
 }
 .theme-dark fieldset[disabled][disabled] .btn,
 .theme-dark fieldset[disabled][disabled] .input-group-btn .btn,
