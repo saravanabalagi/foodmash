@@ -3,7 +3,6 @@
 <td ng-hide="updateShow" ng-init="updateShow=false">{{$index + 1}}</td>
 <td ng-hide="updateShow">{{combo_option_dish.dish.restaurant.name}}</td>
 <td ng-hide="updateShow">{{combo_option_dish.dish.name}}</td>
-<td ng-hide="updateShow" style="width:40px"><i class="material-icons">image</i></td>
 <td ng-hide="updateShow" ng-click="updateShow=!updateShow; setUpdate(combo_option_dish)"><i class="icon-edit"></i></td>
 <td ng-hide="updateShow" ng-click="deleteComboOptionDish(combo_option_dish)"><i class="icon-trash"></i></td>
 
@@ -30,7 +29,5 @@
      </span>
    </div>
  </td>
- <td ng-show="updateShow"><i class="material-icons" ngf-select="uploadFiles($file, $invalidFiles, combo)"
-                            accept="image/*" ngf-max-size="40MB">image</i></td>
  <td ng-show="updateShow" ng-click="updateShow = !updateShow"><i class="fa fa-times-circle"></i></td>
  <td ng-show="updateShow" ng-click="updateComboOptionDish(combo_option_dish)"><i class="fa fa-check-circle"></i></td>

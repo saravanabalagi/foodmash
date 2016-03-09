@@ -3,7 +3,7 @@
 <td ng-hide="updateShow" ng-init="updateShow=false">{{$index + 1}}</td>
 <td ng-hide="updateShow" ng-click="comboOptionDishShow=!comboOptionDishShow">{{combo_option.dish_type.name}}</td>
 <td ng-hide="updateShow">{{combo_option.min_count}}</td>
-<td ng-hide="updateShow"></td>
+<td ng-hide="updateShow">{{combo_option.priority}}</td>
 <td ng-hide="updateShow" ng-click="updateShow=!updateShow; setUpdate(combo_option)"><i class="icon-edit"></i></td>
 <td ng-hide="updateShow" ng-click="deleteComboOption(combo_option)"><i class="icon-trash"></i></td>
 
@@ -22,7 +22,8 @@
  <td style="width:40px" ng-show="updateShow">
       <input class="form-control" type="number" min="1" max="50" ng-model="updatedComboOption.min_count">
  </td>
- <td ng-show="updateShow"><i class="material-icons" ngf-select="uploadFiles($file, $invalidFiles, combo)"
-                             accept="image/*" ngf-max-size="40MB">image</i></td>
+  <td style="width:40px" ng-show="updateShow">
+      <input class="form-control" type="number" min="1" max="50" ng-model="updatedComboOption.priority">
+ </td>
  <td ng-show="updateShow" ng-click="updateShow = !updateShow"><i class="fa fa-times-circle"></i></td>
  <td ng-show="updateShow" ng-click="updateComboOption(combo_option)"><i class="fa fa-check-circle"></i></td>

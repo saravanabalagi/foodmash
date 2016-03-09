@@ -6,7 +6,6 @@
 <td ng-hide="updateShow">{{combo_dish.dish.name}}</td>
 <td ng-hide="updateShow">{{combo_dish.min_count}}</td>
 <td ng-hide="updateShow">{{combo_dish.priority}}</td>
-<td ng-hide="updateShow" style="width:40px"><i class="material-icons">image</i></td>
 <td ng-hide="updateShow" ng-click="updateShow=!updateShow; setUpdate(combo_dish)"><i class="icon-edit"></i></td>
 <td ng-hide="updateShow" ng-click="deleteComboDish(combo_dish)"><i class="icon-trash"></i></td>
 
@@ -50,7 +49,5 @@
  <td style="width:40px" ng-show="updateShow">
     <input class="form-control" type="number" min="1" max="50" ng-model="updatedComboDish.priority">
  </td>
- <td ng-show="updateShow"><i class="material-icons" ngf-select="uploadFiles($file, $invalidFiles, combo)"
-                            accept="image/*" ngf-max-size="40MB">image</i></td>
  <td ng-show="updateShow" ng-click="updateShow = !updateShow"><i class="fa fa-times-circle"></i></td>
  <td ng-show="updateShow" ng-click="updateComboDish(combo_dish)"><i class="fa fa-check-circle"></i></td>
