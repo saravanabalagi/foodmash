@@ -40,8 +40,8 @@ Rails.application.configure do
   ENV['ACCESS_KEY_ID'] = 'AKIAIHVZIHUKB5JAAZJA'
   ENV['SECRET_ACCESS_KEY'] = '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'
 
-  ENV['key'] = 'gtKFFx'
-  ENV['salt'] = 'eCwWELxi'
+  ENV['key'] = 'i4GjyD'
+  ENV['salt'] = 'YPBylwsU'
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
