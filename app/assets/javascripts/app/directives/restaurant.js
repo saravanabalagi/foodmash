@@ -48,7 +48,7 @@ angular.module('foodmashApp.directives')
 				$scope.updatedRestaurant = angular.copy(restaurant);
 			};
 
-			$scope.uploadFiles = function(file, errFiles, restaurant){
+			$scope.uploadFilesForRestaurant = function(file, errFiles, restaurant){
 				if(file){
 					Aws.loadAWS().then(function(aws){
 						file.upload = Upload.upload({

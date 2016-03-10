@@ -30,7 +30,7 @@
  <td ng-show="updateShow">
     <input class="form-control" type="text" ng-model="updatedRestaurant.landline">
  </td>
- <td ng-show="updateShow"><i class="material-icons" ngf-select="uploadFiles($file, $invalidFiles, restaurant)"
+ <td ng-show="updateShow"><i class="material-icons" ngf-select="uploadFilesForRestaurant($file, $invalidFiles, restaurant)"
                              accept="image/*" ngf-max-size="40MB">image</i></td>
  <td ng-show="updateShow" ng-click="updateShow = !updateShow"><i class="fa fa-times-circle"></i></td>
  <td ng-show="updateShow" ng-click="updateRestaurant(restaurant)"><i class="fa fa-check-circle"></i></td>
