@@ -80,12 +80,17 @@ angular.module('foodmashApp.directives')
 					toaster.pop('success', 'Restaurant was created!');
 					$scope.restaurants.unshift($scope.restaurant);
 					$scope.restaurant = new Restaurant;
+					renewSelectedValues();
 					d.resolve(response);
 				}, function(err){
 					toaster.pop('error', 'Restaurant was not created!');
 					d.reject(err);
 				});
 				return d.promise;
+			};
+
+			function renewSelectedValues(){
+				$scope.restaurant.area_id = $scope.selectedArea.id;
 			};
 
 		}]
