@@ -3,7 +3,7 @@ class Api::V1::RestaurantsController < ApiApplicationController
 	respond_to :json
 	
 	def index
-		restaurants = Restaurant.where(params.permit(:id, :name))
+		restaurants = Restaurant.where(params.require(:data).permit(:id, :name))
 		if restaurants
 			render status: 200, json: {success: true, data: restaurants.as_json(:include => :dishes)}
 		else

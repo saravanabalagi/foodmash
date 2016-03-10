@@ -123,7 +123,7 @@ Rails.application.routes.draw do
         collection do 
           post '/checkEmail', to: 'registrations#check_email'
           post '/checkMobileNo', to: 'registrations#check_mobile_no'
-          patch '/', to: 'registrations#update'
+          post '/update', to: 'registrations#update'
           post '/changePassword', to: 'registrations#change_password'
           #password reset
           post '/forgotPassword', to: 'registrations#forgot_password'
@@ -135,7 +135,7 @@ Rails.application.routes.draw do
       end
       #profile
       post '/profile', to: 'profile#show'
-      patch '/profile', to: 'profile#update'
+      post '/profile/update', to: 'profile#update'
       #carts
       resources :carts do 
         collection do 
@@ -154,7 +154,7 @@ Rails.application.routes.draw do
         collection do 
           post '/create', to: 'delivery_addresses#create'
           post '/', to: 'delivery_addresses#index'
-          patch '/', to: 'delivery_addresses#update'
+          post '/update', to: 'delivery_addresses#update'
           post '/destroy', to: 'delivery_addresses#destroy'
         end
       end
@@ -163,7 +163,7 @@ Rails.application.routes.draw do
       #orders
       resources :orders do 
         collection do 
-          patch '/', to: 'orders#update'
+          post '/update', to: 'orders#update'
           post '/destroy', to: 'orders#destroy'
         end
       end
