@@ -68,7 +68,7 @@ angular.module('foodmashApp.directives')
 						file.upload.progress(function(e){ file.progress = Math.min(100, parseInt(100.0 * e.loaded/e.total)); });
 
 						file.upload.then(function(response){
-							$scope.restaurant.logo = 'https://foodmash-india.s3.amazonaws.com/' + response.config.data.key;
+							$scope.updatedRestaurant.logo = 'https://foodmash-india.s3.amazonaws.com/' + response.config.data.key;
 							$scope.updatedRestaurant.update().then(function(response){
 								toaster.pop('success', 'Restaurant logo pic was updated!');
 								var index = $scope.restaurants.indexOf(restaurant);
