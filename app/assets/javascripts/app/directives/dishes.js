@@ -113,7 +113,7 @@ angular.module('foodmashApp.directives')
 
 			function renewSelectedValues(){
 				$scope.dish.dish_type_id = $scope.selectedDishType.id;
-				$scope.dish.cuisine_id = $scope.selectCuisine.id;
+				$scope.dish.cuisine_id = $scope.selectedCuisine.id;
 				$scope.dish.label = $scope.selectedLabel.value;
 			};
 
