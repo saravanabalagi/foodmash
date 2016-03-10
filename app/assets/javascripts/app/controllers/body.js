@@ -108,5 +108,21 @@ angular.module('foodmashApp.controllers')
 				});
  	 		});
  	 	};
+
+ 	 	$rootScope.disableButton = function(htmlElement,textToDisplay){
+ 	 		if(textToDisplay === undefined) textToDisplay = "Loading..."; 
+ 	 		htmlElement.attr('disabled', 'disabled');
+ 	 		htmlElement.children('i.fa').addClass('hidden-icon').hide();
+ 	 		htmlElement.html(function() { return $(this).html().replace(htmlElement.text(),"<span class='hidden-button-text'>"+htmlElement.text()+"</span>"); });
+ 	 		htmlElement.find('.hidden-button-text').hide();
+ 	 		htmlElement.prepend('<span class="loading-button-content-wrapper"><i class="fa fa-spin fa-circle-o-notch"></i>'+textToDisplay+'</span>');
+ 	 	};
+
+ 	 	$rootScope.enableButton = function(htmlElement){
+ 	 		htmlElement.removeAttr('disabled');
+ 	 		htmlElement.children('.loading-button-content-wrapper').remove();
+ 	 		htmlElement.children('.hidden-icon').show().removeClass('hidden-icon');
+ 	 		htmlElement.children('.hidden-button-text').show().removeClass('hidden-button-text');
+ 	 	};
 }]);
 

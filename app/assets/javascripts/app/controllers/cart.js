@@ -113,8 +113,8 @@ angular.module('foodmashApp.controllers')
 			});
 		}if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
 			if($scope.passwordForCod){
+				$scope.processCart();
 				Payment.checkPasswordForCod($scope.passwordForCod).then(function(response){
-					$scope.processCart();
 					toaster.pop('success', 'Cart was purchased!');
 				}, function(err){
 					toaster.pop('error', 'Password incorrect!');
