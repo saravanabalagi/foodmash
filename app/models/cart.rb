@@ -144,8 +144,8 @@ class Cart < ActiveRecord::Base
 								if cart_item["comboOptions"].present?
 									cart_item["comboOptions"].each do |combo_option|
 										if (combo_option["id"] == order_item.category_id and order_item.category_type == 'ComboOption')
-											if combo_option["comboOptionDishes"].present?
-												combo_option["comboOptionDishes"].each do |combo_option_dish|
+											if combo_option["ComboOptionDishes"].present?
+												combo_option["ComboOptionDishes"].each do |combo_option_dish|
 													if combo_option_dish["dish"]["id"] == order_item.item.id
 														order_item.update_attributes!(quantity: combo_option_dish["quantity"]) unless combo_option_dish["quantity"] == order_item.quantity
 													end
@@ -169,8 +169,8 @@ class Cart < ActiveRecord::Base
 					end
 					if cart_item["comboOptions"].present?
 						cart_item["comboOptions"].each do |combo_option|
-							if combo_option["comboOptionDishes"].present?
-								combo_option["comboOptionDishes"].each do |combo_option_dish|
+							if combo_option["ComboOptionDishes"].present?
+								combo_option["ComboOptionDishes"].each do |combo_option_dish|
 									future_order.order_items.build(category_id: combo_option["id"], category_type: 'ComboOption', item_id: combo_option_dish["dish"]["id"], item_type: "Dish", quantity: combo_option_dish["quantity"])
 								end
 							end
@@ -182,7 +182,7 @@ class Cart < ActiveRecord::Base
 		self.delivery_address_id = delivery_address_id 
 		self.vat = vat 
 		self.delivery_charge = delivery_charge 
-		self.grand_total = self.total + self.delivery_charge + self.vat 
+		self.grand_total = grand_total
 		DeliveryAddress.make_primary(delivery_address_id)
 		self.save!
 	end

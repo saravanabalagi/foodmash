@@ -22,16 +22,16 @@ class Combo < ActiveRecord::Base
 			end
 		end
 
-		combo_option_price_list = []
 		if self.combo_options.present?
 			self.combo_options.each do |combo_option|
+				combo_option_price_list = []
 				if combo_option.dishes.present?
 					combo_option.dishes.each do |dish|
 						combo_option_price_list.append(dish.price * combo_option.min_count)
 					end
 				end
+				price += combo_option_price_list.present? ? combo_option_price_list.min : 0.0
 			end
-			price += combo_option_price_list.present? ? combo_option_price_list.min : 0.0
 		end
 		self.price = price
 		return true
