@@ -2,14 +2,14 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('userPanel', ['AuthService', 'UserService','toaster','$location', function(AuthService, UserService, toaster, $location) {
+.directive('userPanel', ['AuthService', 'UserService','toaster','$location', '$rootScope', function(AuthService, UserService, toaster, $location, $rootScope) {
   return {
 
     restrict: 'A',
 
     templateUrl: '/templates/user-panel.html',
 
-    controller: ['$scope', 'AuthService', 'UserService','toaster','$location', function($scope, AuthService, UserService, toaster, $location) {
+    controller: ['$scope', 'AuthService', 'UserService','toaster','$location', '$rootScope', function($scope, AuthService, UserService, toaster, $location, $rootScope) {
 
     	$scope.$on('user:set', function(event, currentUser){
     		$scope.currentUser = currentUser;
@@ -55,11 +55,13 @@ angular.module('foodmashApp.directives')
         $location.path("/contact-us");
       };
 
-      $scope.logout = function() {
+      $scope.logout = function(){
+        $rootScope.disableButton('.logout-button', 'logging out...');
         UserService.logout()
          .then(function(){
          	 $scope.currentUser = null;
            toaster.pop('error', 'Signed Out!');
+           $rootScope.enableButton('.logout-button');
            $location.path("/");
         });
       };

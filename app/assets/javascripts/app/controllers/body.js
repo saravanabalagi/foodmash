@@ -114,7 +114,9 @@ angular.module('foodmashApp.controllers')
  	 		angular.element(document).ready(function(){
  	 			htmlElement = $('' + htmlElement.toString());
  	 			htmlElement.attr('disabled', 'disabled');
- 	 			htmlElement.children('i.fa').addClass('hidden-icon').hide();
+ 	 			if(htmlElement.children('i.fa').length != 0){
+ 	 				htmlElement.children('i.fa').addClass('hidden-icon').hide();
+ 	 			}
  	 			htmlElement.html(function() { return $(this).html().replace(htmlElement.text(),"<span class='hidden-button-text'>"+htmlElement.text()+"</span>"); });
  	 			htmlElement.find('.hidden-button-text').hide();
  	 			htmlElement.prepend('<span class="loading-button-content-wrapper"><i class="fa fa-spin fa-circle-o-notch"></i>'+textToDisplay+'</span>');
@@ -124,11 +126,15 @@ angular.module('foodmashApp.controllers')
  	 	$rootScope.enableButton = function(htmlElement){
  	 		angular.element(document).ready(function(){
  	 			htmlElement = $('' + htmlElement.toString());
-	 	 		htmlElement.removeAttr('disabled');
-	 	 		htmlElement.children('.loading-button-content-wrapper').remove();
-	 	 		htmlElement.children('.hidden-icon').show().removeClass('hidden-icon');
-	 	 		htmlElement.children('.hidden-button-text').show().removeClass('hidden-button-text');
+ 				htmlElement.removeAttr('disabled');
+ 				htmlElement.children('.loading-button-content-wrapper').remove();
+ 				if(htmlElement.children('.hidden-icon').length != 0){
+ 					htmlElement.children('.hidden-icon').show().removeClass('hidden-icon');
+ 				}
+ 				htmlElement.children('.hidden-button-text').after( function() {
+ 			  		return $(this).text();
+ 				}).remove();
  	 		});
- 	 	};
+		};
 }]);
 

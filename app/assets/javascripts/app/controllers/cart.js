@@ -114,10 +114,13 @@ angular.module('foodmashApp.controllers')
 		}if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
 			if($scope.passwordForCod){
 				$scope.processCart();
+				$rootScope.disableButton('.confirm-button', 'Confirming...');
 				Payment.checkPasswordForCod($scope.passwordForCod).then(function(response){
 					toaster.pop('success', 'Cart was purchased!');
+					$rootScope.enableButton('.confirm-button');
 				}, function(err){
 					toaster.pop('error', 'Password incorrect!');
+					$rootScope.enableButton('.confirm-button');
 				});
 			}else{
 				toaster.pop('error', 'Password field is empty!');
