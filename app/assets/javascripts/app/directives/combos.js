@@ -132,12 +132,17 @@ angular.module('foodmashApp.directives')
 					toaster.pop('success', 'Combo was created!');
 					$scope.combos.unshift($scope.combo);
 					$scope.combo = new Combo;
+					renewSelectedValues();
 					d.resolve(response);
 				}, function(err){
 					toaster.pop('error', 'Combo was not created!');
 					d.reject(err);
 				});
 				return d.promise;
+			};
+
+			function renewSelectedValues(){
+				$scope.combo.packaging_centre_id = $scope.selectedPackagingCentre.id;
 			};
 
 		}]
