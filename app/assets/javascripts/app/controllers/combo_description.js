@@ -138,6 +138,22 @@ angular.module('foodmashApp.controllers')
 		});
 	};
 
+	$scope.getLabelClass = function(label){
+		var label_class = "";
+		switch(label){
+			case 'veg':
+				label_class += ' veg';
+				break;
+			case 'egg': 
+				label_class += ' egg';
+				 break;
+			case 'non-veg':
+				label_class += ' non-veg';
+				break;
+		};
+		return label_class;
+	};
+
 	function checkAndPush(selectedDish){
 		for(var i = 0; i<$scope.selectedDishes.length; i++){
 			if(selectedDish["product"]["id"] == $scope.selectedDishes[i]["product"]["id"] && selectedDish["category_id"] == $scope.selectedDishes[i]["category_id"] && selectedDish["category_type"] == $scope.selectedDishes[i]["category_type"] && selectedDish["item"]["id"] == $scope.selectedDishes[i]["item"]["id"]){

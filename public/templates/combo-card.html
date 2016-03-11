@@ -12,12 +12,11 @@
         <h4>{{combo.name}}</h4>
         <ul class="combo-contents">
             <li ng-repeat="combo_dish in combo.combo_dishes">
-                <i class="icon-label" class="{{checkLabel(combo_dish.dish.label)}}"></i>
+                <i class="icon-label {{getLabelClass(combo_dish.dish.label)}}"></i>
                 <span>{{combo_dish.dish.name}}</span>
             </li>
             <li ng-repeat="combo_option in combo.combo_options">
-              <i class="icon-label"></i>
-                <span ng-repeat="combo_option_dish in combo_option.combo_option_dishes">{{combo_option_dish.dish.name}} {{$last? '' : ' / '}} </span>
+                <span ng-repeat="combo_option_dish in combo_option.combo_option_dishes"><i class="icon-label {{getLabelClass(combo_option_dish.dish.label)}}"></i> {{combo_option_dish.dish.name}} &nbsp; </span>
             </li>
         </ul>
 

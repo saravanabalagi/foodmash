@@ -41,16 +41,18 @@ angular.module('foodmashApp.directives')
 				toaster.pop('success', 'Removed from cart!');
 			};
 
-			$scope.checkLabel = function(label){
-				var label_class = '';
-				console.log(label);
+			$scope.getLabelClass = function(label){
+				var label_class = "";
 				switch(label){
 					case 'veg':
-						label_class = 'veg';
+						label_class += ' veg';
+						break;
 					case 'egg': 
-						label_class = 'egg';
-					case 'non_veg':
-						label_class = 'non-veg';
+						label_class += ' egg';
+						 break;
+					case 'non-veg':
+						label_class += ' non-veg';
+						break;
 				};
 				return label_class;
 			};
