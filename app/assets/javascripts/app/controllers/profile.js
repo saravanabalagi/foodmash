@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('ProfileController', ['$scope', 'User','$q','toaster', 'AuthService', 'ProfileService', function($scope, User, $q, toaster, AuthService, ProfileService){
+.controller('ProfileController', ['$scope', 'User','$q','toaster', 'AuthService', 'ProfileService', '$rootScope', function($scope, User, $q, toaster, AuthService, ProfileService, $rootScope){
 
   $scope.user = {};
   $scope.updatedUser = new User;
@@ -26,13 +26,16 @@ angular.module('foodmashApp.controllers')
    };
 
    $scope.updateProfile = function(){
+    $rootScope.disableButton('.save-button', 'Saving...');
      $scope.user.update().then(function(user){
        toaster.pop('success', 'Profile info updated!');
        $scope.user = user;
+       $rootScope.enableButton('.save-button');
        ProfileService.setUserForProfile(user);
        AuthService.updateCurrentUser();
      }, function(err){
        toaster.pop('error', 'Profile info failed to update!');
+       $rootScope.enableButton('.save-button');
      });
    };
 

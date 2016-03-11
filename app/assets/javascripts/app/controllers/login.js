@@ -11,30 +11,30 @@ angular.module('foodmashApp.controllers')
 		});
 
 		$scope.submitSignup = function(){
-			$rootScope.addLoader('.register-button', 'transparent', 'red');
+			$rootScope.disableButton('.register-button', 'Registering...');
 			UserService.signup($scope.signup)
 			.then(function(user){
 				toaster.pop('success', 'Registered successfully!');
 				routToCorrectPath();
-				$rootScope.removeLoader('.register-button');
+				$rootScope.enableButton('.register-button');
 			}, function(reason){
 				toaster.pop('error', 'Was not able to Register!');
 				$scope.signup.errors = reason;
-				$rootScope.removeLoader('.register-button');
+				$rootScope.enableButton('.register-button');
 			});
 		};
 
 		$scope.submitLogin = function(){
-			$rootScope.addLoader('.login-button', 'transparent', 'red');
+			$rootScope.disableButton('.login-button', 'Loggin in...');
 			UserService.login($scope.login)
 			.then(function(user){
 				toaster.pop('success', 'Signed In!');
 				routToCorrectPath();
-				$rootScope.removeLoader('.login-button');
+				$rootScope.enableButton('.login-button');
 			}, function(reason){
 				toaster.pop('error', 'Failed to sign in!');
 				$scope.login.errors = reason;
-				$rootScope.removeLoader('.login-button');
+				$rootScope.enableButton('.login-button');
 			});			
 		};
 

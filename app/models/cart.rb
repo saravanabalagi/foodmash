@@ -63,10 +63,13 @@ class Cart < ActiveRecord::Base
 			when 'cancel' 
 				cancel!
 			when 'ordered' 
+				self.ordered_at = Time.now
 				order_cart!
 			when 'dispatched' 
+				self.dispatched_at = Time.now
 				dispatch!
 			when 'delivered' 
+				self.delivered_at = Time.now
 				deliver!
 		end
 	end

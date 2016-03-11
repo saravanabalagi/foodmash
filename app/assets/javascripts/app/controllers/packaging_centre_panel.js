@@ -17,6 +17,7 @@ angular.module('foodmashApp.controllers')
 	];
 	$scope.timeoutPromise = {};
 
+
 	$scope.statuses = [
 		{name: "purchased", alias: "Placed Order", icon_class: "fa fa-clock-o", percent: 'width:0%'},
 		{name: "ordered", alias: "Being Aggregated", icon_class: "fa fa-dropbox", percent: 'width:35%'},
@@ -54,6 +55,13 @@ angular.module('foodmashApp.controllers')
 			});
 		}
 	});
+
+	$scope.getMilliSecondsDiff = function(cart){
+		var now = new Date().getMilliseconds();
+		var purchased_at = new Date(cart.purchased_at).getMilliseconds();
+		var diff = (purchased_at - now) / 100;
+		return diff;
+	};
 
 	$scope.routeToPackagingCentreOrder = function(cart){
 		PackagingPanelService.setPackagingCentreOrder(cart);

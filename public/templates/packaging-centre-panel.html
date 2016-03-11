@@ -55,7 +55,7 @@
                 <span class="material-input"></span>
               </div>
             </th>
-            <!-- <th>Time elapsed</th> -->
+            <th>Time elapsed</th>
           </tr>
           </thead>
           <tbody>
@@ -64,10 +64,10 @@
             <td class="order-id">{{cart.order_id}}</td>
             <td class="order-amount">{{cart.grand_total}}</td>
             <td>
-              <span class="order-date">{{cart.purchased_at}}</span>
+              <span class="order-date">{{cart.purchased_at | date: 'HH:mm:ss (dd/MM/yyyy)'}}</span>
               <span class="order-time"></span>
             </td>
-            <!-- <td class="time-elapsed">05:21</td> -->
+            <td class="time-elapsed">{{getMilliSecondsDiff(cart)}}</td>
           </tr>
           <tr>
             <td colspan="5">Not found? See <span>{{selectedOption.checkout}} Orders</span></td>

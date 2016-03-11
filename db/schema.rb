@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160306072629) do
+ActiveRecord::Schema.define(version: 20160310222442) do
 
   create_table "areas", force: :cascade do |t|
     t.string   "name"
@@ -49,6 +49,9 @@ ActiveRecord::Schema.define(version: 20160306072629) do
     t.string   "payment_unmappedstatus"
     t.float    "delivery_charge",        default: 0.0
     t.datetime "purchased_at"
+    t.datetime "ordered_at"
+    t.datetime "dispatched_at"
+    t.datetime "delivered_at"
   end
 
   create_table "cities", force: :cascade do |t|

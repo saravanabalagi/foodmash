@@ -13,7 +13,7 @@
         <div class="order-status-update-wrapper">Update as <span class="btn btn-info btn-raised order-status-update" ng-click="updateStatus()">{{next_status.alias}}</span></div>
         <!-- <div class="order-time-elapsed-wrapper">Time elapsed: <span class="order-time-elapsed">05:21</span></div> -->
         <div class="order-header">
-          <span class="order-date">{{cart.purchased_at}} <span class="order-time">{{}}</span></span>
+          <span class="order-date">{{cart.purchased_at | date: 'dd/MM/yyyy'}} <span class="order-time">{{cart.purchased_at | date: 'HH:mm:ss'}}</span></span>
           <span class="order-amount-wrapper">
             <span class="order-amount">{{cart.grand_total}}</span>
             <i class="fa fa-question-circle" title="Payment Method" data-placement="bottom" data-content="Credit Card ending with x574" data-toggle="popover" data-trigger="hover"></i>
