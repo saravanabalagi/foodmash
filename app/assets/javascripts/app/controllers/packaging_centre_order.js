@@ -22,6 +22,7 @@ angular.module('foodmashApp.controllers')
 
 	PackagingPanelService.getPackagingCentreOrder().then(function(cart){
 		$scope.cart = cart;
+        console.log($scope.cart);
 		findNextStatus($scope.cart.aasm_state);
 		aggregatePackagingCentreOrders();
 	}, function(err){
@@ -32,6 +33,18 @@ angular.module('foodmashApp.controllers')
 		PackagingPanelService.setCartForOrderPage(cart);
 		$location.path('/packagingCentrePanel/Order');
 	};
+
+    $scope.getMilliSecondsDiff = function(cart){
+        var now = new Date().getMilliseconds();
+        var purchased_at = new Date(cart.purchased_at).getMilliseconds();
+        console.log("time now: "+now);
+        console.log("time purchased: "+purchased_at);
+        var diff = (now - purchased_at)/1000;
+        console.log("diff "+diff);
+        var diffSecs = diff % 60;
+        var diffMins = Math.floor(diff / 60);
+        return diffMins + ":" + diffSecs;
+    };
 
 	$scope.load = function(){
 	    angular.element(document).ready(function (){

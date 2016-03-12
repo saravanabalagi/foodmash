@@ -1,7 +1,7 @@
 class Cart < ActiveRecord::Base
 	resourcify
 	belongs_to :user
-	has_one :delivery_address
+	belongs_to :delivery_address
 	has_many :order_items, through: :orders
 	has_many :orders, dependent: :destroy
 	before_save :calculate_total
