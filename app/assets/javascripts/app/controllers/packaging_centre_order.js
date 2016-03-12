@@ -2,30 +2,36 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('PackagingCentreOrderController', ['$scope','$location','toaster','$rootScope', 'PackagingCentre', '$filter', 'PackagingPanelService', '$q', 'Cart', function($scope, $location, toaster, $rootScope, PackagingCentre, $filter, PackagingPanelService, $q, Cart){
+.controller('PackagingCentreOrderController', ['$scope','$interval','$location','toaster','$rootScope', 'PackagingCentre', '$filter', 'PackagingPanelService', '$q', 'Cart', function($scope, $interval, $location, toaster, $rootScope, PackagingCentre, $filter, PackagingPanelService, $q, Cart){
 
 	$scope.cart = {};
 	$scope.selectedStatus = {};
 	$scope.next_status = {};
-	$scope.packagingOrderOptions = [
+    $scope.elapsedTime = "";
+    $scope.timer = null;
+    $scope.packagingOrderOptions = [
 		{name: 'Current', icon_class: 'fa fa-inbox pull-right', checkout: 'Delivered'},
 		{name: 'Delivered', icon_class: 'fa fa-archive pull-right', checkout: 'Current'}
 	];
 	$scope.packaging_centre_orders = [];
 
 	$scope.statuses = [
-		{name: "purchased", alias: "Placed Order", icon_class: "fa fa-clock-o", percent: 'width:0%'},
-		{name: "ordered", alias: "Being Aggregated", icon_class: "fa fa-dropbox", percent: 'width:35%'},
-		{name: "dispatched", alias: "Dispatched for Delivery", icon_class: "fa fa-truck", percent: 'width:65%'},
+		{name: "purchased", alias: "Placed Order", icon_class: "fa fa-clock-o", percent: 'width:15%'},
+		{name: "ordered", alias: "Being Aggregated", icon_class: "fa fa-dropbox", percent: 'width:45%'},
+		{name: "dispatched", alias: "Dispatched for Delivery", icon_class: "fa fa-truck", percent: 'width:80%'},
 		{name: "delivered", alias: "Delivered", icon_class: "fa fa-check-circle", percent: 'width:100%'}
 	];
 
 	PackagingPanelService.getPackagingCentreOrder().then(function(cart){
 		$scope.cart = cart;
         console.log($scope.cart);
-		findNextStatus($scope.cart.aasm_state);
-		aggregatePackagingCentreOrders();
-	}, function(err){
+        findNextStatus($scope.cart.aasm_state);
+        aggregatePackagingCentreOrders();
+        if(cart.aasm_state!='delivered')
+            findElapsedTime(new Date());
+            $scope.timer=$interval(function(){ findElapsedTime(new Date()) }, 1000);
+        else { /*findElapsedTime(deliveredTime);*/  }
+    }, function(err){
 		$scope.cart = null;
 	});
 
@@ -33,18 +39,6 @@ angular.module('foodmashApp.controllers')
 		PackagingPanelService.setCartForOrderPage(cart);
 		$location.path('/packagingCentrePanel/Order');
 	};
-
-    $scope.getMilliSecondsDiff = function(cart){
-        var now = new Date().getMilliseconds();
-        var purchased_at = new Date(cart.purchased_at).getMilliseconds();
-        console.log("time now: "+now);
-        console.log("time purchased: "+purchased_at);
-        var diff = (now - purchased_at)/1000;
-        console.log("diff "+diff);
-        var diffSecs = diff % 60;
-        var diffMins = Math.floor(diff / 60);
-        return diffMins + ":" + diffSecs;
-    };
 
 	$scope.load = function(){
 	    angular.element(document).ready(function (){
@@ -137,8 +131,16 @@ angular.module('foodmashApp.controllers')
 			$rootScope.removeLoader('.order-status-update-wrapper');
 			d.reject(err);
 		});
+        checkAndkillTimer();
 		return d.promise;
 	};
+
+    $scope.killTimer = function(){
+        if($scope.timer!=null && $scope.cart.aasm_state=='delivered') {
+            $interval.cancel($scope.timer);
+            $scope.timer=undefined;
+        }
+    };
 
 	function findNextStatus(cart_status){
 		$scope.statuses.filter(function(status){
@@ -147,7 +149,7 @@ angular.module('foodmashApp.controllers')
 				$scope.next_status = $scope.statuses[index + 1];
 			}
 		});
-	};
+	}
 
 	function getSuitableStatus(status){
 		var get_status  = {};
@@ -157,7 +159,7 @@ angular.module('foodmashApp.controllers')
 			}
 		});
 		return get_status;
-	};
+	}
 
 	function aggregatePackagingCentreOrders(){
 		if($scope.cart && $scope.cart.orders && $scope.cart.orders.length > 0){
@@ -167,6 +169,23 @@ angular.module('foodmashApp.controllers')
 				});
 			});
 		}
-	};
+	}
+
+    function findElapsedTime(time){
+        var now = time;
+        var purchased_at = new Date($scope.cart.purchased_at);
+        var diff = Math.abs(now.getTime() - purchased_at.getTime())/1000;
+        var diffSecs = Math.floor(diff % 60);
+        var diffMins = Math.floor(diff / 60);
+        var diffHours;
+        if(parseInt(diffMins)>0) {
+            diffHours = Math.floor(diffMins / 60);
+            diffMins = diffMins % 60;
+            diffHours = (diffHours < 10) ? "0" + diffHours : diffHours;
+        }
+        diffMins = (diffMins < 10) ? "0" + diffMins : diffMins;
+        diffSecs = (diffSecs < 10) ? "0" + diffSecs : diffSecs;
+        $scope.elapsedTime = ((diff===undefined)?"":(diffHours+":"))+diffMins + ":" + diffSecs;
+    }
 
 }]);
