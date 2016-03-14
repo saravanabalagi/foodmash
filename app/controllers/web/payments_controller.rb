@@ -1,7 +1,7 @@
 class Web::PaymentsController < ApplicationController
  	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
  	prepend_before_filter :authenticate_user_from_token!, except: [:success, :failure]
- 	before_filter :set_current_cart, only: [:check_password_for_cod]
+ 	before_filter :set_current_cart, only: [:purchase_for_cod]
  	before_filter :set_payu_processed_cart, only: [:success, :failure]
  	respond_to :json
 
@@ -30,11 +30,11 @@ class Web::PaymentsController < ApplicationController
 		end
  	end
 
- 	def check_password_for_cod
- 		if current_user.valid_password? params[:payment][:password] and @cart.set_payment_method('COD') and @cart.purchase!
+ 	def purchase_for_cod
+ 		if @cart.add_items_to_cart(params[:payment][:cart]) and @cart.set_payment_method('COD') and @cart.purchase!
  			render status: 200, json: {message: 'Succesfully ordered!'}
  		else
- 			render status: 422, json: {error: 'Password was incorrect!'}
+ 			render status: 422, json: {error: 'Failed to order!'}
  		end
  	end
 

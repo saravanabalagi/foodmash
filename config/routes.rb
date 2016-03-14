@@ -77,7 +77,7 @@ Rails.application.routes.draw do
     resources :payments, only: [:index] do 
       collection do 
         post '/getHash', to: 'payments#get_hash'
-        post '/checkPasswordForCod', to: 'payments#check_password_for_cod'
+        post '/purchaseForCod', to: 'payments#purchase_for_cod'
         post '/success', to: 'payments#success'
         post '/failure', to: 'payments#failure'
       end
