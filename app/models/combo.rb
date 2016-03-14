@@ -9,10 +9,19 @@ class Combo < ActiveRecord::Base
 	validates_presence_of :name, :group_size, :packaging_centre_id, :category
 	before_save :check_for_availability
 	before_save :update_label
+	before_save :ensure_picture_is_encoded
 	before_save :calculate_price
+
 	before_destroy :ensure_combo_not_referenced
 
 	private
+
+	def ensure_picture_is_encoded
+	  if self.picture_changed?
+	    self.picture = URI.encode(self.picture) if self.picture.present?
+	  end
+	  return true
+	end
 
 	def calculate_price
 		price = 0
