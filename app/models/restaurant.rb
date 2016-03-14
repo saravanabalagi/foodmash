@@ -6,6 +6,7 @@ class Restaurant < ActiveRecord::Base
 	has_many :dish_types, through: :dishes
 	belongs_to :area
 	validates_presence_of :area_id, :name
+	before_save :ensure_logo_is_encoded
 
 
 	def get_carts_for_restaurant
@@ -45,5 +46,13 @@ class Restaurant < ActiveRecord::Base
 	  end
 
 	  return combos.flatten.uniq
+  end
+
+  private
+  def ensure_logo_is_encoded
+    if self.logo_changed?
+      self.logo = URI.encode(self.logo) if self.logo.present?
+    end
+    return true
   end
 end

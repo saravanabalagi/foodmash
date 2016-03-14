@@ -13,6 +13,7 @@ class Dish < ActiveRecord::Base
   validates :label, presence: true
   validates :price, presence: true
   before_destroy :ensure_dish_not_referenced
+  before_save :ensure_picture_is_encoded
   after_save :update_combos_on_save
 
   def belongs_to_combos
@@ -34,6 +35,13 @@ class Dish < ActiveRecord::Base
   end
 
   private
+
+  def ensure_picture_is_encoded
+    if self.picture_changed?
+      self.picture = URI.encode(self.picture) if self.picture.present?
+    end
+    return true
+  end
 
   def update_combos_on_save
     combos = []
