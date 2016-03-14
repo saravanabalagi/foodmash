@@ -26,11 +26,10 @@
             <input type="text" placeholder="Address Line 1" id="new-address-line-1" ng-model="delivery_address.line1" />
             <input type="text" placeholder="Address Line 2" id="new-address-line-2" ng-model="delivery_address.line2" />
             <input type="text" value="{{area.name}}, {{city.name}}" disabled />
-            <input type="text" value="{{area.pincode}}" disabled />
             <input type="text" placeholder="Contact No" ng-model="delivery_address.contact_no" />
           </div>
         </td>
-        <td colspan="2" ng-click="addDeliveryAddress()"><i class="fa fa-check-circle"></i> Save</td>
+        <td colspan="2"><a class="btn btn-success margin-zero" ng-click="addDeliveryAddress()"><i class="fa fa-check-circle"></i> Save</a> </td>
       </tr>
     </tbody>
   </table>
