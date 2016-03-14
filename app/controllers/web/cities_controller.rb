@@ -13,7 +13,7 @@ class Web::CitiesController < ApplicationController
 	end
 
 	def set_city
-		@cities = City.where(params.permit(:id, :name))
+		@cities = City.where(params.permit(:city).permit(:id, :name))
 		if @cities 
 			render status: 200, json: @cities.as_json(:include => :areas)
 		else
