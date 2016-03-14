@@ -60,6 +60,7 @@ angular.module('foodmashApp.directives')
         UserService.logout()
          .then(function(){
          	 $scope.currentUser = null;
+           $rootScope.currentUser = null; $rootScope.delivery_addresses = null;
            toaster.pop('error', 'Signed Out!');
            $rootScope.enableButton('.logout-button');
            $location.path("/");

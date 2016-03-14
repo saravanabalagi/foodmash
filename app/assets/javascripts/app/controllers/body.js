@@ -5,8 +5,9 @@ angular.module('foodmashApp.controllers')
 .controller('BodyController', ['$scope', '$location', 'toaster', 'CartService', 'City', '$rootScope', function($scope, $location, toaster, CartService, City, $rootScope){
 
 		CartService.setCartGlobally();
-		$scope.loadingCities = true;
-		$scope.loadCombos = {};
+		$scope.cities = [];
+		$scope.selectedCity = {};
+		$scope.selectedArea = {};
 
 		City.setCity().then(function(cities){
 			if(cities.length > 0){
@@ -18,20 +19,18 @@ angular.module('foodmashApp.controllers')
 			}else{
 				$scope.cities = null;
 			}
-			$scope.loadingCities = false;
 		}, function(err){
 			$scope.cities = null;
-			$scope.loadingCities = false;
 		});
 
 		$scope.selectCity = function(city){
 			$scope.selectedCity = city;
-			$rootScope.city = city;
+			$rootScope.city = $scope.selectedCity;
 		};
 
 		$scope.selectArea = function(area){
 			$scope.selectedArea = area;
-			$rootScope.area = area;
+			$rootScope.area = $scope.selectedArea;
 		};
 
 		$scope.setLoadCombos = function(){
@@ -135,6 +134,14 @@ angular.module('foodmashApp.controllers')
  			  		return $(this).text();
  				}).remove();
  	 		});
+		};
+
+		$rootScope.isEmpty = function(obj){
+		    for(var prop in obj) {
+		        if(obj.hasOwnProperty(prop))
+		            return false;
+		    }
+		    return true;
 		};
 }]);
 

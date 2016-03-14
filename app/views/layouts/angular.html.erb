@@ -33,7 +33,7 @@
             </ul>
           </span>
       </div>
-      <a class="btn btn-raised btn-info" id="choose-delivery-location-continue" onclick="$('.loader').fadeOut('slow');" ng-hide="loadingCities" ng-click="setLoadCombos()">Continue</a>
+      <a class="btn btn-raised btn-info" id="choose-delivery-location-continue" onclick="$('.loader').fadeOut('slow');" ng-click="setLoadCombos()" ng-show="!isEmpty(selectedCity) && !isEmpty(selectedArea)">Continue</a>
     </div>
   </div>
   <!-- Loading page -->
