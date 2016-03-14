@@ -1,28 +1,20 @@
- <td ng-click="selectDeliveryAddress(delivery_address)"><i class="fa fa-check-circle"></i></td>
- <td>
-   <div class="combo">
+ <td ng-click="if(!updateShow) selectDeliveryAddress(delivery_address)"><i ng-hide="updateShow" class="fa fa-check-circle"></i></td>
+ <td ng-click="if(!updateShow) selectDeliveryAddress(delivery_address)">
+    <div class="combo" ng-hide="updateShow">
      <span class="combo-name">{{delivery_address.name}}</span>
      <span>{{delivery_address.line1}}</span>
      <span>{{delivery_address.line2}}</span>
      <span>{{delivery_address.area.name}}, {{delivery_address.area.city.name}}</span>
      <span>{{delivery_address.contact_no}}</span>
-   </div>
-
+    </div>
+     <div class="new-address" ng-show="updateShow">
+         <input type="text" placeholder="Full Name" id="new-address-name" ng-model="updatedDeliveryAddress.name" />
+         <input type="text" placeholder="Address Line 1" id="new-address-line-1" ng-model="updatedDeliveryAddress.line1" />
+         <input type="text" placeholder="Address Line 2" id="new-address-line-2" ng-model="updatedDeliveryAddress.line2" />
+         <input type="text" value="{{updatedDeliveryAddress.area.name}}, {{updatedDeliveryAddress.area.city.name}}" disabled />
+         <input type="text" placeholder="Contact No" ng-model="updatedDeliveryAddress.contact_no" />
+     </div>
  </td>
- <td ng-click="updateShow = !updateShow; setUpdate(delivery_address)"><i class="icon-edit"></i></td>
- <td ng-click="deleteDeliveryAddress(delivery_address)"><i class="icon-trash"></i></td>
-
-<td ng-show="updateShow"><i class="fa fa-check-circle hidden"></i></td>
-<td ng-show="updateShow">
- <div class="new-address">
-   <label>Name</label>
-   <input type="text" placeholder="Full Name" id="new-address-name" ng-model="updatedDeliveryAddress.name" />
-   <label>Address Line 1</label>
-   <input type="text" placeholder="Address Line 1" id="new-address-line-1" ng-model="updatedDeliveryAddress.line1" />
-   <label>Address Line 2</label>
-   <input type="text" placeholder="Address Line 2" id="new-address-line-2" ng-model="updatedDeliveryAddress.line2" />
-   <label>Contact No</label>
-   <input type="text" placeholder="Contact No" ng-model="updatedDeliveryAddress.contact_no" />
- </div>
-</td>
-<td ng-show="updateShow" colspan="2" ng-click="updateDeliveryAddress(delivery_address)"><i class="fa fa-check-circle"></i>  </td>
+ <td ng-hide="updateShow"><i ng-click="updateShow = !updateShow; setUpdate(delivery_address)" class="icon-edit"></i></td>
+ <td ng-hide="updateShow"><i ng-click="deleteDeliveryAddress(delivery_address)" class="icon-trash"></i></td>
+ <td ng-show="updateShow" colspan="2"><a ng-click="updateDeliveryAddress(delivery_address)" class="btn btn-success margin-zero"><i class="fa fa-check-circle"></i> Save</a></td>
