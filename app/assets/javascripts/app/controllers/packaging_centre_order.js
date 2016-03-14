@@ -24,7 +24,6 @@ angular.module('foodmashApp.controllers')
 
 	PackagingPanelService.getPackagingCentreOrder().then(function(cart){
 		$scope.cart = cart;
-        console.log($scope.cart);
         findNextStatus($scope.cart.aasm_state);
         aggregatePackagingCentreOrders();
         if(cart.aasm_state!='delivered'){
