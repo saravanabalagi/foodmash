@@ -29,7 +29,7 @@ angular.module('foodmashApp.controllers')
         aggregatePackagingCentreOrders();
         if(cart.aasm_state!='delivered'){
         	findElapsedTime(new Date());
-            $scope.timer=$interval(function(){ findElapsedTime(new Date()) }, 1000);
+            $scope.timer = $interval(function(){ findElapsedTime(new Date()) }, 1000);
         }else{
         	findElapsedTime(cart.delivered_at);
         }
@@ -133,7 +133,7 @@ angular.module('foodmashApp.controllers')
 			$rootScope.removeLoader('.order-status-update-wrapper');
 			d.reject(err);
 		});
-        checkAndkillTimer();
+        $scope.killTimer();
 		return d.promise;
 	};
 
