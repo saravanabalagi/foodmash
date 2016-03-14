@@ -27,10 +27,12 @@ angular.module('foodmashApp.controllers')
         console.log($scope.cart);
         findNextStatus($scope.cart.aasm_state);
         aggregatePackagingCentreOrders();
-        if(cart.aasm_state!='delivered')
+        if(cart.aasm_state!='delivered'){
             findElapsedTime(new Date());
             $scope.timer=$interval(function(){ findElapsedTime(new Date()) }, 1000);
-        else { /*findElapsedTime(deliveredTime);*/  }
+        }else{
+         	findElapsedTime(cart.delivered_at);
+     	}
     }, function(err){
 		$scope.cart = null;
 	});
@@ -131,7 +133,7 @@ angular.module('foodmashApp.controllers')
 			$rootScope.removeLoader('.order-status-update-wrapper');
 			d.reject(err);
 		});
-        checkAndkillTimer();
+        $scope.killTimer();
 		return d.promise;
 	};
 
