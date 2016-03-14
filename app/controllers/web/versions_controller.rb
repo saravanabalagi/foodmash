@@ -1,5 +1,6 @@
 class Web::VersionsController < ApplicationController
 	respond_to :json
+	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
 	before_filter :get_version, only: [:update, :destroy]
 	load_and_authorize_resource skip_load_resource
 

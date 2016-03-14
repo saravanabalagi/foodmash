@@ -1,5 +1,6 @@
 class Web::PackagingCentresController < ApplicationController
 	respond_to :json
+	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
 	before_filter :get_packaging_centre, only: [:update, :destroy, :get_carts_for_centre]
 	load_and_authorize_resource skip_load_resource except: [:get_carts_for_centre]
 

@@ -1,5 +1,6 @@
 class Web::RestaurantsController < ApplicationController
 	respond_to :json
+	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
 	before_action :get_restaurant, only: [:update, :destroy, :has_combos, :get_carts_for_restaurant]
 	load_and_authorize_resource skip_load_resource except: [:has_combos, :has_dish_type, :get_carts_for_restaurant]
 

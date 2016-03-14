@@ -1,5 +1,6 @@
 class Web::UsersController < ApplicationController
 	respond_to :json
+	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
 	before_filter :set_user, only: :update
 	load_and_authorize_resource skip_load_resource
 
