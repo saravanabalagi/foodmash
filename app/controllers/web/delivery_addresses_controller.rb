@@ -1,5 +1,7 @@
 class Web::DeliveryAddressesController < ApplicationController
 	respond_to :json
+	rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
+	prepend_before_filter :authenticate_user_from_token!
 	before_action :get_delivery_address, only: [:update, :destroy]
 	load_and_authorize_resource skip_load_resource
 

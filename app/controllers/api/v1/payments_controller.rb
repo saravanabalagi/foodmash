@@ -1,8 +1,8 @@
 class Api::V1::PaymentsController < ApiApplicationController
+ 	respond_to :json
  	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
  	before_filter :authenticate_user_from_token!
 	before_filter :set_current_cart
- 	respond_to :json
 
  	def index 
  		render status: 200

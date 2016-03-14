@@ -1,9 +1,9 @@
 class Web::PaymentsController < ApplicationController
- 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
- 	prepend_before_filter :authenticate_user_from_token!, except: [:success, :failure]
- 	before_filter :set_current_cart, only: [:purchase_for_cod]
- 	before_filter :set_payu_processed_cart, only: [:success, :failure]
  	respond_to :json
+ 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
+ 	prepend_before_filter :authenticate_user_from_token!
+ 	before_filter :set_or_create_cart, only: [:purchase_for_cod]
+ 	before_filter :set_payu_processed_cart, only: [:success, :failure]
 
  	def get_hash
 		checksum = Payment.calculate_hash(params[:payment][:setup_details]) || nil
@@ -39,8 +39,13 @@ class Web::PaymentsController < ApplicationController
  	end
 
  	private
- 	def set_current_cart
-		@cart = @current_user.carts.where(aasm_state: 'not_started').first.presence 		
+ 	def set_or_create_cart
+ 		session = @current_user.sessions.where(session_token: params[:auth_token]).first
+ 		return permission_denied unless session
+ 	  if @current_user 
+ 	    @cart = @current_user.carts.where(aasm_state: 'not_started').first.presence || Cart.create(user_id: @current_user.id)
+ 	    @cart.generate_order_id if !@cart.order_id.present?
+ 	  end
  	end
 
  	def set_payu_processed_cart

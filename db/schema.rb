@@ -102,6 +102,14 @@ ActiveRecord::Schema.define(version: 20160310222442) do
     t.text     "category",            default: "regular"
   end
 
+  create_table "contact_us", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "issue"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "cuisines", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false

@@ -116,11 +116,9 @@ angular.module('foodmashApp.controllers')
 			Payment.purchaseForCod($scope.cart).then(function(response){
 				toaster.pop('success', 'Cart was purchased!');
 				$rootScope.enableButton('.cod-button');
-				$location.path('/');
-				CartService.refreshCart();
-				setPrimaryAsDeliveryAddress();
+				refreshCartAndSelectDelAdd();
 			}, function(err){
-				toaster.pop('error', 'Password incorrect!');
+				toaster.pop('error', 'Cart was not purchased!');
 				$rootScope.enableButton('.cod-button');
 			});
 		}
@@ -130,9 +128,7 @@ angular.module('foodmashApp.controllers')
 		var d = $q.defer();
 		Cart.addToCart($scope.cart).then(function(cart){
 			toaster.pop('success', 'Cart was submitted!');
-			$location.path('/');
-			CartService.refreshCart();
-			setPrimaryAsDeliveryAddress();
+			refreshCartAndSelectDelAdd();
 			d.resolve(cart);
 		}, function(err){
 			toaster.pop('error', 'Cart was not submitted!');
@@ -185,6 +181,12 @@ angular.module('foodmashApp.controllers')
 		});
 		$scope.cart.total = total;
 		calcTaxAndGrandTotal();
+	};
+
+	function refreshCartAndSelectDelAdd(){
+		$location.path('/');
+		CartService.refreshCart();
+		setPrimaryAsDeliveryAddress();
 	};
 
 	function calcTaxAndGrandTotal(){
