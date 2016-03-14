@@ -59,7 +59,7 @@ class Api::V1::PaymentsController < ApiApplicationController
 
 	def purchase_by_cod
 		return invalid_data unless params[:data][:payment_method]
-		if current_user.valid_password? params[:data][:password] and @cart.purchase! and @cart.set_payment_method('COD')
+		if @cart.set_payment_method('COD') and @cart.purchase! 
 			render status: 200, json: {success: true, data: {order_id: @cart.order_id}}
 		else
 			render status: 200, json: {success: false, error: 'Password was incorrect!'}

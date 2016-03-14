@@ -112,19 +112,17 @@ angular.module('foodmashApp.controllers')
 				toaster.pop('error', 'Could not generate hash');
 			});
 		}if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
-			if($scope.passwordForCod){
-				$scope.processCart();
-				$rootScope.disableButton('.confirm-button', 'Confirming...');
-				Payment.checkPasswordForCod($scope.passwordForCod).then(function(response){
-					toaster.pop('success', 'Cart was purchased!');
-					$rootScope.enableButton('.confirm-button');
-				}, function(err){
-					toaster.pop('error', 'Password incorrect!');
-					$rootScope.enableButton('.confirm-button');
-				});
-			}else{
-				toaster.pop('error', 'Password field is empty!');
-			}
+			$rootScope.disableButton('.cod-button', 'Confirming...');
+			Payment.purchaseForCod($scope.cart).then(function(response){
+				toaster.pop('success', 'Cart was purchased!');
+				$rootScope.enableButton('.cod-button');
+				$location.path('/');
+				CartService.refreshCart();
+				setPrimaryAsDeliveryAddress();
+			}, function(err){
+				toaster.pop('error', 'Password incorrect!');
+				$rootScope.enableButton('.cod-button');
+			});
 		}
 	};
 
