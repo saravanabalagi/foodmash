@@ -34,11 +34,12 @@ angular.module('foodmashApp.controllers')
 		});
 	};
 
+	$scope.load();
+
 	ComboService.getComboForDescription().then(function(combo){
 		$scope.combo = combo;
 	  	setQuantityForComboItems();
 	  	pushDefaultComboOption($scope.combo);
-		$scope.load();
 	}, function(err){
 		$scope.combo = null;
 	});
