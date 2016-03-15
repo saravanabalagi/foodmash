@@ -1,11 +1,11 @@
 class Api::V1::CartsController < ApiApplicationController
 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 	prepend_before_filter :authenticate_user_from_token!
-	before_filter :set_or_create_cart, only: [:index, :add_cart, :destroy, :purchase, :show]
+	before_filter :set_or_create_cart, only: [:add_cart, :destroy, :purchase]
 	respond_to :json
 
 	def history
-		@carts = @current_user.carts.where(params.permit(:data).permit(:id, :aasm_state, :order_id)).where.not(aasm_state: 'not_started') if @current_user
+		@carts = @current_user.carts.where(params.fetch(:data, {}).permit(:id, :aasm_state, :order_id)).where.not(aasm_state: 'not_started')
 		if @carts
 			render status: 200, json: {success: true, data: @carts.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description]}], only: [:id, :quantity, :total]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at, :grand_total, :vat, :delivery_charge]) }
 		else
@@ -14,9 +14,9 @@ class Api::V1::CartsController < ApiApplicationController
 	end
 
 	def show 
+		@cart = @current_user.carts.where(params.fetch(:data, {}).permit(:id, :aasm_state, :order_id)).first.presence
 		if @cart
-			render status: 200, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description, :label]}], only: [:id, :quantity, :total]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at]) }
-		else
+			render status: 200, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description, :label]}], only: [:id, :quantity, :total]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :updated_at, :grand_total, :vat, :delivery_charge]) }
 			render status: 404, json: {success: false, error: "Could not fetch order!"}
 		end
 	end
@@ -27,14 +27,6 @@ class Api::V1::CartsController < ApiApplicationController
 			render status: 200, json: {success: true, data: {order_id: @cart.order_id}}
 		else
 			render status: 404, json: {success: false, error: "Could not fetch cart!"}
-		end
-	end
-
-	def index
-		if @cart and @cart.save!
-			render status: 200, json: {success: true, data: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name]}}, :category => {only: [:id, :name, :description]}], only: [:id, :quantity]} } ,:product => {only: [:name, :price, :description]}], only: [:id, :quantity, :total]} }, only: [:id, :total]) }
-		else
-			render status: 404, json: {success: false, error: "Could not find cart!"}
 		end
 	end
 
