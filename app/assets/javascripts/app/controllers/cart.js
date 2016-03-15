@@ -18,6 +18,7 @@ angular.module('foodmashApp.controllers')
 	$scope.cart.delivery_charge = 0;
 	$scope.delivery_addresses = [];
 	$scope.delivery_address = new DeliveryAddress;
+	setNameAndMobileNo();
 	$scope.loadingDeliveryAddresses = true;
 	$scope.payment_method = "";
 
@@ -145,6 +146,7 @@ angular.module('foodmashApp.controllers')
 			$scope.delivery_addresses.push($scope.delivery_address);
 			$scope.delivery_address = new DeliveryAddress;
 			$scope.reload();
+			setNameAndMobileNo();
 			d.resolve(response);
 		}, function(err){
 			toaster.pop('error', 'Delivery Address was not created!');
@@ -181,6 +183,11 @@ angular.module('foodmashApp.controllers')
 		});
 		$scope.cart.total = total;
 		calcTaxAndGrandTotal();
+	};
+
+	function setNameAndMobileNo(){
+		$scope.delivery_address.name = $rootScope.currentUser.name;
+		$scope.delivery_address.contact_no = $rootScope.currentUser.mobile_no;
 	};
 
 	function refreshCartAndSelectDelAdd(){
