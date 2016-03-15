@@ -6,6 +6,7 @@ angular.module('foodmashApp.controllers')
 
 	$scope.selectedDishes = [];
 	$scope.combo = {};
+	$scope.load();
 
 	$scope.routeToRoot = function(){
 		$location.path("/");
