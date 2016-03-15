@@ -6,6 +6,7 @@ angular.module('foodmashApp.controllers')
 
 	$scope.cart = {};
 	if($rootScope.currentUser){
+		setNameAndMobileNo();
 		$scope.setup_details = {
 			"email": $rootScope.currentUser.email,
 			"productinfo": "a bunch of combos from Foodmash",
@@ -18,7 +19,6 @@ angular.module('foodmashApp.controllers')
 	$scope.cart.delivery_charge = 0;
 	$scope.delivery_addresses = [];
 	$scope.delivery_address = new DeliveryAddress;
-	setNameAndMobileNo();
 	$scope.loadingDeliveryAddresses = true;
 	$scope.payment_method = "";
 
