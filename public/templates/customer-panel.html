@@ -84,7 +84,7 @@
         </div>
 
         <div class="order-header">
-          <span class="order-date">{{selectedCart.updated_at}}<span class="order-time">{{}}</span></span>
+          <span class="order-date">{{selectedCart.updated_at}}<span class="order-time">{{selectedCart.purchased_at | date: 'MMM dd, yyyy HH:mm'}}</span></span>
           <span class="order-amount-wrapper">
             <span class="order-amount">{{selectedCart.grand_total}}</span>
             <i class="fa fa-question-circle" title="Payment Method" data-placement="bottom" data-content="Credit Card ending with x574" data-toggle="popover" data-trigger="hover"></i>

@@ -6,7 +6,6 @@ angular.module('foodmashApp.controllers')
 
 	$scope.selectedDishes = [];
 	$scope.combo = {};
-	$scope.load();
 
 	$scope.routeToRoot = function(){
 		$location.path("/");
@@ -39,6 +38,7 @@ angular.module('foodmashApp.controllers')
 		$scope.combo = combo;
 	  	setQuantityForComboItems();
 	  	pushDefaultComboOption($scope.combo);
+		$scope.load();
 	}, function(err){
 		$scope.combo = null;
 	});
