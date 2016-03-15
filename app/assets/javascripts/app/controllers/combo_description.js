@@ -11,7 +11,7 @@ angular.module('foodmashApp.controllers')
 		$location.path("/");
 	};
 
-	var load = function(){
+	$scope.load = function(){
 		angular.element(document).ready(function (){
 			$(function(){
                 $(".thumbnail.combo-option > .img-wrapper").each(function() { $(this).height($(this).width()*0.75); });
@@ -34,7 +34,7 @@ angular.module('foodmashApp.controllers')
 		});
 	};
 
-	load();
+	$scope.load();
 
 	ComboService.getComboForDescription().then(function(combo){
 		$scope.combo = combo;
