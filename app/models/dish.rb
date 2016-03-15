@@ -37,9 +37,8 @@ class Dish < ActiveRecord::Base
   private
 
   def ensure_picture_is_encoded
-    if self.picture_changed?
-      self.picture = URI.encode(self.picture) if self.picture.present?
-    end
+    decoded_pic = URI.decode(self.picture)
+    self.picture = URI.encode(decoded_pic) if self.picture.present?
     return true
   end
 

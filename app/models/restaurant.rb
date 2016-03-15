@@ -50,9 +50,8 @@ class Restaurant < ActiveRecord::Base
 
   private
   def ensure_logo_is_encoded
-    if self.logo_changed?
-      self.logo = URI.encode(self.logo) if self.logo.present?
-    end
+  	decoded_logo = URI.decode(self.logo)
+    self.logo = URI.encode(decoded_logo) if self.logo.present?
     return true
   end
 end
