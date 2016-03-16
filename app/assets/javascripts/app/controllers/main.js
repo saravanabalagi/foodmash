@@ -100,8 +100,9 @@ angular.module('foodmashApp.controllers')
 			if($scope.selectedSortOption){
 				$scope.combos = orderBy($scope.combos, 'price', option.reverse);
 			}else{
-				$scope.combos = $scope.loadedFromPackagingCentre;
+				applyFilters();
 			}
+			$scope.load();
 		};
 
 		$scope.checkIfSortOptionSelected = function(option){
