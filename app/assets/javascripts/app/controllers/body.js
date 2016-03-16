@@ -7,15 +7,13 @@ angular.module('foodmashApp.controllers')
 		CartService.setCartGlobally();
 		$scope.cities = [];
 		$scope.selectedCity = {};
-		$scope.selectedArea = {};
+		$scope.selectedArea = {name: 'Choose Area'};
 
 		City.setCity().then(function(cities){
 			if(cities.length > 0){
 				$scope.cities = cities;
 				$scope.selectedCity = cities[0];
 				$rootScope.city = $scope.selectedCity;
-				$scope.selectedArea = cities[0].areas[0];
-				$rootScope.area = $scope.selectedArea;
 			}else{
 				$scope.cities = null;
 			}

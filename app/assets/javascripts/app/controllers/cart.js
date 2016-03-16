@@ -5,6 +5,11 @@ angular.module('foodmashApp.controllers')
 .controller('CartController', ['$scope', '$q', 'toaster','$location','CartService','$rootScope', 'DeliveryAddress', 'Cart', 'Payment', '$http', '$httpParamSerializer', function($scope, $q, toaster, $location, CartService, $rootScope, DeliveryAddress, Cart, Payment, $http, $httpParamSerializer){
 
 	$scope.cart = {};
+	$scope.cart.delivery_charge = 0;
+	$scope.delivery_addresses = [];
+	$scope.delivery_address = new DeliveryAddress;
+	$scope.loadingDeliveryAddresses = true;
+	$scope.payment_method = "";
 	if($rootScope.currentUser){
 		setNameAndMobileNo();
 		$scope.setup_details = {
@@ -16,11 +21,6 @@ angular.module('foodmashApp.controllers')
 			"furl": 'http://www.foodmash.net/web/payments/failure'
 		};
 	}
-	$scope.cart.delivery_charge = 0;
-	$scope.delivery_addresses = [];
-	$scope.delivery_address = new DeliveryAddress;
-	$scope.loadingDeliveryAddresses = true;
-	$scope.payment_method = "";
 
 	CartService.getCartInfo().then(function(cart){
 		$scope.cart = cart;
