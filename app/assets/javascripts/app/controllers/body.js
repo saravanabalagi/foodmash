@@ -29,10 +29,10 @@ angular.module('foodmashApp.controllers')
 		$scope.selectArea = function(area){
 			$scope.selectedArea = area;
 			$rootScope.area = $scope.selectedArea;
-		};
-
-		$scope.setLoadCombos = function(){
-			$scope.loadCombos = true;
+			setLoadCombos();
+			angular.element(document).ready(function(){
+				$('.continue-button').click();
+			});
 		};
 
 		$scope.checkIfSideBarPresent = function(){
@@ -140,6 +140,10 @@ angular.module('foodmashApp.controllers')
 		            return false;
 		    }
 		    return true;
+		};
+
+		function setLoadCombos(){
+			$scope.loadCombos = true;
 		};
 }]);
 

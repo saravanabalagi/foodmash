@@ -134,6 +134,7 @@ angular.module('foodmashApp.controllers')
  	 			$scope.combos = $scope.loadedFromPackagingCentre;
  	 		}else{
  	 			applyFilters();
+ 	 			$scope.load();
  	 		}
  	 	};
 
