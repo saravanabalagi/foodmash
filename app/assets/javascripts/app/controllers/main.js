@@ -59,9 +59,11 @@ angular.module('foodmashApp.controllers')
 		if($rootScope.combos){
 			$scope.combos = $rootScope.combos;
 			$scope.loadedFromPackagingCentre = $rootScope.combos;
+			$scope.load();
 		}else{
 			$rootScope.combos = null;
 			$rootScope.combos_hash = null;
+			$scope.load();
 		}
 
 		$scope.$watch('loadCombos', function(n, o){
@@ -134,8 +136,8 @@ angular.module('foodmashApp.controllers')
  	 			$scope.combos = $scope.loadedFromPackagingCentre;
  	 		}else{
  	 			applyFilters();
- 	 			$scope.load();
  	 		}
+ 	 		$scope.load();
  	 	};
 
 		function applyFilters(){
