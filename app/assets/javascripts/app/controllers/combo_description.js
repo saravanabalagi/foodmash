@@ -34,6 +34,8 @@ angular.module('foodmashApp.controllers')
 		});
 	};
 
+	$scope.load();
+
 	ComboService.getComboForDescription().then(function(combo){
 		$scope.combo = combo;
 	  	setQuantityForComboItems();

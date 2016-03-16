@@ -5,7 +5,13 @@ angular.module('foodmashApp.controllers')
 .controller('CartController', ['$scope', '$q', 'toaster','$location','CartService','$rootScope', 'DeliveryAddress', 'Cart', 'Payment', '$http', '$httpParamSerializer', function($scope, $q, toaster, $location, CartService, $rootScope, DeliveryAddress, Cart, Payment, $http, $httpParamSerializer){
 
 	$scope.cart = {};
+	$scope.cart.delivery_charge = 0;
+	$scope.delivery_addresses = [];
+	$scope.delivery_address = new DeliveryAddress;
+	$scope.loadingDeliveryAddresses = true;
+	$scope.payment_method = "";
 	if($rootScope.currentUser){
+		setNameAndMobileNo();
 		$scope.setup_details = {
 			"email": $rootScope.currentUser.email,
 			"productinfo": "a bunch of combos from Foodmash",
@@ -15,11 +21,6 @@ angular.module('foodmashApp.controllers')
 			"furl": 'http://www.foodmash.net/web/payments/failure'
 		};
 	}
-	$scope.cart.delivery_charge = 0;
-	$scope.delivery_addresses = [];
-	$scope.delivery_address = new DeliveryAddress;
-	$scope.loadingDeliveryAddresses = true;
-	$scope.payment_method = "";
 
 	CartService.getCartInfo().then(function(cart){
 		$scope.cart = cart;
@@ -116,11 +117,9 @@ angular.module('foodmashApp.controllers')
 			Payment.purchaseForCod($scope.cart).then(function(response){
 				toaster.pop('success', 'Cart was purchased!');
 				$rootScope.enableButton('.cod-button');
-				$location.path('/');
-				CartService.refreshCart();
-				setPrimaryAsDeliveryAddress();
+				refreshCartAndSelectDelAdd();
 			}, function(err){
-				toaster.pop('error', 'Password incorrect!');
+				toaster.pop('error', 'Cart was not purchased!');
 				$rootScope.enableButton('.cod-button');
 			});
 		}
@@ -130,9 +129,7 @@ angular.module('foodmashApp.controllers')
 		var d = $q.defer();
 		Cart.addToCart($scope.cart).then(function(cart){
 			toaster.pop('success', 'Cart was submitted!');
-			$location.path('/');
-			CartService.refreshCart();
-			setPrimaryAsDeliveryAddress();
+			refreshCartAndSelectDelAdd();
 			d.resolve(cart);
 		}, function(err){
 			toaster.pop('error', 'Cart was not submitted!');
@@ -149,6 +146,7 @@ angular.module('foodmashApp.controllers')
 			$scope.delivery_addresses.push($scope.delivery_address);
 			$scope.delivery_address = new DeliveryAddress;
 			$scope.reload();
+			setNameAndMobileNo();
 			d.resolve(response);
 		}, function(err){
 			toaster.pop('error', 'Delivery Address was not created!');
@@ -187,8 +185,19 @@ angular.module('foodmashApp.controllers')
 		calcTaxAndGrandTotal();
 	};
 
+	function setNameAndMobileNo(){
+		$scope.delivery_address.name = $rootScope.currentUser.name;
+		$scope.delivery_address.contact_no = $rootScope.currentUser.mobile_no;
+	};
+
+	function refreshCartAndSelectDelAdd(){
+		$location.path('/');
+		CartService.refreshCart();
+		setPrimaryAsDeliveryAddress();
+	};
+
 	function calcTaxAndGrandTotal(){
-		$scope.cart.vat = $scope.cart.total * 0.02;
+		$scope.cart.vat = $scope.cart.total * 0.145;
 		if($scope.cart.total == 0){
 			$scope.cart.delivery_charge = 0;
 		}

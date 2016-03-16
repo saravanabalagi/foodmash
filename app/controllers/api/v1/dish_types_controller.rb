@@ -3,7 +3,7 @@ class Api::V1::DishTypesController < ApiApplicationController
  respond_to :json
 
  def index
- 	dish_types = DishType.where(params.permit(:data).permit(:id, :name))
+ 	dish_types = DishType.where(params.fetch(:data, {}).permit(:id, :name))
  	if dish_types
  		render status: 200, json: {success: true, data: dish_types.as_json}
  	else

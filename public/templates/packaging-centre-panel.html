@@ -36,7 +36,14 @@
             <th><i class="fa fa-fw fa-check-circle" ></i></th>
             <th>
               <div class="form-group label-floating is-empty">
-                <label class="control-label">Order ID</label>
+                <label class="control-label">Name</label>
+                <input class="form-control" type="text">
+                <span class="material-input"></span>
+              </div>
+            </th>
+            <th>
+              <div class="form-group label-floating is-empty">
+                <label class="control-label">Area</label>
                 <input class="form-control" type="text">
                 <span class="material-input"></span>
               </div>
@@ -55,19 +62,18 @@
                 <span class="material-input"></span>
               </div>
             </th>
-            <!-- <th>Time elapsed</th> -->
           </tr>
           </thead>
           <tbody>
           <tr ng-repeat="cart in carts" ng-click="selectCart(cart); routeToPackagingCentreOrder(cart)" ng-class="{'active' : selectedCart == cart}">
             <td><i class="{{getStatusIcon(cart.aasm_state)}}" data-toggle="tooltip" title="{{getStatusAlias(cart.aasm_state)}}" data-delay="{'show': 1}" data-placement="left"></i></td>
-            <td class="order-id">{{cart.order_id}}</td>
+            <td class="order-id">{{cart.delivery_address.name}}</td>
+            <td class="order-id">{{cart.delivery_address.area.name}}</td>
             <td class="order-amount">{{cart.grand_total}}</td>
             <td>
               <span class="order-date">{{cart.purchased_at | date: 'MMM dd, yyyy HH:mm:ss'}}</span>
               <span class="order-time"></span>
             </td>
-            <!-- <td class="time-elapsed">{{getMilliSecondsDiff(cart)}}</td> -->
           </tr>
           <tr>
             <td colspan="5">Not found? See <span>{{selectedOption.checkout}} Orders</span></td>

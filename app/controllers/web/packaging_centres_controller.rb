@@ -1,5 +1,6 @@
 class Web::PackagingCentresController < ApplicationController
 	respond_to :json
+	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
 	before_filter :get_packaging_centre, only: [:update, :destroy, :get_carts_for_centre]
 	load_and_authorize_resource skip_load_resource except: [:get_carts_for_centre]
 
@@ -40,7 +41,7 @@ class Web::PackagingCentresController < ApplicationController
 	def get_carts_for_centre
 		@carts = @packaging_centre.get_carts_for_centre
 		if @carts
-			render status: 200, json: @carts.as_json(:include => [{:orders => {:include => [{:order_items => {:include => [{:item => {:include => {:restaurant => {only: [:id, :name, :area_id, :landline]}}, only: [:id, :name, :price]}}], only: [:id, :quantity, :category_id, :category_type]} } ,:product => {only: [:id, :name, :price]}], only: [:id, :quantity, :total, :updated_at]} }, :user, :delivery_address => {:include => [:area => {:include => [:city]}]}], only: [:id, :total, :payment_method, :order_id, :aasm_state, :purchased_at, :grand_total, :vat, :delivery_charge])
+			render status: 200, json: @carts.as_json(:include => [{:orders => {:include => [{:order_items => {:include => [{:item => {:include => {:restaurant => {only: [:id, :name, :area_id, :landline]}}, only: [:id, :name, :price]}}], only: [:id, :quantity, :category_id, :category_type]} } ,:product => {only: [:id, :name, :price]}], only: [:id, :quantity, :total, :updated_at]} }, :user, :delivery_address => {:include => [:area => {:include => [:city]}]}], only: [:id, :total, :payment_method, :order_id, :aasm_state, :purchased_at, :grand_total, :vat, :delivery_charge, :delivered_at])
 		else
 			render status: 422, json: {error: "Could not fetch carts!"}
 		end
