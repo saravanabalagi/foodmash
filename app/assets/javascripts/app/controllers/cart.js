@@ -197,7 +197,7 @@ angular.module('foodmashApp.controllers')
 	};
 
 	function calcTaxAndGrandTotal(){
-		$scope.cart.vat = $scope.cart.total * 0.02;
+		$scope.cart.vat = $scope.cart.total * 0.145;
 		if($scope.cart.total == 0){
 			$scope.cart.delivery_charge = 0;
 		}
