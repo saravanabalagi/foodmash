@@ -138,7 +138,7 @@ angular.module('foodmashApp.controllers')
  	 	function applySortFilterIfSelected(){
  	 		var orderBy = $filter('orderBy');
  	 		if($scope.selectedSortOption){
- 	 			$scope.combos = orderBy($scope.combos, 'price', option.reverse);
+ 	 			$scope.combos = orderBy($scope.combos, 'price', $scope.selectedSortOption.reverse);
  	 		}
  	 		$scope.load();
  	 	};
