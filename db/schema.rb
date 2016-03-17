@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160310222442) do
+ActiveRecord::Schema.define(version: 20160317070527) do
 
   create_table "areas", force: :cascade do |t|
     t.string   "name"
@@ -249,12 +249,7 @@ ActiveRecord::Schema.define(version: 20160310222442) do
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
 
-  create_table "versions", force: :cascade do |t|
-    t.string   "name"
-    t.text     "changelog"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.boolean  "force",      default: false
-  end
+# Could not dump table "versions" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
 end

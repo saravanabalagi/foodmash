@@ -59,9 +59,11 @@ angular.module('foodmashApp.controllers')
 		if($rootScope.combos){
 			$scope.combos = $rootScope.combos;
 			$scope.loadedFromPackagingCentre = $rootScope.combos;
+			$scope.load();
 		}else{
 			$rootScope.combos = null;
 			$rootScope.combos_hash = null;
+			$scope.load();
 		}
 
 		$scope.$watch('loadCombos', function(n, o){
@@ -94,12 +96,7 @@ angular.module('foodmashApp.controllers')
 			}else{
 				$scope.selectedSortOption = option;
 			}
-			var orderBy = $filter('orderBy');
-			if($scope.selectedSortOption){
-				$scope.combos = orderBy($scope.combos, 'price', option.reverse);
-			}else{
-				$scope.combos = $scope.loadedFromPackagingCentre;
-			}
+			applySortFilterIfSelected();
 		};
 
 		$scope.checkIfSortOptionSelected = function(option){
@@ -135,6 +132,15 @@ angular.module('foodmashApp.controllers')
  	 		}else{
  	 			applyFilters();
  	 		}
+ 	 		$scope.load();
+ 	 	};
+
+ 	 	function applySortFilterIfSelected(){
+ 	 		var orderBy = $filter('orderBy');
+ 	 		if($scope.selectedSortOption){
+ 	 			$scope.combos = orderBy($scope.combos, 'price', $scope.selectedSortOption.reverse);
+ 	 		}
+ 	 		$scope.load();
  	 	};
 
 		function applyFilters(){
@@ -147,6 +153,7 @@ angular.module('foodmashApp.controllers')
 				if(survive) filteredCombos.push(combo);
 			});
 			$scope.combos = filteredCombos;
+			applySortFilterIfSelected();
 		};
 
 	 	function checkIfTypeSelected(options, alias){
