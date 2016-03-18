@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160317070527) do
+ActiveRecord::Schema.define(version: 20160317085109) do
 
   create_table "areas", force: :cascade do |t|
     t.string   "name"
@@ -99,15 +99,7 @@ ActiveRecord::Schema.define(version: 20160317070527) do
     t.boolean  "available"
     t.string   "label"
     t.string   "picture"
-    t.text     "category",            default: "regular"
-  end
-
-  create_table "contact_us", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "issue"
-    t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.text     "category",            default: "Regular"
   end
 
   create_table "cuisines", force: :cascade do |t|
@@ -249,7 +241,13 @@ ActiveRecord::Schema.define(version: 20160317070527) do
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
 
-# Could not dump table "versions" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "versions", force: :cascade do |t|
+    t.string   "version_name"
+    t.text     "changelog"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.boolean  "force",        default: false
+    t.integer  "version_code"
+  end
 
 end
