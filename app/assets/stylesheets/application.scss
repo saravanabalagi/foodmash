@@ -1166,7 +1166,7 @@ footer {
   section {
     &.location-section {
       a { color: #CCC; }
-      a:hover, a:focus, a:active { color: #FFF; text-decoration:none; background-color: transparent; }
+      a:hover { color: #FFF; text-decoration:none; background-color: transparent; }
       padding: 15px 15px;
       > i { margin-right: 5px; }
       > ul {
@@ -1308,6 +1308,24 @@ footer {
 @media (min-width: 1300px) {
   body.sidebar-body { padding-left: 200px; }
   .sidebar-wrapper { width: 200px; }
+}
+
+//Disable hover for smaller devices
+@media (max-width: 768px) {
+  .sidebar-wrapper section > ul.sidebar-nav > li
+  {
+    &.active {
+      a:hover {
+        background-color: rgba(0, 0, 0, 0.50);
+        color: #FFF;
+      }
+    }
+    > a:hover {
+      background-color: inherit;
+      color: inherit;
+      > span { transform: translateX(0px); }
+    }
+  }
 }
 
 .sidebar-wrapper.slide-and-hide { left:-200px !important; }
