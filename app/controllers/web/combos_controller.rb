@@ -5,7 +5,7 @@ class Web::CombosController < ApplicationController
 	load_and_authorize_resource skip_load_resource except: [:load_from_packaging_centre, :get_combo_availability, :loadAWS]
 
 	def index
-		@combos = Combo.where(params.permit(:id, :name, :packaging_centre_id))
+		@combos = Combo.where(params.permit(:id, :name, :packaging_centre_id)).order("price ASC")
 		if @combos 
 			render status: 200, json: @combos.as_json(:include => [{:combo_options => {:include => [{:combo_option_dishes => {:include => {:dish => {:include => [{:restaurant => {:include => :area}}, :dish_type] } } } }, :dish_type] } }, {:combo_dishes => {:include => {:dish => {:include => [{:restaurant => {:include => :area }}, :dish_type]} } } }, :packaging_centre])
 		else

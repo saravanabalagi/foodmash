@@ -197,16 +197,16 @@ angular.module('foodmashApp.controllers')
 	};
 
 	function calcTaxAndGrandTotal(){
-		$scope.cart.vat = $scope.cart.total * 0.02;
+		$scope.cart.vat = $scope.cart.total * 0;
 		if($scope.cart.total == 0){
 			$scope.cart.delivery_charge = 0;
 		}
 		if($scope.cart.total && $scope.cart.vat){
 			if($scope.cart.total < 200){
-				$scope.cart.delivery_charge = 30;
+				$scope.cart.delivery_charge = 0;
 				$scope.cart.grand_total = ($scope.cart.total + $scope.cart.vat + $scope.cart.delivery_charge).toFixed(2);
 			}else{
-				$scope.cart.delivery_charge = 40;
+				$scope.cart.delivery_charge = 0;
 				$scope.cart.grand_total = ($scope.cart.total + $scope.cart.vat + $scope.cart.delivery_charge).toFixed(2);
 			}
 		}else{
