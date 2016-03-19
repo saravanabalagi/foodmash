@@ -451,7 +451,7 @@ footer {
     tr {
       td.td-empty {
         background-color: transparent !important;
-        > img { padding: 40px 0; }
+        > img { width: 100%; padding: 40px 0; }
       }
       .quantity-counter {
         .quantity { padding: 0px 2px; vertical-align: middle; }
@@ -1227,7 +1227,6 @@ footer {
       > li.active a {
         background-color: rgba(0,0,0,0.5);
         color: #FFF;
-        &:hover:before { background-color: $white;  }
         &:before {
           left: 0;
           background-color: $logo-red;
@@ -1261,7 +1260,7 @@ footer {
             top: 0;
             bottom: 0;
             width: 3px;
-            background-color: $white;
+            background-color: transparent;
             transition: background-color 0.2s ease-in-out;
           }
         }
