@@ -37,7 +37,7 @@ angular.module('foodmashApp.controllers')
 	    });
 	 };
 
-	if($rootScope.currentUser && !$rootScope.delivery_addresses){
+	if($rootScope.currentUser && !$rootScope.delivery_addresses && $rootScope.area && $rootScope.area.id){
 		DeliveryAddress.query({user_id: $rootScope.currentUser.id, area_id: $rootScope.area.id}).then(function(delivery_addresses){
 			if(delivery_addresses.length > 0){
 				$scope.delivery_addresses = delivery_addresses;
