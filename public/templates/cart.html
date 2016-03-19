@@ -24,30 +24,25 @@
           <tr>
             <td></td>
             <td>Total</td>
-            <td></td>
-            <td class="text-align-right"><span class="rupee"></span>{{cart.total}}</td>
+            <td colspan="2" class="text-align-right"><span class="rupee"></span>{{cart.total}}</td>
             <td></td>
           </tr>
           <tr>
             <td></td>
-            <td>VAT</td>
-            <td>2%</td>
-            <td class="text-align-right"><span class="rupee"></span>{{cart.vat.toFixed(2)}}</td>
-            <td></td>
+            <td>VAT 2%</td>
+            <td colspan="2" class="text-align-right"><span class="rupee"></span>{{cart.vat.toFixed(2)}}</td>
             <td></td>
           </tr>
           <tr>
             <td></td>
             <td>Aggregation + Delivery</td>
-            <td></td>
-            <td class="text-align-right"><span class="rupee"></span>{{cart.delivery_charge}}</td>
+            <td colspan="2" class="text-align-right"><span class="rupee"></span>{{cart.delivery_charge}}</td>
             <td></td>
           </tr>
           <tr>
             <td></td>
             <td>Grand Total</td>
-            <td></td>
-            <td class="text-align-right"><span class="rupee">₹ </span>{{cart.grand_total}}</td>
+            <td colspan="2" class="text-align-right"><span class="rupee">₹ </span>{{cart.grand_total}}</td>
             <td></td>
           </tr>
           </tfoot>
