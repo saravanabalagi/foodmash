@@ -133,6 +133,10 @@ angular.module('foodmashApp.controllers')
 			$rootScope.removeLoader('.order-status-update-wrapper');
 			d.reject(err);
 		});
+<<<<<<< HEAD
+        $scope.killTimer();
+=======
+>>>>>>> 9a4a43179a001dd36cbbc173335124c52373b36e
 		return d.promise;
 	};
 

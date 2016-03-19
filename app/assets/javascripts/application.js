@@ -30,19 +30,7 @@
 $(document).ready( function() {
 
     $.material.init();
-
     $('.rupee').html("&#8377; ");
-
-    $('body').swipe( {
-        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
-            var sidebar = $('.sidebar-wrapper');
-            if(!$('body').hasClass('sidebar-body')
-            || ($(document).width()>435)) return;
-            else if(((!sidebar.hasClass('slider-open')))&&(direction!='right')
-                || ((sidebar.hasClass('slider-open')))&&(direction!='left')) return;
-            sidebarToggle();
-        }
-    });
 
     $(".location-dropdown .dropdown-menu li a").click(function(){
         $(this).parents(".dropdown").find('> a').html($(this).text() + ' <span class="caret"></span>');
@@ -56,6 +44,7 @@ $(document).ready( function() {
         $("html, body").animate({ scrollTop: 0 }, "slow");
     });
 
+    $("body").swipe({ swipeLeft: swipeBodyLeft, swipeRight: swipeBodyRight, allowPageScroll: "vertical" });
     var scrollEnded = $.debounce(100, false, function () {
         if($(this).scrollTop() > 100)
             $(".back-to-top").animate({opacity:0}).fadeIn().animate({opacity:1},100);
@@ -136,6 +125,22 @@ function sidebarToggle() {
     var sidebar = $('.sidebar-wrapper');
     if(sidebar.hasClass('slider-open')) sidebar.addClass("slide-and-hide").removeClass("slider-open");
     else sidebar.addClass("slider-open").removeClass("slide-and-hide");
+}
+
+function swipeBodyLeft() {
+    console.log("swiped");
+    if(!$('body').hasClass('sidebar-body')
+        || ($(document).width()>435)) return;
+    else if(!$('.sidebar-wrapper').hasClass('slider-open')) return;
+    sidebarToggle();
+}
+
+function swipeBodyRight() {
+    console.log("swiped");
+    if(!$('body').hasClass('sidebar-body')
+        || ($(document).width()>435)) return;
+    else if($('.sidebar-wrapper').hasClass('slider-open')) return;
+    sidebarToggle();
 }
 
 
