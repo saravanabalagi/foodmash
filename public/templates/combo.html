@@ -5,6 +5,7 @@
  <td ng-hide="updateShowForCombo"><i class="{{getIconForCategory(combo)}}"></i></td>
  <td ng-hide="updateShowForCombo">{{combo.packaging_centre.name}}</td>
  <td ng-hide="updateShowForCombo" style="width:40px"><i class="material-icons">image</i></td>
+ <td ng-hide="updateShowForCombo">{{combo.price}}</td>
  <td ng-hide="updateShowForCombo"  ng-click="updateShowForCombo = !updateShowForCombo; setUpdate(combo)" ng-init="updateShowForCombo=false"><i class="icon-edit"></i></td>
  <td ng-hide="updateShowForCombo" ng-click="deleteCombo(combo)"><i class="icon-trash"></i></td>
 

@@ -58,8 +58,14 @@ angular.module('foodmashApp.directives')
       $scope.logout = function(){
         $rootScope.disableButton('.logout-button', 'logging out...');
         UserService.logout()
-         .then(function(){
+         .then(function(response){
          	 $scope.currentUser = null;
+           $rootScope.currentUser = null; $rootScope.delivery_addresses = null;
+           toaster.pop('error', 'Signed Out!');
+           $rootScope.enableButton('.logout-button');
+           $location.path("/");
+        }, function(err){
+           $scope.currentUser = null;
            $rootScope.currentUser = null; $rootScope.delivery_addresses = null;
            toaster.pop('error', 'Signed Out!');
            $rootScope.enableButton('.logout-button');
