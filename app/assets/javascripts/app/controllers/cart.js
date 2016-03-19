@@ -201,7 +201,7 @@ angular.module('foodmashApp.controllers')
 		if($scope.cart.total == 0){
 			$scope.cart.delivery_charge = 0;
 		}
-		if($scope.cart.total && $scope.cart.vat){
+		if($scope.cart.total){
 			if($scope.cart.total < 200){
 				$scope.cart.delivery_charge = 0;
 				$scope.cart.grand_total = ($scope.cart.total + $scope.cart.vat + $scope.cart.delivery_charge).toFixed(2);
