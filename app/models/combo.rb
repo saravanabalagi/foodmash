@@ -17,10 +17,9 @@ class Combo < ActiveRecord::Base
 	private
 
 	def ensure_picture_is_encoded
-	  if self.picture_changed?
-	    self.picture = URI.encode(self.picture) if self.picture.present?
-	  end
-	  return true
+	 	decoded_pic = URI.decode(self.picture) if self.picture.present?
+		self.picture = URI.encode(decoded_pic) if self.picture.present?
+	   	return true
 	end
 
 	def calculate_price

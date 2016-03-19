@@ -17,10 +17,10 @@ angular.module('foodmashApp.resources')
 		return d.promise;
 	};
 
-	resource.checkPasswordForCod = function(password){
+	resource.purchaseForCod = function(cart){
 		var self = this;
 		var d = $q.defer();
-		resource.$post(self.$url('checkPasswordForCod'), {password: password}).then(function(response){
+		resource.$post(self.$url('purchaseForCod'), {cart: cart}).then(function(response){
 			d.resolve(response);
 		}, function(err){ d.reject(err); })
 		return d.promise;

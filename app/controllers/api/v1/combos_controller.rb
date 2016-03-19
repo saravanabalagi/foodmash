@@ -4,7 +4,7 @@ class Api::V1::CombosController < ApiApplicationController
 	respond_to :json
 
 	def index
-		@combos = Combo.where(params.permit(:data).permit(:id, :packaging_centre_id)).where(active: true)
+		@combos = Combo.where(params.fetch(:data, {}).permit(:id, :packaging_centre_id)).where(active: true)
 		if @combos
 			render status: 200, json: {success: true, 
 			data: 

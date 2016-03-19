@@ -24,15 +24,14 @@ angular.module('foodmashApp.controllers')
 
 	PackagingPanelService.getPackagingCentreOrder().then(function(cart){
 		$scope.cart = cart;
-        console.log($scope.cart);
         findNextStatus($scope.cart.aasm_state);
         aggregatePackagingCentreOrders();
-        if(cart.aasm_state!='delivered'){
-            findElapsedTime(new Date());
-            $scope.timer=$interval(function(){ findElapsedTime(new Date()) }, 1000);
+        if(cart.aasm_state != 'delivered'){
+        	findElapsedTime(new Date());
+            $scope.timer = $interval(function(){ findElapsedTime(new Date()) }, 1000);
         }else{
-         	findElapsedTime(cart.delivered_at);
-     	}
+        	findElapsedTime(new Date(cart.delivered_at));
+        }
     }, function(err){
 		$scope.cart = null;
 	});
@@ -127,20 +126,25 @@ angular.module('foodmashApp.controllers')
 			PackagingPanelService.setUpdatedCart(cart);
 			$rootScope.removeLoader('.order-status-update-wrapper');
 			findNextStatus($scope.cart.aasm_state);
+       		$scope.killTimer(cart);
 			d.resolve(cart);
 		}, function(err){
 			toaster.pop('error', 'Cart status was not updated!');
 			$rootScope.removeLoader('.order-status-update-wrapper');
 			d.reject(err);
 		});
+<<<<<<< HEAD
         $scope.killTimer();
+=======
+>>>>>>> 9a4a43179a001dd36cbbc173335124c52373b36e
 		return d.promise;
 	};
 
-    $scope.killTimer = function(){
-        if($scope.timer!=null && $scope.cart.aasm_state=='delivered') {
+    $scope.killTimer = function(cart){
+        if($scope.timer != null && cart.aasm_state == 'delivered') {
             $interval.cancel($scope.timer);
             $scope.timer=undefined;
+            findElapsedTime(new Date(cart.delivered_at));
         }
     };
 
@@ -187,7 +191,7 @@ angular.module('foodmashApp.controllers')
         }
         diffMins = (diffMins < 10) ? "0" + diffMins : diffMins;
         diffSecs = (diffSecs < 10) ? "0" + diffSecs : diffSecs;
-        $scope.elapsedTime = ((diff===undefined)?"":(diffHours+":"))+diffMins + ":" + diffSecs;
+        $scope.elapsedTime = ((diff==undefined)?"":(diffHours+":"))+diffMins + ":" + diffSecs;
     }
 
 }]);

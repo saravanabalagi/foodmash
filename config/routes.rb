@@ -77,7 +77,7 @@ Rails.application.routes.draw do
     resources :payments, only: [:index] do 
       collection do 
         post '/getHash', to: 'payments#get_hash'
-        post '/checkPasswordForCod', to: 'payments#check_password_for_cod'
+        post '/purchaseForCod', to: 'payments#purchase_for_cod'
         post '/success', to: 'payments#success'
         post '/failure', to: 'payments#failure'
       end
@@ -139,11 +139,8 @@ Rails.application.routes.draw do
       #carts
       resources :carts do 
         collection do 
-          post '/addAddress', to: 'carts#add_address'
           post '/history', to: 'carts#history'
-          post '/', to: 'carts#index'
           post '/addCart', to: 'carts#add_cart'
-          post '/remove', to: 'carts#remove_from_cart'
           post '/destroy', to: 'carts#destroy'
           post '/purchase', to: 'carts#purchase'
           post '/show', to: 'carts#show'

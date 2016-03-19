@@ -3,7 +3,7 @@ class Api::V1::DishesController < ApiApplicationController
 	respond_to :json
 
 	def index
-		dishes = Dish.where(params.permit(:data).permit(:id, :name))
+		dishes = Dish.where(params.fetch(:data, {}).permit(:id, :name))
 		if dishes
 			render status: 200, json: {success: true, data: dishes.as_json(:include => [:restaurant, :dish_type])}
 		else
@@ -12,7 +12,7 @@ class Api::V1::DishesController < ApiApplicationController
 	end
 
 	def belongs_to_combos
-		dish = Dish.find(params.permit(:data).permit(:id))
+		dish = Dish.find(params.fetch(:data, {}).permit(:id))
 		if dish.present?
 			render status: 200, json: {success: true, data: dish.belongs_to_combos.as_json}
 		else

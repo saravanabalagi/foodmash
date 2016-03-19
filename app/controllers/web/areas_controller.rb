@@ -1,5 +1,6 @@
 class Web::AreasController < ApplicationController
 	respond_to :json
+	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
 	before_filter :get_area, only: [:update, :destroy]
 	load_and_authorize_resource skip_load_resource
 

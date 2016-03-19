@@ -5,21 +5,22 @@ angular.module('foodmashApp.controllers')
 .controller('CartController', ['$scope', '$q', 'toaster','$location','CartService','$rootScope', 'DeliveryAddress', 'Cart', 'Payment', '$http', '$httpParamSerializer', function($scope, $q, toaster, $location, CartService, $rootScope, DeliveryAddress, Cart, Payment, $http, $httpParamSerializer){
 
 	$scope.cart = {};
-	if($rootScope.currentUser){
-		$scope.setup_details = {
-			"email": $rootScope.currentUser.email,
-			"productinfo": "a bunch of combos from Foodmash",
-			"firstname": $rootScope.currentUser.name.split(" ")[0],
-			"phone": $rootScope.currentUser.mobile_no,
-			"surl": 'http://foodmash.herokuapp.com/web/payments/success',
-			"furl": 'http://foodmash.herokuapp.com/web/payments/success'
-		};
-	}
 	$scope.cart.delivery_charge = 0;
 	$scope.delivery_addresses = [];
 	$scope.delivery_address = new DeliveryAddress;
 	$scope.loadingDeliveryAddresses = true;
 	$scope.payment_method = "";
+	if($rootScope.currentUser){
+		setNameAndMobileNo();
+		$scope.setup_details = {
+			"email": $rootScope.currentUser.email,
+			"productinfo": "a bunch of combos from Foodmash",
+			"firstname": $rootScope.currentUser.name.split(" ")[0],
+			"phone": $rootScope.currentUser.mobile_no,
+			"surl": 'http://www.foodmash.net/web/payments/success',
+			"furl": 'http://www.foodmash.net/web/payments/failure'
+		};
+	}
 
 	CartService.getCartInfo().then(function(cart){
 		$scope.cart = cart;
@@ -112,19 +113,15 @@ angular.module('foodmashApp.controllers')
 				toaster.pop('error', 'Could not generate hash');
 			});
 		}if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
-			if($scope.passwordForCod){
-				$scope.processCart();
-				$rootScope.disableButton('.confirm-button', 'Confirming...');
-				Payment.checkPasswordForCod($scope.passwordForCod).then(function(response){
-					toaster.pop('success', 'Cart was purchased!');
-					$rootScope.enableButton('.confirm-button');
-				}, function(err){
-					toaster.pop('error', 'Password incorrect!');
-					$rootScope.enableButton('.confirm-button');
-				});
-			}else{
-				toaster.pop('error', 'Password field is empty!');
-			}
+			$rootScope.disableButton('.cod-button', 'Confirming...');
+			Payment.purchaseForCod($scope.cart).then(function(response){
+				toaster.pop('success', 'Cart was purchased!');
+				$rootScope.enableButton('.cod-button');
+				refreshCartAndSelectDelAdd();
+			}, function(err){
+				toaster.pop('error', 'Cart was not purchased!');
+				$rootScope.enableButton('.cod-button');
+			});
 		}
 	};
 
@@ -132,9 +129,7 @@ angular.module('foodmashApp.controllers')
 		var d = $q.defer();
 		Cart.addToCart($scope.cart).then(function(cart){
 			toaster.pop('success', 'Cart was submitted!');
-			$location.path('/');
-			CartService.refreshCart();
-			setPrimaryAsDeliveryAddress();
+			refreshCartAndSelectDelAdd();
 			d.resolve(cart);
 		}, function(err){
 			toaster.pop('error', 'Cart was not submitted!');
@@ -151,6 +146,7 @@ angular.module('foodmashApp.controllers')
 			$scope.delivery_addresses.push($scope.delivery_address);
 			$scope.delivery_address = new DeliveryAddress;
 			$scope.reload();
+			setNameAndMobileNo();
 			d.resolve(response);
 		}, function(err){
 			toaster.pop('error', 'Delivery Address was not created!');
@@ -189,8 +185,19 @@ angular.module('foodmashApp.controllers')
 		calcTaxAndGrandTotal();
 	};
 
+	function setNameAndMobileNo(){
+		$scope.delivery_address.name = $rootScope.currentUser.name;
+		$scope.delivery_address.contact_no = $rootScope.currentUser.mobile_no;
+	};
+
+	function refreshCartAndSelectDelAdd(){
+		$location.path('/');
+		CartService.refreshCart();
+		setPrimaryAsDeliveryAddress();
+	};
+
 	function calcTaxAndGrandTotal(){
-		$scope.cart.vat = $scope.cart.total * 0.02;
+		$scope.cart.vat = $scope.cart.total * 0.145;
 		if($scope.cart.total == 0){
 			$scope.cart.delivery_charge = 0;
 		}

@@ -5,37 +5,34 @@ angular.module('foodmashApp.controllers')
 .controller('BodyController', ['$scope', '$location', 'toaster', 'CartService', 'City', '$rootScope', function($scope, $location, toaster, CartService, City, $rootScope){
 
 		CartService.setCartGlobally();
-		$scope.loadingCities = true;
-		$scope.loadCombos = {};
+		$scope.cities = [];
+		$scope.selectedCity = {};
+		$scope.selectedArea = {name: 'Choose Area'};
 
 		City.setCity().then(function(cities){
 			if(cities.length > 0){
 				$scope.cities = cities;
 				$scope.selectedCity = cities[0];
 				$rootScope.city = $scope.selectedCity;
-				$scope.selectedArea = cities[0].areas[0];
-				$rootScope.area = $scope.selectedArea;
 			}else{
 				$scope.cities = null;
 			}
-			$scope.loadingCities = false;
 		}, function(err){
 			$scope.cities = null;
-			$scope.loadingCities = false;
 		});
 
 		$scope.selectCity = function(city){
 			$scope.selectedCity = city;
-			$rootScope.city = city;
+			$rootScope.city = $scope.selectedCity;
 		};
 
 		$scope.selectArea = function(area){
 			$scope.selectedArea = area;
-			$rootScope.area = area;
-		};
-
-		$scope.setLoadCombos = function(){
-			$scope.loadCombos = true;
+			$rootScope.area = $scope.selectedArea;
+			setLoadCombos();
+			angular.element(document).ready(function(){
+				$('.continue-button').click();
+			});
 		};
 
 		$scope.checkIfSideBarPresent = function(){
@@ -135,6 +132,18 @@ angular.module('foodmashApp.controllers')
  			  		return $(this).text();
  				}).remove();
  	 		});
+		};
+
+		$rootScope.isEmpty = function(obj){
+		    for(var prop in obj) {
+		        if(obj.hasOwnProperty(prop))
+		            return false;
+		    }
+		    return true;
+		};
+
+		function setLoadCombos(){
+			$scope.loadCombos = true;
 		};
 }]);
 

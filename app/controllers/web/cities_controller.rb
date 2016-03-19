@@ -1,5 +1,6 @@
 class Web::CitiesController < ApplicationController
 	respond_to :json
+	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
 	before_filter :get_city, only: [:update, :destroy]
 	load_and_authorize_resource skip_load_resource except: [:set_city]
 
@@ -13,7 +14,7 @@ class Web::CitiesController < ApplicationController
 	end
 
 	def set_city
-		@cities = City.where(params.permit(:id, :name))
+		@cities = City.where(params.permit(:city).permit(:id, :name))
 		if @cities 
 			render status: 200, json: @cities.as_json(:include => :areas)
 		else

@@ -1,8 +1,8 @@
 class Api::V1::PaymentsController < ApiApplicationController
+ 	respond_to :json
  	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
  	before_filter :authenticate_user_from_token!
 	before_filter :set_current_cart
- 	respond_to :json
 
  	def index 
  		render status: 200
@@ -59,7 +59,7 @@ class Api::V1::PaymentsController < ApiApplicationController
 
 	def purchase_by_cod
 		return invalid_data unless params[:data][:payment_method]
-		if current_user.valid_password? params[:data][:password] and @cart.purchase! and @cart.set_payment_method('COD')
+		if @cart.set_payment_method('COD') and @cart.purchase! 
 			render status: 200, json: {success: true, data: {order_id: @cart.order_id}}
 		else
 			render status: 200, json: {success: false, error: 'Password was incorrect!'}
