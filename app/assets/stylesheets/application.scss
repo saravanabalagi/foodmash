@@ -319,6 +319,7 @@ footer {
         -o-transition: all 0.3s ease-in-out;
         transition: all 0.3s ease-in-out;
         &:hover {
+          cursor: pointer;
           -webkit-transform: scale(1.2);
           -moz-transform: scale(1.2);
           -ms-transform: scale(1.2);
@@ -331,8 +332,10 @@ footer {
   > div.footer-links {
     padding: 5px;
     > span {
+      &:hover { cursor: pointer; }
       &:not(:last-child):after {
         content: " | ";
+        cursor: none;
       }
     }
   }
