@@ -37,7 +37,7 @@ angular.module('foodmashApp.controllers')
 	    });
 	 };
 
-	if($rootScope.currentUser && !$rootScope.delivery_addresses){
+	if($rootScope.currentUser && !$rootScope.delivery_addresses && $rootScope.area && $rootScope.area.id){
 		DeliveryAddress.query({user_id: $rootScope.currentUser.id, area_id: $rootScope.area.id}).then(function(delivery_addresses){
 			if(delivery_addresses.length > 0){
 				$scope.delivery_addresses = delivery_addresses;
@@ -197,16 +197,16 @@ angular.module('foodmashApp.controllers')
 	};
 
 	function calcTaxAndGrandTotal(){
-		$scope.cart.vat = $scope.cart.total * 0.02;
+		$scope.cart.vat = $scope.cart.total * 0;
 		if($scope.cart.total == 0){
 			$scope.cart.delivery_charge = 0;
 		}
-		if($scope.cart.total && $scope.cart.vat){
+		if($scope.cart.total){
 			if($scope.cart.total < 200){
-				$scope.cart.delivery_charge = 30;
+				$scope.cart.delivery_charge = 0;
 				$scope.cart.grand_total = ($scope.cart.total + $scope.cart.vat + $scope.cart.delivery_charge).toFixed(2);
 			}else{
-				$scope.cart.delivery_charge = 40;
+				$scope.cart.delivery_charge = 0;
 				$scope.cart.grand_total = ($scope.cart.total + $scope.cart.vat + $scope.cart.delivery_charge).toFixed(2);
 			}
 		}else{

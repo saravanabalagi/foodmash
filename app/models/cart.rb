@@ -137,18 +137,18 @@ class Cart < ActiveRecord::Base
 						order.update_attributes!(quantity: cart_item["quantity"]) unless cart_item["quantity"] == order.quantity
 						if order.order_items.present?
 							order.order_items.each do |order_item|
-								if cart_item["comboDishes"].present?
-									cart_item["comboDishes"].each do |combo_dish| 
+								if cart_item["combo_dishes"].present?
+									cart_item["combo_dishes"].each do |combo_dish| 
 										if combo_dish["dish"]["id"] == order_item.item.id and (combo_dish["id"] == order_item.category_id and order_item.category_type == 'ComboDish')
 											order_item.update_attributes!(quantity: combo_dish["quantity"]) unless combo_dish["quantity"] == order_item.quantity
 										end
 									end							
 								end
-								if cart_item["comboOptions"].present?
-									cart_item["comboOptions"].each do |combo_option|
+								if cart_item["combo_options"].present?
+									cart_item["combo_options"].each do |combo_option|
 										if (combo_option["id"] == order_item.category_id and order_item.category_type == 'ComboOption')
-											if combo_option["comboOptionDishes"].present?
-												combo_option["comboOptionDishes"].each do |combo_option_dish|
+											if combo_option["combo_option_dishes"].present?
+												combo_option["combo_option_dishes"].each do |combo_option_dish|
 													if combo_option_dish["dish"]["id"] == order_item.item.id
 														order_item.update_attributes!(quantity: combo_option_dish["quantity"]) unless combo_option_dish["quantity"] == order_item.quantity
 													end
@@ -165,15 +165,15 @@ class Cart < ActiveRecord::Base
 				end
 				unless sim
 					future_order = self.orders.build(product_id: cart_item["id"], product_type: 'Combo', quantity: cart_item["quantity"])
-					if cart_item["comboDishes"].present?
-						cart_item["comboDishes"].each do |combo_dish| 
+					if cart_item["combo_dishes"].present?
+						cart_item["combo_dishes"].each do |combo_dish| 
 							future_order.order_items.build(category_id: combo_dish["id"], category_type: 'ComboDish', item_id: combo_dish["dish"]["id"], item_type: "Dish", quantity: combo_dish["quantity"])
 						end							
 					end
-					if cart_item["comboOptions"].present?
-						cart_item["comboOptions"].each do |combo_option|
-							if combo_option["comboOptionDishes"].present?
-								combo_option["comboOptionDishes"].each do |combo_option_dish|
+					if cart_item["combo_options"].present?
+						cart_item["combo_options"].each do |combo_option|
+							if combo_option["combo_option_dishes"].present?
+								combo_option["combo_option_dishes"].each do |combo_option_dish|
 									future_order.order_items.build(category_id: combo_option["id"], category_type: 'ComboOption', item_id: combo_option_dish["dish"]["id"], item_type: "Dish", quantity: combo_option_dish["quantity"])
 								end
 							end
@@ -196,14 +196,14 @@ class Cart < ActiveRecord::Base
 		if order.product.id == cart_item["id"]
 			order.order_items.each do |order_item|
 				if order_item.category_type == "ComboDish"
-					cart_item["comboDishes"].each do |combo_dish|
+					cart_item["combo_dishes"].each do |combo_dish|
 						if order_item.category_id == combo_dish["id"] and order_item.item.id == combo_dish["dish"]["id"]
 							cart_order_item_count += 1
 						end
 					end 
 				end
 				if order_item.category_type == "ComboOption"
-					cart_item["comboOptions"].each do |combo_option|
+					cart_item["combo_options"].each do |combo_option|
 						if order_item.category_id == combo_option["id"] and order_item.item.id == combo_option["dish"]["id"]
 							cart_order_item_count += 1
 						end

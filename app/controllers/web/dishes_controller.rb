@@ -5,7 +5,7 @@ class Web::DishesController < ApplicationController
 	load_and_authorize_resource skip_load_resource
 
 	def index
-		@dishes = Dish.where(params.permit(:id, :restaurant_id, :name, :dish_type_id, :cuisine_id))
+		@dishes = Dish.where(params.permit(:id, :restaurant_id, :name, :dish_type_id, :cuisine_id)).order("price ASC")
 		if @dishes 
 			render status: 200, json: @dishes.as_json(:include => [:dish_type, :cuisine])
 		else

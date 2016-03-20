@@ -128,7 +128,6 @@ function sidebarToggle() {
 }
 
 function swipeBodyLeft() {
-    console.log("swiped");
     if(!$('body').hasClass('sidebar-body')
         || ($(document).width()>435)) return;
     else if(!$('.sidebar-wrapper').hasClass('slider-open')) return;
@@ -136,7 +135,6 @@ function swipeBodyLeft() {
 }
 
 function swipeBodyRight() {
-    console.log("swiped");
     if(!$('body').hasClass('sidebar-body')
         || ($(document).width()>435)) return;
     else if($('.sidebar-wrapper').hasClass('slider-open')) return;
