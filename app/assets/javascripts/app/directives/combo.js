@@ -73,7 +73,7 @@ angular.module('foodmashApp.directives')
 				$scope.toggleActiveOptionForUpdate.counter = $scope.updatedCombo.active == true ? 1 : 0;
 			};
 
-			$scope.uploadFiles = function(file, errFiles, updatedCombo){
+			$scope.uploadFilesForCombo = function(file, errFiles, updatedCombo){
 				if(file){
 					Aws.loadAWS().then(function(aws){
 						file.upload = Upload.upload({

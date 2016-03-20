@@ -51,7 +51,7 @@
  <td ng-show="updateShow">
       <input class="form-control" type="number" ng-model="updatedDish.price">
   </td>
- <td ng-show="updateShow"><i class="material-icons" ngf-select="uploadFiles($file, $invalidFiles, dish)"
+ <td ng-show="updateShow"><i class="material-icons" ngf-select="uploadFilesForDish($file, $invalidFiles, dish)"
                              accept="image/*" ngf-max-size="40MB">image</i></td>
  <td ng-show="updateShow" ng-click="updateShow = !updateShow"><i class="fa fa-times-circle"></i></td>
  <td ng-show="updateShow" ng-click="updateDish(dish)"><i class="fa fa-check-circle"></i></td>

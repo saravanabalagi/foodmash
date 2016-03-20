@@ -98,7 +98,7 @@ angular.module('foodmashApp.directives')
 				return icon_class;
 			};
 
-			$scope.uploadFiles = function(file, errFiles){
+			$scope.uploadFilesForCombos = function(file, errFiles){
 				if(file){
 					Aws.loadAWS().then(function(aws){
 						file.upload = Upload.upload({

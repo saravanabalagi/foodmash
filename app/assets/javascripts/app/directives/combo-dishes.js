@@ -92,12 +92,18 @@ angular.module('foodmashApp.directives')
 					toaster.pop('success', 'Combo Dish was created!');
 					$scope.combo_dishes.unshift($scope.combo_dish);
 					$scope.combo_dish = new ComboDish;
+					renewSelectedValues();
 					d.resolve(response);
 				}, function(err){
 					toaster.pop('error', 'Combo Dish was not created!');
 					d.reject(null);
 				});
 				return d.promise;
+			};
+
+			function renewSelectedValues(){
+				$scope.combo_dish.dish_id = $scope.selectedDish.id;
+				$scope.combo_dish.dish_type_id = $scope.selectedDishType.id;
 			};
 
 		}]

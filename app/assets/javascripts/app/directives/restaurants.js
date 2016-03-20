@@ -44,7 +44,7 @@ angular.module('foodmashApp.directives')
 				$scope.restaurant.area_id = area.id;
 			};
 
-			$scope.uploadFiles = function(file, errFiles){
+			$scope.uploadFilesForRestaurants = function(file, errFiles){
 				if(file){
 					Aws.loadAWS().then(function(aws){
 						file.upload = Upload.upload({

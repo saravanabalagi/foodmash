@@ -65,7 +65,7 @@ angular.module('foodmashApp.directives')
 				$scope.dish.label = label.value;
 			};
 
-			$scope.uploadFiles = function(file, errFiles){
+			$scope.uploadFilesForDishes = function(file, errFiles){
 				if(file){
 					Aws.loadAWS().then(function(aws){
 						file.upload = Upload.upload({
