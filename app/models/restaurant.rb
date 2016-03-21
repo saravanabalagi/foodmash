@@ -6,6 +6,7 @@ class Restaurant < ActiveRecord::Base
 	has_many :dish_types, through: :dishes
 	belongs_to :area
 	validates_presence_of :area_id, :name
+	before_destroy :ensure_restaurant_not_referenced
 	before_save :ensure_logo_is_encoded
 
 
@@ -46,6 +47,20 @@ class Restaurant < ActiveRecord::Base
 	  end
 
 	  return combos.flatten.uniq
+  end
+
+  def ensure_restaurant_not_referenced
+  	if dishes.empty?
+  		return true
+  	else
+  		check_for_dish_in_combos = false
+  		dishes.each do |d|
+  			if !d.combos.empty?
+  				check_for_dish_in_combos = true
+  			end
+  		end
+  		check_for_dish_in_combos == true ? return false : return true
+  	end
   end
 
   private
