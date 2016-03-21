@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('comboOptionDishes', ['ComboOptionDish', '$q', 'Dish', 'toaster', 'Restaurant', function(ComboOptionDish, $q, Dish, toaster, Restaurant){
+.directive('comboOptionDishes', ['ComboOptionDish', '$q', 'Dish', 'toaster', 'ComboService', function(ComboOptionDish, $q, Dish, toaster, ComboService){
 
 	return {
 
@@ -10,7 +10,7 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/combo-option-dishes.html',
 
-		controller: ['$scope', 'ComboOptionDish', '$q', 'Dish', 'toaster', 'Restaurant', function($scope, ComboOptionDish, $q, Dish, toaster, Restaurant){
+		controller: ['$scope', 'ComboOptionDish', '$q', 'Dish', 'toaster', 'ComboService', function($scope, ComboOptionDish, $q, Dish, toaster, ComboService){
 
 			$scope.combo_option_dishes = [];
 			$scope.combo_option_dish = new ComboOptionDish;
@@ -18,13 +18,9 @@ angular.module('foodmashApp.directives')
 			$scope.restaurants = [];
 			$scope.loadingDishesForComboOptionDishes = true;
 
-			Restaurant.query({packaging_centre_id: $scope.combo.packaging_centre_id}).then(function(restaurants){
-				if(restaurants.length > 0){
-					$scope.restaurants = restaurants;
-				}else{
-					$scope.restaurants = null;
-				}
-			}, function(err){	
+			ComboService.getRestaurantsForCombo($scope.combo.packaging_centre_id).then(function(restaurants){
+				$scope.restaurants = restaurants;
+			}, function(err){
 				$scope.restaurants = null;
 			});
 

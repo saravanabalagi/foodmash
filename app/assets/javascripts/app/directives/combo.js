@@ -20,7 +20,6 @@ angular.module('foodmashApp.directives')
 				{name: "Corporate", icon_class: "fa fa-sitemap"},
 				{name: "Health", icon_class: "fa fa-heartbeat"}
 			];
-			$scope.packaging_centres = [];
 
 			$scope.routeToCombo = function(combo){
 				$location.path("/combos/" + combo.id);
@@ -35,16 +34,6 @@ angular.module('foodmashApp.directives')
 				$scope.toggleActiveOptionForUpdate.counter += 1;
 				$scope.updatedCombo.active = $scope.activeOptions[$scope.toggleActiveOptionForUpdate.counter % 2].value;
 			};
-
-			PackagingCentre.query().then(function(packaging_centres){
-				if(packaging_centres.length > 0){
-					$scope.packaging_centres = packaging_centres;
-				}else{
-					$scope.packaging_centres = null;
-				}
-			}, function(err){
-				$scope.packaging_centres = null;
-			});
 
 			$scope.updateActiveState = function(combo){
 				var d = $q.defer();

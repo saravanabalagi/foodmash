@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('comboOption', ['ComboOption', '$q', 'toaster', '$location', function(ComboOption, $q, toaster, $location){
+.directive('comboOption', ['ComboOption', '$q', 'toaster', function(ComboOption, $q, toaster){
 
 	return {
 
@@ -10,7 +10,7 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/combo-option.html',
 
-		controller: ['$scope', 'ComboOption', '$q', 'toaster', '$location', function($scope, ComboOption, $q, toaster, $location){
+		controller: ['$scope', 'ComboOption', '$q', 'toaster', function($scope, ComboOption, $q, toaster){
 
 			$scope.updatedComboOption = new ComboOption;
 

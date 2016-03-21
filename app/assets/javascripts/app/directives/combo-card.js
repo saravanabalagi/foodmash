@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('comboCard', ['toaster','CartService', '$location', 'ComboService', function(toaster, CartService, $location, ComboService){
+.directive('comboCard', ['toaster','CartService', '$location', 'ComboDescriptionService', function(toaster, CartService, $location, ComboDescriptionService){
 
 	return {
 
@@ -10,7 +10,7 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/combo-card.html',
 
-		controller: ['$scope', 'toaster','CartService', '$location', 'ComboService', function($scope, toaster, CartService, $location, ComboService){
+		controller: ['$scope', 'toaster','CartService', '$location', 'ComboDescriptionService', function($scope, toaster, CartService, $location, ComboDescriptionService){
 
 			$scope.selectedDishes = [];
 
@@ -19,7 +19,7 @@ angular.module('foodmashApp.directives')
 			pushDefaultComboOption($scope.combo);
 
 			$scope.routeToComboDescription = function(combo){
-				ComboService.setComboForDescription(combo);
+				ComboDescriptionService.setComboForDescription(combo);
 				$location.path("/combo-description");
 			};
 

@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('restaurants', ['toaster', 'Restaurant', '$q', 'PackagingCentre', 'Areas', 'Aws', 'Upload', function(toaster, Restaurant, $q, PackagingCentre, Areas, Aws, Upload){
+.directive('restaurants', ['toaster', 'Restaurant', '$q', 'PackagingCentre', 'Areas', 'Aws', 'Upload', 'DishType', 'Cuisine', function(toaster, Restaurant, $q, PackagingCentre, Areas, Aws, Upload, DishType, Cuisine){
 
 	return {
 
@@ -10,7 +10,7 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/restaurants.html',
 
-		controller: ['$scope', 'toaster', 'Restaurant', '$q', 'PackagingCentre', 'Areas', 'Aws', 'Upload', function($scope, toaster, Restaurant, $q, PackagingCentre, Areas, Aws, Upload){
+		controller: ['$scope', 'toaster', 'Restaurant', '$q', 'PackagingCentre', 'Areas', 'Aws', 'Upload', 'DishType', 'Cuisine', function($scope, toaster, Restaurant, $q, PackagingCentre, Areas, Aws, Upload, DishType, Cuisine){
 
 			$scope.restaurant = new Restaurant;
 			$scope.restaurants = [];

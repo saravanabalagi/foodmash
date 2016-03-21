@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('comboDish', ['ComboDish', '$q', 'toaster', 'DishType', 'Dish', '$location', 'Restaurant', function(ComboDish, $q, toaster, DishType, Dish, $location, Restaurant){
+.directive('comboDish', ['ComboDish', '$q', 'toaster', 'Dish', function(ComboDish, $q, toaster, Dish){
 
 	return {
 
@@ -10,7 +10,7 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/combo-dish.html',
 
-		controller: ['$scope', 'ComboDish', '$q', 'toaster', 'DishType', 'Dish', 'Restaurant', function($scope, ComboDish, $q, toaster, DishType, Dish, Restaurant){
+		controller: ['$scope', 'ComboDish', '$q', 'toaster', 'Dish', function($scope, ComboDish, $q, toaster, Dish){
 
 			$scope.updatedComboDish = new ComboDish;	
 			$scope.dishes_for_update = [];

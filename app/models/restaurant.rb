@@ -59,7 +59,7 @@ class Restaurant < ActiveRecord::Base
   				check_for_dish_in_combos = true
   			end
   		end
-  		check_for_dish_in_combos == true ? return false : return true
+  		return check_for_dish_in_combos == true ? false : true
   	end
   end
 
