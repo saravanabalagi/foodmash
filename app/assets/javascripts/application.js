@@ -125,20 +125,20 @@ function sidebarToggle() {
     var sidebar = $('.sidebar-wrapper');
     if(sidebar.hasClass('slider-open')) sidebar.addClass("slide-and-hide").removeClass("slider-open");
     else sidebar.addClass("slider-open").removeClass("slide-and-hide");
-}
+};
 
 function swipeBodyLeft() {
     if(!$('body').hasClass('sidebar-body')
         || ($(document).width()>435)) return;
     else if(!$('.sidebar-wrapper').hasClass('slider-open')) return;
     sidebarToggle();
-}
+};
 
 function swipeBodyRight() {
     if(!$('body').hasClass('sidebar-body')
         || ($(document).width()>435)) return;
     else if($('.sidebar-wrapper').hasClass('slider-open')) return;
     sidebarToggle();
-}
+};
 
 
