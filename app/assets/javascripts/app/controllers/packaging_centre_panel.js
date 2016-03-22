@@ -186,7 +186,7 @@ angular.module('foodmashApp.controllers')
 	function applySortFilterIfSelected(){
 		var orderBy = $filter('orderBy');
 	 	if($scope.selectedSortOption){
-	 		$scope.carts = orderBy($scope.carts, 'purchased_at', option.reverse);
+	 		$scope.carts = orderBy($scope.carts, 'purchased_at', $scope.selectedSortOption.reverse);
 	 	}
 	};
 
