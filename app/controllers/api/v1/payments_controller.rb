@@ -57,6 +57,10 @@ class Api::V1::PaymentsController < ApiApplicationController
 		end
  	end
 
+ 	def validate_promo_code
+ 		render status: 200, json: {success: false, data: {message: 'Pomo code was invalid'}}
+ 	end
+
 	def purchase_by_cod
 		return invalid_data unless params[:data][:payment_method]
 		if @cart.set_payment_method('COD') and @cart.purchase! 
