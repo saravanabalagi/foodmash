@@ -54,10 +54,7 @@ angular.module('foodmashApp.controllers')
 
     $scope.selectSortOption = function(option){
     	$scope.selectedSortOption = option;
-    	var orderBy = $filter('orderBy');
-    	if($scope.selectedSortOption && $scope.carts){
-    		$scope.carts = orderBy($scope.carts, 'purchased_at', option.reverse);
-    	}
+    	applySortFilterIfSelected();
     };
 
     $scope.checkIfSortOptionSelected = function(option){
@@ -87,6 +84,7 @@ angular.module('foodmashApp.controllers')
     		}
     		break;
     	};
+    	applySortFilterIfSelected();
     };
 
     $scope.checkIfSelected = function(option){
@@ -136,6 +134,13 @@ angular.module('foodmashApp.controllers')
 			price += oi.quantity * oi.item.price * order.quantity;
 		});
 		return price;
+	};
+
+	function applySortFilterIfSelected(){
+		var orderBy = $filter('orderBy');
+    	if($scope.selectedSortOption && $scope.carts){
+    		$scope.carts = orderBy($scope.carts, 'purchased_at', option.reverse);
+    	}
 	};
 
 	function getSuitableStatus(status){
