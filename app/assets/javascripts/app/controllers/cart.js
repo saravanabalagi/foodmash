@@ -17,8 +17,8 @@ angular.module('foodmashApp.controllers')
 			"productinfo": "a bunch of combos from Foodmash",
 			"firstname": $rootScope.currentUser.name.split(" ")[0],
 			"phone": $rootScope.currentUser.mobile_no,
-			"surl": 'http://www.foodmash.net/web/payments/success',
-			"furl": 'http://www.foodmash.net/web/payments/failure'
+			"surl": 'http://www.foodmash.in/web/payments/success',
+			"furl": 'http://www.foodmash.in/web/payments/failure'
 		};
 	}
 

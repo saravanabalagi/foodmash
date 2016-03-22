@@ -88,8 +88,15 @@ angular.module('foodmashApp.controllers')
 	        					$scope.carts = null;
 	        				}
 	        				$scope.loadingCarts = false;
+	        				$scope.selectOption($scope.selectedOption || $scope.packagingPanelOptions[0]);
+	        				$scope.selectSortOption($scope.selectedSortOption || $scope.sortOptions[1]);
 	        			}, function(err){
+	        				$scope.loadedCarts = null;
+	        				$scope.packaging_centre = null;
+	        				$scope.carts = null;
 	        				$scope.loadingCarts = false;
+	        				$scope.selectOption($scope.selectedOption || $scope.packagingPanelOptions[0]);
+	        				$scope.selectSortOption($scope.selectedSortOption || $scope.sortOptions[1]);
 	        			});
 	        		}
 	        	});
