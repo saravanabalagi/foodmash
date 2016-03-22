@@ -21,7 +21,7 @@
      <a data-target="#" class="dropdown-toggle" data-toggle="dropdown">{{selectedAreaForUpdate.name || updatedRestaurant.area.name}}
        <b class="caret"></b></a>
        <ul class="dropdown-menu" id="delivery-location-dropdown">
-         <li ng-repeat="area in areas" ng-click="selectAreaForUpdate(area)"><a>{{area.name}}</a></li>
+         <li ng-repeat="area in areas" ng-click="selectAreaForUpdate(area)">{{area.name}}</li>
        </ul>
      </span>
      <span class="material-input"></span>

@@ -27,7 +27,7 @@
                 <span ng-hide="selectedArea.name">Area</span>{{selectedArea.name}}
                 <b class="caret"></b></a>
                 <ul class="dropdown-menu" id="delivery-location-dropdown">
-                  <li ng-repeat="area in areas" ng-click="selectArea(area)"><a>{{area.name}}</a>
+                  <li ng-repeat="area in areas" ng-click="selectArea(area)">{{area.name}}
                   </li>
                 </ul>
               </span>
@@ -41,7 +41,7 @@
             <span class="material-input"></span>
           </div>
         </th>
-        <th class="th-xs"><i class="material-icons" ngf-select="uploadFiles($file, $invalidFiles)"
+        <th class="th-xs"><i class="material-icons" ngf-select="uploadFilesForRestaurants($file, $invalidFiles)"
                                     accept="image/*" ngf-max-size="40MB">image</i></th>
         <th class="th-xs" ng-click="addRestaurant()"><i class="material-icons">add_circle_outline</i></th>
         <th class="th-xs"></th>

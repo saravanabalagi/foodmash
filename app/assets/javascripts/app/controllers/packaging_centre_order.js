@@ -119,18 +119,18 @@ angular.module('foodmashApp.controllers')
 
 	$scope.updateStatus = function(){
 		var d = $q.defer();
-		$rootScope.addLoader('.order-status-update-wrapper', '', 'red');
+		$rootScope.disableButton('.order-status-update-button');
 		Cart.changeStatus($scope.next_status.name, $scope.cart.id).then(function(cart){
 			toaster.pop('success', 'Cart status was successfully updated!');
 			$scope.cart = cart;
 			PackagingPanelService.setUpdatedCart(cart);
-			$rootScope.removeLoader('.order-status-update-wrapper');
+			$rootScope.enableButton('.order-status-update-button');
 			findNextStatus($scope.cart.aasm_state);
        		$scope.killTimer(cart);
 			d.resolve(cart);
 		}, function(err){
 			toaster.pop('error', 'Cart status was not updated!');
-			$rootScope.removeLoader('.order-status-update-wrapper');
+			$rootScope.enableButton('.order-status-update-button');
 			d.reject(err);
 		});
 		return d.promise;

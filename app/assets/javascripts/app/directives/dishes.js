@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('dishes', ['Dish', '$q', 'toaster', 'DishType', 'Cuisine', 'Upload', 'Aws', function(Dish, $q, toaster, DishType, Cuisine, Upload, Aws){
+.directive('dishes', ['Dish', '$q', 'toaster', 'Upload', 'Aws', 'DishService', function(Dish, $q, toaster, Upload, Aws, DishService){
 
 	return {
 
@@ -10,7 +10,7 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/dishes.html',
 
-		controller: ['$scope', 'Dish', '$q', 'toaster', 'DishType', 'Cuisine','Upload', 'Aws', function($scope, Dish, $q, toaster, DishType, Cuisine, Upload, Aws){
+		controller: ['$scope', 'Dish', '$q', 'toaster','Upload', 'Aws', 'DishService', function($scope, Dish, $q, toaster, Upload, Aws, DishService){
 
 			$scope.dish_types = [];
 			$scope.cuisines = [];
@@ -18,24 +18,16 @@ angular.module('foodmashApp.directives')
 			$scope.labels = [{name: "Veg", value: "veg"}, {name: "Egg", value: "egg"}, {name: "Non Veg", value: "non-veg"}];
 			$scope.dish = new Dish;
 
-			DishType.query().then(function(dish_types){
-				if(dish_types.length > 0){
-				  $scope.dish_types = dish_types;		
-				}else{
-				  $scope.dish_types = null;
-				}
-			}, function(err){
-				$scope.dish_types = null;
-			});
-
-			Cuisine.query().then(function(cuisines){
-				if(cuisines.length > 0){
-				  $scope.cuisines = cuisines;		
-				}else{
-				  $scope.cuisines = null;
-				}
+			DishService.getCuisinesForDish().then(function(cuisines){
+				$scope.cuisines = cuisines;
 			}, function(err){
 				$scope.cuisines = null;
+			});
+
+			DishService.getDishTypesForDish().then(function(dish_types){
+				$scope.dish_types = dish_types;
+			}, function(err){
+				$scope.dish_types = null;
 			});
 
 			$scope.$watch('restaurant', function(n, o){
@@ -65,7 +57,7 @@ angular.module('foodmashApp.directives')
 				$scope.dish.label = label.value;
 			};
 
-			$scope.uploadFiles = function(file, errFiles){
+			$scope.uploadFilesForDishes = function(file, errFiles){
 				if(file){
 					Aws.loadAWS().then(function(aws){
 						file.upload = Upload.upload({

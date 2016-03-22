@@ -72,7 +72,7 @@ angular.module('foodmashApp.controllers')
     		case 'Current': 
     		if($scope.loadedCarts){
     			var deliveredCarts = $filter('filter')($scope.loadedCarts, {aasm_state: 'delivered'}, true);
-    			$scope.carts = $scope.loadedCarts;
+    			$scope.carts = angular.copy($scope.loadedCarts);
     			deliveredCarts.filter(function(cart){
     				var index = $scope.carts.indexOf(cart);
     				$scope.carts.splice(index, 1);

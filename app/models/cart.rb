@@ -119,7 +119,7 @@ class Cart < ActiveRecord::Base
 			self.save!
 	end
 
-	def add_cart(cart_items, delivery_address_id, vat, grand_total, delivery_charge)
+	def add_cart(cart_items, delivery_address_id)
 		if self.orders.present?
 			self.orders.each do |order|
 				if cart_items.present?
@@ -182,10 +182,7 @@ class Cart < ActiveRecord::Base
 				end
 			end
 		end
-		self.delivery_address_id = delivery_address_id 
-		self.vat = vat 
-		self.delivery_charge = delivery_charge 
-		self.grand_total = grand_total
+		self.delivery_address_id = delivery_address_id
 		DeliveryAddress.make_primary(delivery_address_id)
 		self.save!
 	end
@@ -234,6 +231,10 @@ class Cart < ActiveRecord::Base
 	private
 	def calculate_total
 		self.total = orders.to_a.sum{|o| (o.order_items.to_a.sum{|oi| (oi.item.price * oi.quantity) || 0} * o.quantity) || 0}
+		self.vat = 0.02 * self.total
+		self.delivery_charge = self.total < 200 ? 30 : 40
+		self.grand_total = self.total + self.vat + self.delivery_charge
+		return true
 	end
 
 	def update_orders

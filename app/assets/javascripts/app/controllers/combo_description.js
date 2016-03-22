@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('ComboDescriptionController', ['$scope', '$location', 'toaster', 'CartService', 'ComboService', function($scope, $location, toaster, CartService, ComboService){
+.controller('ComboDescriptionController', ['$scope', '$location', 'toaster', 'CartService', 'ComboDescriptionService', function($scope, $location, toaster, CartService, ComboDescriptionService){
 
 	$scope.selectedDishes = [];
 	$scope.combo = {};
@@ -34,7 +34,7 @@ angular.module('foodmashApp.controllers')
 		});
 	};
 
-	ComboService.getComboForDescription().then(function(combo){
+	ComboDescriptionService.getComboForDescription().then(function(combo){
 		$scope.combo = combo;
 		$scope.load();
 	  	setQuantityForComboItems();

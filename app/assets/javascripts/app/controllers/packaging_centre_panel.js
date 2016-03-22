@@ -88,15 +88,15 @@ angular.module('foodmashApp.controllers')
 	        					$scope.carts = null;
 	        				}
 	        				$scope.loadingCarts = false;
-	        				$scope.selectOption($scope.packagingPanelOptions[0]);
-	        				$scope.selectSortOption($scope.sortOptions[1]);
+	        				$scope.selectOption($scope.selectedOption || $scope.packagingPanelOptions[0]);
+	        				$scope.selectSortOption($scope.selectedSortOption || $scope.sortOptions[1]);
 	        			}, function(err){
 	        				$scope.loadedCarts = null;
 	        				$scope.packaging_centre = null;
 	        				$scope.carts = null;
 	        				$scope.loadingCarts = false;
-	        				$scope.selectOption($scope.packagingPanelOptions[0]);
-	        				$scope.selectSortOption($scope.sortOptions[1]);
+	        				$scope.selectOption($scope.selectedOption || $scope.packagingPanelOptions[0]);
+	        				$scope.selectSortOption($scope.selectedSortOption || $scope.sortOptions[1]);
 	        			});
 	        		}
 	        	});
@@ -129,7 +129,7 @@ angular.module('foodmashApp.controllers')
 	 		case 'Current': 
 	 		if($scope.loadedCarts){
 	 			var deliveredCarts = $filter('filter')($scope.loadedCarts, {aasm_state: 'delivered'}, true);
-	 			$scope.carts = $scope.loadedCarts;
+	 			$scope.carts = angular.copy($scope.loadedCarts);
 	 			deliveredCarts.filter(function(cart){
 	 				var index = $scope.carts.indexOf(cart);
 	 				$scope.carts.splice(index, 1);

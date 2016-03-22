@@ -35,6 +35,7 @@ angular.module('foodmashApp.controllers')
 			{name: 'Low to High', icon_class: 'fa fa-sort-amount-asc pull-right', reverse: false},
 			{name: 'High to Low', icon_class: 'fa fa-sort-amount-desc pull-right', reverse: true}
 		];
+		$scope.selectedSortOption = $scope.sortOptions[0];
 
 		$scope.mainOptions = 
 		[
@@ -91,9 +92,7 @@ angular.module('foodmashApp.controllers')
 		});
 
 		$scope.selectSortOption = function(option){
-			if($scope.selectedSortOption == option){
-				$scope.selectedSortOption = null;
-			}else{
+			if($scope.selectedSortOption !== option){
 				$scope.selectedSortOption = option;
 			}
 			applySortFilterIfSelected();

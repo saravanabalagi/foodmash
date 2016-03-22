@@ -13,33 +13,12 @@ angular.module('foodmashApp.directives')
 		controller: ['$scope', 'Restaurant', '$q', '$location', 'toaster', 'Upload', 'Aws', 'Areas', function($scope, Restaurant, $q, $location, toaster, Upload, Aws, Areas){
 
 			$scope.updatedRestaurant = new Restaurant;
-			$scope.areas = [];
-
-			Areas.query().then(function(areas){
-				if(areas.length > 0){
-					$scope.areas = areas;
-				}else{
-					$scope.areas = null;
-				}
-			}, function(err){
-				$scope.areas = null;
-			});
 
 			$scope.selectAreaForUpdate = function(area){
 				$scope.selectedAreaForUpdate = area;
 				$scope.updatedRestaurant.area_id = area.id;
 			};
-
-			Areas.query().then(function(areas){
-				if(areas.length > 0){
-				  $scope.areas = areas;		
-				}else{
-				  $scope.areas = new Array;
-				}
-			}, function(err){
-				$scope.areas = null;
-			});
-
+		
 			$scope.routeToRestaurant = function(restaurant){
 				$location.path("/restaurants/" + restaurant.id);
 			};
@@ -107,7 +86,7 @@ angular.module('foodmashApp.directives')
 					toaster.pop('success', 'Restaurant was deleted!');
 					d.resolve(response);
 				}, function(err){
-					toaster.pop('alert', 'Restaurant was not deleted!');
+					toaster.pop('error', 'Restaurant was not deleted!');
 					d.reject(err);
 				});
 				return d.promise;
