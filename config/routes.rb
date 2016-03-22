@@ -157,6 +157,7 @@ Rails.application.routes.draw do
       end
       #check_connection
       post '/check_connection', to: 'check_connection#ping'
+      post '/instantiate', to: 'check_connection#instantiate'
       #orders
       resources :orders do 
         collection do 
@@ -173,6 +174,7 @@ Rails.application.routes.draw do
           post '/success', to: 'payments#success'
           post '/failure', to: 'payments#failure'
           post '/getPaymentRelatedDetailsForMobileSdk', to: 'payments#get_payment_details_for_mobile_sdk'
+          post '/validatePromoCode', to: 'payments#validate_promo_code'
         end
       end
 

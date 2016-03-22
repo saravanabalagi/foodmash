@@ -12,6 +12,7 @@ angular.module('foodmashApp.controllers')
 		{name: 'Current', icon_class: 'fa fa-inbox pull-right', checkout: 'Delivered'},
 		{name: 'Delivered', icon_class: 'fa fa-archive pull-right', checkout: 'Current'}
 	];
+
 	$scope.statuses = [
 		{name: "purchased", alias: "Placed Order", icon_class: "fa fa-clock-o", percent: 'width:0%'},
 		{name: "ordered", alias: "Being Aggregated", icon_class: "fa fa-dropbox", percent: 'width:35%'},
@@ -53,10 +54,7 @@ angular.module('foodmashApp.controllers')
 
     $scope.selectSortOption = function(option){
     	$scope.selectedSortOption = option;
-    	var orderBy = $filter('orderBy');
-    	if($scope.selectedSortOption && $scope.carts){
-    		$scope.carts = orderBy($scope.carts, 'purchased_at', option.reverse);
-    	}
+    	applySortFilterIfSelected();
     };
 
     $scope.checkIfSortOptionSelected = function(option){
@@ -68,6 +66,7 @@ angular.module('foodmashApp.controllers')
 
     $scope.selectOption = function(option){
     	$scope.selectedOption = option;
+    	$scope.selectedCart = {};
     	switch(option.name){
     		case 'Current': 
     		if($scope.loadedCarts){
@@ -85,6 +84,7 @@ angular.module('foodmashApp.controllers')
     		}
     		break;
     	};
+    	applySortFilterIfSelected();
     };
 
     $scope.checkIfSelected = function(option){
@@ -134,6 +134,13 @@ angular.module('foodmashApp.controllers')
 			price += oi.quantity * oi.item.price * order.quantity;
 		});
 		return price;
+	};
+
+	function applySortFilterIfSelected(){
+		var orderBy = $filter('orderBy');
+    	if($scope.selectedSortOption && $scope.carts){
+    		$scope.carts = orderBy($scope.carts, 'purchased_at', $scope.selectedSortOption.reverse);
+    	}
 	};
 
 	function getSuitableStatus(status){

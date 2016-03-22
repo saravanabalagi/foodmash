@@ -43,18 +43,27 @@ class Api::V1::PaymentsController < ApiApplicationController
 
 	def success
  		if params.present? and @cart.add_fields_from_payu(params) and @cart.purchase!
-			render status: 200, json: {message: 'Cart was successfully processed!'}
+			render status: 200, json: {success: true, message: 'Cart was successfully processed!'}
 		else
-			render status: 422, json: {error: 'Cart was not successfully processed!'}
+			render status: 422, json: {success: false, error: 'Cart was not successfully processed!'}
 		end
  	end
 
  	def failure
  		if params.present? and @cart.add_fields_from_payu(params)
-			render status: 200, json: {message: 'Cart payment failed to process!'}
+			render status: 200, json: {success: true, message: 'Cart payment failed to process!'}
 		else
-			render status: 422, json: {error: 'Cart payment failure was not processed!'}
+			render status: 422, json: {success: false, error: 'Cart payment failure was not processed!'}
 		end
+ 	end
+
+ 	def validate_promo_code
+ 		success, promo_discount = @cart.apply_promo_code(params[:data][:promo_code])
+ 	 	if success and promo_discount
+ 	 		render status: 200, json: {success: success, data: {promo_discount: promo_discount, grand_total: @cart.grand_total}}
+ 	 	else
+ 			render status: 200, json: {success: success, error: 'Pomo code was invalid!'}
+ 	 	end
  	end
 
 	def purchase_by_cod
