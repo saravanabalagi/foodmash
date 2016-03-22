@@ -44,13 +44,13 @@ $(document).ready( function() {
         $("html, body").animate({ scrollTop: 0 }, "slow");
     });
 
-    $("body").swipe({ swipeLeft: swipeBodyLeft, swipeRight: swipeBodyRight, allowPageScroll: "vertical" });
-    var scrollEnded = $.debounce(100, false, function () {
-        if($(this).scrollTop() > 100)
-            $(".back-to-top").animate({opacity:0}).fadeIn().animate({opacity:1},100);
-        else $(".back-to-top").animate({opacity:0},200).delay(400).fadeOut();
-    });
-    $(window).scroll(scrollEnded);
+    // $("body").swipe({ swipeLeft: swipeBodyLeft, swipeRight: swipeBodyRight, allowPageScroll: "vertical" });
+    // var scrollEnded = $.debounce(100, false, function () {
+    //     if($(this).scrollTop() > 100)
+    //         $(".back-to-top").animate({opacity:0}).fadeIn().animate({opacity:1},100);
+    //     else $(".back-to-top").animate({opacity:0},200).delay(400).fadeOut();
+    // });
+    // $(window).scroll(scrollEnded);
 
     // JS for account begins
     $(".add-new-address-wrapper").click(function(){
@@ -127,18 +127,18 @@ function sidebarToggle() {
     else sidebar.addClass("slider-open").removeClass("slide-and-hide");
 };
 
-function swipeBodyLeft() {
-    if(!$('body').hasClass('sidebar-body')
-        || ($(document).width()>435)) return;
-    else if(!$('.sidebar-wrapper').hasClass('slider-open')) return;
-    sidebarToggle();
-};
+// function swipeBodyLeft() {
+//     if(!$('body').hasClass('sidebar-body')
+//         || ($(document).width()>435)) return;
+//     else if(!$('.sidebar-wrapper').hasClass('slider-open')) return;
+//     sidebarToggle();
+// };
 
-function swipeBodyRight() {
-    if(!$('body').hasClass('sidebar-body')
-        || ($(document).width()>435)) return;
-    else if($('.sidebar-wrapper').hasClass('slider-open')) return;
-    sidebarToggle();
-};
+// function swipeBodyRight() {
+//     if(!$('body').hasClass('sidebar-body')
+//         || ($(document).width()>435)) return;
+//     else if($('.sidebar-wrapper').hasClass('slider-open')) return;
+//     sidebarToggle();
+// };
 
 

@@ -58,7 +58,12 @@ class Api::V1::PaymentsController < ApiApplicationController
  	end
 
  	def validate_promo_code
- 		render status: 200, json: {success: false, error: 'Pomo code was invalid!'}
+ 		success, promo_discount = @cart.apply_promo_code(params[:data][:promo_code])
+ 	 	if success and promo_discount
+ 	 		render status: 200, json: {success: success, data: {promo_discount: promo_discount, grand_total: @cart.grand_total}}
+ 	 	else
+ 			render status: 200, json: {success: success, error: 'Pomo code was invalid!'}
+ 	 	end
  	end
 
 	def purchase_by_cod

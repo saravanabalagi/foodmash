@@ -222,6 +222,22 @@ class Cart < ActiveRecord::Base
 		self.order_id
 	end
 
+	def apply_promo_code(promo_code)
+		promo = Promo.find_by(code: promo_code)
+		if promo.present? and promo.active and promo.users.create!(user_id: self.user_id)
+			combo_price_list = []
+			self.orders.each do |order|
+				combo_price_list << order.product.price
+			end
+			max_combo_price = combo_price_list.max
+			self.grand_total -=  max_combo_price - 50
+			self.save!
+			return true, max_combo_price - 50
+		else
+			return false, 0
+		end
+	end
+
 	def set_payment_method(payment_method)
 		self.payment_method = payment_method
 		self.purchased_at = Time.now

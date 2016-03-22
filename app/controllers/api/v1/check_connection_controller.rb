@@ -9,4 +9,22 @@ class Api::V1::CheckConnectionController < ApiApplicationController
 		end 
 	end
 
+	def instantiate
+		versions = Version.last
+		maintainence = {
+			title: 'Launch',
+			message: 'We are working on something big for you, come back on wednesday at 7 p.m. !',
+			image: '',
+			blocking: true
+		}
+		settings = {
+
+		}
+		if params[:android_id].present?
+			render status: 200, json: {success: true, data: {versions: versions, maintainence: maintainence, settings: settings}}
+		else
+			render status: 404, json: {success: false}
+		end 
+	end
+
 end

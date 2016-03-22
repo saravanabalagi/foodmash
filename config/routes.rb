@@ -157,6 +157,7 @@ Rails.application.routes.draw do
       end
       #check_connection
       post '/check_connection', to: 'check_connection#ping'
+      post '/instantiate', to: 'check_connection#instantiate'
       #orders
       resources :orders do 
         collection do 

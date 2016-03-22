@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160317085109) do
+ActiveRecord::Schema.define(version: 20160322133328) do
+
+  create_table "Promos_Users", id: false, force: :cascade do |t|
+    t.integer "promo_id", null: false
+    t.integer "user_id",  null: false
+  end
+
+  add_index "Promos_Users", ["promo_id", "user_id"], name: "index_Promos_Users_on_promo_id_and_user_id", unique: true
+  add_index "Promos_Users", ["user_id", "promo_id"], name: "index_Promos_Users_on_user_id_and_promo_id", unique: true
 
   create_table "areas", force: :cascade do |t|
     t.string   "name"
@@ -173,6 +181,13 @@ ActiveRecord::Schema.define(version: 20160317085109) do
     t.decimal  "longitude",  precision: 10, scale: 6
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+  end
+
+  create_table "promos", force: :cascade do |t|
+    t.string   "code"
+    t.boolean  "active",     default: true
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "restaurants", force: :cascade do |t|
