@@ -11,6 +11,7 @@ angular.module('foodmashApp.services')
    this.getCuisinesForDish = function(){
       var d = $q.defer();
       if(!service.cuisines.length){
+        console.log('querying for cuisines');
         Cuisine.query().then(function(cuisines){
           if(cuisines.length > 0){
             service.cuisines = cuisines;
@@ -32,6 +33,7 @@ angular.module('foodmashApp.services')
     this.getDishTypesForDish = function(){
       var d = $q.defer();
       if(!service.dish_types.length){
+        console.log('querying for dish types');
         DishType.query().then(function(dish_types){
           if(dish_types.length > 0){
             service.dish_types = dish_types;
