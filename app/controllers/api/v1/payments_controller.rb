@@ -58,7 +58,7 @@ class Api::V1::PaymentsController < ApiApplicationController
  	end
 
  	def validate_promo_code
- 		render status: 200, json: {success: false, error: 'Pomo code was invalid'}
+ 		render status: 200, json: {success: false, error: 'Pomo code was invalid!'}
  	end
 
 	def purchase_by_cod
