@@ -739,6 +739,12 @@ footer {
     i.fa.completed { background-color: #FFF; color: #111;}
     z-index: 2;
     .order-status-meter {
+      &.cancelled {
+        > div.progress-bar {
+          background-color: $logo-red;
+          width: 10% !important;
+        }
+      }
       display: inline-block;
       position: absolute;
       left: 0;
