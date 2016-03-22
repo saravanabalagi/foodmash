@@ -7,7 +7,7 @@ angular.module('foodmashApp.services')
    var service = this;
    service.restaurants = [];
    service.dish_types = [];
-   service.packaging_centre_id;
+   service.packaging_centre_id = 0;
 
    this.getRestaurantsForCombo = function(packaging_centre_id){
       var d = $q.defer();
