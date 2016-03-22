@@ -12,6 +12,7 @@ angular.module('foodmashApp.controllers')
 		{name: 'Current', icon_class: 'fa fa-inbox pull-right', checkout: 'Delivered'},
 		{name: 'Delivered', icon_class: 'fa fa-archive pull-right', checkout: 'Current'}
 	];
+
 	$scope.statuses = [
 		{name: "purchased", alias: "Placed Order", icon_class: "fa fa-clock-o", percent: 'width:0%'},
 		{name: "ordered", alias: "Being Aggregated", icon_class: "fa fa-dropbox", percent: 'width:35%'},
@@ -68,6 +69,7 @@ angular.module('foodmashApp.controllers')
 
     $scope.selectOption = function(option){
     	$scope.selectedOption = option;
+    	$scope.selectedCart = {};
     	switch(option.name){
     		case 'Current': 
     		if($scope.loadedCarts){

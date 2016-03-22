@@ -7,11 +7,11 @@ angular.module('foodmashApp.services')
    var service = this;
    service.restaurants = [];
    service.dish_types = [];
-   service.packaging_centre_id = 0;
+   service.packaging_centre_id = {};
 
    this.getRestaurantsForCombo = function(packaging_centre_id){
       var d = $q.defer();
-      if(!service.restaurants.length && service.packaging_centre_id !== packaging_centre_id){
+      if(service.packaging_centre_id != packaging_centre_id){
         Restaurant.query({packaging_centre_id: packaging_centre_id}).then(function(restaurants){
           if(restaurants.length > 0){
             service.restaurants = restaurants;
