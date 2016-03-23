@@ -5,6 +5,7 @@ class Cart < ActiveRecord::Base
 	has_many :order_items, through: :orders
 	has_many :orders, dependent: :destroy
 	after_save :update_orders
+	belongs_to :promo
 	include AASM
 
 	aasm do

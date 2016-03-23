@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160322133328) do
+ActiveRecord::Schema.define(version: 20160323072022) do
 
   create_table "Promos_Users", id: false, force: :cascade do |t|
     t.integer "promo_id", null: false
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20160322133328) do
     t.datetime "ordered_at"
     t.datetime "dispatched_at"
     t.datetime "delivered_at"
+    t.integer  "promo_id"
   end
 
   create_table "cities", force: :cascade do |t|
