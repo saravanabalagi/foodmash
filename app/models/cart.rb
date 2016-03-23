@@ -267,10 +267,10 @@ class Cart < ActiveRecord::Base
 					combo_price_list << order.product.price
 				end
 				max_combo_price = combo_price_list.max
-				self.grand_total -=  max_combo_price - 50 - self.vat - self.delivery_charge
+				self.grand_total -=  [max_combo_price - 50, 0].max + self.vat + self.delivery_charge
 			end
 			self.save!
-			return true, [max_combo_price - 50, 0].max - self.vat - self.delivery_charge
+			return true, [max_combo_price - 50, 0].max + self.vat + self.delivery_charge
 		else
 			return false, 0
 		end
