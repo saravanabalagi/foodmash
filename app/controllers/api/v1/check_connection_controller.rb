@@ -11,7 +11,7 @@ class Api::V1::CheckConnectionController < ApiApplicationController
 
 	def instantiate
 		versions = Version.last
-		maintainence = {
+		maintenance = {
 			title: 'Foodmash Launch',
 			message: 'We are working on something big for you, come back today evening at 7 p.m. !',
 			image: '',
