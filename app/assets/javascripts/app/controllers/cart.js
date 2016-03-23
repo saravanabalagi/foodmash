@@ -37,29 +37,29 @@ angular.module('foodmashApp.controllers')
 	    });
 	 };
 
-	if($rootScope.currentUser && !$rootScope.delivery_addresses && $rootScope.area && $rootScope.area.id){
-		DeliveryAddress.query({user_id: $rootScope.currentUser.id, area_id: $rootScope.area.id}).then(function(delivery_addresses){
-			if(delivery_addresses.length > 0){
-				$scope.delivery_addresses = delivery_addresses;
-				$rootScope.delivery_addresses = delivery_addresses;
-				setPrimaryAsDeliveryAddress();
-			}else{
-				$scope.delivery_addresses = new Array;
-				$scope.cart.delivery_address_id = null;
-				$rootScope.delivery_addresses = null;
-			}
-			$scope.loadingDeliveryAddresses = false;
-		}, function(err){
-			$scope.delivery_addresses = null;
-			$scope.loadingDeliveryAddresses = false;
-		});
-	}else{
-		if($rootScope.delivery_addresses){
-			$scope.delivery_addresses = $rootScope.delivery_addresses;
-		}else{
-			$scope.delivery_addresses = null;
-		}
-	}
+	 if($rootScope.currentUser && !$rootScope.delivery_addresses && $rootScope.area && $rootScope.area.id){
+ 		DeliveryAddress.query({user_id: $rootScope.currentUser.id, area_id: $rootScope.area.id}).then(function(delivery_addresses){
+ 			if(delivery_addresses.length > 0){
+ 				$scope.delivery_addresses = delivery_addresses;
+ 				$rootScope.delivery_addresses = delivery_addresses;
+ 				setPrimaryAsDeliveryAddress();
+ 			}else{
+ 				$scope.delivery_addresses = new Array;
+ 				$scope.cart.delivery_address_id = null;
+ 				$rootScope.delivery_addresses = null;
+ 			}
+ 			$scope.loadingDeliveryAddresses = false;
+ 		}, function(err){
+ 			$scope.delivery_addresses = null;
+ 			$scope.loadingDeliveryAddresses = false;
+ 		});
+	 }else{
+	 	if($rootScope.delivery_addresses){
+	 		$scope.delivery_addresses = $rootScope.delivery_addresses;
+	 	}else{
+	 		$scope.delivery_addresses = null;
+	 	}
+	 }
 
 	$scope.isDeliveryAddressSelected = function(delivery_address){
 		if($scope.cart.delivery_address_id == delivery_address.id){
@@ -123,6 +123,26 @@ angular.module('foodmashApp.controllers')
 				$rootScope.enableButton('.cod-button');
 			});
 		}
+	};
+
+	$scope.applyPromoCode = function(promo_code){
+		$scope.cart.user_id = $rootScope.currentUser.id;
+		Payment.validatePromoCode(promo_code, $scope.cart).then(function(response){
+			console.log(response);
+			if(response.promo_discount){
+				toaster.pop('success', 'A discount of ' + response.promo_discount + ' was applied to cart!');
+			}else{
+				toaster.pop('error', 'Failed to apply promo code!');
+			}
+			if(response.cart){
+				$scope.cart.grand_total = response.cart.grand_total;
+				$scope.cart.vat = response.cart.vat;
+				$scope.cart.delivery_charge = response.cart.delivery_charge;
+			}
+		}, function(err){
+			toaster.pop('error', 'Failed to apply promo code!');
+			console.log(err);
+		});
 	};
 
 	$scope.processCart = function(){
@@ -197,16 +217,16 @@ angular.module('foodmashApp.controllers')
 	};
 
 	function calcTaxAndGrandTotal(){
-		$scope.cart.vat = $scope.cart.total * 0;
+		$scope.cart.vat = $scope.cart.total * 0.02;
 		if($scope.cart.total == 0){
 			$scope.cart.delivery_charge = 0;
 		}
 		if($scope.cart.total){
 			if($scope.cart.total < 200){
-				$scope.cart.delivery_charge = 0;
+				$scope.cart.delivery_charge = 30;
 				$scope.cart.grand_total = ($scope.cart.total + $scope.cart.vat + $scope.cart.delivery_charge).toFixed(2);
 			}else{
-				$scope.cart.delivery_charge = 0;
+				$scope.cart.delivery_charge = 40;
 				$scope.cart.grand_total = ($scope.cart.total + $scope.cart.vat + $scope.cart.delivery_charge).toFixed(2);
 			}
 		}else{

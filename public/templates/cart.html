@@ -41,12 +41,6 @@
           </tr>
           <tr>
             <td></td>
-            <td>Promo Code</td>
-            <td colspan="2" class="text-align-right"><span class="rupee"></span>{{promo_discount}}</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
             <td>Grand Total</td>
             <td colspan="2" class="text-align-right"><span class="rupee">₹ </span>{{cart.grand_total}}</td>
             <td></td>
@@ -56,11 +50,12 @@
         <div class="row promo-code-wrapper-row" ng-if="currentUser">
           <div class="form-group label-floating is-empty promo-code-wrapper">
             <label class="control-label">Promo Code</label>
-            <input class="form-control" type="text" id="promoc-code">
-            <p class="help-block">Enter a valid PromoCode</p>
+            <input class="form-control" type="text" id="promoc-code" ng-model="promo_code">
+            <p class="help-block">Enter a valid Promo Code</p>
             <span class="material-input"></span>
           </div>
-          <a class="btn btn-raised btn-success"> Apply </a>
+          <p style="font-family: Segoe UI Light; color: red">(Warning, promo code can by applied only once!)</p>
+          <a class="btn btn-raised btn-success" ng-click="applyPromoCode(promo_code)" ng-disabled="!promo_code.length"> Apply </a>
         </div>
       </div>
     </div>
@@ -118,7 +113,7 @@
   <div class="row">
     <div class="proceed-to-pay-wrapper">
         <div class="row">
-          <a class="btn btn-raised btn-info cod-button" ng-click="proceedToPayment()"> Cash on Delivery </a>
+          <a class="btn btn-raised btn-info cod-button" ng-click="setCod(); proceedToPayment()"> Cash on Delivery </a>
           <!--<a class="btn btn-raised btn-info" ng-click="setPayu(); proceedToPayment()">Online Payment</a>-->
         </div>
     </div>

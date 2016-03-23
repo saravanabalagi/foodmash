@@ -4,8 +4,8 @@ class Cart < ActiveRecord::Base
 	belongs_to :delivery_address
 	has_many :order_items, through: :orders
 	has_many :orders, dependent: :destroy
-	before_save :calculate_total
 	after_save :update_orders
+	belongs_to :promo
 	include AASM
 
 	aasm do
@@ -112,9 +112,10 @@ class Cart < ActiveRecord::Base
 			end
 		end
 			self.delivery_address_id = cart[:delivery_address_id]
+			self.calculate_total
 			self.vat = cart[:vat]
-			self.grand_total = cart[:grand_total]
 			self.delivery_charge = cart[:delivery_charge]
+			self.grand_total = cart[:grand_total]
 			DeliveryAddress.make_primary(cart[:delivery_address_id])
 			self.save!
 	end
@@ -183,6 +184,7 @@ class Cart < ActiveRecord::Base
 			end
 		end
 		self.delivery_address_id = delivery_address_id
+		self.calculate_total
 		DeliveryAddress.make_primary(delivery_address_id)
 		self.save!
 	end
@@ -222,17 +224,52 @@ class Cart < ActiveRecord::Base
 		self.order_id
 	end
 
-	def apply_promo_code(promo_code)
-		promo = Promo.find_by(code: promo_code)
-		if promo.present? and promo.active and promo.users.create!(user_id: self.user_id)
+	def self.apply_promo_code(promo_code, cart)
+		promo = Promo.find_by(code: promo_code) if promo_code
+		user = User.find(cart[:user_id]) if cart[:user_id]
+		if user and promo and promo.users.pluck(:id).include?(user.id)
+			promo_user = promo.users.find(user.id)
+		else
+			promo_user = nil
+		end
+		if promo.present? and promo.active and !promo_user.present?
+			promo.users << user
 			combo_price_list = []
-			self.orders.each do |order|
-				combo_price_list << order.product.price
+			max_combo_price = 0
+			if cart[:orders].present?
+				cart[:orders].each do |order|
+					combo_price_list << order[:product][:price]
+				end
+				max_combo_price = combo_price_list.max
+				cart[:grand_total]  = (cart[:grand_total].to_f -  [max_combo_price - 50, 0].max) - cart[:vat] - cart[:delivery_charge]
+				cart[:vat] = 0
+				cart[:delivery_charge] = 0
 			end
-			max_combo_price = combo_price_list.max
-			self.grand_total -=  max_combo_price - 50
-			self.save!
-			return true, max_combo_price - 50
+			return true, [max_combo_price - 50, 0].max, cart
+		else
+			return false, 0, nil
+		end
+	end
+
+	def apply_promo_code(promo_code)
+		promo = Promo.find_by(code: promo_code) if promo_code
+		user = User.find(self.user_id) if self.user_id
+		if user and promo and promo.users.pluck(:id).include?(user.id)
+			promo_user = promo.users.find(user.id)
+		else
+			promo_user = nil
+		end
+		if promo.present? and promo.active and !promo_user.present?
+			combo_price_list = []
+			max_combo_price = 0
+			if self.orders.present?
+				self.orders.each do |order|
+					combo_price_list << order.product.price
+				end
+				max_combo_price = combo_price_list.max
+				self.grand_total -=  [max_combo_price - 50, 0].max + self.vat + self.delivery_charge
+			end
+			return true, [max_combo_price - 50, 0].max + self.vat + self.delivery_charge, self.grand_total
 		else
 			return false, 0
 		end
@@ -244,15 +281,14 @@ class Cart < ActiveRecord::Base
 		self.save!
 	end
 
-	private
 	def calculate_total
 		self.total = orders.to_a.sum{|o| (o.order_items.to_a.sum{|oi| (oi.item.price * oi.quantity) || 0} * o.quantity) || 0}
 		self.vat = 0.02 * self.total
 		self.delivery_charge = self.total < 200 ? 30 : 40
 		self.grand_total = self.total + self.vat + self.delivery_charge
-		return true
 	end
 
+	private
 	def update_orders
 		if self.purchased?	
 			orders.each {|order| order.product.update_attributes! no_of_purchases: order.quantity; order.order_items.each{|order_item| order_item.item.update_attributes! no_of_purchases: (order_item.quantity*order_item.order.quantity)} }

@@ -80,6 +80,7 @@ Rails.application.routes.draw do
         post '/purchaseForCod', to: 'payments#purchase_for_cod'
         post '/success', to: 'payments#success'
         post '/failure', to: 'payments#failure'
+        post '/validatePromoCode', to: 'payments#validate_promo_code'
       end
     end
   end

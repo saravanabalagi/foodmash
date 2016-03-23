@@ -30,6 +30,15 @@ class Web::PaymentsController < ApplicationController
 		end
  	end
 
+ 	def validate_promo_code
+ 		success, promo_discount, cart = Cart.apply_promo_code(params[:payment][:promo_code].downcase, params[:payment][:cart])
+ 	 	if success and promo_discount
+ 	 		render status: 200, json: {promo_discount: promo_discount, cart: cart}
+ 	 	else
+ 			render status: 422, json: {error: 'Pomo code was invalid!'}
+ 	 	end
+ 	end
+
  	def purchase_for_cod
  		if @cart.add_items_to_cart(params[:payment][:cart]) and @cart.set_payment_method('COD') and @cart.purchase!
  			render status: 200, json: {message: 'Succesfully ordered!'}
