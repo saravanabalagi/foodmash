@@ -17,10 +17,10 @@ class Api::V1::CheckConnectionController < ApiApplicationController
 			image: 'http://www.thesaleslion.com/wp-content/uploads/2012/10/blog-launch.jpg',
 			blocking: true
 		}
-		settings = {android_id
+		settings = {
 
 		}
-		if params[:].present?
+		if params[:android_id].present?
 			render status: 200, json: {success: true, data: {versions: versions, maintenance: maintenance, settings: settings}}
 		else
 			render status: 404, json: {success: false}
