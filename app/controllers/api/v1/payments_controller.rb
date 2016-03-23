@@ -58,9 +58,9 @@ class Api::V1::PaymentsController < ApiApplicationController
  	end
 
  	def validate_promo_code
- 		success, promo_discount = @cart.apply_promo_code(params[:data][:promo_code].downcase)
+ 		success, promo_discount, grand_total = @cart.apply_promo_code(params[:data][:promo_code].downcase)
  	 	if success and promo_discount
- 	 		render status: 200, json: {success: success, data: {promo_discount: promo_discount, grand_total: @cart.grand_total}}
+ 	 		render status: 200, json: {success: success, data: {promo_discount: promo_discount, grand_total: grand_total}}
  	 	else
  			render status: 200, json: {success: success, error: 'Pomo code was invalid!'}
  	 	end
@@ -68,7 +68,17 @@ class Api::V1::PaymentsController < ApiApplicationController
 
 	def purchase_by_cod
 		return invalid_data unless params[:data][:payment_method]
-		if @cart.set_payment_method('COD') and @cart.purchase! 
+		success = nil
+		if params[:data][:promo_code].present?
+			success, promo_discount, grand_total = @cart.apply_promo_code(params[:data][:promo_code].downcase)
+		end
+		if success
+			promo = Promo.find_by(code: params[:data][:promo_code].downcase)
+			promo.users << @current_user
+		end
+		if success and @cart.set_payment_method('COD') and @cart.purchase! 
+			render status: 200, json: {success: true, data: {order_id: @cart.order_id, promo_discount: promo_discount}}
+		elsif @cart.set_payment_method('COD') and @cart.purchase! 
 			render status: 200, json: {success: true, data: {order_id: @cart.order_id}}
 		else
 			render status: 200, json: {success: false, error: 'Password was incorrect!'}

@@ -260,7 +260,6 @@ class Cart < ActiveRecord::Base
 			promo_user = nil
 		end
 		if promo.present? and promo.active and !promo_user.present?
-			promo.users << user
 			combo_price_list = []
 			max_combo_price = 0
 			if self.orders.present?
@@ -270,8 +269,7 @@ class Cart < ActiveRecord::Base
 				max_combo_price = combo_price_list.max
 				self.grand_total -=  [max_combo_price - 50, 0].max + self.vat + self.delivery_charge
 			end
-			self.save!
-			return true, [max_combo_price - 50, 0].max + self.vat + self.delivery_charge
+			return true, [max_combo_price - 50, 0].max + self.vat + self.delivery_charge, self.grand_total
 		else
 			return false, 0
 		end
