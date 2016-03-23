@@ -73,8 +73,10 @@ angular.module('foodmashApp.controllers')
     			var deliveredCarts = $filter('filter')($scope.loadedCarts, {aasm_state: 'delivered'}, true);
     			$scope.carts = angular.copy($scope.loadedCarts);
     			deliveredCarts.filter(function(cart){
-    				var index = $scope.carts.indexOf(cart);
-    				$scope.carts.splice(index, 1);
+    				var index = $scope.carts.map(function(c) { return c.id; }).indexOf(cart.id);
+    				if(angular.isNumber(index) && index != -1){
+    					$scope.carts.splice(index, 1);
+    				}
     			});
     		}
     		break;

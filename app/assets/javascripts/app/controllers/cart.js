@@ -125,6 +125,26 @@ angular.module('foodmashApp.controllers')
 		}
 	};
 
+	$scope.applyPromoCode = function(promo_code){
+		$scope.cart.user_id = $rootScope.currentUser.id;
+		Payment.validatePromoCode(promo_code, $scope.cart).then(function(response){
+			console.log(response);
+			if(response.promo_discount){
+				toaster.pop('success', 'A discount of ' + response.promo_discount + ' was applied to cart!');
+			}else{
+				toaster.pop('error', 'Failed to apply promo code!');
+			}
+			if(response.cart){
+				$scope.cart.grand_total = response.cart.grand_total;
+				$scope.cart.vat = response.cart.vat;
+				$scope.cart.delivery_charge = response.cart.delivery_charge;
+			}
+		}, function(err){
+			toaster.pop('error', 'Failed to apply promo code!');
+			console.log(err);
+		});
+	};
+
 	$scope.processCart = function(){
 		var d = $q.defer();
 		Cart.addToCart($scope.cart).then(function(cart){
@@ -197,16 +217,16 @@ angular.module('foodmashApp.controllers')
 	};
 
 	function calcTaxAndGrandTotal(){
-		$scope.cart.vat = $scope.cart.total * 0;
+		$scope.cart.vat = $scope.cart.total * 0.02;
 		if($scope.cart.total == 0){
 			$scope.cart.delivery_charge = 0;
 		}
 		if($scope.cart.total){
 			if($scope.cart.total < 200){
-				$scope.cart.delivery_charge = 0;
+				$scope.cart.delivery_charge = 30;
 				$scope.cart.grand_total = ($scope.cart.total + $scope.cart.vat + $scope.cart.delivery_charge).toFixed(2);
 			}else{
-				$scope.cart.delivery_charge = 0;
+				$scope.cart.delivery_charge = 40;
 				$scope.cart.grand_total = ($scope.cart.total + $scope.cart.vat + $scope.cart.delivery_charge).toFixed(2);
 			}
 		}else{

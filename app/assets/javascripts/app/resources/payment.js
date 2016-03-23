@@ -26,5 +26,14 @@ angular.module('foodmashApp.resources')
 		return d.promise;
 	};
 
+	resource.validatePromoCode = function(promo_code, cart){
+		var self = this;
+		var d = $q.defer();
+		resource.$post(self.$url('validatePromoCode'), {promo_code: promo_code, cart: cart}).then(function(response){
+			d.resolve(response);
+		}, function(err){ d.reject(err); })
+		return d.promise;
+	};
+
 	return resource;
 }]);
