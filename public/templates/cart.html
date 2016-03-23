@@ -54,7 +54,7 @@
             <p class="help-block">Enter a valid Promo Code</p>
             <span class="material-input"></span>
           </div>
-          <a class="btn btn-raised btn-success" ng-click="applyPromoCode(promo_code)"> Apply </a>
+          <a class="btn btn-raised btn-success" ng-click="applyPromoCode(promo_code)" ng-disabled="!promo_code.length"> Apply </a>
         </div>
       </div>
     </div>

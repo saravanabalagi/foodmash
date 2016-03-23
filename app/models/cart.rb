@@ -267,12 +267,10 @@ class Cart < ActiveRecord::Base
 					combo_price_list << order.product.price
 				end
 				max_combo_price = combo_price_list.max
-				self.grand_total -=  max_combo_price - 50
-				self.vat = 0
-				self.delivery_charge = 0
+				self.grand_total -=  max_combo_price - 50 - self.vat - self.delivery_charge
 			end
 			self.save!
-			return true, [max_combo_price - 50, 0].max
+			return true, [max_combo_price - 50, 0].max - self.vat - self.delivery_charge
 		else
 			return false, 0
 		end
@@ -286,9 +284,8 @@ class Cart < ActiveRecord::Base
 
 	def calculate_total
 		self.total = orders.to_a.sum{|o| (o.order_items.to_a.sum{|oi| (oi.item.price * oi.quantity) || 0} * o.quantity) || 0}
-		self.vat = 0
-		self.delivery_charge = 0
-		# self.total < 200 ? 30 : 40
+		self.vat = 0.02 * self.total
+		self.delivery_charge = self.total < 200 ? 30 : 40
 		self.grand_total = self.total + self.vat + self.delivery_charge
 	end
 
