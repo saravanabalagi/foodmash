@@ -21,7 +21,7 @@ class Api::V1::CheckConnectionController < ApiApplicationController
 
 		}
 		if params[:android_id].present?
-			render status: 200, json: {success: true, data: {versions: versions, maintenance: {}, settings: settings}}
+			render status: 200, json: {success: true, data: {versions: versions, settings: settings}}
 		else
 			render status: 404, json: {success: false}
 		end 
