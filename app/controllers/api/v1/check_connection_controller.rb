@@ -14,13 +14,13 @@ class Api::V1::CheckConnectionController < ApiApplicationController
 		maintenance = {
 			title: 'Foodmash Launch',
 			message: 'We are working on something big for you, come back today evening at 7 p.m. !',
-			image: '',
+			image: 'http://www.thesaleslion.com/wp-content/uploads/2012/10/blog-launch.jpg',
 			blocking: true
 		}
-		settings = {
+		settings = {android_id
 
 		}
-		if params[:android_id].present?
+		if params[:].present?
 			render status: 200, json: {success: true, data: {versions: versions, maintenance: maintenance, settings: settings}}
 		else
 			render status: 404, json: {success: false}
