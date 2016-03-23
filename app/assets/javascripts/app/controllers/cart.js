@@ -89,7 +89,7 @@ angular.module('foodmashApp.controllers')
 			return ;
 		}
 		if(!$rootScope.currentUser){
-			toaster.pop('info', 'Login to proceed to Payment');
+			toaster.pop('info', 'Login and continue');
 			$location.path('/login');
 			$rootScope.storeLocation = '/cart';
 			return ;

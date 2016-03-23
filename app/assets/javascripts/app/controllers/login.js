@@ -25,7 +25,7 @@ angular.module('foodmashApp.controllers')
 		};
 
 		$scope.submitLogin = function(){
-			$rootScope.disableButton('.login-button', 'Loggin in...');
+			$rootScope.disableButton('.login-button', 'Logging in...');
 			UserService.login($scope.login)
 			.then(function(user){
 				toaster.pop('success', 'Signed In!');
