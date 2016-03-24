@@ -6,7 +6,7 @@ class DeliveryAddress < ActiveRecord::Base
 	validates_presence_of :area_id, :line1, primary: {default: false}
 	before_save :falsify_true_records
 	# before_save :make_primary_for_first_address
-	before_destroy :make_primary_for_first_address
+	# before_destroy :make_primary_for_first_address
 
 	def self.make_primary(delivery_address_id)
 		delivery_address = DeliveryAddress.find delivery_address_id
