@@ -466,6 +466,29 @@ footer {
         background-color: transparent !important;
         > img { width: 100%; padding: 40px 0; }
       }
+      .attached-note { color: $success-green; }
+      .add-note-wrapper {
+        padding: 0 10px 15px;
+        position: absolute;
+        background: rgba(255,255,255,0.95);
+        border-radius: 10px;
+        border: 10px solid rgba(0,0,0,0.3);
+        width: 400px;
+        text-align: center;
+        .add-note { width:70%; text-align: left; margin-right: 10px; }
+        > * { display: inline-block; }
+        &:before {
+          position: absolute;
+          content: '';
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          top: -30px;
+          border-bottom: 10px solid rgba(0,0,0,0.3);
+          border-left: 10px solid transparent;
+          border-right: 10px solid transparent;
+        }
+      }
       .quantity-counter {
         .quantity { padding: 0px 2px; vertical-align: middle; }
       }
