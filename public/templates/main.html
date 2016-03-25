@@ -1,4 +1,4 @@
-<div class="sidebar-wrapper sidebar-open">
+ <div class="sidebar-wrapper sidebar-open">
   <div class="sidebar">
     <section class="sidebar-section">
       <h5>Type</h5>
@@ -51,10 +51,10 @@
 
 
 <div class="container">
+  <div class="row" style="margin-bottom:15px">
+    <p style="font-size: 15px;color: #fff;text-align: center;background: #999;padding: 10px;border-radius: 10px;">We run from 12 - 3 p.m. and 7 - 10 p.m. Use promo code FM15 for 15% off!</p>
+  </div>
   <div class="row" ng-show="combos.length">
       <combo-card ng-repeat="combo in combos | filter:search" ng-init="load()"></combo-card>
-  </div>
-  <div class="row" ng-show="!combos.length">
-    <p style="text-align: center; font-size: 150%; font-family: Serif; font-style: italic;">We are working on something big for you, come back today evening at 7p.m. !</p>
   </div>
 </div>

@@ -38,7 +38,7 @@ angular.module('foodmashApp.controllers')
 	 };
 
 	 if($rootScope.currentUser && !$rootScope.delivery_addresses && $rootScope.area && $rootScope.area.id){
- 		DeliveryAddress.query({user_id: $rootScope.currentUser.id, area_id: $rootScope.area.id}).then(function(delivery_addresses){
+ 		DeliveryAddress.query({area_id: $rootScope.area.id}).then(function(delivery_addresses){
  			if(delivery_addresses.length > 0){
  				$scope.delivery_addresses = delivery_addresses;
  				$rootScope.delivery_addresses = delivery_addresses;
@@ -89,7 +89,7 @@ angular.module('foodmashApp.controllers')
 			return ;
 		}
 		if(!$rootScope.currentUser){
-			toaster.pop('info', 'Login to proceed to Payment');
+			toaster.pop('info', 'Login and continue');
 			$location.path('/login');
 			$rootScope.storeLocation = '/cart';
 			return ;
@@ -128,20 +128,18 @@ angular.module('foodmashApp.controllers')
 	$scope.applyPromoCode = function(promo_code){
 		$scope.cart.user_id = $rootScope.currentUser.id;
 		Payment.validatePromoCode(promo_code, $scope.cart).then(function(response){
-			console.log(response);
 			if(response.promo_discount){
 				toaster.pop('success', 'A discount of ' + response.promo_discount + ' was applied to cart!');
 			}else{
 				toaster.pop('error', 'Failed to apply promo code!');
 			}
-			if(response.cart){
+			if(response.cart.grand_total){
 				$scope.cart.grand_total = response.cart.grand_total;
 				$scope.cart.vat = response.cart.vat;
 				$scope.cart.delivery_charge = response.cart.delivery_charge;
 			}
 		}, function(err){
 			toaster.pop('error', 'Failed to apply promo code!');
-			console.log(err);
 		});
 	};
 

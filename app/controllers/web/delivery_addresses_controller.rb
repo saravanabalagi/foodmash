@@ -6,7 +6,7 @@ class Web::DeliveryAddressesController < ApplicationController
 	load_and_authorize_resource skip_load_resource
 
 	def index
-		@delivery_addresses = DeliveryAddress.where(params.permit(:user_id, :area_id))
+		@delivery_addresses = @current_user.delivery_addresses.where(params.permit(:area_id))
 		if @delivery_addresses 
 			render status: 200, json: @delivery_addresses.as_json(:include => {:area => {:include => :city}})
 		else
@@ -45,10 +45,10 @@ class Web::DeliveryAddressesController < ApplicationController
 	end
 
 	def delivery_address_params
-		params.require(:delivery_address).permit(:name, :line1, :line2, :area_id, :contact_no, :primary, :latitude, :longitude)
+		params.require(:delivery_address).permit(:name, :line1, :line2, :area_id, :contact_no, :primary, :latitude, :longitude, :user_id)
 	end
 
 	def delivery_address_update_params
-		params.require(:delivery_address).permit(:name, :line1, :line2, :area_id, :contact_no, :primary, :latitude, :longitude)
+		params.require(:delivery_address).permit(:name, :line1, :line2, :area_id, :contact_no, :primary, :latitude, :longitude, :user_id)
 	end
 end
