@@ -233,19 +233,9 @@ class Cart < ActiveRecord::Base
 			promo_user = nil
 		end
 		if promo.present? and promo.active and !promo_user.present?
+			cart[:grand_total] = cart[:grand_total].to_f - (cart[:grand_total].to_f * 0.15)
 			promo.users << user
-			combo_price_list = []
-			max_combo_price = 0
-			if cart[:orders].present?
-				cart[:orders].each do |order|
-					combo_price_list << order[:product][:price]
-				end
-				max_combo_price = combo_price_list.max
-				cart[:grand_total]  = (cart[:grand_total].to_f -  [max_combo_price - 50, 0].max) - cart[:vat] - cart[:delivery_charge]
-				cart[:vat] = 0
-				cart[:delivery_charge] = 0
-			end
-			return true, [max_combo_price - 50, 0].max, cart
+			return true, cart[:grand_total].to_f * 0.15, cart
 		else
 			return false, 0, nil
 		end
@@ -260,16 +250,8 @@ class Cart < ActiveRecord::Base
 			promo_user = nil
 		end
 		if promo.present? and promo.active and !promo_user.present?
-			combo_price_list = []
-			max_combo_price = 0
-			if self.orders.present?
-				self.orders.each do |order|
-					combo_price_list << order.product.price
-				end
-				max_combo_price = combo_price_list.max
-				self.grand_total -=  [max_combo_price - 50, 0].max + self.vat + self.delivery_charge
-			end
-			return true, [max_combo_price - 50, 0].max + self.vat + self.delivery_charge, self.grand_total
+			self.grand_total -= self.grand_total*0.15
+			return true, self.grand_total * 0.15, self.grand_total
 		else
 			return false, 0
 		end
