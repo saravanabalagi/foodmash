@@ -625,9 +625,8 @@ footer {
           display: inline-block;
           vertical-align: middle;
         }
-        i.icon-label {
-          transform: translateY(2px);
-        }
+        > span { display: inline; }
+        > i.icon-label { transform: translateY(2px); }
       }
     }
     > div.restaurant-logo-wrapper {
