@@ -13,7 +13,7 @@ class Api::V1::CheckConnectionController < ApiApplicationController
 		versions = Version.last
 		maintenance = {
 			title: 'Foodmash Launch',
-			message: 'We run from 1-3 p.m. and 7 - 10 p.m. Use promo code FM15 for 15% off!',
+			message: 'We run from 12 - 3 p.m. and 7 - 10 p.m. Use promo code FM15 for 15% off!',
 			image: 'http://www.thesaleslion.com/wp-content/uploads/2012/10/blog-launch.jpg',
 			blocking: false
 		}
