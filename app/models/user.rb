@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   delegate :can?, :cannot?, to: :ability
 
   has_many :contact_us
-  has_and_belongs_to_many :promos, :join_table => "Promos_Users"
+  has_and_belongs_to_many :promos, :join_table => "promos_users"
   has_many :carts
   has_many :sessions
   has_many :delivery_addresses, dependent: :destroy

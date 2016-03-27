@@ -7,7 +7,7 @@ angular.module('foodmashApp.controllers')
 	$scope.cart = {};
 	$scope.selectedStatus = {};
 	$scope.next_status = {};
-    $scope.elapsedTime = "";
+    $scope.elapsedTime = null;
     $scope.timer = null;
     $scope.packagingOrderOptions = [
 		{name: 'Current', icon_class: 'fa fa-inbox pull-right', checkout: 'Delivered'},
@@ -136,10 +136,30 @@ angular.module('foodmashApp.controllers')
 		return d.promise;
 	};
 
+	$scope.cancelStatus = function(){
+		var d = $q.defer();
+		if(confirm('Are you sure ?')){
+			$rootScope.disableButton('.order-status-cancel-button');
+			Cart.changeStatus('cancel', $scope.cart.id).then(function(cart){
+				toaster.pop('success', 'Cart was successfully cancelled!');
+				$scope.cart = cart;
+				PackagingPanelService.setUpdatedCart(cart);
+				$rootScope.enableButton('.order-status-cancel-button');
+	       		$scope.killTimer(cart);
+				d.resolve(cart);
+			}, function(err){
+				toaster.pop('error', 'Cart was not cancelled!');
+				$rootScope.enableButton('.order-status-cancel-button');
+				d.reject(err);
+			});
+		}
+		return d.promise;
+	};
+
     $scope.killTimer = function(cart){
-        if($scope.timer != null && cart.aasm_state == 'delivered') {
+        if($scope.timer != null && (cart.aasm_state == 'delivered' || cart.aasm_state == 'not_started')) {
             $interval.cancel($scope.timer);
-            $scope.timer=undefined;
+            $scope.timer=null;
             findElapsedTime(new Date(cart.delivered_at));
         }
     };
@@ -151,7 +171,7 @@ angular.module('foodmashApp.controllers')
 				$scope.next_status = $scope.statuses[index + 1];
 			}
 		});
-	}
+	};
 
 	function getSuitableStatus(status){
 		var get_status  = {};
@@ -161,7 +181,7 @@ angular.module('foodmashApp.controllers')
 			}
 		});
 		return get_status;
-	}
+	};
 
 	function aggregatePackagingCentreOrders(){
 		if($scope.cart && $scope.cart.orders && $scope.cart.orders.length > 0){
@@ -171,7 +191,7 @@ angular.module('foodmashApp.controllers')
 				});
 			});
 		}
-	}
+	};
 
     function findElapsedTime(time){
         var now = time;
@@ -179,15 +199,16 @@ angular.module('foodmashApp.controllers')
         var diff = Math.abs(now.getTime() - purchased_at.getTime())/1000;
         var diffSecs = Math.floor(diff % 60);
         var diffMins = Math.floor(diff / 60);
-        var diffHours;
-        if(parseInt(diffMins)>0) {
+        var diffHours = Math.floor(diffMins / 60);
+        if(parseInt(diffMins)>0){
             diffHours = Math.floor(diffMins / 60);
             diffMins = diffMins % 60;
             diffHours = (diffHours < 10) ? "0" + diffHours : diffHours;
         }
+        diffHours = (diffHours < 10) ? "" + diffHours : diffHours;
         diffMins = (diffMins < 10) ? "0" + diffMins : diffMins;
         diffSecs = (diffSecs < 10) ? "0" + diffSecs : diffSecs;
         $scope.elapsedTime = ((diff==undefined)?"":(diffHours+":"))+diffMins + ":" + diffSecs;
-    }
+    };
 
 }]);

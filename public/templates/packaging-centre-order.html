@@ -10,10 +10,11 @@
           </div>
          <i ng-repeat-start="status in statuses" class="{{status.icon_class}}" ng-class="{'completed' : checkIfCompleted(status)}" data-toggle="tooltip" title="{{status.alias}}" data-delay="{'show': 1}" data-placement="bottom"></i><span ng-repeat-end> </span>
         </div>
-        <div class="order-status-update-wrapper" ng-hide="cart.aasm_state == 'delivered'">Update as 
+        <div class="order-status-update-wrapper" ng-hide="cart.aasm_state == 'delivered' || cart.aasm_state == 'not_started'">Update as 
         <button class="btn btn-info btn-raised order-status-update-button" ng-click="updateStatus()"><i class="fa fa-step-forward"></i>{{next_status.alias}}</button>
+        <button class="btn btn-warning btn-raised order-status-cancel-button" ng-click="cancelStatus()"><i class="fa fa-eject"></i>Cancel Order</button>
         </div>
-         <div class="order-time-elapsed-wrapper">Time elapsed: <span class="order-time-elapsed">{{elapsedTime}}</span></div>
+         <div ng-hide="cart.aasm_state == 'not_started'" class="order-time-elapsed-wrapper">Time elapsed: <span class="order-time-elapsed">{{elapsedTime}}</span></div>
         <div class="order-header">
           <span class="order-date">{{cart.purchased_at | date: 'MMM dd, yyyy'}} <span class="order-time">{{cart.purchased_at | date: 'HH:mm:ss'}}</span></span>
           <span class="order-amount-wrapper">

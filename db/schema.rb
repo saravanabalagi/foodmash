@@ -11,15 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323072022) do
-
-  create_table "Promos_Users", id: false, force: :cascade do |t|
-    t.integer "promo_id", null: false
-    t.integer "user_id",  null: false
-  end
-
-  add_index "Promos_Users", ["promo_id", "user_id"], name: "index_Promos_Users_on_promo_id_and_user_id", unique: true
-  add_index "Promos_Users", ["user_id", "promo_id"], name: "index_Promos_Users_on_user_id_and_promo_id", unique: true
+ActiveRecord::Schema.define(version: 20160327001344) do
 
   create_table "areas", force: :cascade do |t|
     t.string   "name"
@@ -190,6 +182,14 @@ ActiveRecord::Schema.define(version: 20160323072022) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end
+
+  create_table "promos_users", id: false, force: :cascade do |t|
+    t.integer "promo_id", null: false
+    t.integer "user_id",  null: false
+  end
+
+  add_index "promos_users", ["promo_id", "user_id"], name: "index_promos_users_on_promo_id_and_user_id", unique: true
+  add_index "promos_users", ["user_id", "promo_id"], name: "index_promos_users_on_user_id_and_promo_id", unique: true
 
   create_table "restaurants", force: :cascade do |t|
     t.string   "name"

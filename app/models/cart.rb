@@ -4,7 +4,7 @@ class Cart < ActiveRecord::Base
 	belongs_to :delivery_address
 	has_many :order_items, through: :orders
 	has_many :orders, dependent: :destroy
-	after_save :update_orders
+	after_save :update_orders_for_save
 	belongs_to :promo
 	include AASM
 
@@ -20,7 +20,7 @@ class Cart < ActiveRecord::Base
 	  end
 
 	  event :cancel do
-	    transitions :from => :purchased, :to => :not_started
+	    transitions :from => [:purchased, :ordered, :dispatched, :delivered], :to => :not_started
 	  end
 
 	  event :order_cart do 
@@ -61,6 +61,8 @@ class Cart < ActiveRecord::Base
 			when 'purchase' 
 				purchase!
 			when 'cancel' 
+				self.orders.destroy_all
+				self.delivery_charge = self.vat = self.total = self.grand_total = 0
 				cancel!
 			when 'ordered' 
 				self.ordered_at = Time.now
@@ -271,7 +273,7 @@ class Cart < ActiveRecord::Base
 	end
 
 	private
-	def update_orders
+	def update_orders_for_save
 		if self.purchased?	
 			orders.each {|order| order.product.update_attributes! no_of_purchases: order.quantity; order.order_items.each{|order_item| order_item.item.update_attributes! no_of_purchases: (order_item.quantity*order_item.order.quantity)} }
 		end
