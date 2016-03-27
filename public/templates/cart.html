@@ -39,6 +39,12 @@
             <td colspan="2" class="text-align-right"><span class="rupee"></span>{{cart.delivery_charge}}</td>
             <td></td>
           </tr>
+          <tr ng-show="cart.promo_discount">
+            <td></td>
+            <td>Promo Discount</td>
+            <td colspan="2" class="text-align-right"><span class="rupee"></span>- {{cart.promo_discount}}</td>
+            <td></td>
+          </tr>
           <tr>
             <td></td>
             <td>Grand Total</td>
@@ -55,7 +61,6 @@
             <span class="material-input"></span>
           </div>
           <a class="btn btn-raised btn-success" ng-click="applyPromoCode(promo_code)" ng-disabled="!promo_code.length"> Apply </a>
-          <p style="font-family: Segoe UI Light; color: red">(Warning, promo code can by applied only once!)</p>
         </div>
       </div>
     </div>

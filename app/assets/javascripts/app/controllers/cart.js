@@ -133,10 +133,12 @@ angular.module('foodmashApp.controllers')
 			}else{
 				toaster.pop('error', 'Failed to apply promo code!');
 			}
-			if(response.cart.grand_total){
+			if(response.cart.grand_total && response.cart.promo_id && response.cart.promo_discount){
 				$scope.cart.grand_total = response.cart.grand_total;
 				$scope.cart.vat = response.cart.vat;
 				$scope.cart.delivery_charge = response.cart.delivery_charge;
+				$scope.cart.promo_id = response.cart.promo_id;
+				$scope.cart.promo_discount = response.cart.promo_discount;
 			}
 		}, function(err){
 			toaster.pop('error', 'Failed to apply promo code!');

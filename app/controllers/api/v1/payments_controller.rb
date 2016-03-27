@@ -75,6 +75,8 @@ class Api::V1::PaymentsController < ApiApplicationController
 		if success
 			promo = Promo.find_by(code: params[:data][:promo_code].downcase)
 			promo.users << @current_user
+			@cart.promo_id = promo.id
+			@cart.promo_discount = params[:data][:promo_discount] if params[:data][:promo_discount]
 		end
 		if success and @cart.set_payment_method('COD') and @cart.purchase! 
 			render status: 200, json: {success: true, data: {order_id: @cart.order_id, promo_discount: promo_discount}}

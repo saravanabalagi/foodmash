@@ -50,6 +50,24 @@ angular.module('foodmashApp.controllers')
         $('[data-toggle="tooltip"]').tooltip();
         $('[data-toggle="popover"]').popover();
       });
+      CustomerPanelService.loadCartsForCustomer().then(function(carts){
+		if(carts && carts.length > 0){
+			$scope.loadedCarts = carts;
+			$scope.carts = carts;
+		}else{
+			$scope.loadedCarts = null;
+			$scope.carts = null;
+		}
+		$scope.loadingCarts = false;
+		$scope.selectOption($scope.customerPanelOptions[0]);
+		$scope.selectSortOption($scope.sortOptions[1]);
+	}, function(err){
+		$scope.loadedCarts = null;
+		$scope.carts = null;
+		$scope.loadingCarts = false;
+		$scope.selectOption($scope.customerPanelOptions[0]);
+		$scope.selectSortOption($scope.sortOptions[1]);
+	});
     };
 
     $scope.selectSortOption = function(option){

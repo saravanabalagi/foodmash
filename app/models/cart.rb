@@ -118,6 +118,12 @@ class Cart < ActiveRecord::Base
 			self.vat = cart[:vat]
 			self.delivery_charge = cart[:delivery_charge]
 			self.grand_total = cart[:grand_total]
+			if cart[:promo_id].present? and cart[:promo_discount].present?
+				promo = Promo.find(cart[:promo_id])
+				promo.users << self.user
+				self.promo_id = promo.id
+				self.promo_discount = cart[:promo_discount]
+			end
 			DeliveryAddress.make_primary(cart[:delivery_address_id])
 			self.save!
 	end
@@ -234,10 +240,11 @@ class Cart < ActiveRecord::Base
 		else
 			promo_user = nil
 		end
-		if promo.present? and promo.active and !promo_user.present?
+		if promo.present? and promo.active and !promo_user.present? and !cart[:promo_id].present?
+			cart[:promo_id] = promo.id
 			cart[:grand_total] = cart[:grand_total].to_f - (cart[:total].to_f * 0.15)
-			promo.users << user
-			return true, cart[:total].to_f * 0.15, cart
+			cart[:promo_discount] = cart[:total].to_f * 0.15
+			return true, cart[:promo_discount], cart
 		else
 			return false, 0, nil
 		end
@@ -252,8 +259,10 @@ class Cart < ActiveRecord::Base
 			promo_user = nil
 		end
 		if promo.present? and promo.active and !promo_user.present?
+			self.promo_id = promo.id
 			self.grand_total -= self.total * 0.15
-			return true, self.total * 0.15, self.grand_total
+			self.promo_discount = self.total * 0.15
+			return true, self.promo_discount, self.grand_total
 		else
 			return false, 0
 		end

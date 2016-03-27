@@ -64,6 +64,12 @@
                 <td></td>
                 <td><span class="rupee"></span>{{cart.delivery_charge}}</td>
               </tr>
+               <tr ng-show="cart.promo_discount">
+                <td></td>
+                <td>Promo Discount</td>
+                <td></td>
+                <td><span class="rupee"></span>- {{cart.promo_discount}}</td>
+              </tr>
               <tr>
                 <td></td>
                 <td>Grand Total</td>
