@@ -6,6 +6,17 @@
       <div ng-repeat="order_item in order.order_items">
         <span>{{order_item.quantity}} x {{order_item.item.name}}</span>
       </div>
+      <span class="attached-note" data-title="Attached Note" data-content="Content of note should be displayed here" data-toggle="popover" data-trigger="hover" data-placement="bottom"><i class="fa fa-paperclip"></i> Note Attached</span>
+      <a class="btn btn-primary"><i class="fa fa-edit"></i>Add note</a>
+      <div class="add-note-wrapper">
+        <div class="form-group label-floating is-empty add-note">
+          <label class="control-label">Note</label>
+          <input class="form-control" type="text" ng-model="note">
+          <p class="help-block">Add your preferences</p>
+          <span class="material-input"></span>
+        </div>
+        <a class="btn btn-raised btn-success" ng-disabled="!note.length">Add</a>
+      </div>
     </div>
   </td>
   <td>
