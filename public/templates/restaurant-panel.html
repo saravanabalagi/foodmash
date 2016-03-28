@@ -60,7 +60,7 @@
           <tr ng-repeat="cart in carts" ng-click="selectCart(cart)" ng-class="{'active' : selectedCart == cart}">
             <td>{{cart.order_id}}</td>
             <td>{{cart.total}}</td>
-            <td>{{cart.purchased_at}}</td>
+            <td>{{cart.purchased_at | date: 'MMM dd, yyyy HH:mm:ss'}}</td>
           </tr>
           <tr>
             <td colspan="4">Not found? Check out <span>{{selectedOption.checkout}} Orders</span></td>
@@ -80,11 +80,10 @@
           <i ng-repeat-start="status in statuses" class="{{status.icon_class}}" ng-class="{'completed' : checkIfCompleted(status)}" data-toggle="tooltip" title="{{status.alias}}" data-delay="{'show': 1}" data-placement="bottom"></i><span ng-repeat-end> </span>
         </div>
         <div class="order-status-update-wrapper">Update as <span class="btn btn-info btn-raised order-status-update">Ready</span></div>
-        <div class="order-time-elapsed-wrapper">Time elapsed: <span class="order-time-elapsed">05:21</span></div>
         <div class="order-header">
-          <span class="order-date">{{selectedCart.updated_at}}<span class="order-time">{{}}</span></span>
+          <span class="order-date">{{selectedCart.purchased_at | date: 'MMM dd, yyyy HH:mm:ss'}}</span>
           <span class="order-amount-wrapper">
-            <span class="order-amount">{{selectedCart.total}}</span>
+            <span class="order-amount">{{selectedOrderItemsTotal()}}</span>
             <i class="fa fa-question-circle" title="Payment Status" data-placement="bottom" data-content="Payment will be done in 7 days" data-toggle="popover" data-trigger="hover"></i>
           </span>
         </div>
@@ -111,7 +110,7 @@
                 <td></td>
                 <td>Total</td>
                 <td></td>
-                <td><span class="rupee"></span>{{selectedCart.total}}</td>
+                <td><span class="rupee"></span>{{selectedOrderItemsTotal()}}</td>
               </tr>
               <tr class="additional-notes-wrapper">
                 <td colspan="4">

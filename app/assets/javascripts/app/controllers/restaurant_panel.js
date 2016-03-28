@@ -69,12 +69,9 @@ angular.module('foodmashApp.controllers')
 	 };
 
 	 $scope.selectSortOption = function(option){
-	 	$scope.selectedSortOption = option;
-	 	var orderBy = $filter('orderBy');
-	 	if($scope.selectedSortOption){
-	 		$scope.carts = orderBy($scope.carts, 'purchased_at', option.reverse);
-	 	}
-	 };
+    	$scope.selectedSortOption = option;
+    	applySortFilterIfSelected();
+    };
 
 	 $scope.checkIfSortOptionSelected = function(option){
 	 	if(option == $scope.selectedSortOption){
@@ -122,6 +119,23 @@ angular.module('foodmashApp.controllers')
 		$scope.selectedCart = cart;
 		getSuitableStatus(cart.aasm_state);
 		getOrderItems(cart);
+	};
+
+	$scope.selectedOrderItemsTotal = function(){
+		var total = 0;
+		if($scope.selectedOrderItems.length > 0){
+			$scope.selectedOrderItems.filter(function(order_item){
+				total += order_item.quantity * order_item.item.price;
+			});
+		}
+		return total;
+	};
+
+	function applySortFilterIfSelected(){
+		var orderBy = $filter('orderBy');
+    	if($scope.selectedSortOption && $scope.carts){
+    		$scope.carts = orderBy($scope.carts, 'purchased_at', $scope.selectedSortOption.reverse);
+    	}
 	};
 
 	function getSuitableStatus(status){
