@@ -99,6 +99,7 @@ angular.module('foodmashApp.controllers')
 	 		}
 	 		break;
 	 	};
+	 	applySortFilterIfSelected();
 	 };
 
 	 $scope.checkIfSelected = function(option){
