@@ -9,21 +9,23 @@
           </div>
       </div>
       <div class="caption">
-        <h4>{{combo.name}}</h4>
+        <h4>{{combo.name}} <span style="font-family: 'monotype corsiva'; font-size: '50%'">[serves {{combo.group_size}}]</span></h4>
+        
         <ul class="combo-contents">
             <li ng-repeat="combo_dish in combo.combo_dishes">
                 <i class="icon-label {{getLabelClass(combo_dish.dish.label)}}"></i>
-                <span>{{combo_dish.dish.name}}</span>
+                <span>{{combo_dish.quantity}} x {{combo_dish.dish.name}}</span>
             </li>
             <li ng-repeat="combo_option in combo.combo_options">
-                <span ng-repeat="combo_option_dish in combo_option.combo_option_dishes"><i class="icon-label {{getLabelClass(combo_option_dish.dish.label)}}"></i> {{combo_option_dish.dish.name}} &nbsp; </span>
+                <span ng-repeat="combo_option_dish in combo_option.combo_option_dishes"><i class="icon-label {{getLabelClass(combo_option_dish.dish.label)}}"></i>{{combo_option.quantity}} x {{combo_option_dish.dish.name}}/</span>
             </li>
         </ul>
 
 
 
-        <!-- <div class="restaurant-logo-wrapper">
+      <!--   <div class="restaurant-logo-wrapper">
           <img class="restaurant-logo" src="{{combo_dish.dish.restaurant.logo}}" ng-repeat="combo_dish in combo.combo_dishes">
+            
         </div> -->
 
 
