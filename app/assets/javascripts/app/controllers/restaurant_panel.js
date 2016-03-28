@@ -87,15 +87,19 @@ angular.module('foodmashApp.controllers')
 	 	$scope.selectedOption = option;
 	 	switch(option.name){
 	 		case 'Current': 
+	 		if($scope.loadedCarts){
 	 			var deliveredCarts = $filter('filter')($scope.loadedCarts, {aasm_state: 'delivered'}, true);
-	 			$scope.carts = $scope.loadedCarts;
+	 			$scope.carts = angular.copy($scope.loadedCarts);
 	 			deliveredCarts.filter(function(cart){
-	 				var index = $scope.carts.indexOf(cart);
+	 				var index = $scope.carts.map(function(c) { return c.id; }).indexOf(cart.id);
 	 				$scope.carts.splice(index, 1);
 	 			});
+	 		}
 	 		break;
 	 		case 'Delivered': 
+	 		if($scope.loadedCarts){
 	 			$scope.carts = $filter('filter')($scope.loadedCarts, {aasm_state: 'delivered'}, true);
+	 		}
 	 		break;
 	 	};
 	 };
