@@ -38,6 +38,7 @@ angular.module('foodmashApp.directives')
 						$scope.filling = false;
 						toaster.pop('error', 'Order quantity was reset due to invalidity!');
 					}
+					$scope.$parent.promo = {};
 				}else{
 					toaster.pop('error', 'Order was not updated!');
 					order.quantity = $scope.old_quantity;
@@ -66,6 +67,7 @@ angular.module('foodmashApp.directives')
 						$scope.filling = false;
 						toaster.pop('error', 'Order quantity was reset due to invalidity!');
 					}
+					$scope.$parent.promo = {};
 				}else{
 					toaster.pop('error', 'Order was not updated!');
 					order.quantity = $scope.old_quantity;
@@ -128,6 +130,7 @@ angular.module('foodmashApp.directives')
 					$scope.cart.orders.splice(index, 1);
 					$scope.updateCartInfo();
 					toaster.pop('success', 'Order was removed from cart!');
+					$scope.$parent.promo = {};
 				}else{
 					toaster.pop('error', 'Order was not removed from cart!');
 				}

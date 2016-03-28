@@ -10,6 +10,7 @@ angular.module('foodmashApp.controllers')
 	$scope.delivery_address = new DeliveryAddress;
 	$scope.loadingDeliveryAddresses = true;
 	$scope.payment_method = "";
+	$scope.promo = {};
 	if($rootScope.currentUser){
 		setNameAndMobileNo();
 		$scope.setup_details = {
@@ -114,6 +115,10 @@ angular.module('foodmashApp.controllers')
 			});
 		}if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
 			$rootScope.disableButton('.cod-button', 'Confirming...');
+			if($scope.promo.id && $scope.promo.discount){
+				$scope.cart.promo_id = $scope.promo.id;
+				$scope.cart.promo_discount = $scope.promo.discount;
+			}
 			Payment.purchaseForCod($scope.cart).then(function(response){
 				toaster.pop('success', 'Cart was purchased!');
 				$rootScope.enableButton('.cod-button');
@@ -137,8 +142,8 @@ angular.module('foodmashApp.controllers')
 				$scope.cart.grand_total = response.cart.grand_total;
 				$scope.cart.vat = response.cart.vat;
 				$scope.cart.delivery_charge = response.cart.delivery_charge;
-				$scope.cart.promo_id = response.cart.promo_id;
-				$scope.cart.promo_discount = response.cart.promo_discount;
+				$scope.promo.id = response.cart.promo_id;
+				$scope.promo.discount = response.cart.promo_discount;
 			}
 		}, function(err){
 			toaster.pop('error', 'Failed to apply promo code!');
@@ -203,6 +208,13 @@ angular.module('foodmashApp.controllers')
 		});
 		$scope.cart.total = total;
 		calcTaxAndGrandTotal();
+	};
+
+	$scope.checkIfPromoExists = function(){
+		if($scope.promo && $scope.promo.id && $scope.promo.discount){
+			return true;
+		}
+		return false;
 	};
 
 	function setNameAndMobileNo(){

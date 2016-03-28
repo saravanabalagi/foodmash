@@ -39,10 +39,10 @@
             <td colspan="2" class="text-align-right"><span class="rupee"></span>{{cart.delivery_charge}}</td>
             <td></td>
           </tr>
-          <tr ng-show="cart.promo_discount">
+          <tr ng-show="checkIfPromoExists()">
             <td></td>
             <td>Promo Discount</td>
-            <td colspan="2" class="text-align-right"><span class="rupee"></span>- {{cart.promo_discount}}</td>
+            <td colspan="2" class="text-align-right"><span class="rupee"></span>- {{promo.discount}}</td>
             <td></td>
           </tr>
           <tr>
