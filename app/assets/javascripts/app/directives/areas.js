@@ -49,10 +49,16 @@ angular.module('foodmashApp.directives')
 				$scope.area.save().then(function(result){
 					toaster.pop('success', 'A new Area was created!');
 					$scope.areas.unshift($scope.area);
+					var packaging_centre_id = $scope.area.packaging_centre_id;
 					$scope.area = new Areas;
+					renewSelectedValues(packaging_centre_id);
 				}, function(err){
 					toaster.pop('error', 'Failed to create new Area!');
 				});
+			};
+
+			function renewSelectedValues(packaging_centre_id){
+				$scope.area.packaging_centre_id = packaging_centre_id;
 			};
 
 		}]

@@ -134,6 +134,10 @@ angular.module('foodmashApp.controllers')
  	 		$scope.load();
  	 	};
 
+ 	 	$scope.changeArea = function(area){
+ 	 		$rootScope.area = area;
+ 	 	};
+
  	 	function applySortFilterIfSelected(){
  	 		var orderBy = $filter('orderBy');
  	 		if($scope.selectedSortOption){
