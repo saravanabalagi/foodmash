@@ -62,7 +62,7 @@
             <td><i class="{{getStatusIcon(cart.aasm_state)}}" data-toggle="tooltip" title="{{getStatusAlias(cart.aasm_state)}}" data-delay="{'show': 1}" data-placement="left"></i></td>
             <td>{{cart.order_id}}</td>
             <td>{{cart.grand_total}}</td>
-            <td>{{cart.purchased_at}}</td>
+            <td>{{cart.purchased_at | date: 'MMM dd, yyyy HH:mm'}}</td>
           </tr>
           <tr>
             <td colspan="4">Not found? Check out <span>{{selectedOption.checkout}} Orders</span></td>
@@ -84,7 +84,7 @@
         </div>
 
         <div class="order-header">
-          <span class="order-date">{{selectedCart.updated_at}}<span class="order-time">{{selectedCart.purchased_at | date: 'MMM dd, yyyy HH:mm'}}</span></span>
+          <span class="order-date"><span class="order-time">{{selectedCart.purchased_at | date: 'MMM dd, yyyy HH:mm'}}</span></span>
           <span class="order-amount-wrapper">
             <span class="order-amount">{{selectedCart.grand_total}}</span>
             <i class="fa fa-question-circle" title="Payment Method" data-placement="bottom" data-content="Credit Card ending with x574" data-toggle="popover" data-trigger="hover"></i>
@@ -106,7 +106,7 @@
                 <td>
                   <div class="combo">
                     <span class="combo-name">{{order.product.name}}</span>
-                    <span ng-repeat="order_item in order.order_items">{{order_item.quantity}}x {{order_item.item.name}}</span>
+                    <span ng-repeat="order_item in order.order_items">{{order_item.quantity}} x {{order_item.item.name}}</span>
                   </div>
                 </td>
                 <td>x{{order.quantity}}</td>

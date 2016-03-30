@@ -31,7 +31,7 @@ class Web::PaymentsController < ApplicationController
  	end
 
  	def validate_promo_code
- 		success, promo_discount, cart = Cart.apply_promo_code(params[:payment][:promo_code].downcase, params[:payment][:cart])
+ 		success, promo_discount, cart = Cart.apply_promo_code(params[:payment][:promo_code].downcase, params[:payment][:cart], params[:payment][:promo])
  	 	if success and promo_discount
  	 		render status: 200, json: {promo_discount: promo_discount, cart: cart}
  	 	else

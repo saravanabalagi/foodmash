@@ -122,7 +122,7 @@ angular.module('foodmashApp.controllers')
 
 	$scope.applyPromoCode = function(promo_code){
 		$scope.cart.user_id = $rootScope.currentUser.id;
-		Payment.validatePromoCode(promo_code, $scope.cart).then(function(response){
+		Payment.validatePromoCode(promo_code, $scope.cart, $scope.promo).then(function(response){
 			if(response.promo_discount){
 				toaster.pop('success', 'A discount of ' + response.promo_discount + ' was applied to cart!');
 			}else{

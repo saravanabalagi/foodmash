@@ -33,8 +33,8 @@ Rails.application.configure do
     address:              'smtp.gmail.com',
     port:                  2525,
     domain:               'foodmash.in',
-    user_name:            'praveen',
-    password:             '88lampard88',
+    user_name:            'info',
+    password:             'info@foodmash',
     authentication:       'plain',
     enable_starttls_auto:  true,
     ssl:                   true

@@ -232,15 +232,15 @@ class Cart < ActiveRecord::Base
 		self.order_id
 	end
 
-	def self.apply_promo_code(promo_code, cart)
+	def self.apply_promo_code(promo_code, cart, cart_promo)
 		promo = Promo.find_by(code: promo_code) if promo_code
 		user = User.find(cart[:user_id]) if cart[:user_id]
-		if user and promo and promo.users.pluck(:id).include?(user.id)
-			promo_user = promo.users.find(user.id)
-		else
-			promo_user = nil
-		end
-		if promo.present? and promo.active and !promo_user.present? and !cart[:promo_id].present?
+		# if user and promo and promo.users.pluck(:id).include?(user.id)
+		# 	promo_user = promo.users.find(user.id)
+		# else
+		# 	promo_user = nil
+		# end
+		if promo.present? and promo.active and (cart_promo.present? ? cart_promo.id != promo.id : true)
 			cart[:promo_id] = promo.id
 			cart[:grand_total] = cart[:grand_total].to_f - (cart[:total].to_f * 0.15)
 			cart[:promo_discount] = cart[:total].to_f * 0.15
@@ -253,12 +253,12 @@ class Cart < ActiveRecord::Base
 	def apply_promo_code(promo_code)
 		promo = Promo.find_by(code: promo_code) if promo_code
 		user = User.find(self.user_id) if self.user_id
-		if user and promo and promo.users.pluck(:id).include?(user.id)
-			promo_user = promo.users.find(user.id)
-		else
-			promo_user = nil
-		end
-		if promo.present? and promo.active and !promo_user.present?
+		# if user and promo and promo.users.pluck(:id).include?(user.id)
+		# 	promo_user = promo.users.find(user.id)
+		# else
+		# 	promo_user = nil
+		# end
+		if promo.present? and promo.active
 			self.promo_id = promo.id
 			self.grand_total -= self.total * 0.15
 			self.promo_discount = self.total * 0.15
