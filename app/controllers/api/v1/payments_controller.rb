@@ -22,7 +22,7 @@ class Api::V1::PaymentsController < ApiApplicationController
 			udf2: '',
 			udf3: '',
 			udf4: '',
-			udf5: ''
+			udf5: '',
 		}
 		checksum = Payment.calculate_hash(details) || nil
 		if checksum.present?

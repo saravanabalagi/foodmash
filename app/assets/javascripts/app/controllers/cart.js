@@ -11,16 +11,9 @@ angular.module('foodmashApp.controllers')
 	$scope.loadingDeliveryAddresses = true;
 	$scope.payment_method = "";
 	$scope.promo = {};
+	$scope.setup_details = {};
 	if($rootScope.currentUser){
 		setNameAndMobileNo();
-		$scope.setup_details = {
-			"email": $rootScope.currentUser.email,
-			"productinfo": "a bunch of combos from Foodmash",
-			"firstname": $rootScope.currentUser.name.split(" ")[0],
-			"phone": $rootScope.currentUser.mobile_no,
-			"surl": 'http://www.foodmash.in/web/payments/success',
-			"furl": 'http://www.foodmash.in/web/payments/failure'
-		};
 	}
 
 	CartService.getCartInfo().then(function(cart){
@@ -90,12 +83,9 @@ angular.module('foodmashApp.controllers')
 			return ;
 		}
 		if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'Payu'){
-			$scope.setup_details["txnid"] = $scope.cart.order_id;
-			$scope.setup_details.amount = $scope.cart.grand_total;
+			$scope.setup_details["amount"] = $scope.cart.grand_total.toFixed(2).toString();
 			Payment.getHash($scope.setup_details).then(function(response){
-				$scope.setup_details.hash = response.hash;
-				$scope.setup_details.key = response.key;
-				$scope.setup_details.salt = response.salt;
+				$scope.setup_details = response.setup_details;
 				$scope.processCart();
 				angular.element(document).ready(function (){
 					$('#payu-payment-form').submit();

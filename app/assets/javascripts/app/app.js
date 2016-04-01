@@ -111,6 +111,26 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 		.when('/contact-us', {
 			templateUrl: '/templates/contact-us.html'
 		})
+		// .when('/payments/success', {
+		// 	controller: 'CustomerPanelController',
+		// 	templateUrl: '/templates/customer-panel.html',
+		// 	resolve: {
+		// 		panel: 
+		// 		function(AuthorizeService){
+		// 			AuthorizeService.authorizeRouteForCustomer();
+		// 		}
+		// 	}
+		// })
+		// .when('/payments/failure', {
+		// 	controller: 'CustomerPanelController',
+		// 	templateUrl: '/templates/customer-panel.html',
+		// 	resolve: {
+		// 		panel: 
+		// 		function(AuthorizeService){
+		// 			AuthorizeService.authorizeRouteForCustomer();
+		// 		}
+		// 	}
+		// })
 		.when('/', 
 		{
 			controller: 'MainController',
