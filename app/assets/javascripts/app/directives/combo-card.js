@@ -57,6 +57,14 @@ angular.module('foodmashApp.directives')
 				return label_class;
 			};
 
+			$scope.checkIfFirst = function(combo_dish){
+				var check = false;
+				if($scope.combo.combo_dishes[0] == combo_dish){
+					check = true;
+				}
+				return check;
+			};
+
 			function pushAllComboDishes(combo){
 				if(combo.combo_dishes.length > 0){
 					for(var i=0; i<combo.combo_dishes.length; i++){
