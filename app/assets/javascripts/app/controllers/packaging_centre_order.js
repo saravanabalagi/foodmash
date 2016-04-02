@@ -187,8 +187,10 @@ angular.module('foodmashApp.controllers')
 		if($scope.cart && $scope.cart.orders && $scope.cart.orders.length > 0){
 			$scope.cart.orders.filter(function(order){
 				order.order_items.filter(function(order_item){
+					var old_quantity = order_item.quantity;
 					order_item.quantity = order.quantity * order_item.quantity;
 					$scope.packaging_centre_orders.push(order_item);
+					order_item.quantity = old_quantity;
 				});
 			});
 		}
