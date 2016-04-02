@@ -15,7 +15,7 @@ class Api::V1::CheckConnectionController < ApiApplicationController
 			title: 'Foodmash Offer',
 			message: 'We run from 12 - 3 p.m. and 7 - 10 p.m. Use promo code FM15 for 15% off!',
 			image: 'http://www.thesaleslion.com/wp-content/uploads/2012/10/blog-launch.jpg',
-			blocking: true
+			blocking: false
 		}
 		settings = {
 
