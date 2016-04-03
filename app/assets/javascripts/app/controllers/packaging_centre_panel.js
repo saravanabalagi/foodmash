@@ -16,6 +16,7 @@ angular.module('foodmashApp.controllers')
 		{name: 'Delivered', icon_class: 'fa fa-archive pull-right', checkout: 'Current'}
 	];
 	$scope.timeoutPromise = {};
+	var notification = new Audio('blackberry.mp3');
 
 
 	$scope.statuses = [
@@ -80,6 +81,7 @@ angular.module('foodmashApp.controllers')
 	        			PackagingPanelService.loadCartsForPanel(role).then(function(packaging_centre){
 	        				if(packaging_centre && packaging_centre.carts && packaging_centre.carts.length > 0){
 	        					$scope.packaging_centre = packaging_centre;
+	        					checkForNewCarts(packaging_centre.carts);
 	        					$scope.loadedCarts = packaging_centre.carts;
 	        					$scope.carts = packaging_centre.carts ;
 	        				}else{
@@ -183,6 +185,12 @@ angular.module('foodmashApp.controllers')
 			}
 		});
 		return alias;
+	};
+
+	function checkForNewCarts(newCarts){
+		if($scope.loadedCarts.length < newCarts.length){
+			notification.play();
+		}
 	};
 
 	function applySortFilterIfSelected(){
