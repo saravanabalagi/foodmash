@@ -188,7 +188,7 @@ angular.module('foodmashApp.controllers')
 	};
 
 	function checkForNewCarts(newCarts){
-		if($scope.loadedCarts.length < newCarts.length){
+		if(newCarts && newCarts.length && $scope.loadedCarts && $scope.loadedCarts.length && $scope.loadedCarts.length < newCarts.length){
 			notification.play();
 		}
 	};
