@@ -205,6 +205,16 @@ h3, .h3 {
 .text-align-center { text-align: center; }
 .text-align-justify { text-align: justify; }
 
+.flash-message {
+  font-size: 15px;
+  color: #FFF;
+  text-align: center;
+  background: #888;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.20);
+}
+
 /*Navbar*/
 .navbar-inverse { background-color: #222 !important; }
 .navbar {
@@ -456,6 +466,29 @@ footer {
         background-color: transparent !important;
         > img { width: 100%; padding: 40px 0; }
       }
+      .attached-note { color: $success-green; }
+      .add-note-wrapper {
+        padding: 0 10px 15px;
+        position: absolute;
+        background: rgba(255,255,255,0.95);
+        border-radius: 10px;
+        border: 10px solid rgba(0,0,0,0.3);
+        width: 400px;
+        text-align: center;
+        .add-note { width:70%; text-align: left; margin-right: 10px; }
+        > * { display: inline-block; }
+        &:before {
+          position: absolute;
+          content: '';
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          top: -30px;
+          border-bottom: 10px solid rgba(0,0,0,0.3);
+          border-left: 10px solid transparent;
+          border-right: 10px solid transparent;
+        }
+      }
       .quantity-counter {
         .quantity { padding: 0px 2px; vertical-align: middle; }
       }
@@ -576,6 +609,15 @@ footer {
   -ms-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.1);
   padding: 0;
+  &.disabled:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
   .img-wrapper {
     position: relative;
     width: 100%;
@@ -616,9 +658,8 @@ footer {
           display: inline-block;
           vertical-align: middle;
         }
-        i.icon-label {
-          transform: translateY(2px);
-        }
+        > span { display: inline; }
+        > i.icon-label { transform: translateY(2px); }
       }
     }
     > div.restaurant-logo-wrapper {
@@ -739,6 +780,12 @@ footer {
     i.fa.completed { background-color: #FFF; color: #111;}
     z-index: 2;
     .order-status-meter {
+      &.cancelled {
+        > div.progress-bar {
+          background-color: $logo-red;
+          width: 10% !important;
+        }
+      }
       display: inline-block;
       position: absolute;
       left: 0;
