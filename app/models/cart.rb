@@ -52,7 +52,7 @@ class Cart < ActiveRecord::Base
 		self.payment_card_no = params["cardnum"]
 		self.issuing_bank = params["issuing_bank"]
 		self.payment_card_type = params["card_type"]
-		self.purchase_at = Time.now
+		self.purchased_at = Time.now
 		self.save!
 	end
 

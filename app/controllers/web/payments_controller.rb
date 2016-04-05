@@ -1,7 +1,7 @@
 class Web::PaymentsController < ApplicationController
  	respond_to :json
  	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
- 	prepend_before_filter :authenticate_user_from_token!
+ 	prepend_before_filter :authenticate_user_from_token!, except: [:success, :failure]
  	before_filter :set_or_create_cart, only: [:purchase_for_cod, :get_hash]
  	before_filter :set_payu_processed_cart, only: [:success, :failure]
 
@@ -9,8 +9,8 @@ class Web::PaymentsController < ApplicationController
  		details = {
 			firstname: @current_user.name.split.first,
 			productinfo: 'a bunch of combos from Foodmash',
-			surl: 'http://localhost:3000/payments/success',
-			furl: 'http://localhost:3000/payments/failure',
+			surl: 'http://localhost:3000/web/payments/success',
+			furl: 'http://localhost:3000/web/payments/failure',
 			txnid: @cart.generate_order_id,
 			email: @current_user.email,
 			phone: @current_user.mobile_no,
@@ -32,7 +32,6 @@ class Web::PaymentsController < ApplicationController
  	end
 
  	def success
- 		byebug
  		if params.present? and @cart.add_fields_from_payu(params) and @cart.purchase!
 			render status: 200, json: {message: 'Cart was successfully processed!'}
 		else

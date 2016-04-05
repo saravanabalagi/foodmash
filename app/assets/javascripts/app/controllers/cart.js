@@ -83,7 +83,7 @@ angular.module('foodmashApp.controllers')
 			return ;
 		}
 		if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'Payu'){
-			$scope.setup_details["amount"] = $scope.cart.grand_total.toFixed(2).toString();
+			$scope.setup_details["amount"] = $scope.cart.grand_total;
 			Payment.getHash($scope.setup_details).then(function(response){
 				$scope.setup_details = response.setup_details;
 				$scope.processCart();
