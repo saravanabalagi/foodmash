@@ -107,6 +107,8 @@
                   <div class="combo">
                     <span class="combo-name">{{order.product.name}}</span>
                     <span ng-repeat="order_item in order.order_items">{{order_item.quantity}} x {{order_item.item.name}}</span>
+                     <span ng-show="order.note" class="attached-note" data-title="Note" data-content="{{order.note}}" data-toggle="popover" data-trigger="hover" data-placement="bottom"><i class="fa fa-paperclip"></i> Note Attached
+                     </span>
                   </div>
                 </td>
                 <td>x{{order.quantity}}</td>

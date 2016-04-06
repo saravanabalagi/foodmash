@@ -45,29 +45,29 @@ angular.module('foodmashApp.controllers')
 	});
 
 	$scope.load = function(){
-      angular.element(document).ready(function(){
-        new WOW().init();
-        $('[data-toggle="tooltip"]').tooltip();
-        $('[data-toggle="popover"]').popover();
-      });
-      CustomerPanelService.loadCartsForCustomer().then(function(carts){
-		if(carts && carts.length > 0){
-			$scope.loadedCarts = carts;
-			$scope.carts = carts;
-		}else{
+	      angular.element(document).ready(function (){
+	      	new WOW().init();
+	      	$('[data-toggle="tooltip"]').tooltip();
+	      	$('[data-toggle="popover"]').popover();
+	      });
+	      CustomerPanelService.loadCartsForCustomer().then(function(carts){
+			if(carts && carts.length > 0){
+				$scope.loadedCarts = carts;
+				$scope.carts = carts;
+			}else{
+				$scope.loadedCarts = null;
+				$scope.carts = null;
+			}
+			$scope.loadingCarts = false;
+			$scope.selectOption($scope.customerPanelOptions[0]);
+			$scope.selectSortOption($scope.sortOptions[1]);
+		}, function(err){
 			$scope.loadedCarts = null;
 			$scope.carts = null;
-		}
-		$scope.loadingCarts = false;
-		$scope.selectOption($scope.customerPanelOptions[0]);
-		$scope.selectSortOption($scope.sortOptions[1]);
-	}, function(err){
-		$scope.loadedCarts = null;
-		$scope.carts = null;
-		$scope.loadingCarts = false;
-		$scope.selectOption($scope.customerPanelOptions[0]);
-		$scope.selectSortOption($scope.sortOptions[1]);
-	});
+			$scope.loadingCarts = false;
+			$scope.selectOption($scope.customerPanelOptions[0]);
+			$scope.selectSortOption($scope.sortOptions[1]);
+		});
     };
 
     $scope.selectSortOption = function(option){
@@ -124,6 +124,11 @@ angular.module('foodmashApp.controllers')
 	$scope.selectCart = function(cart){
 		$scope.selectedCart = cart;
 		getSuitableStatus(cart.aasm_state);
+		angular.element(document).ready(function (){
+			new WOW().init();
+			$('[data-toggle="tooltip"]').tooltip();
+			$('[data-toggle="popover"]').popover();
+		});
 	};
 
 	$scope.getStatusIcon = function(status){

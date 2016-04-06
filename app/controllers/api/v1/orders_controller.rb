@@ -26,6 +26,6 @@ class Api::V1::OrdersController < ApiApplicationController
 	end
 
 	def update_order_params
-		params[:data].require(:order).permit(:id, :quantity)
+		params[:data].require(:order).permit(:id, :quantity, :note)
 	end
 end

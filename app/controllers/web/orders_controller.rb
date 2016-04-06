@@ -43,10 +43,10 @@ class Web::OrdersController < ApplicationController
 	end
 
 	def order_params
-	 params.require(:order).permit(:product_id, :product_type) 
+	 	params.require(:order).permit(:product_id, :product_type, :note) 
 	end
 
 	def update_order_params
-		params.require(:order).permit(:id, :quantity)
+		params.require(:order).permit(:id, :quantity, :note)
 	end
 end

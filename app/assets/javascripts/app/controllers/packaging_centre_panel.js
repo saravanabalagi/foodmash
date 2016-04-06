@@ -16,7 +16,7 @@ angular.module('foodmashApp.controllers')
 		{name: 'Delivered', icon_class: 'fa fa-archive pull-right', checkout: 'Current'}
 	];
 	$scope.timeoutPromise = {};
-	var notification = new Audio('blackberry.mp3');
+	var notification = new Audio('coin.wav');
 
 
 	$scope.statuses = [

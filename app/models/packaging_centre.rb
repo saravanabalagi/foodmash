@@ -7,17 +7,10 @@ class PackagingCentre < ActiveRecord::Base
 	validates_uniqueness_of :name
 
 	def get_carts_for_centre
-		carts_list = []
-		if combos.present?
-			combos.each do |combo|
-				if combo.orders.present?
-					combo.orders.each do |order|
-						carts_list << order.cart
-					end
-				end
-			end
-		end
-		return carts_list.flatten.uniq.select{|c| c.aasm_state != 'not_started'}
+		carts_list = Cart.where(purchased_at: Time.now.beginning_of_month..Time.now.end_of_month).where.not(aasm_state: 'not_started')
+		packaging_centre_ids = []
+		carts_list.each{|cart| cart.orders.each{|order| packaging_centre_ids << order.product.packaging_centre_id}}
+		return carts_list.uniq if (packaging_centre_ids.uniq.length == 1 and packaging_centre_ids.uniq.include? self.id)
 	end
 
 end

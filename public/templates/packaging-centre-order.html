@@ -1,4 +1,4 @@
-  <div class="container">
+  <div class="container" ng-init="load()">
     <div class="row">
 
       <div class="col-md-6 order-description">
@@ -19,7 +19,7 @@
           <span class="order-date">{{cart.purchased_at | date: 'MMM dd, yyyy'}} <span class="order-time">{{cart.purchased_at | date: 'HH:mm:ss'}}</span></span>
           <span class="order-amount-wrapper">
             <span class="order-amount">{{cart.grand_total}}</span>
-            <i class="fa fa-question-circle" title="Payment Method" data-placement="bottom" data-content="Credit Card ending with x574" data-toggle="popover" data-trigger="hover"></i>
+            <i class="fa fa-question-circle" title="Payment Method" data-placement="bottom" data-content="{{cart.payment_method}}" data-toggle="popover" data-trigger="hover"></i>
           </span>
         </div>
         <div class="order-contents">
@@ -39,6 +39,8 @@
                   <div class="combo">
                     <span class="combo-name">{{order.product.name}}</span>
                     <span ng-repeat="order_item in order.order_items">{{order_item.quantity}} x {{order_item.item.name}}</span>
+                    <span ng-show="order.note" class="attached-note" data-title="Note" data-content="{{order.note}}" data-toggle="popover" data-trigger="hover" data-placement="bottom"><i class="fa fa-paperclip"></i> Note Attached
+                     </span>
                   </div>
                 </td>
                 <td>x {{order.quantity}}</td>
@@ -140,12 +142,6 @@
                   <td></td>
                   <td><span class="rupee"></span>{{pOrder.quantity * pOrder.item.price}}</td>
                 </tr>
-               <!--  <tr class="additional-notes-wrapper">
-                  <td colspan="4">
-                    <span><i class="fa fa-edit"></i></span>
-                    <span class="additional-notes"></span>
-                  </td>
-                </tr> -->
               </tfoot>
             </table>
           </div>

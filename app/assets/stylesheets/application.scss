@@ -830,6 +830,7 @@ footer {
           span:not(.combo-name) { display:block; font-size: 12px; }
         }
       }
+     .attached-note { color: $success-green; }
     }
     tfoot {
       tr:first-child {
