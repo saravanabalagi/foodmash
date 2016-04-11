@@ -49,7 +49,7 @@ angular.module('foodmashApp.controllers')
 		$scope.selectArea = function(area){
 			$scope.selectedArea = area;
 			$rootScope.area = $scope.selectedArea;
-			setLoadCombos();
+			// setLoadCombos();
 			$cookieStore.put('selectedArea', $scope.selectedArea);
 			$cookieStore.put('selectedCity', $scope.selectedCity);
 			angular.element(document).ready(function(){
