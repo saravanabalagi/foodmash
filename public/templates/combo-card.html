@@ -16,7 +16,7 @@
                 <span>{{combo_dish.dish.name}}</span>
             </li>
             <li ng-repeat="combo_option in combo.combo_options">
-                <span ng-repeat="combo_option_dish in combo_option.combo_option_dishes"><i class="icon-label {{getLabelClass(combo_option_dish.dish.label)}}"></i> {{combo_option_dish.dish.name}} &nbsp; </span>
+                <span ng-repeat="combo_option_dish in combo_option.combo_option_dishes"><i class="icon-label {{getLabelClass(combo_option_dish.dish.label)}}"></i>{{combo_option_dish.dish.name}} &nbsp; </span>
             </li>
         </ul>
         <p>

@@ -12,10 +12,10 @@ class Api::V1::PaymentsController < ApiApplicationController
 		details = {
 			firstname: @current_user.name.split.first,
 			productinfo: 'a bunch of combos from Foodmash',
-			surl: 'http://www.foodmash.herokuapp.com/api/v1/payments/success',
-			furl: 'http://www.foodmash.herokuapp.com/api/v1/payments/failure',
+			surl: 'http://www.foodmash.in/api/v1/payments/success',
+			furl: 'http://www.foodmash.in/api/v1/payments/failure',
 			amount: @cart.grand_total.to_s,
-			txnid: @cart.order_id,
+			txnid: @cart.generate_order_id,
 			email: @current_user.email,
 			phone: @current_user.mobile_no,
 			udf1: '',
@@ -26,7 +26,7 @@ class Api::V1::PaymentsController < ApiApplicationController
 		}
 		checksum = Payment.calculate_hash(details) || nil
 		if checksum.present?
-			render status: 200, json: {success: true, data: {hash: checksum}}
+			render status: 200, json: {success: true, data: {hash: checksum, order_id: @cart.order_id}}
 		else
 			render status: 200, json: {success:true, error: 'Was not able to calculate hash!'}
 		end

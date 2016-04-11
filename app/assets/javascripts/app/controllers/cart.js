@@ -31,12 +31,37 @@ angular.module('foodmashApp.controllers')
 	    });
 	 };
 
-	 $scope.$watch('$rootScope.area', function(n, o){
-	 	loadDeliveryAddresses();
-	 });
+	 $scope.$watch('area.id', function(n, o){
+		$scope.reload();
+	});
+
+	$scope.reload = function(){
+		var d = $q.defer();
+		if($rootScope.area && $rootScope.area.id && $rootScope.currentUser && $rootScope.currentUser.id){
+			DeliveryAddress.query({user_id: $rootScope.currentUser.id, area_id: $rootScope.area.id}).then(function(delivery_addresses){
+				if(delivery_addresses.length > 0){
+					$scope.delivery_addresses = delivery_addresses;
+					$rootScope.delivery_addresses = delivery_addresses;
+					setPrimaryAsDeliveryAddress();
+					d.resolve(null);
+				}else{
+					$scope.delivery_addresses = new Array;
+					$scope.cart.delivery_address_id = null;
+					$rootScope.delivery_addresses = null;
+					d.resolve(null);
+				}
+				$scope.loadingDeliveryAddresses = false;
+			}, function(err){
+				$scope.delivery_addresses = null;
+				$scope.loadingDeliveryAddresses = false;
+				d.reject(err);
+			});
+		}
+		return d.promise;
+	};
 
 	 if($rootScope.currentUser && !$rootScope.delivery_addresses && $rootScope.area && $rootScope.area.id){
- 		loadDeliveryAddresses();
+ 			$scope.reload();
 	 }else{
 	 	if($rootScope.delivery_addresses){
 	 		$scope.delivery_addresses = $rootScope.delivery_addresses;
@@ -160,27 +185,6 @@ angular.module('foodmashApp.controllers')
 		return d.promise;
 	};
 
-	$scope.reload = function(){
-		var d = $q.defer();
-		DeliveryAddress.query({user_id: $rootScope.currentUser.id, area_id: $rootScope.area.id}).then(function(delivery_addresses){
-		if(delivery_addresses.length > 0){
-			$scope.delivery_addresses = delivery_addresses;
-			$rootScope.delivery_addresses = delivery_addresses;
-			setPrimaryAsDeliveryAddress();
-			d.resolve(null);
-		}else{
-			$scope.delivery_addresses = new Array;
-			$scope.cart.delivery_address_id = null;
-			$rootScope.delivery_addresses = null;
-			d.resolve(null);
-		}
-	}, function(err){
-		$scope.delivery_addresses = null;
-		d.reject(err);
-	});
-		return d.promise;
-	};
-
 	$scope.updateCartInfo = function(){
 		var total = 0;
 		$scope.cart.orders.filter(function(order){ 
@@ -195,24 +199,6 @@ angular.module('foodmashApp.controllers')
 			return true;
 		}
 		return false;
-	};
-
-	function loadDeliveryAddresses(){
-		DeliveryAddress.query({area_id: $rootScope.area.id}).then(function(delivery_addresses){
-			if(delivery_addresses.length > 0){
-				$scope.delivery_addresses = delivery_addresses;
-				$rootScope.delivery_addresses = delivery_addresses;
-				setPrimaryAsDeliveryAddress();
-			}else{
-				$scope.delivery_addresses = new Array;
-				$scope.cart.delivery_address_id = null;
-				$rootScope.delivery_addresses = null;
-			}
-			$scope.loadingDeliveryAddresses = false;
-		}, function(err){
-			$scope.delivery_addresses = null;
-			$scope.loadingDeliveryAddresses = false;
-		});
 	};
 
 	function setNameAndMobileNo(){
