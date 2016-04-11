@@ -10,10 +10,10 @@
     <%= stylesheet_link_tag "application", :media => "all" %>
   </head>
 
-  <body ng-class="{'sidebar-body': checkIfSideBarPresent()}" ng-class="{'bg': addBodyBackground()}" ng-controller="BodyController" ng-cloak>
+  <body ng-class="{'sidebar-body': checkIfSideBarPresent()}" ng-class="{'bg': addBodyBackground()}" ng-controller="BodyController" ng-cloak ng-init="loadGlobal()">
 
   <!-- Loading page -->
-  <div class="loader" ng-cloak>
+  <div class="loader" ng-cloak style="display: none;">
     <div class="loader-wrapper">
       <img src="assets/logo_transparent.png" style="width:300px; height:auto;" />
       <div class="choose-delivery-location-wrapper">

@@ -4,10 +4,7 @@
       <i class="fa fa-map-marker"></i>
       <ul>
        <li class="dropdown location-dropdown">
-         <a data-target="#" class="dropdown-toggle" data-toggle="dropdown">{{area.name}}</a>
-         <ul class="dropdown-menu">
-           <li ng-click="changeArea(area)" ng-repeat="area in city.areas"><a>{{area.name}}</a></li>
-         </ul>
+         <a data-target="#" class="dropdown-toggle" data-toggle="dropdown" ng-click="fadeInLoader()">{{selectedArea.name}}</a>
        </li>
      </ul>
     </section>
