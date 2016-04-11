@@ -27,7 +27,7 @@ production:
   database: foodmash_1
   username: root
   password: 88lampard88
-  host: foodmash-1.cab6vaio9jee.us-west-2.rds.amazonaws.com
+  host: foodmash-2.cab6vaio9jee.us-west-2.rds.amazonaws.com
   sslmode: verify-full
   sslrootcert: config/amazon-rds-ca-cert.pem
   encrypt: true
