@@ -28,6 +28,9 @@ angular.module('foodmashApp.controllers')
 				$scope.selectedArea = $rootScope.area = area;
 				$scope.selectedCity = $rootScope.city = city;
 			}else{
+				angular.element(document).ready(function(){
+					$('.loader').fadeIn('slow');
+				});
 			}
 		};
 
