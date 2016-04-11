@@ -27,6 +27,7 @@ angular.module('foodmashApp.controllers')
 			if(area && area.id){
 				$scope.selectedArea = $rootScope.area = area;
 				$scope.selectedCity = $rootScope.city = city;
+				setLoadCombos();
 			}else{
 				angular.element(document).ready(function(){
 					$('.loader').fadeIn('slow');
