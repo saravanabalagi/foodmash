@@ -12,10 +12,10 @@ class Api::V1::CheckConnectionController < ApiApplicationController
 	def instantiate
 		versions = Version.last
 		maintenance = {
-			title: 'Folks at work',
-			message: 'Foodmash is under maintenance :) Pls come back later.',
-			image: 'http://www.protectsigns.uk/images/detailed/3/P7001_30.jpg',
-			blocking: true
+			title: 'Foodmash Offer',
+			message: 'We run from 1 - 3 p.m. and 7 - 10 p.m. Use promo code FM15 to get 15% off on all orders!',
+			image: 'https://coretium.files.wordpress.com/2012/11/15off.png',
+			blocking: false
 		}
 		settings = {
 
