@@ -2,7 +2,7 @@ class Web::CombosController < ApplicationController
 	respond_to :json
 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
 	before_action :get_combo, only: [:update, :destroy]
-	load_and_authorize_resource skip_load_resource except: [:load_from_packaging_centre, :get_combo_availability, :loadAWS]
+	load_and_authorize_resource skip_load_resource except: [:load_from_packaging_centre, :get_combo_availability]
 
 	def index
 		@combos = Combo.where(params.permit(:id, :name, :packaging_centre_id)).order("price ASC")
@@ -56,7 +56,8 @@ class Web::CombosController < ApplicationController
 				data:
 				{
 					combos: @loadedFromPackagingCentre, 
-					hash: hash.as_json
+					hash: hash,
+					user: @current_user.as_json(:include => {:roles => {:include => :resource}})
 				}
 			}
 		else

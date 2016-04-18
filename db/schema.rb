@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160406031101) do
+ActiveRecord::Schema.define(version: 20160418133625) do
 
   create_table "areas", force: :cascade do |t|
     t.string   "name"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20160406031101) do
     t.datetime "delivered_at"
     t.integer  "promo_id"
     t.float    "promo_discount"
+    t.float    "mash_cash"
   end
 
   create_table "cities", force: :cascade do |t|
@@ -110,6 +111,22 @@ ActiveRecord::Schema.define(version: 20160406031101) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
+
   create_table "delivery_addresses", force: :cascade do |t|
     t.integer  "user_id"
     t.text     "line1"
@@ -149,12 +166,10 @@ ActiveRecord::Schema.define(version: 20160406031101) do
     t.integer  "order_id"
     t.integer  "item_id"
     t.string   "item_type"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.integer  "category_id"
-    t.string   "category_type"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.string   "aasm_state"
-    t.integer  "quantity",      default: 1, null: false
+    t.integer  "quantity",   default: 1, null: false
   end
 
   create_table "orders", force: :cascade do |t|
@@ -245,6 +260,7 @@ ActiveRecord::Schema.define(version: 20160406031101) do
     t.boolean  "offers",                 default: true
     t.string   "dob"
     t.string   "otp"
+    t.float    "mash_cash",              default: 0.0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

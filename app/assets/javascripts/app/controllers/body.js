@@ -165,7 +165,7 @@ angular.module('foodmashApp.controllers')
 		};
 
 		function setLoadCombos(){
-			// $scope.loadCombos = true;
+			$scope.loadCombos = true;
 		};
 }]);
 

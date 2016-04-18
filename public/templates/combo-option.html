@@ -1,6 +1,7 @@
 
 
 <td ng-hide="updateShow" ng-init="updateShow=false">{{$index + 1}}</td>
+<td ng-hide="updateShow">{{combo_option.name}}</td>
 <td ng-hide="updateShow" ng-click="comboOptionDishShow=!comboOptionDishShow">{{combo_option.dish_type.name}}</td>
 <td ng-hide="updateShow">{{combo_option.min_count}}</td>
 <td ng-hide="updateShow">{{combo_option.priority}}</td>
@@ -8,6 +9,9 @@
 <td ng-hide="updateShow" ng-click="deleteComboOption(combo_option)"><i class="icon-trash"></i></td>
 
  <td ng-show="updateShow">{{$index + 1}}</td>
+ <td style="width:40px" ng-show="updateShow">
+      <input class="form-control" type="text" ng-model="updatedComboOption.name">
+ </td>
  <td ng-show="updateShow">
    <div class="form-group label-floating is-empty">
      <span class="dropdown location-dropdown">

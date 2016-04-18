@@ -24,7 +24,7 @@ angular.module('foodmashApp.services')
 			}
 		}
 
-			var future_order = {"added_at": Date.now(), "order_items": [], "product": {"id": combo.id, "price": combo.price, "description": combo.description, "name": combo.name, "available": combo.available, "active": combo.active}, "total": combo.price, "quantity": 1};
+			var future_order = {"added_at": Date.now(), "order_items": [], "product": {"id": combo.id, "price": combo.price, "description": combo.description, "name": combo.name, "available": combo.available, "active": combo.active, type: "Combo"}, "total": combo.price, "quantity": 1};
 			for(var i=0;i<selected_dishes.length;i++){
 				if(selected_dishes[i]["product"]["id"] == combo.id){
 					var order_item = angular.copy(selected_dishes[i]);

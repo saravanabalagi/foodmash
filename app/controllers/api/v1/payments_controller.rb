@@ -42,7 +42,7 @@ class Api::V1::PaymentsController < ApiApplicationController
 	end
 
 	def success
- 		if params.present? and @cart.add_fields_from_payu(params) and @cart.purchase!
+ 		if params.present? and @cart.add_fields_from_payu(params) and @cart.purchase! and @current_user.award_mash_cash(check_for_promo_and_set(@cart))
 			render status: 200, json: {success: true, message: 'Cart was successfully processed!'}
 		else
 			render status: 422, json: {success: false, error: 'Cart was not successfully processed!'}
@@ -66,6 +66,8 @@ class Api::V1::PaymentsController < ApiApplicationController
  	 	end
  	end
 
+ 	def 
+
 	def purchase_by_cod
 		return invalid_data unless params[:data][:payment_method]
 		success = nil
@@ -78,7 +80,7 @@ class Api::V1::PaymentsController < ApiApplicationController
 			@cart.promo_id = promo.id
 			@cart.promo_discount = params[:data][:promo_discount] if params[:data][:promo_discount]
 		end
-		if success and @cart.set_payment_method('COD') and @cart.purchase! 
+		if success and @cart.set_payment_method('COD') and @cart.purchase! and @current_user.award_mash_cash(check_for_promo_and_set(@cart))
 			render status: 200, json: {success: true, data: {order_id: @cart.order_id, promo_discount: promo_discount}}
 		elsif @cart.set_payment_method('COD') and @cart.purchase! 
 			render status: 200, json: {success: true, data: {order_id: @cart.order_id}}
@@ -91,4 +93,12 @@ class Api::V1::PaymentsController < ApiApplicationController
 	def set_current_cart
 		@cart = @current_user.carts.where(aasm_state: 'not_started').first.presence
 	end
+
+	def check_for_promo_and_set(cart)
+ 		if (cart.promo_discount.present? and cart.promo_id.present?) or cart.mash_cash.present?
+ 			return 0.0
+ 		else
+ 			return cart.delivery_charge
+ 		end
+ 	end
  end

@@ -11,9 +11,10 @@ class RegistrationsController < Devise::RegistrationsController
 	  build_resource(sign_up_params)
 	  # Try to save them
 	  if resource.save!
-	  	# UserMailer.signup_confirmation(resource).deliver_later!
+	  	SendSignupConfirmationJob.set(wait: 20.seconds).perform_later(resource)
 	  	session_token = resource.generate_session_token
       	resource.sessions.create! session_token: session_token
+      	resource.award_mash_cash(20)
 	    render status: 200,
 	    json: {
 	      success: true, info: "Registered", data: {

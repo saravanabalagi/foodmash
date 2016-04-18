@@ -1,0 +1,155 @@
+<body>
+<style type="text/css">
+	@font-face {
+		font-family: "Myriad Pro";
+		src: font-url("myriadpro/myriadpro.eot");
+		src: font-url("myriadpro/myriadpro.eot?#iefix") format("embedded-opentype"),
+		font-url("myriadpro/myriadpro.woff") format("woff"),
+		font-url("myriadpro/myriadpro.ttf") format("truetype"),
+		font-url("myriadpro/myriadpro.svgz") format("svg"),
+		font-url("myriadpro/myriadpro.svg") format("svg");
+	}
+
+	@font-face {
+		font-family: "Segoe UI Light";	
+		src: font-url("segoeui/segoeuil.eot");
+		src: font-url("segoeui/segoeuil.eot?#iefix") format("embedded-opentype"),
+		font-url("segoeui/segoeuil.woff") format("woff"),
+		font-url("segoeui/segoeuil.ttf") format("truetype"),
+		font-url("segoeui/segoeuil.svgz") format("svg"),
+		font-url("segoeui/segoeuil.svg") format("svg");
+	}
+
+	a { color: #00CCFF; text-decoration: none; }
+	hr { border-color: #666 ; width: 90%; }
+	body { margin: 0; padding: 0; }
+	.parent {
+		font-family: "Segoe UI Light";
+		background-color: #111; 
+		color:#EEE; 
+		text-align: center;
+	}
+
+	.logo-wrapper { padding: 20px;}
+	.logo { width: 200px; height: auto;}
+	.title-icon-wrapper { text-align: center; padding: 10px; }
+	.title-icon-wrapper > * { display: inline-block; vertical-align: middle; }
+	.title-icon { width: 60px; height: auto; }
+	.title-info { font-family: "Myriad Pro"; font-size: 25px; color: #009900; font-weight: bolder; }
+	.hr-divider td { padding: 0 !important; }
+	.hr-divider td > hr{ margin: 0 auto; border-color: #FFF; width: 100%; }
+
+	table.invoice {
+		font-family: "Myriad Pro";
+		padding: 0 10px 20px;
+		text-align: left;
+		width: calc(100% - 50px);
+		max-width: 700px;
+		margin: 30px auto;
+		border-radius: 10px;
+		background-color: #EEE;
+		color: #111;
+	}
+
+	table.invoice td {
+		padding: 10px;
+		vertical-align: top;
+	}
+
+	table.invoice th { padding: 10px; }
+	table.invoice tfoot tr:first-child td { padding-top: 20px; }
+	table.invoice tfoot td { padding: 0 10px; }
+
+	.order-id { text-align: center; color: #CC0000; }
+	.price { text-align: right; }
+	.quantity { text-align: center; }
+	.total-wrapper { font-weight: bold; color: #005588; }
+	.total-wrapper td { padding-top: 10px !important; }
+	.grand-total-wrapper { font-weight: bold; color: #007700; }
+	.link { font-size: 18px; padding-bottom: 15px; }
+	.disclaimer { font-size: 12; padding: 20px; color: #999; }
+</style>
+	<div class="parent">
+		<div class="logo-wrapper">
+			<img class="logo" 
+				src="<%= asset_path('logo_hybrid_transparent.png') %>">
+		</div>
+		<div class="content">
+			<div class="title-wrapper"> 
+				<div class="title-icon-wrapper">
+					<img class="title-icon" src="<%= asset_path('tick_filled.svg') %>">
+					<span class="title-info">Order successfully placed</span>
+				</div>
+				<div class="title-message">Your order <strong><%= @cart.order_id %></strong> for <strong>INR <%= @cart.grand_total %></strong> has been received</div>
+			</div>
+			<div class="message"></div>
+			<table class="invoice">
+				<thead>
+					<tr>
+						<th>Contents</th>
+						<th class="quantity quantity-header">Quantity</th>
+						<th class="price price-header">Amount (INR)</th>
+					</tr>
+					<tr class="hr-divider"> <td colspan="3"><hr></td> </tr>
+				</thead>
+				<tbody>
+					<% @cart.orders.each do |order| %>
+					<tr>
+						<td>
+							<div class="combo">
+								<div class="combo-name"><%= order.product.name %></div>
+								<div class="combo-contents">
+								<% order.order_items.each do |order_item| %>	
+									<div class="combo-dish"><%= order_item.quantity %> x <%= order_item.item.name %></div>
+								<% end %>	
+								</div>
+							</div>
+						</td>
+						<td class="quantity"><%= order.quantity %></td>
+						<td class="price"><%= order.total %></td>
+					</tr>
+					<% end %>
+				</tbody>
+				<tfoot>
+					<tr class="hr-divider"> <td style="padding-top: 10px !important" colspan="3"><hr></td> </tr>
+					<tr class="total-wrapper">
+						<td colspan="2">Total</td>
+						<td class="price"><%= @cart.total %></td>
+					</tr>
+					<tr>
+						<td colspan="2">VAT 2%</td>
+						<td class="price"><%= @cart.vat %></td>
+					</tr>
+					<tr>
+						<td colspan="2">Delivery Charges</td>
+						<td class="price"><%= @cart.delivery_charge %></td>
+					</tr>
+					<% if @cart.promo_discount %>
+					<tr>
+						<td colspan="2">Promo Discount</td>
+						<td class="price">- <%= @cart.promo_discount %></td>
+					</tr>
+					<% end %>
+					<% if @cart.mash_cash %>
+					<tr>
+						<td colspan="2">Mash Cash Used</td>
+						<td class="price">- <%= @cart.mash_cash %></td>
+					</tr>
+					<% end %>
+					<tr class="hr-divider"> <td colspan="3" style="padding: 10px 0 !important"><hr></td> </tr>
+					<tr class="grand-total-wrapper">
+						<td colspan="2">Grand Total</td>
+						<td class="price"><%= @cart.grand_total %></td>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="link">
+				You shall view the order status in <a href="http://foodmash.in/customerPanel">Order History</a>
+			</div> <hr style="margin-bottom: -10px">
+			<div class="disclaimer">
+			The information contained in this communication is intended solely for the use of the individual or entity to whom it is addressed and others authorized to receive it.&nbsp; This communication may contain confidential or legally privileged information.&nbsp; If you are not the intended recipient, any disclosure, copying, distribution or action taken relying on the contents is prohibited and may be unlawful.&nbsp; If you have received this communication in error, or if you or your employer do not consent to email messages of this kind, please notify us immediately by responding to this email and then delete it from your system.&nbsp; No liability is accepted for any harm that may be caused to your systems or data by this message.&nbsp; 
+			</div>
+		</div>
+	</div>
+
+</body>

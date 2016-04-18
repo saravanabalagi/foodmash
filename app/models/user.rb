@@ -61,6 +61,20 @@ class User < ActiveRecord::Base
     return reset_password_token
   end
 
+  def award_mash_cash(amount)
+    self.mash_cash += amount
+    self.save!   
+  end
+
+  def use_mash_cash(amount)
+      if amount >= 150 and amount <= self.mash_cash
+        self.mash_cash -= amount
+        self.save!
+        return true
+      else
+        return false
+      end
+  end
   
   private
 

@@ -32,7 +32,7 @@ angular.module('foodmashApp.controllers')
        $scope.user = user;
        $rootScope.enableButton('.save-button');
        ProfileService.setUserForProfile(user);
-       AuthService.updateCurrentUser();
+       AuthService.updateCurrentUser(user);
      }, function(err){
        toaster.pop('error', 'Profile info failed to update!');
        $rootScope.enableButton('.save-button');
