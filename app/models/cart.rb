@@ -264,19 +264,12 @@ class Cart < ActiveRecord::Base
 		end
 	end
 
-	def apply_mash_cash(promo_code)
-		promo = Promo.find_by(code: promo_code) if promo_code
+	def apply_mash_cash(mash_cash)
 		user = User.find(self.user_id) if self.user_id
-		# if user and promo and promo.users.pluck(:id).include?(user.id)
-		# 	promo_user = promo.users.find(user.id)
-		# else
-		# 	promo_user = nil
-		# end
-		if promo.present? and promo.active
-			self.promo_id = promo.id
-			self.grand_total -= self.total * 0.15
-			self.promo_discount = self.total * 0.15
-			return true, self.promo_discount, self.grand_total
+		if user.mash_cash > 150 and mash_cash > 0 and  mash_cash <= user.mash_cash
+			self.mash_cash = mash_cash
+			self.grand_total -= self.mash_cash
+			return true, self.mash_cash, self.grand_total
 		else
 			return false, 0
 		end
