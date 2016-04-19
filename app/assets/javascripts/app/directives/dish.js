@@ -87,14 +87,16 @@ angular.module('foodmashApp.directives')
 
 			$scope.deleteDish = function(dish){
 				var d = $q.defer();
-				dish.delete().then(function(response){
-					toaster.pop('success', 'Dish was deleted!');
-					$scope.dishes.splice($scope.dishes.indexOf(dish), 1);
-					d.resolve(response);
-				}, function(err){
-					toaster.pop('error', 'Dish was not deleted!');
-					d.reject(err);
-				});
+				if(confirm('Are you sure ?')){
+					dish.delete().then(function(response){
+						toaster.pop('success', 'Dish was deleted!');
+						$scope.dishes.splice($scope.dishes.indexOf(dish), 1);
+						d.resolve(response);
+					}, function(err){
+						toaster.pop('error', 'Dish was not deleted!');
+						d.reject(err);
+					});
+				}
 				return d.promise;
 			};
 

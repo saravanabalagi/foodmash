@@ -12,10 +12,14 @@ angular.module('foodmashApp.directives')
 
 		controller: ['$scope', 'ComboOption', '$q', 'toaster', 'Dish', 'ComboService', function($scope, ComboOption, $q, toaster, Dish, ComboService){
 
-			$scope.dish_types = [];
 			$scope.combo_options = [];
 			$scope.combo_option = new ComboOption;
-			$scope.loadingDishesTypes = true;
+			$scope.compulsoryOptions = 
+			[
+				{icon_class: "fa fa-times-circle", value: false},
+				{icon_class: "fa fa-check-circle", value: true}
+			];
+			$scope.combo_option.compulsory = $scope.activeOptions[0].value;
 
 			ComboService.getDishTypesForCombo().then(function(dish_types){
 				$scope.dish_types = dish_types;
@@ -35,9 +39,23 @@ angular.module('foodmashApp.directives')
 				}
 			});
 
-			$scope.selectDishTypeForComboOption = function(dish_type){
-				$scope.selectedDishTypeForComboOption = dish_type;
-				$scope.combo_option.dish_type_id = dish_type.id;
+			$scope.toggleCompulsoryOption = function(){
+				if(typeof($scope.toggleCompulsoryOption.counter) == 'undefined'){
+					$scope.toggleCompulsoryOption.counter = 1;
+				}else{
+					$scope.toggleCompulsoryOption.counter += 1;
+				}
+				$scope.combo_option.compulsory = $scope.compulsoryOptions[$scope.toggleCompulsoryOption.counter % 2].value;
+			};
+
+			$scope.getIconForCompulsory = function(combo_option){
+				var icon_class = "";
+				$scope.compulsoryOptions.filter(function(compOp){
+					if(compOp.value == combo_option.compulsory){
+						icon_class = compOp.icon_class;
+					}
+				});
+				return icon_class;
 			};
 
 			$scope.addComboOption = function(combo_id){
@@ -46,8 +64,9 @@ angular.module('foodmashApp.directives')
 				$scope.combo_option.save().then(function(response){
 					toaster.pop('success', 'Combo Option was created!');
 					$scope.combo_options.unshift($scope.combo_option);
+					var old_compulsory = $scope.combo_option.compulsory;
 					$scope.combo_option = new ComboOption;
-					renewSelectedValues(combo_id);
+					renewSelectedValues(combo_id, old_compulsory);
 					d.resolve(response);
 				}, function(err){
 					toaster.pop('error', 'Combo Option was not created!');
@@ -56,9 +75,9 @@ angular.module('foodmashApp.directives')
 				return d.promise;
 			};
 
-			function renewSelectedValues(combo_id){
-				$scope.combo_option.dish_type_id = $scope.selectedDishTypeForComboOption.id;
+			function renewSelectedValues(combo_id, old_compulsory){
 				$scope.combo_option.combo_id = combo_id;
+				$scope.combo_option.compulsory = old_compulsory;
 			};
 
 		}]

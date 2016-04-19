@@ -7,7 +7,7 @@ class Web::ComboOptionsController < ApplicationController
 	def index
 		@combo_options = ComboOption.where(params.permit(:id,:combo_id, :dish_type_id))
 		if @combo_options 
-			render status: 200, json: @combo_options.as_json(:include => :dish_type)
+			render status: 200, json: @combo_options.as_json
 		else
 			render status: 404, json: {error: 'Combos Options not found!'}
 		end
@@ -16,7 +16,7 @@ class Web::ComboOptionsController < ApplicationController
 	def create
 		@combo_option = ComboOption.new combo_option_params
 		if @combo_option.save! 
-			render status: 201, json: @combo_option.as_json(:include => :dish_type)
+			render status: 201, json: @combo_option.as_json
 		else
 			render status: 422, json: @combo_option.errors.as_json
 		end
@@ -24,7 +24,7 @@ class Web::ComboOptionsController < ApplicationController
 
 	def update
 		if @combo_option && @combo_option.update_attributes(combo_option_update_params)
-			render status: 200, json: @combo_option.as_json(:include => :dish_type)
+			render status: 200, json: @combo_option.as_json
 		else
 			render status: 422, json: @combo_option.errors.as_json
 		end
@@ -45,10 +45,10 @@ class Web::ComboOptionsController < ApplicationController
 	end
 
 	def combo_option_params
-		params.require(:combo_option).permit(:name, :combo_id, :dish_type_id, :description, :priority, :min_count)
+		params.require(:combo_option).permit(:name, :combo_id, :description, :priority, :min_count, :compulsory)
 	end
 
 	def combo_option_update_params
-		params.require(:combo_option).permit(:name, :combo_id, :dish_type_id, :description, :priority, :min_count)
+		params.require(:combo_option).permit(:name, :combo_id, :description, :priority, :min_count, :compulsory)
 	end
 end

@@ -5,7 +5,7 @@ class Web::DishesController < ApplicationController
 	load_and_authorize_resource skip_load_resource
 
 	def index
-		@dishes = Dish.where(params.permit(:id, :restaurant_id, :name, :dish_type_id, :cuisine_id)).order("price ASC")
+		@dishes = Dish.where(params.permit(:id, :restaurant_id, :name, :dish_type_id, :cuisine_id)).order("price ASC").where(arcive: false)
 		if @dishes 
 			render status: 200, json: @dishes.as_json(:include => [:dish_type, :cuisine])
 		else
@@ -23,7 +23,7 @@ class Web::DishesController < ApplicationController
 	end
 
 	def update
-		if @dish && @dish.update_attributes(dish_update_params)
+		if @dish && @dish.update_attributes!(dish_update_params)
 			render status: 200, json: @dish.as_json(:include => [:dish_type, :cuisine])
 		else
 			render status: 422, json: @dish.errors.as_json
@@ -31,7 +31,7 @@ class Web::DishesController < ApplicationController
 	end
 
 	def destroy
-		if @dish && @dish.destroy
+		if @dish && @dish.update_attributes!(arcive: true, available: false)
 		  head :ok
 		else
 		  render status: 404, json: {error: "Dish with id #{params[:id]} not found!"}

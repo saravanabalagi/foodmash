@@ -3,11 +3,11 @@ class ComboOptionDish < ActiveRecord::Base
 	belongs_to :dish
 	validates :dish_id, presence: true
 	validates :combo_option_id, presence: true
-	after_save :call_label_on_combo
+	after_save :update_combo
 
 	private
 	
-	def call_label_on_combo
+	def update_combo
 		self.combo_option.combo.save!
 	end
 end

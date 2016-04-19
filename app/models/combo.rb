@@ -11,10 +11,18 @@ class Combo < ActiveRecord::Base
 	before_save :update_label
 	before_save :ensure_picture_is_encoded
 	before_save :calculate_price
-
+	before_save :allow_only_one_customizable_combo
 	before_destroy :ensure_combo_not_referenced
 
 	private
+	def allow_only_one_customizable_combo
+		combos = Combo.where(packaging_centre_id: self.packaging_centre_id) if self.packaging_centre_id
+		if combos.present?
+			customizable_combos = combos.where(customizable: true)
+			return false if !customizable_combos.length
+		end
+		return true
+	end
 
 	def ensure_picture_is_encoded
 	 	decoded_pic = URI.decode(self.picture) if self.picture.present?
@@ -31,7 +39,8 @@ class Combo < ActiveRecord::Base
 		end
 
 		if self.combo_options.present?
-			self.combo_options.each do |combo_option|
+			compulsory_combo_options = self.combo_options.where(compulsory: true)
+			compulsory_combo_options.each do |combo_option|
 				combo_option_price_list = []
 				if combo_option.dishes.present?
 					combo_option.dishes.each do |dish|
@@ -40,6 +49,16 @@ class Combo < ActiveRecord::Base
 				end
 				price += combo_option_price_list.present? ? combo_option_price_list.min : 0.0
 			end
+			non_compulsory_combo_options = self.combo_options.where(compulsory: false)
+			non_compulsory_combo_option_price_list = []
+			non_compulsory_combo_options.each do |combo_option|
+				if combo_option.dishes.present?
+					combo_option.dishes.each do |dish|
+						non_compulsory_combo_option_price_list.append(dish.price * combo_option.min_count)
+					end
+				end
+			end
+			price += non_compulsory_combo_option_price_list.present? ? non_compulsory_combo_option_price_list.min : 0.0
 		end
 		self.price = price
 		return true

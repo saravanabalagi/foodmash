@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160418133625) do
+ActiveRecord::Schema.define(version: 20160419052443) do
 
   create_table "areas", force: :cascade do |t|
     t.string   "name"
@@ -81,12 +81,12 @@ ActiveRecord::Schema.define(version: 20160418133625) do
   create_table "combo_options", force: :cascade do |t|
     t.string   "name"
     t.integer  "combo_id"
-    t.integer  "dish_type_id"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.text     "description"
     t.integer  "priority"
-    t.integer  "min_count",    default: 1
+    t.integer  "min_count",   default: 1
+    t.boolean  "compulsory",  default: false
   end
 
   create_table "combos", force: :cascade do |t|
@@ -103,6 +103,8 @@ ActiveRecord::Schema.define(version: 20160418133625) do
     t.string   "label"
     t.string   "picture"
     t.text     "category",            default: "Regular"
+    t.boolean  "archive",             default: false
+    t.boolean  "customizable",        default: false
   end
 
   create_table "cuisines", force: :cascade do |t|
@@ -154,12 +156,13 @@ ActiveRecord::Schema.define(version: 20160418133625) do
     t.integer  "dish_type_id"
     t.integer  "restaurant_id"
     t.integer  "no_of_purchases", default: 0
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.boolean  "available",       default: true
     t.text     "description"
     t.string   "label"
     t.integer  "cuisine_id"
+    t.boolean  "archive",         default: false
   end
 
   create_table "order_items", force: :cascade do |t|

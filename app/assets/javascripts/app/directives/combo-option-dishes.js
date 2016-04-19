@@ -16,7 +16,6 @@ angular.module('foodmashApp.directives')
 			$scope.combo_option_dish = new ComboOptionDish;
 			$scope.dishes = [];
 			$scope.restaurants = [];
-			$scope.loadingDishesForComboOptionDishes = true;
 
 			ComboService.getRestaurantsForCombo($scope.combo.packaging_centre_id).then(function(restaurants){
 				$scope.restaurants = restaurants;
@@ -36,9 +35,14 @@ angular.module('foodmashApp.directives')
 				}
 			});
 
+			$scope.selectDishTypeForComboOptionDishes = function(dish_type){
+				$scope.selectedDishTypeForComboOptionDishes = dish_type;
+				$scope.loadDishes($scope.selectedRestaurantForComboOptionDishes.id, $scope.selectedDishTypeForComboOptionDishes.id);
+			};
+
 			$scope.selectRestaurantForComboOptionDishes = function(restaurant){
 				$scope.selectedRestaurantForComboOptionDishes = restaurant;
-				$scope.loadDishes(restaurant.id);
+				$scope.loadDishes($scope.selectedRestaurantForComboOptionDishes.id, $scope.selectedDishTypeForComboOptionDishes.id);
 			};
 
 			$scope.selectDishForComboOptionDishes = function(dish){
@@ -46,15 +50,14 @@ angular.module('foodmashApp.directives')
 				$scope.combo_option_dish.dish_id = dish.id;
 			};
 
-			$scope.loadDishes = function(restaurant_id){
+			$scope.loadDishes = function(restaurant_id, dish_type_id){
 				var d = $q.defer();
-				Dish.query({dish_type_id: $scope.combo_option.dish_type_id, restaurant_id: restaurant_id}).then(function(dishes){
+				Dish.query({dish_type_id: dish_type_id, restaurant_id: restaurant_id}).then(function(dishes){
 					if(dishes.length > 0){
 						$scope.dishes = dishes;
 					}else{
 						$scope.dishes = null;
 					}
-					$scope.loadingDishesForComboOptionDishes = false;
 				}, function(err){
 					$scope.dishes = null;
 				});
