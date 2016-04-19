@@ -121,14 +121,17 @@ angular.module('foodmashApp.directives')
 
 			$scope.deleteCombo = function(combo){
 				var d = $q.defer();
-				combo.delete().then(function(response){
-					toaster.pop('success', 'Combo was deleted!');
-					$scope.combos.splice($scope.combos.indexOf(combo), 1);
-					d.resolve(response);
-				}, function(err){
-					toaster.pop('error', 'Combo was not deleted!');
-					d.reject(err);
-				});
+				if(confirm('Are you sure ?')){
+					combo.delete().then(function(response){
+						toaster.pop('success', 'Combo was deleted!');
+						$scope.combos.splice($scope.combos.indexOf(combo), 1);
+						d.resolve(response);
+					}, function(err){
+						toaster.pop('error', 'Combo was not deleted!');
+						d.reject(err);
+					});
+				}
+				return d.promise;
 			};
 
 		}]

@@ -58,11 +58,11 @@ angular.module('foodmashApp.directives')
 				return d.promise;
 			};
 
-			$scope.deleteComboOptionDish = function(combo_option_dish, combo_option_dishes){
+			$scope.deleteComboOptionDish = function(combo_option_dish){
 				var d = $q.defer();
 				combo_option_dish.delete().then(function(response){
 					toaster.pop('success', 'Combo Option Dish was deleted!');
-					combo_option_dishes.splice(combo_option_dishes.indexOf(combo_option_dish), 1);
+					$scope.combo_option_dishes.splice($scope.combo_option_dishes.indexOf(combo_option_dish), 1);
 					d.resolve(response);
 				}, function(err){
 					toaster.pop('error', 'Combo Option Dish was not deleted!');

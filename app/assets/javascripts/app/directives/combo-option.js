@@ -16,13 +16,13 @@ angular.module('foodmashApp.directives')
 
 			$scope.setUpdate = function(combo_option){
 				$scope.updatedComboOption = angular.copy(combo_option);
+				$scope.toggleCompulsoryOptionForUpdate.counter = $scope.updatedComboOption.compulsory == true ? 1 : 0;
 			};
 
-			$scope.selectDishTypeForComboOptionUpdate = function(dish_type){
-				$scope.selectedDishTypeForComboOptionUpdate = dish_type;
-				$scope.updatedComboOption.dish_type_id = dish_type.id;
+			$scope.toggleCompulsoryOptionForUpdate = function(){
+				$scope.toggleCompulsoryOptionForUpdate.counter += 1;
+				$scope.updatedComboOption.compulsory = $scope.compulsoryOptions[$scope.toggleCompulsoryOptionForUpdate.counter % 2].value;
 			};
-
 
 			$scope.updateComboOption = function(combo_option){
 				var d = $q.defer();

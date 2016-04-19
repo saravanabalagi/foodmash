@@ -17,6 +17,20 @@
           <span class="material-input"></span>
         </div>
       </th>
+         <th>
+        <div class="form-group label-floating is-empty">
+          <span class="dropdown custom-dropdown">
+            <a data-target="#" class="dropdown-toggle custom-dropdown-toggle" data-toggle="dropdown" ng-init="selectedDishTypeForComboOptionDishes = {};">
+                <span ng-hide="selectedDishTypeForComboOptionDishes.name">Dish Type</span>{{selectedDishTypeForComboOptionDishes.name}}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" id="delivery-location-dropdown">
+              <li ng-repeat="dish_type in dish_types" ng-click="selectDishTypeForComboOptionDishes(dish_type)">{{dish_type.name}}</li>
+            </ul>
+          </span>
+          <span class="material-input"></span>
+        </div>
+      </th>
       <th>
         <div class="form-group label-floating is-empty">
           <span class="dropdown custom-dropdown">
