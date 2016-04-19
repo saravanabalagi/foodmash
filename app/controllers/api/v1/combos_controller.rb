@@ -10,7 +10,8 @@ class Api::V1::CombosController < ApiApplicationController
 			data: 
 			{
 				combos: @combos.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => [{:restaurant => {only: [:id, :name, :logo]}}], only: [:id, :name, :description, :label, :price, :picture]} } , only: :id} }, only: [:id, :name, :description, :priority, :min_count]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name, :logo]}}, only: [:id, :name, :description, :label, :price, :picture] } }, only: [:id, :priority, :min_count] } } ], only: [:name, :id, :no_of_purchases, :description, :group_size, :available, :label, :price, :picture, :category]), 
-				cart: @cart.as_json(:include => {:orders => {:include => {:product => {only: :id}}, only: [:id, :quantity, :total]} }, only: [:id, :total]) }
+				cart: @cart.as_json(:include => {:orders => {:include => {:product => {only: :id}}, only: [:id, :quantity, :total]} }, only: [:id, :total]) },
+				user: @current_user.as_json(:include => {:roles => {:include => :resource}})
 			}
 		else
 			render status: 404, json: {success: false, error: "Could not load the combos!"}

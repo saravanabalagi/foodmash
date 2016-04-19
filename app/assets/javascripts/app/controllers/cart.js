@@ -11,6 +11,7 @@ angular.module('foodmashApp.controllers')
 	$scope.loadingDeliveryAddresses = true;
 	$scope.payment_method = "";
 	$scope.promo = {};
+	$scope.mash_cash = 0;
 	$scope.setup_details = {};
 	if($rootScope.currentUser){
 		setNameAndMobileNo();
@@ -135,24 +136,24 @@ angular.module('foodmashApp.controllers')
 		}
 	};
 
-	$scope.applyPromoCode = function(promo_code){
-		$scope.cart.user_id = $rootScope.currentUser.id;
-		Payment.validatePromoCode(promo_code, $scope.cart, $scope.promo).then(function(response){
-			if(response.promo_discount){
-				toaster.pop('success', 'A discount of ' + response.promo_discount + ' was applied to cart!');
+	$scope.checkForPromoOrMashCash = function(promo_or_mash_cash){
+		if(promo_or_mash_cash && isNaN(promo_or_mash_cash) && promo_or_mash_cash.match(/^[a-z0-9]+$/i)){
+			if(!$scope.mash_cash){
+				applyPromoCode(promo_or_mash_cash);
 			}else{
-				toaster.pop('error', 'Failed to apply promo code!');
+				$scope.mash_cash = $scope.cart.mash_cash = 0;
+				calcTaxAndGrandTotal();
+				applyPromoCode(promo_or_mash_cash);
 			}
-			if(response.cart.grand_total && response.cart.promo_id && response.cart.promo_discount){
-				$scope.cart.grand_total = response.cart.grand_total;
-				$scope.cart.vat = response.cart.vat;
-				$scope.cart.delivery_charge = response.cart.delivery_charge;
-				$scope.promo.id = response.cart.promo_id;
-				$scope.promo.discount = response.cart.promo_discount;
+		}else if(promo_or_mash_cash && !isNaN(promo_or_mash_cash)){
+			if(!$scope.promo.discount){
+				useMashCash(promo_or_mash_cash);
+			}else{
+				$scope.promo = {};
+				calcTaxAndGrandTotal();
+				useMashCash(promo_or_mash_cash);
 			}
-		}, function(err){
-			toaster.pop('error', 'Failed to apply promo code!');
-		});
+		}
 	};
 
 	$scope.processCart = function(){
@@ -199,6 +200,47 @@ angular.module('foodmashApp.controllers')
 			return true;
 		}
 		return false;
+	};
+
+	$scope.checkIfMashCashUsed = function(){
+		if($scope.mash_cash && !isNaN($scope.mash_cash)){
+			return true;
+		}
+		return false;
+	};
+
+	function useMashCash(mash_cash){
+		if(mash_cash <= 0){
+			toaster.pop('error', 'Mash Cash entered is negligible!');
+		}else if(mash_cash > 0 && mash_cash < 150){
+			toaster.pop('error', 'Mash Cash must be 150 or more to be utilized!');
+		}else if(mash_cash >=150 && $scope.cart.grand_total && !$scope.mash_cash && mash_cash <= $rootScope.currentUser.mash_cash){
+			$scope.mash_cash = mash_cash;
+			$scope.cart.grand_total -= $scope.mash_cash;
+			$scope.cart.grand_total = $scope.cart.grand_total.toFixed(2);
+			$scope.cart.mash_cash = $scope.mash_cash;
+			toaster.pop('success', 'Mash Cash of ' + $scope.mash_cash + ' was used!');
+		}
+	};
+
+	function applyPromoCode(promo_code){
+		$scope.cart.user_id = $rootScope.currentUser.id;
+		Payment.validatePromoCode(promo_code, $scope.cart, $scope.promo).then(function(response){
+			if(response.promo_discount){
+				toaster.pop('success', 'A discount of ' + response.promo_discount + ' was applied to cart!');
+			}else{
+				toaster.pop('error', 'Failed to apply promo code!');
+			}
+			if(response.cart.grand_total && response.cart.promo_id && response.cart.promo_discount){
+				$scope.cart.grand_total = response.cart.grand_total;
+				$scope.cart.vat = response.cart.vat;
+				$scope.cart.delivery_charge = response.cart.delivery_charge;
+				$scope.promo.id = response.cart.promo_id;
+				$scope.promo.discount = response.cart.promo_discount;
+			}
+		}, function(err){
+			toaster.pop('error', 'Failed to apply promo code!');
+		});
 	};
 
 	function setNameAndMobileNo(){

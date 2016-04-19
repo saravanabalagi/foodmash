@@ -19,15 +19,11 @@ class Api::V1::SessionsController < ApiApplicationController
 	    json: {
 	      success: true,
 	      data: {
-        	user_token: resource.user_token,
-        	session_token: session_token,
-					user: {
-							email: resource.email,
-							mobile_no: resource.mobile_no,
-							name: resource.name
-					}
-        }
-			}
+        		user_token: resource.user_token,
+        		session_token: session_token,
+				user: resource.as_json(:include => {:roles => {:include => :resource}})
+          }
+		}
 	end
 
 	def failure 

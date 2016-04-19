@@ -10,7 +10,6 @@ class SessionsController < Devise::SessionsController
     resource = User.find_for_database_authentication(email: params[:user][:email]) || User.find_for_database_authentication(mobile_no: params[:user][:mobile_no])
     return failure unless resource
     return failure unless resource.valid_password?(params[:user][:password])
-    # UserMailer.signup_confirmation(resource).deliver_later!
     sign_in(resource)
     session_token = resource.generate_session_token
     resource.sessions.create! session_token: session_token

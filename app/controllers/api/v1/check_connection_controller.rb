@@ -15,7 +15,7 @@ class Api::V1::CheckConnectionController < ApiApplicationController
 			title: 'Folks at Work',
 			message: 'Foodmash is under maintenance, please come back later :)',
 			image: 'http://vigilidelfuoco.usb.it/uploads/pics/men-at-work_02.jpg',
-			blocking: true
+			blocking: false
 		}
 		settings = {
 

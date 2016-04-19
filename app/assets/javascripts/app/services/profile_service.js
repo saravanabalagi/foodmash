@@ -30,8 +30,6 @@ angular.module('foodmashApp.services')
    
    this.setUserForProfile= function(user){
       service.user = user;
-      $rootScope.currentUser.name = user.name;
-      $rootScope.currentUser.mobile_no = user.mobile_no;
    };
 
  }]);

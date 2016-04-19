@@ -47,6 +47,12 @@ gem 'aws-sdk', '~> 2'
 
 gem "font-awesome-rails"
 
+gem 'delayed_job_active_record'
+
+gem 'daemons'
+
+gem 'mailgun_rails'
+
 gem 'rack-cors', :require => 'rack/cors'
 
 gem 'tzinfo-data'

@@ -72,6 +72,8 @@ class Cart < ActiveRecord::Base
 				dispatch!
 			when 'delivered' 
 				self.delivered_at = Time.now
+				current_user = User.find(self.user_id)
+				current_user.award_mash_cash(0.5 * self.grand_total) if ((self.delivered_at - self.purchased_at) > 1.hour)
 				deliver!
 		end
 	end
@@ -100,14 +102,10 @@ class Cart < ActiveRecord::Base
 						end
 					end
 				else
-					future_order = self.orders.build(product_id: cart_order[:product][:id], product_type: "Combo", quantity: cart_order[:quantity], note: cart_order[:note])
+					future_order = self.orders.build(product_id: cart_order[:product][:id], product_type: cart_order[:product][:type], quantity: cart_order[:quantity], note: cart_order[:note])
 					if cart_order[:order_items].present?
 						cart_order[:order_items].each do |cart_order_item|
-							if cart_order_item[:category_type].present? and cart_order_item[:category_type] == 'ComboOption'
-								future_order.order_items.build(category_id: cart_order_item[:category_id], category_type: cart_order_item[:category_type], item_id: cart_order_item[:item][:id], item_type: "Dish", quantity: cart_order_item[:quantity])
-							elsif cart_order_item[:category_type].present? and cart_order_item[:category_type] == 'ComboDish'
-								future_order.order_items.build(category_id: cart_order_item[:category_id], category_type: cart_order_item[:category_type], item_id: cart_order_item[:item][:id], item_type: "Dish", quantity: cart_order_item[:quantity])
-							end
+							future_order.order_items.build(item_id: cart_order_item[:item][:id], item_type: "Dish", quantity: cart_order_item[:quantity])
 						end
 					end
 				end
@@ -115,14 +113,17 @@ class Cart < ActiveRecord::Base
 		end
 			self.delivery_address_id = cart[:delivery_address_id]
 			self.calculate_total
-			self.vat = cart[:vat]
-			self.delivery_charge = cart[:delivery_charge]
-			self.grand_total = cart[:grand_total]
 			if cart[:promo_id].present? and cart[:promo_discount].present?
 				promo = Promo.find(cart[:promo_id])
 				promo.users << self.user
 				self.promo_id = promo.id
-				self.promo_discount = cart[:promo_discount]
+				self.promo_discount = self.total * 0.15
+				self.grand_total -= self.promo_discount
+			end
+			if cart[:mash_cash].present?
+				user = self.user
+				self.mash_cash = cart[:mash_cash].to_f if user.use_mash_cash(cart[:mash_cash].to_f)
+				self.grand_total -= self.mash_cash
 			end
 			DeliveryAddress.make_primary(cart[:delivery_address_id])
 			self.save!
@@ -148,19 +149,17 @@ class Cart < ActiveRecord::Base
 							order.order_items.each do |order_item|
 								if cart_item["combo_dishes"].present?
 									cart_item["combo_dishes"].each do |combo_dish| 
-										if combo_dish["dish"]["id"] == order_item.item.id and (combo_dish["id"] == order_item.category_id and order_item.category_type == 'ComboDish')
+										if combo_dish["dish"]["id"] == order_item.item.id
 											order_item.update_attributes!(quantity: combo_dish["quantity"]) unless combo_dish["quantity"] == order_item.quantity
 										end
 									end							
 								end
 								if cart_item["combo_options"].present?
 									cart_item["combo_options"].each do |combo_option|
-										if (combo_option["id"] == order_item.category_id and order_item.category_type == 'ComboOption')
-											if combo_option["combo_option_dishes"].present?
-												combo_option["combo_option_dishes"].each do |combo_option_dish|
-													if combo_option_dish["dish"]["id"] == order_item.item.id
-														order_item.update_attributes!(quantity: combo_option_dish["quantity"]) unless combo_option_dish["quantity"] == order_item.quantity
-													end
+										if combo_option["combo_option_dishes"].present?
+											combo_option["combo_option_dishes"].each do |combo_option_dish|
+												if combo_option_dish["dish"]["id"] == order_item.item.id
+													order_item.update_attributes!(quantity: combo_option_dish["quantity"]) unless combo_option_dish["quantity"] == order_item.quantity
 												end
 											end
 										end
@@ -173,17 +172,17 @@ class Cart < ActiveRecord::Base
 					end
 				end
 				unless sim
-					future_order = self.orders.build(product_id: cart_item["id"], product_type: 'Combo', quantity: cart_item["quantity"], note: cart_item["note"])
+					future_order = self.orders.build(product_id: cart_item["id"], product_type: cart_item["type"], quantity: cart_item["quantity"], note: cart_item["note"])
 					if cart_item["combo_dishes"].present?
 						cart_item["combo_dishes"].each do |combo_dish| 
-							future_order.order_items.build(category_id: combo_dish["id"], category_type: 'ComboDish', item_id: combo_dish["dish"]["id"], item_type: "Dish", quantity: combo_dish["quantity"])
+							future_order.order_items.build(item_id: combo_dish["dish"]["id"], item_type: "Dish", quantity: combo_dish["quantity"])
 						end							
 					end
 					if cart_item["combo_options"].present?
 						cart_item["combo_options"].each do |combo_option|
 							if combo_option["combo_option_dishes"].present?
 								combo_option["combo_option_dishes"].each do |combo_option_dish|
-									future_order.order_items.build(category_id: combo_option["id"], category_type: 'ComboOption', item_id: combo_option_dish["dish"]["id"], item_type: "Dish", quantity: combo_option_dish["quantity"])
+									future_order.order_items.build(item_id: combo_option_dish["dish"]["id"], item_type: "Dish", quantity: combo_option_dish["quantity"])
 								end
 							end
 						end
@@ -194,6 +193,7 @@ class Cart < ActiveRecord::Base
 		self.delivery_address_id = delivery_address_id
 		self.calculate_total
 		DeliveryAddress.make_primary(delivery_address_id)
+		byebug
 		self.save!
 	end
 
@@ -202,18 +202,14 @@ class Cart < ActiveRecord::Base
 		cart_order_item_count = 0
 		if order.product.id == cart_item["id"]
 			order.order_items.each do |order_item|
-				if order_item.category_type == "ComboDish"
-					cart_item["combo_dishes"].each do |combo_dish|
-						if order_item.category_id == combo_dish["id"] and order_item.item.id == combo_dish["dish"]["id"]
-							cart_order_item_count += 1
-						end
-					end 
-				end
-				if order_item.category_type == "ComboOption"
-					cart_item["combo_options"].each do |combo_option|
-						if order_item.category_id == combo_option["id"] and order_item.item.id == combo_option["dish"]["id"]
-							cart_order_item_count += 1
-						end
+				cart_item["combo_dishes"].each do |combo_dish|
+					if order_item.item.id == combo_dish["dish"]["id"]
+						cart_order_item_count += 1
+					end
+				end 
+				cart_item["combo_options"].each do |combo_option|
+					if order_item.item.id == combo_option["dish"]["id"]
+						cart_order_item_count += 1
 					end
 				end
 			end
@@ -263,6 +259,17 @@ class Cart < ActiveRecord::Base
 			self.grand_total -= self.total * 0.15
 			self.promo_discount = self.total * 0.15
 			return true, self.promo_discount, self.grand_total
+		else
+			return false, 0
+		end
+	end
+
+	def apply_mash_cash(mash_cash)
+		user = User.find(self.user_id) if self.user_id
+		if user.mash_cash > 150 and mash_cash > 0 and  mash_cash <= user.mash_cash
+			self.mash_cash = mash_cash
+			self.grand_total -= self.mash_cash
+			return true, self.mash_cash, self.grand_total
 		else
 			return false, 0
 		end

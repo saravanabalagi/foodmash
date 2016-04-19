@@ -28,20 +28,16 @@ Rails.application.configure do
   ENV['SECRET_ACCESS_KEY'] = 'ptmn4Lf4hOzcdf5x4VhyHYs4BkMqvwP0f3hyMnMa'
 
   # config.action_mailer.default_url_options = {host: 'localhost:3000'}
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address:              'smtp.gmail.com',
-    port:                  2525,
-    domain:               'foodmash.in',
-    user_name:            'info',
-    password:             'info@foodmash',
-    authentication:       'plain',
-    enable_starttls_auto:  true,
-    ssl:                   true
-  }
+ config.action_mailer.delivery_method = :mailgun
+ config.action_mailer.mailgun_settings = {
+    api_key: 'key-94f4c01f83062ed201fee0c4463bacf5',
+    domain: 'foodmash.in'
+  } 
 
   ENV['key'] = 'gtKFFx'
   ENV['salt'] = 'eCwWELxi'
+
+  ENV['mailgun_api_key'] = 'key-94f4c01f83062ed201fee0c4463bacf5'
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
