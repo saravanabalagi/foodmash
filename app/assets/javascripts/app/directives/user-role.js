@@ -87,14 +87,16 @@ angular.module('foodmashApp.directives')
 
 			$scope.removeRole = function(user, role){
 				var d = $q.defer();
-				User.removeRole(user.id, role.name, role.resource_id).then(function(user){
-					toaster.pop('success', 'Role was successfully removed from the user!');
-					$scope.user = user;
-					d.resolve(null);
-				}, function(err){
-					toaster.pop('error', 'Role was not deleted for the user!');
-					d.reject(err);
-				});
+				if(confirm('Are you sure ?')){
+					User.removeRole(user.id, role.name, role.resource_id).then(function(user){
+						toaster.pop('success', 'Role was successfully removed from the user!');
+						$scope.user = user;
+						d.resolve(null);
+					}, function(err){
+						toaster.pop('error', 'Role was not deleted for the user!');
+						d.reject(err);
+					});
+				}
 				return d.promise;
 			};
 

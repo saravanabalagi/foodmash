@@ -40,14 +40,16 @@ angular.module('foodmashApp.directives')
 
 			$scope.deleteCity = function(city){
 				var d = $q.defer();
-				city.delete().then(function(response){
-					$scope.cities.splice($scope.cities.indexOf(city), 1);
-					toaster.pop('success', 'City was succussfully deleted!');
-					d.resolve(response);
-				}, function(err){
-					toaster.pop('error', 'City was not deleted!');
-					d.reject(err);
-				});
+				if(confirm('Are you sure ?')){
+					city.delete().then(function(response){
+						$scope.cities.splice($scope.cities.indexOf(city), 1);
+						toaster.pop('success', 'City was succussfully deleted!');
+						d.resolve(response);
+					}, function(err){
+						toaster.pop('error', 'City was not deleted!');
+						d.reject(err);
+					});
+				}
 				return d.promise;
 			};
 

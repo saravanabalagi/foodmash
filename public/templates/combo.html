@@ -4,7 +4,7 @@
  <td ng-hide="updateShowForCombo">{{combo.group_size}}</td>
  <td ng-hide="updateShowForCombo"><i class="{{getIconForCategory(combo)}}"></i></td>
  <td ng-hide="updateShowForCombo">{{combo.packaging_centre.name}}</td>
- <td ng-hide="updateShowForCombo" style="width:40px"><i class="material-icons">image</i></td>
+ <td ng-hide="updateShowForCombo"><span class="checkbox-material"><input type="checkbox" value="{{combo.customizable}}" disabled="disabled"></td>
  <td ng-hide="updateShowForCombo">{{combo.price}}</td>
  <td ng-hide="updateShowForCombo"  ng-click="updateShowForCombo = !updateShowForCombo; setUpdate(combo)" ng-init="updateShowForCombo=false"><i class="icon-edit"></i></td>
  <td ng-hide="updateShowForCombo" ng-click="deleteCombo(combo)"><i class="icon-trash"></i></td>
@@ -33,6 +33,8 @@
         </ul>
       </span>
     </div>
+  </td>
+  <td ng-show="updateShowForCombo"><span  class="checkbox-material"><input type="checkbox" ng-model="updatedCombo.customizable"></span>
   </td>
   <td ng-show="updateShowForCombo"><i class="material-icons" ngf-select="uploadFilesForCombo($file, $invalidFiles, combo)"
                               accept="image/*" ngf-max-size="40MB">image</i></td>

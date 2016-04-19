@@ -39,7 +39,7 @@ class Combo < ActiveRecord::Base
 		end
 
 		if self.combo_options.present?
-			compulsory_combo_options = self.combo_options.where(compulsory: true)
+			compulsory_combo_options = self.combo_options.where.not(min_count: 0)
 			compulsory_combo_options.each do |combo_option|
 				combo_option_price_list = []
 				if combo_option.dishes.present?
@@ -49,12 +49,12 @@ class Combo < ActiveRecord::Base
 				end
 				price += combo_option_price_list.present? ? combo_option_price_list.min : 0.0
 			end
-			non_compulsory_combo_options = self.combo_options.where(compulsory: false)
+			non_compulsory_combo_options = self.combo_options.where(min_count: 0)
 			non_compulsory_combo_option_price_list = []
 			non_compulsory_combo_options.each do |combo_option|
 				if combo_option.dishes.present?
 					combo_option.dishes.each do |dish|
-						non_compulsory_combo_option_price_list.append(dish.price * combo_option.min_count)
+						non_compulsory_combo_option_price_list.append(dish.price * 1)
 					end
 				end
 			end

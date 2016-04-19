@@ -16,12 +16,6 @@ angular.module('foodmashApp.directives')
 
 			$scope.setUpdate = function(combo_option){
 				$scope.updatedComboOption = angular.copy(combo_option);
-				$scope.toggleCompulsoryOptionForUpdate.counter = $scope.updatedComboOption.compulsory == true ? 1 : 0;
-			};
-
-			$scope.toggleCompulsoryOptionForUpdate = function(){
-				$scope.toggleCompulsoryOptionForUpdate.counter += 1;
-				$scope.updatedComboOption.compulsory = $scope.compulsoryOptions[$scope.toggleCompulsoryOptionForUpdate.counter % 2].value;
 			};
 
 			$scope.updateComboOption = function(combo_option){
@@ -42,14 +36,16 @@ angular.module('foodmashApp.directives')
 
 			$scope.deleteComboOption = function(combo_option){
 				var d = $q.defer();
-				combo_option.delete().then(function(response){
-					toaster.pop('success', 'Combo Option was deleted!');
-					$scope.combo_options.splice($scope.combo_options.indexOf(combo_option), 1);
-					d.resolve(response);
-				}, function(err){
-					toaster.pop('error', 'Combo Option was not deleted!');
-					d.reject(err);
-				});
+				if(confirm('Are you sure ?')){
+					combo_option.delete().then(function(response){
+						toaster.pop('success', 'Combo Option was deleted!');
+						$scope.combo_options.splice($scope.combo_options.indexOf(combo_option), 1);
+						d.resolve(response);
+					}, function(err){
+						toaster.pop('error', 'Combo Option was not deleted!');
+						d.reject(err);
+					});
+				}
 				return d.promise;
 			};
 

@@ -36,14 +36,16 @@ angular.module('foodmashApp.directives')
 
 			$scope.deletePackagingCentre = function(packaging_centre){
 				var d = $q.defer();
-				packaging_centre.delete().then(function(response){
-					$scope.packaging_centres.splice($scope.packaging_centres.indexOf(packaging_centre), 1);
-					toaster.pop('success', 'Centre was succussfully deleted!');
-					d.resolve(response);
-				}, function(err){
-					toaster.pop('error', 'Centre was not deleted!');
-					d.reject(err);
-				});
+				if(confirm('Are you sure ?')){
+					packaging_centre.delete().then(function(response){
+						$scope.packaging_centres.splice($scope.packaging_centres.indexOf(packaging_centre), 1);
+						toaster.pop('success', 'Centre was succussfully deleted!');
+						d.resolve(response);
+					}, function(err){
+						toaster.pop('error', 'Centre was not deleted!');
+						d.reject(err);
+					});
+				}
 				return d.promise;
 			};
 

@@ -41,14 +41,16 @@ angular.module('foodmashApp.directives')
 
 			$scope.deleteArea = function(area){
 				var d = $q.defer();
-				area.delete().then(function(response){
-					$scope.areas.splice($scope.areas.indexOf(area), 1);
-					toaster.pop('success', 'Area was succussfully deleted!');
-					d.resolve(response);
-				}, function(err){
-					toaster.pop('error', 'Area was not deleted!');
-					d.reject(err);
-				});
+				if(confirm('Are you sure ?')){
+					area.delete().then(function(response){
+						$scope.areas.splice($scope.areas.indexOf(area), 1);
+						toaster.pop('success', 'Area was succussfully deleted!');
+						d.resolve(response);
+					}, function(err){
+						toaster.pop('error', 'Area was not deleted!');
+						d.reject(err);
+					});
+				}
 				return d.promise;
 			};
 

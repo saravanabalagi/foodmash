@@ -87,7 +87,7 @@ angular.module('foodmashApp.directives')
 				if(combo.combo_options.length > 0){
 					var lowest_non_compulsory_combo_option_dish;
 					for(var i=0; i<combo.combo_options.length; i++){
-						if(combo.combo_options[i].compulsory){
+						if(combo.combo_options[i].min_count){
 							var selectedDish = {"product": {}, "item": {}};
 							selectedDish["product"]["id"] = combo.id;
 							selectedDish["category_id"] = combo["combo_options"][i].id;
@@ -119,17 +119,19 @@ angular.module('foodmashApp.directives')
 							lowest_non_compulsory_combo_option_dish = lowest_non_compulsory_combo_option_dish_temp;
 						}
 					}
-					var selectedDish = {"product": {}, "item": {}};
-					selectedDish["product"]["id"] = combo.id;
-					selectedDish["category_id"] = lowest_non_compulsory_combo_option_dish.category_id;
-					selectedDish["category_type"] = "ComboOption";
-					selectedDish["item"]["id"] = parseInt(lowest_non_compulsory_combo_option_dish.dish.id, 10);
-					selectedDish["item"]["name"] = lowest_non_compulsory_combo_option_dish.dish.name;
-					selectedDish["item"]["description"] = lowest_non_compulsory_combo_option_dish.dish.description;
-					selectedDish["item"]["price"] = parseFloat(lowest_non_compulsory_combo_option_dish.dish.price);
-					selectedDish["added_at"] = Date.now();
-					selectedDish["quantity"] = 1;
-					$scope.selectedDishes.push(selectedDish);
+					if(lowest_non_compulsory_combo_option_dish && lowest_non_compulsory_combo_option_dish.category_id){
+						var selectedDish = {"product": {}, "item": {}};
+						selectedDish["product"]["id"] = combo.id;
+						selectedDish["category_id"] = lowest_non_compulsory_combo_option_dish.category_id;
+						selectedDish["category_type"] = "ComboOption";
+						selectedDish["item"]["id"] = parseInt(lowest_non_compulsory_combo_option_dish.dish.id, 10);
+						selectedDish["item"]["name"] = lowest_non_compulsory_combo_option_dish.dish.name;
+						selectedDish["item"]["description"] = lowest_non_compulsory_combo_option_dish.dish.description;
+						selectedDish["item"]["price"] = parseFloat(lowest_non_compulsory_combo_option_dish.dish.price);
+						selectedDish["added_at"] = Date.now();
+						selectedDish["quantity"] = 1;
+						$scope.selectedDishes.push(selectedDish);
+					}
 				}
 			};
 
@@ -155,7 +157,7 @@ angular.module('foodmashApp.directives')
 
 				if($scope.combo.combo_options && $scope.combo.combo_options.length > 0){
 					for(var i=0;i<$scope.combo.combo_options.length;i++){
-						if($scope.combo.combo_options[i].compulsory){
+						if($scope.combo.combo_options[i].min_count){
 							$scope.combo.combo_options[i].quantity = $scope.combo.combo_options[i].min_count;
 						}
 					}
