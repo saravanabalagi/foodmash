@@ -1,5 +1,5 @@
 class Combo < ActiveRecord::Base
-	before_save {|city| write_attribute(:name, city.name.split.each{|s| s[0] = s[0].upcase}.join(' '))}
+	before_save {|combo| write_attribute(:name, combo.name.split.each{|s| s[0] = s[0].upcase}.join(' '))}
 	belongs_to :packaging_centre
 	has_many :combo_dishes, dependent: :destroy
 	has_many :combo_options, dependent: :destroy
@@ -17,11 +17,13 @@ class Combo < ActiveRecord::Base
 	private
 	def allow_only_one_customizable_combo
 		combos = Combo.where(packaging_centre_id: self.packaging_centre_id) if self.packaging_centre_id
+		allow = true
 		if combos.present?
 			customizable_combos = combos.where(customizable: true)
-			return false if !customizable_combos.length
+			customizable_combos = customizable_combos.where.not(id: self.id) if self.id
+			allow = false if customizable_combos.present? and self.customizable == true
 		end
-		return true
+		return allow
 	end
 
 	def ensure_picture_is_encoded

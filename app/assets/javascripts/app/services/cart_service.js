@@ -11,11 +11,11 @@ angular.module('foodmashApp.services')
 		
 	refurbishCartFromServer();
 
-	this.setCartGlobally = function(){
+	service.setCartGlobally = function(){
 		$rootScope.cart = service.cart;
 	};
 
-	this.addToCart = function(combo, selected_dishes){
+	service.addToCart = function(combo, selected_dishes){
 		for(var i = 0;i<service.cart.orders.length;i++){
 			if(service.cart.orders[i]["product"]["id"] == combo.id && checkWithIncomingOrder(service.cart.orders[i], selected_dishes)){
 				service.cart.orders[i]["quantity"] += 1;
@@ -37,7 +37,7 @@ angular.module('foodmashApp.services')
 			return ;
 	};
 
-	this.removeFromCart = function(combo){
+	service.removeFromCart = function(combo){
 		for(var i = service.cart.orders.length - 1; i>=0; i--){
 			if(service.cart.orders[i]["product"]["id"] == combo.id){
 				service.cart.orders[i]["quantity"] -= 1;
@@ -51,7 +51,7 @@ angular.module('foodmashApp.services')
 		return ;
 	};
 
-	this.getCartInfo = function(){
+	service.getCartInfo = function(){
 		var d = $q.defer();
 		if(service.cart.orders){
 			d.resolve(service.cart);
@@ -61,14 +61,14 @@ angular.module('foodmashApp.services')
 		return d.promise;
 	};
 
-	this.setCartInfo = function(cart){
+	service.setCartInfo = function(cart){
 		if(cart){
 			service.cart = cart;
 			$rootScope.cart = service.cart;
 		}
 	};
 
-	this.refreshCart = function(){
+	service.refreshCart = function(){
 		refurbishCartFromServer();
 	};
 

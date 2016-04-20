@@ -7,7 +7,7 @@ angular.module('foodmashApp.services')
    var service = this;
    service.carts = [];
 
-   this.getCartsForCustomer = function(){
+   service.getCartsForCustomer = function(){
       var d = $q.defer();
       if(service.carts && !service.carts.length){
         Cart.query({user_id: $rootScope.currentUser.id}).then(function(carts){
@@ -28,11 +28,11 @@ angular.module('foodmashApp.services')
       return d.promise;
     };
    
-   this.setCarts= function(carts){
+   service.setCarts= function(carts){
       service.carts = carts;
    };
 
-   this.loadCartsForCustomer = function(){
+   service.loadCartsForCustomer = function(){
       var d = $q.defer();
       Cart.query({user_id: $rootScope.currentUser.id}).then(function(carts){
         if(carts.length > 0){

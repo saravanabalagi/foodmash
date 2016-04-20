@@ -8,7 +8,7 @@ angular.module('foodmashApp.services')
    service.packaging_centre = {};
    service.cart = {};
 
-   this.getCartsForPanel = function(role){
+   service.getCartsForPanel = function(role){
       var d = $q.defer();
       if(service.packaging_centre && !service.packaging_centre.name){
         PackagingCentre.query({id: role.resource.id}).then(function(packaging_centres){
@@ -39,7 +39,7 @@ angular.module('foodmashApp.services')
       return d.promise;
    };
 
-   this.loadCartsForPanel = function(role){
+   service.loadCartsForPanel = function(role){
       var d = $q.defer();
       PackagingCentre.query({id: role.resource.id}).then(function(packaging_centres){
          if(packaging_centres && packaging_centres.length > 0){
@@ -66,11 +66,11 @@ angular.module('foodmashApp.services')
       return d.promise;
    };
    
-   this.setPackagingCentreOrder = function(cart){
+   service.setPackagingCentreOrder = function(cart){
       service.cart = cart;
    };
 
-   this.setUpdatedCart = function(cart){
+   service.setUpdatedCart = function(cart){
       if(service.packaging_centre && service.packaging_centre.carts && service.packaging_centre.carts.length > 0){
         service.packaging_centre.carts.filter(function(c){
           if(c.id == cart.id){
@@ -81,7 +81,7 @@ angular.module('foodmashApp.services')
       }
    };
 
-   this.getPackagingCentreOrder = function(){
+   service.getPackagingCentreOrder = function(){
       var d = $q.defer();
       if(service.cart){
         d.resolve(service.cart);

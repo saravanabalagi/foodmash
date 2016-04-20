@@ -2,11 +2,15 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('MainController', ['$scope', '$location', 'toaster', '$q', 'Combo', '$rootScope', '$filter', 'AuthService', function($scope, $location, toaster, $q, Combo, $rootScope, $filter, AuthService){
+.controller('MainController', ['$scope', '$location', 'toaster', '$q', 'Combo', '$rootScope', '$filter', 'AuthService', 'MainService', function($scope, $location, toaster, $q, Combo, $rootScope, $filter, AuthService, MainService){
 		$scope.loadedFromPackagingCentre = [];
 		$scope.combos = [];
-		$scope.selected = new Set();
-		$scope.loadingComboCards = true;
+		$scope.selected = MainService.getSelectedSet();
+		$scope.sortOptions = MainService.getSortOptions();
+		$scope.mainOptions = MainService.getMainOptions();
+		$scope.sizeOptions = MainService.getSizeOptions();
+		$scope.preferenceOptions = MainService.getPreferenceOptions();
+		$scope.selectedSortOption = MainService.getSelectedSortOption();
 
 		$scope.load = function(){
 			 angular.element(document).ready(function (){
@@ -30,67 +34,41 @@ angular.module('foodmashApp.controllers')
 			 	});
 			 });
 		};
-
-		$scope.sortOptions = [
-			{name: 'Low to High', icon_class: 'fa fa-sort-amount-asc pull-right', reverse: false},
-			{name: 'High to Low', icon_class: 'fa fa-sort-amount-desc pull-right', reverse: true}
-		];
-		$scope.selectedSortOption = $scope.sortOptions[0];
-
-		$scope.mainOptions = 
-		[
-			{name: "Regular", icon_class: "fa fa-cutlery pull-right", alias: 'Regular'},
-			{name: "Budget", icon_class: "fa fa-coffee pull-right", alias: 'Budget'},
-			{name: "Corporate", icon_class: "fa fa-sitemap pull-right", alias: 'Corporate'},
-			{name: "Health", icon_class: "fa fa-heartbeat pull-right", alias: 'Health'}
-		];
-		$scope.sizeOptions = 
-		[
-		   {name: "Micro", icon_class: "icon-user1 pull-right", style: "", alias: 1},
-		   {name: "Medium", icon_class: "icon-user2 pull-right", style: "font-size: 18px; margin-top: -3px;", alias: 2},
-		   {name: "Mega", icon_class: "icon-user3 pull-right", style: "font-size: 25px; padding: 0; margin-top: -5px;", alias: 3}
-		];
-		$scope.preferenceOptions = 
-		[
-			{name: "Veg", icon_class: "fa fa-leaf pull-right", alias: 'veg'},
-			{name: "Egg", icon_class: "icon-egg pull-right", alias: 'egg'},
-			{name: "Non Veg", icon_class: "icon-meat pull-right", alias: 'non-veg'}
-		];
 		
-		if($rootScope.combos){
-			$scope.combos = $rootScope.combos;
-			$scope.loadedFromPackagingCentre = $rootScope.combos;
+		if($rootScope.loadedFromPackagingCentre){
+			$scope.combos = $rootScope.loadedFromPackagingCentre;
+			$scope.loadedFromPackagingCentre = $rootScope.loadedFromPackagingCentre;
 			$scope.load();
+			applyFilters();
 		}else{
-			$rootScope.combos = null;
+			$rootScope.loadedFromPackagingCentre = null;
 			$scope.loadedFromPackagingCentre = null;
-			$rootScope.combos_hash = null;
+			$rootScope.combo_hash = null;
 			$scope.load();
 		}
 
 		$scope.$watch('loadCombos', function(n, o){
 			if(n == true && $rootScope.area){
 				Combo.loadFromPackagingCentre({packaging_centre_id: $rootScope.area.packaging_centre_id}).then(function(loadedFromPackagingCentre){
-					if(!$rootScope.combos_hash){
+					if(!$rootScope.combo_hash){
 						$scope.combos = loadedFromPackagingCentre.data.combos;
 						$scope.loadedFromPackagingCentre = loadedFromPackagingCentre.data.combos;
-						$rootScope.combos = $scope.combos;
-						$rootScope.combos_hash = loadedFromPackagingCentre.data.hash;
+						$rootScope.loadedFromPackagingCentre = $scope.loadedFromPackagingCentre;
+						$rootScope.combo_hash = loadedFromPackagingCentre.data.hash;
 					}
-					else if($rootScope.combos_hash && loadedFromPackagingCentre.data.hash != $rootScope.combos_hash){
+					else if($rootScope.combo_hash && loadedFromPackagingCentre.data.hash != $rootScope.combo_hash){
 						$scope.combos = loadedFromPackagingCentre.data.combos;
 						$scope.loadedFromPackagingCentre = loadedFromPackagingCentre.data.combos;
-						$rootScope.combos = $scope.combos;
-						$rootScope.combos_hash = loadedFromPackagingCentre.data.hash;
+						$rootScope.loadedFromPackagingCentre = $scope.loadedFromPackagingCentre;
+						$rootScope.combo_hash = loadedFromPackagingCentre.data.hash;
 					}
+					applyFilters();
 					AuthService.updateCurrentUser(loadedFromPackagingCentre.data.user);
-					$scope.loadingComboCards = false;
 				}, function(err){
 					$scope.combos = null;
 					$scope.loadedFromPackagingCentre = null;
-					$rootScope.combos = null;
-					$rootScope.combos_hash = null;
-					$scope.loadingComboCards = false;
+					$rootScope.loadedFromPackagingCentre = null;
+					$rootScope.combo_hash = null;
 				});
 			}
 		});
@@ -98,6 +76,7 @@ angular.module('foodmashApp.controllers')
 		$scope.selectSortOption = function(option){
 			if($scope.selectedSortOption !== option){
 				$scope.selectedSortOption = option;
+				MainService.setSelectedSortOption($scope.selectedSortOption);
 			}
 			applySortFilterIfSelected();
 		};
@@ -129,6 +108,7 @@ angular.module('foodmashApp.controllers')
  	 		}else{
  	 			$scope.selected.add(option);
  	 		}
+ 	 		MainService.setSelectedSet($scope.selected);
 
  	 		if($scope.selected.size == 0){
  	 			$scope.combos = $scope.loadedFromPackagingCentre;

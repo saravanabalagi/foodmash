@@ -7,7 +7,7 @@ angular.module('foodmashApp.services')
    var service = this;
    service.user = {};
 
-   this.getUserForProfile = function(){
+   service.getUserForProfile = function(){
       var d = $q.defer();
       if(!service.user.name && $rootScope.currentUser){
         User.query({id: $rootScope.currentUser.id}).then(function(users){
@@ -28,7 +28,7 @@ angular.module('foodmashApp.services')
       return d.promise;
     };
    
-   this.setUserForProfile= function(user){
+   service.setUserForProfile= function(user){
       service.user = user;
    };
 

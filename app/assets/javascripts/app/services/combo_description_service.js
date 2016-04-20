@@ -7,11 +7,11 @@ angular.module('foodmashApp.services')
    var service = this;
    service.combo = {};
    
-   this.setComboForDescription= function(combo) {
+   service.setComboForDescription= function(combo) {
       service.combo = combo;
    };
 
-   this.getComboForDescription = function(){
+   service.getComboForDescription = function(){
       var d = $q.defer();
       if(service.combo){
         d.resolve(service.combo);

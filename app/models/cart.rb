@@ -193,7 +193,7 @@ class Cart < ActiveRecord::Base
 		self.delivery_address_id = delivery_address_id
 		self.calculate_total
 		DeliveryAddress.make_primary(delivery_address_id)
-		byebug
+		# byebug
 		self.save!
 	end
 
@@ -202,14 +202,22 @@ class Cart < ActiveRecord::Base
 		cart_order_item_count = 0
 		if order.product.id == cart_item["id"]
 			order.order_items.each do |order_item|
-				cart_item["combo_dishes"].each do |combo_dish|
-					if order_item.item.id == combo_dish["dish"]["id"]
-						cart_order_item_count += 1
-					end
-				end 
-				cart_item["combo_options"].each do |combo_option|
-					if order_item.item.id == combo_option["dish"]["id"]
-						cart_order_item_count += 1
+				if cart_item["combo_dishes"].present?
+					cart_item["combo_dishes"].each do |combo_dish|
+						if order_item.item.id == combo_dish["dish"]["id"]
+							cart_order_item_count += 1
+						end
+					end 
+				end
+				if cart_item["combo_options"].present?
+					cart_item["combo_options"].each do |combo_option|
+						if combo_option["combo_option_dishes"].present?
+							combo_option["combo_option_dishes"].each do |combo_option_dish|
+								if order_item.item.id == combo_option_dish["dish"]["id"]
+									cart_order_item_count += 1
+								end
+							end
+						end
 					end
 				end
 			end

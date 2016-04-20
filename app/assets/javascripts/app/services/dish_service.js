@@ -8,7 +8,7 @@ angular.module('foodmashApp.services')
    service.cuisines = [];
    service.dish_types = [];
 
-   this.getCuisinesForDish = function(){
+   service.getCuisinesForDish = function(){
       var d = $q.defer();
       if(!service.cuisines.length){
         Cuisine.query().then(function(cuisines){
@@ -29,7 +29,7 @@ angular.module('foodmashApp.services')
       return d.promise;
     };
 
-    this.getDishTypesForDish = function(){
+    service.getDishTypesForDish = function(){
       var d = $q.defer();
       if(!service.dish_types.length){
         DishType.query().then(function(dish_types){
