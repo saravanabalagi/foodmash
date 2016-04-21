@@ -10,26 +10,13 @@ angular.module('foodmashApp.controllers')
 	$scope.carts = [];
 	$scope.selectedCart = {};
 	$scope.selectedStatus = {};
-	$scope.loadingCarts = true;
-	$scope.packagingPanelOptions = [
-		{name: 'Current', icon_class: 'fa fa-inbox pull-right', checkout: 'Delivered'},
-		{name: 'Delivered', icon_class: 'fa fa-archive pull-right', checkout: 'Current'}
-	];
+	$scope.packagingPanelOptions = PackagingPanelService.getPackagingPanelOptions();
 	$scope.timeoutPromise = {};
 	var notification = new Audio('coin.wav');
-
-
-	$scope.statuses = [
-		{name: "purchased", alias: "Placed Order", icon_class: "fa fa-clock-o", percent: 'width:0%'},
-		{name: "ordered", alias: "Being Aggregated", icon_class: "fa fa-dropbox", percent: 'width:35%'},
-		{name: "dispatched", alias: "Dispatched for Delivery", icon_class: "fa fa-truck", percent: 'width:65%'},
-		{name: "delivered", alias: "Delivered", icon_class: "fa fa-check-circle", percent: 'width:100%'}
-	];
-
-	$scope.sortOptions = [
-		{name: 'Newest First', icon_class: 'fa fa-sort-amount-asc pull-right', reverse: true},
-		{name: 'Oldest First', icon_class: 'fa fa-sort-amount-desc pull-right', reverse: false}
-	];
+	$scope.statuses = PackagingPanelService.getPackagingPanelStatuses();
+	$scope.sortOptions = PackagingPanelService.getPackagingPanelSortOptions();
+	$scope.selectedOption = PackagingPanelService.getSelectedPackagingPanelOption();
+	$scope.selectedSortOption = PackagingPanelService.getSelectedSortOption();
 
 	$scope.roles.filter(function(role){
 		if(role.name == "packaging_centre_admin"){
@@ -43,26 +30,17 @@ angular.module('foodmashApp.controllers')
 					$scope.loadedCarts = null;
 					$scope.carts = null;
 				}
-				$scope.loadingCarts = false;
-				$scope.selectOption($scope.packagingPanelOptions[0]);
-				$scope.selectSortOption($scope.sortOptions[1]);
+				applyPackagingPanelOptionFilterIfSelected();
+				applySortFilterIfSelected();
 			}, function(err){
 				$scope.loadedCarts = null;
 				$scope.packaging_centre = null;
 				$scope.carts = null;
-				$scope.loadingCarts = false;
-				$scope.selectOption($scope.packagingPanelOptions[0]);
-				$scope.selectSortOption($scope.sortOptions[1]);
+				applyPackagingPanelOptionFilterIfSelected();
+				applySortFilterIfSelected();
 			});
 		}
 	});
-
-	$scope.getMilliSecondsDiff = function(cart){
-		var now = new Date().getMilliseconds();
-		var purchased_at = new Date(cart.purchased_at).getMilliseconds();
-		var diff = (purchased_at - now) / 100;
-		return diff;
-	};
 
 	$scope.routeToPackagingCentreOrder = function(cart){
 		PackagingPanelService.setPackagingCentreOrder(cart);
@@ -70,40 +48,38 @@ angular.module('foodmashApp.controllers')
 	};
 
 	$scope.load = function(){
+		(function tick(){
+	    	$scope.roles.filter(function(role){
+	    		if(role.name == "packaging_centre_admin"){
+	    			PackagingPanelService.loadCartsForPanel(role).then(function(packaging_centre){
+	    				if(packaging_centre && packaging_centre.carts && packaging_centre.carts.length > 0){
+	    					$scope.packaging_centre = packaging_centre;
+	    					checkForNewCarts(packaging_centre.carts);
+	    					$scope.loadedCarts = packaging_centre.carts;
+	    					$scope.carts = packaging_centre.carts ;
+	    				}else{
+	    					$scope.packaging_centre = null;
+	    					$scope.loadedCarts = null;
+	    					$scope.carts = null;
+	    				}
+	    				applyPackagingPanelOptionFilterIfSelected();
+						applySortFilterIfSelected();
+	    			}, function(err){
+	    				$scope.loadedCarts = null;
+	    				$scope.packaging_centre = null;
+	    				$scope.carts = null;
+	    				applyPackagingPanelOptionFilterIfSelected();
+						applySortFilterIfSelected();
+	    			});
+	    		}
+	    	});
+	        $scope.timeoutPromise = $timeout(tick, 30000);
+	    })();
 	    angular.element(document).ready(function (){
 	      new WOW().init();
 	      $('[data-toggle="tooltip"]').tooltip();
 	      $('[data-toggle="popover"]').popover();
 	    });
-	    	(function tick(){
-	        	$scope.roles.filter(function(role){
-	        		if(role.name == "packaging_centre_admin"){
-	        			PackagingPanelService.loadCartsForPanel(role).then(function(packaging_centre){
-	        				if(packaging_centre && packaging_centre.carts && packaging_centre.carts.length > 0){
-	        					$scope.packaging_centre = packaging_centre;
-	        					checkForNewCarts(packaging_centre.carts);
-	        					$scope.loadedCarts = packaging_centre.carts;
-	        					$scope.carts = packaging_centre.carts ;
-	        				}else{
-	        					$scope.packaging_centre = null;
-	        					$scope.loadedCarts = null;
-	        					$scope.carts = null;
-	        				}
-	        				$scope.loadingCarts = false;
-	        				$scope.selectOption($scope.selectedOption || $scope.packagingPanelOptions[0]);
-	        				$scope.selectSortOption($scope.selectedSortOption || $scope.sortOptions[1]);
-	        			}, function(err){
-	        				$scope.loadedCarts = null;
-	        				$scope.packaging_centre = null;
-	        				$scope.carts = null;
-	        				$scope.loadingCarts = false;
-	        				$scope.selectOption($scope.selectedOption || $scope.packagingPanelOptions[0]);
-	        				$scope.selectSortOption($scope.selectedSortOption || $scope.sortOptions[1]);
-	        			});
-	        		}
-	        	});
-	            $scope.timeoutPromise = $timeout(tick, 30000);
-	        })();
 	 };
 
 	 $scope.$on('$destroy', function(){
@@ -112,6 +88,7 @@ angular.module('foodmashApp.controllers')
 
 	 $scope.selectSortOption = function(option){
 	 	$scope.selectedSortOption = option;
+	 	PackagingPanelService.setSelectedSortOption($scope.selectedSortOption);
 	 	applySortFilterIfSelected();
 	 };
 
@@ -124,25 +101,8 @@ angular.module('foodmashApp.controllers')
 
 	 $scope.selectOption = function(option){
 	 	$scope.selectedOption = option;
-	 	switch(option.name){
-	 		case 'Current': 
-	 		if($scope.loadedCarts){
-	 			var deliveredCarts = $filter('filter')($scope.loadedCarts, {aasm_state: 'delivered'}, true);
-	 			$scope.carts = angular.copy($scope.loadedCarts);
-	 			deliveredCarts.filter(function(cart){
-	 				var index = $scope.carts.map(function(c) { return c.id; }).indexOf(cart.id);
-	 				if(angular.isNumber(index) && index != -1){
-	 					$scope.carts.splice(index, 1);
-	 				}
-	 			});
-	 		}
-	 		break;
-	 		case 'Delivered': 
-	 		if($scope.loadedCarts){
-	 			$scope.carts = $filter('filter')($scope.loadedCarts, {aasm_state: 'delivered'}, true);
-	 		}
-	 		break;
-	 	};
+	 	PackagingPanelService.setSelectedPackagingPanelOption($scope.selectedOption);
+	 	applyPackagingPanelOptionFilterIfSelected();
 	 	applySortFilterIfSelected();
 	 };
 
@@ -190,6 +150,30 @@ angular.module('foodmashApp.controllers')
 	function checkForNewCarts(newCarts){
 		if(newCarts && newCarts.length && $scope.loadedCarts && $scope.loadedCarts.length && $scope.loadedCarts.length < newCarts.length){
 			notification.play();
+		}
+	};
+
+	function applyPackagingPanelOptionFilterIfSelected(){
+		if($scope.selectedOption){
+			switch($scope.selectedOption.name){
+				case 'Current': 
+				if($scope.loadedCarts){
+					var deliveredCarts = $filter('filter')($scope.loadedCarts, {aasm_state: 'delivered'}, true);
+					$scope.carts = angular.copy($scope.loadedCarts);
+					deliveredCarts.filter(function(cart){
+						var index = $scope.carts.map(function(c) { return c.id; }).indexOf(cart.id);
+						if(angular.isNumber(index) && index != -1){
+							$scope.carts.splice(index, 1);
+						}
+					});
+				}
+				break;
+				case 'Delivered': 
+				if($scope.loadedCarts){
+					$scope.carts = $filter('filter')($scope.loadedCarts, {aasm_state: 'delivered'}, true);
+				}
+				break;
+			};
 		}
 	};
 

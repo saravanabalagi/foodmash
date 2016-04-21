@@ -7,23 +7,11 @@ angular.module('foodmashApp.controllers')
 	$scope.carts = [];
 	$scope.selectedCart = {};
 	$scope.selectedStatus = {};
-	$scope.loadingCarts = true;
-	$scope.customerPanelOptions = [
-		{name: 'Current', icon_class: 'fa fa-inbox pull-right', checkout: 'Delivered'},
-		{name: 'Delivered', icon_class: 'fa fa-archive pull-right', checkout: 'Current'}
-	];
-
-	$scope.statuses = [
-		{name: "purchased", alias: "Placed Order", icon_class: "fa fa-clock-o", percent: 'width:0%'},
-		{name: "ordered", alias: "Being Aggregated", icon_class: "fa fa-dropbox", percent: 'width:35%'},
-		{name: "dispatched", alias: "Dispatched for Delivery", icon_class: "fa fa-truck", percent: 'width:65%'},
-		{name: "delivered", alias: "Delivered", icon_class: "fa fa-check-circle", percent: 'width:100%'}
-	];
-
-	$scope.sortOptions = [
-		{name: 'Newest First', icon_class: 'fa fa-sort-amount-asc pull-right', reverse: true},
-		{name: 'Oldest First', icon_class: 'fa fa-sort-amount-desc pull-right', reverse: false}
-	];
+	$scope.customerPanelOptions = CustomerPanelService.getCustomerPanelOptions();
+	$scope.statuses = CustomerPanelService.getCustomerPanelStatuses();
+	$scope.sortOptions = CustomerPanelService.getCustomerPanelSortOptions();
+	$scope.selectedOption = CustomerPanelService.getSelectedCustomerPanelOption();
+	$scope.selectedSortOption = CustomerPanelService.getSelectedCustomerPanelSortOption();
 
 	CustomerPanelService.getCartsForCustomer().then(function(carts){
 		if(carts && carts.length > 0){
@@ -33,15 +21,11 @@ angular.module('foodmashApp.controllers')
 			$scope.loadedCarts = null;
 			$scope.carts = null;
 		}
-		$scope.loadingCarts = false;
-		$scope.selectOption($scope.customerPanelOptions[0]);
-		$scope.selectSortOption($scope.sortOptions[1]);
+		applyCustomerPanelFilterIfSelected();
+		applySortFilterIfSelected();
 	}, function(err){
 		$scope.loadedCarts = null;
 		$scope.carts = null;
-		$scope.loadingCarts = false;
-		$scope.selectOption($scope.customerPanelOptions[0]);
-		$scope.selectSortOption($scope.sortOptions[1]);
 	});
 
 	$scope.load = function(){
@@ -58,20 +42,17 @@ angular.module('foodmashApp.controllers')
 				$scope.loadedCarts = null;
 				$scope.carts = null;
 			}
-			$scope.loadingCarts = false;
-			$scope.selectOption($scope.customerPanelOptions[0]);
-			$scope.selectSortOption($scope.sortOptions[1]);
+			applyCustomerPanelFilterIfSelected();
+			applySortFilterIfSelected();
 		}, function(err){
 			$scope.loadedCarts = null;
 			$scope.carts = null;
-			$scope.loadingCarts = false;
-			$scope.selectOption($scope.customerPanelOptions[0]);
-			$scope.selectSortOption($scope.sortOptions[1]);
 		});
     };
 
     $scope.selectSortOption = function(option){
     	$scope.selectedSortOption = option;
+    	CustomerPanelService.setSelectedCustomerPanelSortOption($scope.selectedSortOption);
     	applySortFilterIfSelected();
     };
 
@@ -84,26 +65,9 @@ angular.module('foodmashApp.controllers')
 
     $scope.selectOption = function(option){
     	$scope.selectedOption = option;
+    	CustomerPanelService.setSelectedCustomerPanelOption($scope.selectedOption);
     	$scope.selectedCart = {};
-    	switch(option.name){
-    		case 'Current': 
-    		if($scope.loadedCarts){
-    			var deliveredCarts = $filter('filter')($scope.loadedCarts, {aasm_state: 'delivered'}, true);
-    			$scope.carts = angular.copy($scope.loadedCarts);
-    			deliveredCarts.filter(function(cart){
-    				var index = $scope.carts.map(function(c) { return c.id; }).indexOf(cart.id);
-    				if(angular.isNumber(index) && index != -1){
-    					$scope.carts.splice(index, 1);
-    				}
-    			});
-    		}
-    		break;
-    		case 'Delivered': 
-    		if($scope.loadedCarts){
-    			$scope.carts = $filter('filter')($scope.loadedCarts, {aasm_state: 'delivered'}, true);
-    		}
-    		break;
-    	};
+    	applyCustomerPanelFilterIfSelected();
     	applySortFilterIfSelected();
     };
 
@@ -159,6 +123,30 @@ angular.module('foodmashApp.controllers')
 			price += oi.quantity * oi.item.price * order.quantity;
 		});
 		return price;
+	};
+
+	function applyCustomerPanelFilterIfSelected(){
+		if($scope.selectedOption){
+			switch($scope.selectedOption.name){
+				case 'Current': 
+				if($scope.loadedCarts){
+					var deliveredCarts = $filter('filter')($scope.loadedCarts, {aasm_state: 'delivered'}, true);
+					$scope.carts = angular.copy($scope.loadedCarts);
+					deliveredCarts.filter(function(cart){
+						var index = $scope.carts.map(function(c) { return c.id; }).indexOf(cart.id);
+						if(angular.isNumber(index) && index != -1){
+							$scope.carts.splice(index, 1);
+						}
+					});
+				}
+				break;
+				case 'Delivered': 
+				if($scope.loadedCarts){
+					$scope.carts = $filter('filter')($scope.loadedCarts, {aasm_state: 'delivered'}, true);
+				}
+				break;
+			};
+		}
 	};
 
 	function applySortFilterIfSelected(){

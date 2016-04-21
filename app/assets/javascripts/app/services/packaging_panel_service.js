@@ -7,6 +7,55 @@ angular.module('foodmashApp.services')
    var service = this;
    service.packaging_centre = {};
    service.cart = {};
+   service.packagingPanelOptions = [
+    {name: 'Current', icon_class: 'fa fa-inbox pull-right', checkout: 'Delivered'},
+    {name: 'Delivered', icon_class: 'fa fa-archive pull-right', checkout: 'Current'}
+  ];
+  service.selectedPackagingPanelOption = null;
+
+  service.statuses = [
+    {name: "purchased", alias: "Incoming Order", icon_class: "fa fa-clock-o", percent: 'width:0%'},
+    {name: "ordered", alias: "Placed Order with Restaurants", icon_class: "fa fa-dropbox", percent: 'width:35%'},
+    {name: "dispatched", alias: "Dispatched for Delivery", icon_class: "fa fa-truck", percent: 'width:65%'},
+    {name: "delivered", alias: "Delivered", icon_class: "fa fa-check-circle", percent: 'width:100%'}
+  ];
+
+  service.sortOptions = [
+    {name: 'Newest First', icon_class: 'fa fa-sort-amount-asc pull-right', reverse: true},
+    {name: 'Oldest First', icon_class: 'fa fa-sort-amount-desc pull-right', reverse: false}
+  ];
+  service.selectedSortOption = null;
+
+  service.getPackagingPanelSortOptions = function(){
+    return service.sortOptions;
+  };
+
+  service.getPackagingPanelStatuses = function(){
+    return service.statuses;
+  };
+
+  service.getPackagingPanelOptions = function(){
+    return service.packagingPanelOptions;
+  };
+
+  service.setSelectedPackagingPanelOption = function(selectedPackagingPanelOption){
+    service.selectedPackagingPanelOption = selectedPackagingPanelOption || service.packagingPanelOptions[0];
+  };
+
+  service.getSelectedPackagingPanelOption = function(selectedPackagingPanelOption){
+      return service.selectedPackagingPanelOption;
+  };
+
+  service.setSelectedSortOption = function(selectedSortOption){
+    service.selectedSortOption = selectedSortOption || service.sortOptions[0];
+  };
+
+  service.getSelectedSortOption = function(selectedSortOption){
+      return service.selectedSortOption;
+  };
+
+  service.setSelectedPackagingPanelOption(service.packagingPanelOptions[0]);
+  service.setSelectedSortOption(service.sortOptions[0]);
 
    service.getCartsForPanel = function(role){
       var d = $q.defer();
