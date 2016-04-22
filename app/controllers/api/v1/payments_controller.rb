@@ -1,7 +1,7 @@
 class Api::V1::PaymentsController < ApiApplicationController
  	respond_to :json
  	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
- 	before_filter :authenticate_user_from_token!
+ 	before_filter :authenticate_user_from_token!, except: [:success, :failure]
 	before_filter :set_current_cart
 	before_filter :apply_promo_or_mash_cash, only: [:purchase_by_cod, :success]
 
@@ -43,19 +43,19 @@ class Api::V1::PaymentsController < ApiApplicationController
 	end
 
 	def success
- 		if params.present? and @success and @cart.add_fields_from_payu(params) and @cart.purchase! and @current_user.award_mash_cash(check_for_promo_and_set(@cart))
-			render status: 200, json: {success: true, message: 'Cart was successfully processed!'}
+ 		if params.present? and @success and @cart.add_fields_from_payu(params) and @current_user.award_mash_cash(check_for_promo_and_set(@cart)) and @cart.purchase!
+			render 'mobile_success'
 		else
-			render status: 422, json: {success: false, error: 'Cart was not successfully processed!'}
+			render 'mobile_success'
 		end
  	end
 
  	def failure
  		if params.present? and @cart.add_fields_from_payu(params)
-			render status: 200, json: {success: true, message: 'Cart payment failed to process!'}
+			render 'mobile_failure'
 		else
-			render status: 422, json: {success: false, error: 'Cart payment failure was not processed!'}
-		end
+			render 'mobile_failure'
+		end	
  	end
 
  	def apply_promo_code
@@ -78,7 +78,7 @@ class Api::V1::PaymentsController < ApiApplicationController
 
 	def purchase_by_cod
 		return invalid_data unless params[:data][:payment_method]
-		if @success and @cart.set_payment_method('COD') and @cart.purchase! and @current_user.award_mash_cash(check_for_promo_and_set(@cart))
+		if @success and @cart.set_payment_method('COD') and @current_user.award_mash_cash(check_for_promo_and_set(@cart)) and @cart.purchase!
 			render status: 200, json: {success: true, data: {order_id: @cart.order_id, promo_discount: promo_discount}}
 		elsif @cart.set_payment_method('COD') and @cart.purchase! 
 			render status: 200, json: {success: true, data: {order_id: @cart.order_id}}
