@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419052443) do
+ActiveRecord::Schema.define(version: 20160419182523) do
 
   create_table "areas", force: :cascade do |t|
     t.string   "name"
@@ -81,12 +81,11 @@ ActiveRecord::Schema.define(version: 20160419052443) do
   create_table "combo_options", force: :cascade do |t|
     t.string   "name"
     t.integer  "combo_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.text     "description"
     t.integer  "priority"
-    t.integer  "min_count",   default: 1
-    t.boolean  "compulsory",  default: false
+    t.integer  "min_count",   default: 0
   end
 
   create_table "combos", force: :cascade do |t|

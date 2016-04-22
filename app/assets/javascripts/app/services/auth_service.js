@@ -8,7 +8,7 @@ angular.module('foodmashApp.services')
    service._user = null;
    service.auth_token = null;
    
-   this.setCurrentUser = function(u, auth_token){
+   service.setCurrentUser = function(u, auth_token){
      u.auth_token = auth_token;
      service._user = u;
      $cookieStore.put('user', u);
@@ -18,7 +18,7 @@ angular.module('foodmashApp.services')
      $rootScope.$broadcast("auth_token:set", auth_token);
    };
 
-   this.updateCurrentUser = function(u){
+   service.updateCurrentUser = function(u){
       var old_user = service._user;
       if(u && old_user && old_user != u){
         service._user = u;
@@ -28,7 +28,7 @@ angular.module('foodmashApp.services')
       }
    };
 
-   this.removeCurrentUser = function(){
+   service.removeCurrentUser = function(){
      service._user = null;
      $cookieStore.remove('user');
      $cookieStore.remove('auth_token');
@@ -37,7 +37,7 @@ angular.module('foodmashApp.services')
      $rootScope.$broadcast("auth_token:unset");
    };
    
-   this.currentUser = function(){
+   service.currentUser = function(){
      var d = $q.defer();
      if(service._user) {
        d.resolve(service._user);

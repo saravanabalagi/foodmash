@@ -6,7 +6,7 @@ angular.module('foodmashApp.services')
 
 	var service = this;
 
-	this.authorizeRouteForSuperAdmin = function(){
+	service.authorizeRouteForSuperAdmin = function(){
 		var d = $q.defer();
 		var check = false;
 		if($rootScope.currentUser && $rootScope.currentUser.roles){
@@ -29,7 +29,7 @@ angular.module('foodmashApp.services')
 		return d.promise;
 	};
 
-	this.authorizeRouteForPackagingCentreAdmin = function(){
+	service.authorizeRouteForPackagingCentreAdmin = function(){
 		var d = $q.defer();
 		var check = false;
 		if($rootScope.currentUser && $rootScope.currentUser.roles){
@@ -52,7 +52,7 @@ angular.module('foodmashApp.services')
 		return d.promise;
 	};
 
-	this.authorizeRouteForRestaurantAdmin = function(){
+	service.authorizeRouteForRestaurantAdmin = function(){
 		var d = $q.defer();
 		var check = false;
 		if($rootScope.currentUser && $rootScope.currentUser.roles){
@@ -75,7 +75,7 @@ angular.module('foodmashApp.services')
 		return d.promise;
 	};
 
-	this.authorizeRouteForCustomer = function(){
+	service.authorizeRouteForCustomer = function(){
 		var d = $q.defer();
 		var check = false;
 		if($rootScope.currentUser && $rootScope.currentUser.roles){
@@ -98,7 +98,7 @@ angular.module('foodmashApp.services')
 		return d.promise;
 	};
 
-	this.checkForLogin = function(){
+	service.checkForLogin = function(){
 		var d = $q.defer();
 		if($rootScope.currentUser){
 			d.resolve(null);

@@ -85,6 +85,10 @@ angular.module('foodmashApp.directives')
         }
       };
 
+      $scope.floatToInt = function(value){
+        return value | 0;
+      };
+
       function hasRole(name){
         var check = false;
         $scope.currentUser.roles.filter(function(role){

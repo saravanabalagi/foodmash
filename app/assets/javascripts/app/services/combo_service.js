@@ -9,7 +9,7 @@ angular.module('foodmashApp.services')
    service.dish_types = [];
    service.packaging_centre_id = {};
 
-   this.getRestaurantsForCombo = function(packaging_centre_id){
+   service.getRestaurantsForCombo = function(packaging_centre_id){
       var d = $q.defer();
       if(service.packaging_centre_id != packaging_centre_id){
         Restaurant.query({packaging_centre_id: packaging_centre_id}).then(function(restaurants){
@@ -33,7 +33,7 @@ angular.module('foodmashApp.services')
       return d.promise;
     };
 
-    this.getDishTypesForCombo = function(){
+    service.getDishTypesForCombo = function(){
       var d = $q.defer();
       if(!service.dish_types.length){
         DishType.query().then(function(dish_types){

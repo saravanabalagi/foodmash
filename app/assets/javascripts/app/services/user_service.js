@@ -3,9 +3,11 @@
 angular.module('foodmashApp.services')
 
  .service('UserService', ['$rootScope', '$q', '$cookieStore', '$http', 'AuthService', function($rootScope, $q, $cookieStore, $http, AuthService) {
-      this.currentUser = AuthService.currentUser;
+      
+      var service = this;     
+      service.currentUser = AuthService.currentUser;
 
-      this.login = function(params) {
+      service.login = function(params) {
         var d = $q.defer();
         $http({
           url: '/users/sign_in',
@@ -16,7 +18,7 @@ angular.module('foodmashApp.services')
         }).success(function(response) { 
           if(response.success) {
             var user = response.data.user;
-            var auth_token = response.data.auth_token; // talk about this
+            var auth_token = response.data.auth_token; 
             AuthService.setCurrentUser(user, auth_token);
             d.resolve(user);
           } else {
@@ -28,7 +30,7 @@ angular.module('foodmashApp.services')
         return d.promise;
       };
 
-      this.logout = function() {
+      service.logout = function() {
         var d = $q.defer();
         $http({
           url: '/users/sign_out',
@@ -42,7 +44,7 @@ angular.module('foodmashApp.services')
         return d.promise;
       };
 
-      this.signup = function(params) {
+      service.signup = function(params) {
         var d = $q.defer();
         $http({
           url: '/users',

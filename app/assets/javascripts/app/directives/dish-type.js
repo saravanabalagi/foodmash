@@ -36,14 +36,16 @@ angular.module('foodmashApp.directives')
 
 			$scope.deleteDishType = function(dish_type){
 				var d = $q.defer();
-				dish_type.delete().then(function(response){
-					$scope.dish_types.splice($scope.dish_types.indexOf(dish_type), 1);
-					toaster.pop('success', 'Dish Type was succussfully deleted!');
-					d.resolve(response);
-				}, function(err){
-					toaster.pop('error', 'Dish Type was not deleted!');
-					d.reject(err);
-				});
+				if(confirm('Are you sure ?')){
+					dish_type.delete().then(function(response){
+						$scope.dish_types.splice($scope.dish_types.indexOf(dish_type), 1);
+						toaster.pop('success', 'Dish Type was succussfully deleted!');
+						d.resolve(response);
+					}, function(err){
+						toaster.pop('error', 'Dish Type was not deleted!');
+						d.reject(err);
+					});
+				}
 				return d.promise;
 			};
 

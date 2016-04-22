@@ -9,18 +9,10 @@ angular.module('foodmashApp.controllers')
 	$scope.next_status = {};
     $scope.elapsedTime = null;
     $scope.timer = null;
-    $scope.packagingOrderOptions = [
-		{name: 'Current', icon_class: 'fa fa-inbox pull-right', checkout: 'Delivered'},
-		{name: 'Delivered', icon_class: 'fa fa-archive pull-right', checkout: 'Current'}
-	];
 	$scope.packaging_centre_orders = [];
+    $scope.packagingOrderOptions = PackagingPanelService.getPackagingPanelOptions();
 
-	$scope.statuses = [
-		{name: "purchased", alias: "Placed Order", icon_class: "fa fa-clock-o", percent: 'width:15%'},
-		{name: "ordered", alias: "Being Aggregated", icon_class: "fa fa-dropbox", percent: 'width:45%'},
-		{name: "dispatched", alias: "Dispatched for Delivery", icon_class: "fa fa-truck", percent: 'width:80%'},
-		{name: "delivered", alias: "Delivered", icon_class: "fa fa-check-circle", percent: 'width:100%'}
-	];
+	$scope.statuses = PackagingPanelService.getPackagingPanelStatuses();
 
 	PackagingPanelService.getPackagingCentreOrder().then(function(cart){
 		$scope.cart = cart;
