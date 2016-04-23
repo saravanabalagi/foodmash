@@ -2,7 +2,7 @@ class Web::CombosController < ApplicationController
 	respond_to :json
 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
 	before_action :get_combo, only: [:update, :destroy]
-	load_and_authorize_resource skip_load_resource except: [:get_combo_availability]
+	load_and_authorize_resource skip_load_resource except: [:load_from_packaging_centre, :get_combo_availability]
 
 	def index
 		@combos = Combo.where(params.permit(:id, :name, :packaging_centre_id)).order("price ASC").where(archive: false)
@@ -49,6 +49,7 @@ class Web::CombosController < ApplicationController
 
 	def load_from_packaging_centre
 		@loadedFromPackagingCentre = Combo.where(params.permit(:id, :name, :packaging_centre_id)).where(active: true).order("price ASC").as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name, :logo]}}, only: [:id, :name, :price, :description, :picture, :label]} } , only: :id} }, only: [:id, :min_count]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name, :logo]}}, only: [:id, :name, :description, :price, :picture, :label]} }, only: [:id, :min_count] } } ], only: [:name, :price, :id, :description, :available, :active, :picture, :label, :group_size, :category, :customizable])
+		user = User.find_by(params[:auth_user_token]) if params[:auth_user_token]
 		hash = Digest::SHA1.hexdigest(@loadedFromPackagingCentre.to_s)
 		if @loadedFromPackagingCentre
 			render status: 200, json: 
@@ -57,7 +58,7 @@ class Web::CombosController < ApplicationController
 				{
 					combos: @loadedFromPackagingCentre, 
 					hash: hash,
-					user: @current_user.as_json(:include => {:roles => {:include => :resource}})
+					user: user.as_json(:include => {:roles => {:include => :resource}})
 				}
 			}
 		else
