@@ -12,7 +12,7 @@ angular.module('foodmashApp.interceptors', [])
          AuthService.currentUser().then(function(user) {
            if(user && req.url != "https://foodmash-india.s3.amazonaws.com/" && req.url != "https://test.payu.in/_payment"){
              req.params = req.params || {};
-             req.params['auth_token'] = req.params['auth_token'] || user.auth_token;
+             req.params['auth_token'] = req.params['auth_token'] || $rootScope.auth_token;
              req.params['auth_user_token'] = req.params['auth_user_token'] || user.user_token;
              d.resolve(req);
            } else {

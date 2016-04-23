@@ -9,18 +9,20 @@ angular.module('foodmashApp.services')
    service.auth_token = null;
    
    service.setCurrentUser = function(u, auth_token){
-     u.auth_token = auth_token;
-     service._user = u;
-     $cookieStore.put('user', u);
-     $cookieStore.put('auth_token', auth_token);
-     $rootScope.currentUser = u;
-     $rootScope.$broadcast("user:set", u);
-     $rootScope.$broadcast("auth_token:set", auth_token);
+    if(u && auth_token && u.id){
+         $rootScope.auth_token = auth_token;
+         service._user = u;
+         $cookieStore.put('user', u);
+         $cookieStore.put('auth_token', auth_token);
+         $rootScope.currentUser = u;
+         $rootScope.$broadcast("user:set", u);
+         $rootScope.$broadcast("auth_token:set", auth_token);
+    }
    };
 
    service.updateCurrentUser = function(u){
       var old_user = service._user;
-      if(u && old_user && old_user != u){
+      if(u && old_user && old_user.id && u.id && old_user != u){
         service._user = u;
         $cookieStore.put('user', service._user);
         $rootScope.currentUser = u;

@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('CustomerPanelController', ['$scope','$location','toaster','$rootScope','Cart', 'CustomerPanelService', '$filter', function($scope, $location, toaster, $rootScope, Cart, CustomerPanelService, $filter){
+.controller('CustomerPanelController', ['$scope','$location','toaster','$rootScope','Cart', 'CustomerPanelService', '$filter', 'ProfileService', 'AuthService', function($scope, $location, toaster, $rootScope, Cart, CustomerPanelService, $filter, ProfileService, AuthService){
 
 	$scope.carts = [];
 	$scope.selectedCart = CustomerPanelService.getSelectedCustomerPanelCart();
@@ -13,6 +13,11 @@ angular.module('foodmashApp.controllers')
 	$scope.selectedOption = CustomerPanelService.getSelectedCustomerPanelOption();
 	$scope.selectedSortOption = CustomerPanelService.getSelectedCustomerPanelSortOption();
 	getSuitableStatus($scope.selectedCart);
+
+	ProfileService.loadUserForProfile().then(function(user){
+	  	AuthService.updateCurrentUser(user);
+	}, function(err){
+	});
 
 	CustomerPanelService.getCartsForCustomer().then(function(carts){
 		if(carts && carts.length > 0){
