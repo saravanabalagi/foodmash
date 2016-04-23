@@ -8,6 +8,7 @@ angular.module('foodmashApp.services')
    service.carts = [];
    service.selectedCustomerPanelOption = null;
    service.selectedCustomerPanelSortOption = null;
+   service.selectedCustomerPanelCart = null;
    service.customerPanelOptions = [
     {name: 'Current', icon_class: 'fa fa-inbox pull-right', checkout: 'Delivered'},
     {name: 'Delivered', icon_class: 'fa fa-archive pull-right', checkout: 'Current'}
@@ -19,11 +20,19 @@ angular.module('foodmashApp.services')
   ];
 
   service.statuses = [
-    {name: "purchased", alias: "Placed Order", icon_class: "fa fa-clock-o", percent: 'width:0%'},
-    {name: "ordered", alias: "Being Aggregated", icon_class: "fa fa-dropbox", percent: 'width:35%'},
-    {name: "dispatched", alias: "Dispatched for Delivery", icon_class: "fa fa-truck", percent: 'width:65%'},
+    {name: "purchased", alias: "Placed Order", icon_class: "fa fa-clock-o", percent: 'width:15%'},
+    {name: "ordered", alias: "Being Aggregated", icon_class: "fa fa-dropbox", percent: 'width:45%'},
+    {name: "dispatched", alias: "Dispatched for Delivery", icon_class: "fa fa-truck", percent: 'width:75%'},
     {name: "delivered", alias: "Delivered", icon_class: "fa fa-check-circle", percent: 'width:100%'}
   ];
+
+  service.getSelectedCustomerPanelCart = function(){
+      return service.selectedCustomerPanelCart;
+  };
+
+  service.setSelectedCustomerPanelCart = function(selectedCart){
+      service.selectedCustomerPanelCart = selectedCart;
+  };  
 
   service.getCustomerPanelOptions = function(){
       return service.customerPanelOptions;

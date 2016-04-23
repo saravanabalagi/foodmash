@@ -5,13 +5,14 @@ angular.module('foodmashApp.controllers')
 .controller('CustomerPanelController', ['$scope','$location','toaster','$rootScope','Cart', 'CustomerPanelService', '$filter', function($scope, $location, toaster, $rootScope, Cart, CustomerPanelService, $filter){
 
 	$scope.carts = [];
-	$scope.selectedCart = {};
+	$scope.selectedCart = CustomerPanelService.getSelectedCustomerPanelCart();
 	$scope.selectedStatus = {};
 	$scope.customerPanelOptions = CustomerPanelService.getCustomerPanelOptions();
 	$scope.statuses = CustomerPanelService.getCustomerPanelStatuses();
 	$scope.sortOptions = CustomerPanelService.getCustomerPanelSortOptions();
 	$scope.selectedOption = CustomerPanelService.getSelectedCustomerPanelOption();
 	$scope.selectedSortOption = CustomerPanelService.getSelectedCustomerPanelSortOption();
+	getSuitableStatus($scope.selectedCart);
 
 	CustomerPanelService.getCartsForCustomer().then(function(carts){
 		if(carts && carts.length > 0){
@@ -67,12 +68,20 @@ angular.module('foodmashApp.controllers')
     	$scope.selectedOption = option;
     	CustomerPanelService.setSelectedCustomerPanelOption($scope.selectedOption);
     	$scope.selectedCart = {};
+    	CustomerPanelService.setSelectedCustomerPanelCart(null);
     	applyCustomerPanelFilterIfSelected();
     	applySortFilterIfSelected();
     };
 
-    $scope.checkIfSelected = function(option){
+    $scope.checkIfOptionSelected = function(option){
     	if(option == $scope.selectedOption){
+    		return true;
+    	}
+    	return false;
+    };
+
+    $scope.checkIfCartSelected = function(cart){
+    	if(cart && $scope.selectedCart && cart.id && $scope.selectedCart.id && cart.id == $scope.selectedCart.id){
     		return true;
     	}
     	return false;
@@ -87,7 +96,8 @@ angular.module('foodmashApp.controllers')
 
 	$scope.selectCart = function(cart){
 		$scope.selectedCart = cart;
-		getSuitableStatus(cart.aasm_state);
+		CustomerPanelService.setSelectedCustomerPanelCart($scope.selectedCart);
+		getSuitableStatus($scope.selectedCart);
 		angular.element(document).ready(function (){
 			new WOW().init();
 			$('[data-toggle="tooltip"]').tooltip();
@@ -156,9 +166,9 @@ angular.module('foodmashApp.controllers')
     	}
 	};
 
-	function getSuitableStatus(status){
+	function getSuitableStatus(cart){
 		$scope.statuses.filter(function(s){
-			if(s.name == status){
+			if(cart && cart.aasm_state && s.name == cart.aasm_state){
 				$scope.selectedStatus = s;
 			}
 		});
