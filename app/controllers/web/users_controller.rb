@@ -7,7 +7,7 @@ class Web::UsersController < ApplicationController
 	def index
 		@users = User.where(params.permit(:id, :email))
 		if @users
-			render status: 200, json: @users.as_json(:include => {:roles => {:include => :resource}}, only: [:name, :email, :mobile_no, :id, :user_token])
+			render status: 200, json: @users.as_json(:include => {:roles => {:include => :resource}})
 		else
 			render status: 404, json: {error: "User not found!"}
 		end
@@ -16,7 +16,7 @@ class Web::UsersController < ApplicationController
 	def find_by_email
 		@users = User.search_by_email(params[:email])
 		if @users
-			render status: 200, json: @users.as_json(:include => {:roles => {:include => :resource}}, only: [:name, :email, :mobile_no, :id])
+			render status: 200, json: @users.as_json(:include => {:roles => {:include => :resource}})
 		else
 			render status: 404, json: {error: "User not found!"}
 		end

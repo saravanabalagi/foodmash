@@ -249,7 +249,7 @@ angular.module('foodmashApp.controllers')
 	};
 
 	function refreshCartAndSelectDelAdd(){
-		$location.path('/');
+		$location.path('/customerPanel');
 		CartService.refreshCart();
 		setPrimaryAsDeliveryAddress();
 	};

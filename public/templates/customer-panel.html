@@ -3,7 +3,7 @@
       <section class="sidebar-section">
         <h5>Order History</h5>
         <ul class="sidebar-nav group-size">
-          <li ng-repeat="option in customerPanelOptions" ng-click="selectOption(option)" ng-class="{'active' : checkIfSelected(option)}">
+          <li ng-repeat="option in customerPanelOptions" ng-click="selectOption(option)" ng-class="{'active' : checkIfOptionSelected(option)}">
             <a>
               <span>{{option.name}}</span>
               <i class="{{option.icon_class}}"></i>
@@ -58,8 +58,8 @@
           </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="cart in carts" ng-click="selectCart(cart)" ng-class="{'active' : selectedCart == cart}">
-            <td><i class="{{getStatusIcon(cart.aasm_state)}}" data-toggle="tooltip" title="{{getStatusAlias(cart.aasm_state)}}" data-delay="{'show': 1}" data-placement="left"></i></td>
+          <tr ng-repeat="cart in carts" ng-click="selectCart(cart)" ng-class="{'active' : checkIfCartSelected(cart)}">
+            <td><i class="{{getStatusIcon(cart.aasm_state)}}" data-toggle="tooltip" title="{{getStatusAlias(cart.aasm_state)}}" data-delay="{'show': 1}" data-placement="right"></i></td>
             <td>{{cart.order_id}}</td>
             <td>{{cart.grand_total}}</td>
             <td>{{cart.purchased_at | date: 'MMM dd, yyyy HH:mm'}}</td>
@@ -87,7 +87,7 @@
           <span class="order-date"><span class="order-time">{{selectedCart.purchased_at | date: 'MMM dd, yyyy HH:mm'}}</span></span>
           <span class="order-amount-wrapper">
             <span class="order-amount">{{selectedCart.grand_total}}</span>
-            <i class="fa fa-question-circle" title="Payment Method" data-placement="bottom" data-content="Credit Card ending with x574" data-toggle="popover" data-trigger="hover"></i>
+            <i class="fa fa-question-circle" title="Payment Method" data-placement="bottom" data-content="{{selectedCart.payment_method}}" data-toggle="popover" data-trigger="hover"></i>
           </span>
         </div>
         <div class="order-contents">

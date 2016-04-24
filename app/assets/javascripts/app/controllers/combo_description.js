@@ -115,7 +115,7 @@ angular.module('foodmashApp.controllers')
 			pushDefaultComboOption($scope.combo);
 			toaster.pop('success', 'Added to cart!');
 		}else{
-			toaster.pop('error', 'Please select one more dish!');
+			toaster.pop('error', 'Please select one more dish from another tab!');
 		}
 	};
 

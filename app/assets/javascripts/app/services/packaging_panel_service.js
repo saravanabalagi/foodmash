@@ -14,9 +14,9 @@ angular.module('foodmashApp.services')
   service.selectedPackagingPanelOption = null;
 
   service.statuses = [
-    {name: "purchased", alias: "Incoming Order", icon_class: "fa fa-clock-o", percent: 'width:0%'},
-    {name: "ordered", alias: "Placed Order with Restaurants", icon_class: "fa fa-dropbox", percent: 'width:35%'},
-    {name: "dispatched", alias: "Dispatched for Delivery", icon_class: "fa fa-truck", percent: 'width:65%'},
+    {name: "purchased", alias: "Incoming Order", icon_class: "fa fa-clock-o", percent: 'width:15%'},
+    {name: "ordered", alias: "Placed Order with Restaurants", icon_class: "fa fa-dropbox", percent: 'width:45%'},
+    {name: "dispatched", alias: "Dispatched for Delivery", icon_class: "fa fa-truck", percent: 'width:75%'},
     {name: "delivered", alias: "Delivered", icon_class: "fa fa-check-circle", percent: 'width:100%'}
   ];
 
