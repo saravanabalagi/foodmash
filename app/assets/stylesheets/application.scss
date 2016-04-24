@@ -62,6 +62,17 @@ $ambiguous-violet: #822fe6;
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000', GradientType=0 );
 }
 
+@mixin white-fading-overlay-bg {
+  background: rgba(0,0,0,0);
+  background: -moz-linear-gradient(top, rgba(255,255,255,0.9) 0%, rgba(0,0,0,0) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255,255,255,0.9)), color-stop(100%, rgba(0,0,0,0)));
+  background: -webkit-linear-gradient(top, rgba(255,255,255,0.9) 0%, rgba(0,0,0,0) 100%);
+  background: -o-linear-gradient(top, rgba(255,255,255,0.9) 0%, rgba(0,0,0,0) 100%);
+  background: -ms-linear-gradient(top, rgba(255,255,255,0.9) 0%, rgba(0,0,0,0) 100%);
+  background: linear-gradient(to bottom, rgba(255,255,255,0.9) 0%, rgba(0,0,0,0) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000', GradientType=0 );
+}
+
 @font-face {
   font-family: 'Segoe UI';
   src: font-url("segoeui/segoeui.eot");
@@ -743,7 +754,7 @@ footer {
         }
       }
     }
-    > img {
+    .combo-image {
       position: absolute;
       left: 50%;
       top: 50%;
@@ -779,11 +790,6 @@ footer {
       }
     }
 
-  }
-}
-@media(min-width: 991px) and (max-width:1199px) {
-  .thumbnail.combo-card .caption p:last-child a.btn {
-    padding: 5px;
   }
 }
 /*CSS for index*/
@@ -1465,68 +1471,6 @@ footer {
 /*CSS for sidebar ends*/
 
 /*CSS for combo-description begins*/
-.thumbnail.combo-option,
-.thumbnail.combo-dish {
-  padding: 0;
-  -webkit-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.1);
-  -ms-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.1);
-  .caption {
-    padding: 15px;
-    > h4 {
-      > * { display: inline-block; }
-      > i.icon-label {
-        -webkit-transform: translateY(2px);
-        -moz-transform: translateY(2px);
-        -ms-transform: translateY(2px);
-        -o-transform: translateY(2px);
-        transform: translateY(2px);
-      }
-    }
-    > p {
-      font-size: 13px;
-      &:last-child {
-        text-align: right;
-        position: absolute;
-        margin: 0;
-        bottom: 0;
-        left: 15px;
-        right: 15px;
-        &:before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          width: 100%;
-          height: 1px;
-          background-color: rgba(0, 0, 0, 0.1);
-        }
-      }
-    }
-  }
-  .restaurant-logo-wrapper {
-    float: left;
-    padding: 10px;
-    > .restaurant-logo {
-      width: auto;
-      height: 30px;
-    }
-  }
-  .quantity-counter {
-    display: inline-block;
-    padding: 15px;
-    > a.btn-fab.btn-fab-nano i {
-      -webkit-transform: translate(-6px,-7px);
-      -moz-transform: translate(-6px,-7px);
-      -ms-transform: translate(-6px,-7px);
-      transform: translate(-6px,-7px);
-    }
-    .quantity { padding: 0px 5px; vertical-align: middle }
-  }
-}
-
 .combo-option-row {
   font-size: 0;
   margin-bottom: 20px;
@@ -1545,6 +1489,11 @@ footer {
     max-width: 33.33333%;
     overflow: hidden;
     .thumbnail.combo-option {
+      padding: 0;
+      -webkit-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.1);
+      -moz-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.1);
+      -ms-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.1);
       &.selected .caption { .btn-select-combo-option { display: none; } }
       &:not(.selected) {
         &:before {
@@ -1562,7 +1511,7 @@ footer {
         position: relative;
         width: 100%;
         overflow: hidden;
-        > img {
+        > .combo-option-dish-image {
           position: absolute;
           left: 50%;
           top: 50%;
@@ -1572,43 +1521,92 @@ footer {
           -ms-transform: translate(-50%,-50%);
           transform: translate(-50%,-50%);
         }
+        .top-overlay {
+          @include white-fading-overlay-bg;
+          position: absolute;
+          top: 0; left: 0; right: 0;
+          width: 100%; height: 40%;
+          .restaurant-logo {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            width: auto;
+            height: 30px;
+          }
+        }
+        .combo-option-price {
+          .rupee { font-size: 12px; }
+          font-family: "Myriad Pro";
+          padding: 5px 15px;
+          position: absolute;
+          top: 0;
+          left: 10px;
+          z-index: 2;
+          background-color: #333;
+          box-shadow: 0 1px 5px 1px rgba(0,0,0,0.2);
+          color: #f5f5f5;
+          border-bottom-left-radius: 7px;
+          border-bottom-right-radius: 7px;
+        }
+        .bottom-overlay {
+          position: absolute;
+          bottom: 0; right: 0; left: 0;
+          height: 60%; width: 100%;
+          border-bottom-right-radius: 4px;
+          border-bottom-left-radius: 4px;
+          @include black-fading-overlay-bg;
+          .bottom-bar {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 10px;
+            .combo-option-name {
+              i.icon-label {
+                transform: translateY(2px);
+                display: inline-block;
+              }
+              padding-left: 5px;
+              padding-right: 5px;
+              color: white;
+              margin-right: 70px;
+              font-size: 18px;
+            }
+            .quantity-counter-wrapper {
+              position: absolute;
+              padding: inherit;
+              right: 0;
+              top: 0;
+              bottom: 0;
+              height: 100%;
+              .quantity-counter {
+                position: relative;
+                top: 50%;
+                -webkit-transform: translateY(-50%);
+                -moz-transform: translateY(-50%);
+                -ms-transform: translateY(-50%);
+                transform: translateY(-50%);
+                > * { display: inline-block; vertical-align: middle; }
+                font-size: 13px;
+                .quantity {
+                  color: white;
+                  font-size: 17px;
+                  padding-left: 5px;
+                  padding-right: 5px;
+                }
+                a.btn-fab.btn-fab-nano i {
+                  -webkit-transform: translate(-6px,-7px);
+                  -moz-transform: translate(-6px,-7px);
+                  -ms-transform: translate(-6px,-7px);
+                  transform: translate(-6px,-7px);
+                }
+              }
+            }
+          }
+        }
       }
       margin-bottom: 5px;
       position: relative;
-      .caption {
-        margin-bottom: 40px;
-        .btn-select-combo-option { position: absolute; }
-        .btn-add-extra { float: right; }
-      }
     }
-  }
-}
-
-.thumbnail.combo-dish {
-  clear: both;
-  overflow: auto;
-  > .img-wrapper {
-    position: relative;
-    width: 320px;
-    height: 240px;
-    overflow: hidden;
-    float: left;
-    > img {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      height: 100%;
-      width: auto;
-      -webkit-transform: translate(-50%,-50%);
-      -ms-transform: translate(-50%,-50%);
-      transform: translate(-50%,-50%);
-    }
-  }
-  .caption {
-    height: 240px;
-    margin-left: 320px;
-    padding-bottom: 55px;
-    position: relative;
   }
 }
 
@@ -1616,19 +1614,6 @@ footer {
   .combo-option-row {
     .combo-option-wrapper {
       max-width: inherit;
-    }
-  }
-  .thumbnail.combo-dish {
-    overflow: inherit;
-    position: relative;
-    > .img-wrapper {
-      float: none;
-      width: 100%;
-    }
-    .caption {
-      position: static;
-      height: auto;
-      margin-left: 0;
     }
   }
 }
