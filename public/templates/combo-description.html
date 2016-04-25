@@ -1,6 +1,9 @@
 <div class="container" ng-init="load()">
-  <div class="combo-option-row" ng-repeat="combo_option in combo.combo_options | orderBy: 'priority'">
-    <div class="combo-option-wrapper" ng-repeat="combo_option_dish in combo_option.combo_option_dishes">
+  <div class="combo-option-tabs row">
+    <div class="tab" ng-repeat="combo_option in combo.combo_options | orderBy: 'priority'">{{combo_option.name}}</div>
+  </div>
+  <div class="combo-option-contents row" ng-repeat="combo_option in combo.combo_options | orderBy: 'priority'">
+    <div class="combo-option-wrapper col-md-4 col-sm-6" ng-repeat="combo_option_dish in combo_option.combo_option_dishes">
       <div class="thumbnail combo-option selected">
         <div class="img-wrapper">
           <img class="combo-option-dish-image" src="{{combo_option_dish.dish.picture}}">

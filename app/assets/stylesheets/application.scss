@@ -1474,23 +1474,47 @@ footer {
 /*CSS for sidebar ends*/
 
 /*CSS for combo-description begins*/
-.combo-option-row {
-  font-size: 0;
-  margin-bottom: 20px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-  text-align: center;
-  > *:not(:first-child) { padding-left: 5px; }
-  > *:not(:last-child) { padding-right: 5px; }
-  .combo-option-wrapper {
-    white-space: normal;
-    text-align: left;
+.combo-option-tabs {
+  &:after {
     display: inline-block;
-    font-size: 15px;
     width: 100%;
-    max-width: 33.33333%;
-    overflow: hidden;
+    position: absolute;
+    height: 1px;
+    background-color: rgba(0,0,0,0.2);
+    left: 0;
+    bottom: -1px;
+    right: 0;
+  }
+  position: relative;
+  text-align: center;
+  margin-bottom: 20px;
+  .tab {
+    &.active {
+      &:hover {
+        color: #111111;
+        border-bottom: 3px solid $logo-red;
+      }
+      color: #111111;
+      border-bottom: 3px solid $logo-red;
+    }
+    &:hover {
+      color: #555555;
+      border-bottom: 3px solid $mild-blue-dark;
+    }
+    color: #999999;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 10px 20px;
+    display: inline-block;
+    vertical-align: middle;
+    transition: all 0.3s ease-in-out;
+    border-bottom: 3px solid transparent;
+  }
+}
+.combo-option-contents {
+  .combo-option-wrapper {
+    margin-top: 10px;
+    margin-bottom: 10px;
     .thumbnail.combo-option {
       padding: 0;
       -webkit-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.1);
