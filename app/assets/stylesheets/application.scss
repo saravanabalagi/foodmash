@@ -1474,6 +1474,24 @@ footer {
 /*CSS for sidebar ends*/
 
 /*CSS for combo-description begins*/
+.cart-view-row {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  .cart-view {
+    padding: 20px;
+    position: relative;
+    background-color: #555;
+    border-radius: 15px;
+    color: white;
+    .combo-contents { font-size: 13px; }
+    .combo-name { margin-right: 50px; }
+    .combo-price {
+      padding: inherit;
+      position: absolute;
+      top: 0; right: 0;
+    }
+  }
+}
 .combo-option-tabs {
   &:after {
     display: inline-block;
