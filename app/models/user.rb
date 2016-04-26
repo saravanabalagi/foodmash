@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   delegate :can?, :cannot?, to: :ability
 
   has_many :contact_us
+  has_many :sent_invitations, as: :sender
+  belongs_to :invitation
   has_and_belongs_to_many :promos, :join_table => "promos_users"
   has_many :carts
   has_many :sessions
@@ -16,7 +18,9 @@ class User < ActiveRecord::Base
   validates :name, length: {minimum: 2}
   validates :email, format: {with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/}, uniqueness: true
   validates :mobile_no, presence: true, length: {is: 10}, numericality: {only_integer: true}, uniqueness: true
+  validates :invitation_id, uniqueness: true, allow_nil: true
   before_create :generate_user_token
+  before_create :set_invitation_limit
   after_create :assign_default_role
 
   def ability
@@ -75,8 +79,20 @@ class User < ActiveRecord::Base
         return false
       end
   end
+
+  def invitation_token
+    invitation.token if invitation
+  end
+
+  def invitation_token=(token)
+    self.invitation = Invitation.find_by(token: token)
+  end
   
   private
+
+  def set_invitation_limit
+    self.invitation_limit = 5
+  end
 
   def assign_default_role
     self.add_role(:customer)

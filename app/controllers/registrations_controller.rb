@@ -52,7 +52,7 @@ end
 
 	private 
 		def sign_up_params
-			params.require(:user).permit(:name, :email, :password, :password_confirmation, :mobile_no)
+			params.require(:user).permit(:name, :email, :password, :password_confirmation, :mobile_no, :invitation_token)
 		end
 
 		def update_params

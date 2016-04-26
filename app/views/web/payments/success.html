@@ -3,19 +3,9 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" >	
 
-			function AndroidSuccess(input, orderId) { PayU.onSuccess(input, orderId); }	
-            
-    		var orderId = assign_order_id_string;
-            var result = 
-            "<?php \
-            	$result=''; \
-        		foreach($_POST as $key=> $value) \
-        			$result .= $key . '=' . $value . ','; \
-    			$result = rtrim($result , ','); \
-    			echo $result; \
-    		?>";
-
-			AndroidSuccess(result, orderId);
+		window.setTimeout(function() {
+		    window.location.href = 'http://localhost:3000/customerPanel';
+		}, 2000);
 
 		</script>
 		<style>

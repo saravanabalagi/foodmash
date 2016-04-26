@@ -3,18 +3,9 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" >	
 
-			function AndroidFailure(input) { PayU.onFailure(input); }	
-            
-            var result = 
-            "<?php \
-            	$result=''; \
-        		foreach($_POST as $key=> $value) \
-        			$result .= $key . '=' . $value . ','; \
-    			$result = rtrim($result , ','); \
-    			echo $result; \
-    		?>";
-
-			AndroidFailure(result);
+		window.setTimeout(function(){
+		    window.location.href = 'http://localhost:3000/cart';
+		}, 2000);
 
 		</script>
 		<style>
