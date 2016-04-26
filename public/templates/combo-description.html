@@ -1,71 +1,40 @@
 <div class="container" ng-init="load()">
-
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2" ng-repeat="combo_dish in combo.combo_dishes | orderBy: 'priority'">
-      <div class="thumbnail combo-dish">
-        <div class="img-wrapper">
-          <img src="{{combo_dish.dish.picture}}">
-        </div>
-        <div class="caption">
-          <h4>
-            <i class="icon-label {{getLabelClass(combo_dish.dish.label)}}"></i>
-            <span>{{combo_dish.dish.name}}</span>
-          </h4>
-          <p>{{combo_dish.dish.description}}</p>
-          <p>
-
-
-
-            <span class="restaurant-logo-wrapper">
-              <img class="restaurant-logo" src="{{combo_dish.dish.restaurant.logo}}">
-            </span>
-
-
-
-
-            <span class="quantity-counter">
-              <a ng-click="removeComboDish(combo_dish)" class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="material-icons">remove</i> </a>
-              <span class="quantity">{{combo_dish.quantity}}</span>
-              <a ng-click="addComboDish(combo_dish)" class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="material-icons">add</i> </a>
-            </span>
-          </p>
-        </div>
-      </div>
-    </div>
+  <div class="combo-option-tabs row">
+    <div class="tab" ng-repeat="combo_option in combo.combo_options | orderBy: 'priority'">{{combo_option.name}}</div>
   </div>
-
-  <div class="combo-option-row" ng-repeat="combo_option in combo.combo_options | orderBy: 'priority'">
-    <div class="combo-option-wrapper" ng-repeat="combo_option_dish in combo_option.combo_option_dishes">
+  <div class="combo-option-contents row" ng-repeat="combo_option in combo.combo_options | orderBy: 'priority'">
+    <div class="combo-option-wrapper col-md-4 col-sm-6" ng-repeat="combo_option_dish in combo_option.combo_option_dishes">
       <div class="thumbnail combo-option selected">
         <div class="img-wrapper">
-          <img src="{{combo_option_dish.dish.picture}}">
-        </div>
-        <div class="caption">
-          <h4>
-            <i class="icon-label {{getLabelClass(combo_option_dish.dish.label)}}"></i>
-            <span>{{combo_option_dish.dish.name}}</span>
-          </h4>
-          <p>{{combo_option_dish.dish.description}}</p>
-          <p>
-            <span class="restaurant-logo-wrapper">
-              <img class="restaurant-logo" src="{{combo_option_dish.dish.restaurant.logo}}">
-            </span>
-            <a ng-click="toggleDish(combo, combo_option, combo_option_dish)" class="btn btn-primary btn-select-combo-option"><i class="fa fa-check-circle"></i>Choose</a> 
-            <span class="quantity-counter" ng-show="checkIfSelected(combo_option, combo_option_dish)">
-              <a ng-click="removeSelectedDish(combo_option, combo_option_dish)" class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="material-icons">remove</i> </a>
-              <span class="quantity">{{showQuantityOfSelectedDish(combo_option, combo_option_dish)}}</span>
-              <a ng-click="selectDish(combo, combo_option, combo_option_dish.dish)" class="btn btn-border btn-fab btn-fab-nano" role="button"><i class="material-icons">add</i> </a>
-            </span>
-            <a ng-click="toggleDish(combo, combo_option, combo_option_dish)" ng-hide="checkIfSelected(combo_option, combo_option_dish)" ng-click="" class="btn btn-success btn-add-extra"><i class="fa fa-shopping-cart"></i>Add Extra</a> 
-          </p>
+          <img class="combo-option-dish-image" src="{{combo_option_dish.dish.picture}}">
+          <div class="combo-option-dish-price">
+            <span class="rupee">₹</span>
+            <span>{{combo_option_dish.dish.price}}</span>
+          </div>
+          <div class="top-overlay">
+            <img class="restaurant-logo" src="{{combo_option_dish.dish.restaurant.logo}}" />
+          </div>
+          <div class="bottom-overlay">
+            <div class="bottom-bar">
+              <div class="combo-option-dish-name">
+                <i class="icon-label {{getLabelClass(combo_option_dish.dish.label)}}"></i>
+                <span>{{combo_option_dish.dish.name}}</span>
+              </div>
+              <div class="quantity-counter-wrapper">
+                <div class="quantity-counter">
+                  <a ng-show="combo_option_dish.quantity" ng-click="removeSelectedDish(combo_option, combo_option_dish)" class="btn btn-border btn-raised btn-fab btn-fab-nano" role="button"><i class="material-icons">remove</i> </a>
+                  <span ng-show="combo_option_dish.quantity" class="quantity">{{showQuantityOfSelectedDish(combo_option, combo_option_dish)}}</span>
+                  <a ng-click="selectDish(combo, combo_option, combo_option_dish.dish)" class="btn btn-border btn-raised btn-fab btn-fab-nano" role="button"><i class="material-icons">add</i> </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
   <div class="row add-to-cart-wrapper">
-    <a ng-click="routeToRoot()" class="btn btn-raised btn-dark" role="button" data-toggle=snackbar data-content="Added to cart" data-timeout="3000"><i class="fa fa-angle-left"></i>Back</a> 
+    <a ng-click="routeToRoot()" class="btn btn-raised btn-dark" role="button" data-toggle=snackbar data-content="Added to cart" data-timeout="3000"><i class="fa fa-angle-left"></i>Back</a>
     <a ng-click="addCombo(combo)" class="btn btn-raised btn-info" role="button" data-toggle=snackbar data-content="Added to cart" data-timeout="3000"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
-  </div> 
-
+  </div>
 </div>

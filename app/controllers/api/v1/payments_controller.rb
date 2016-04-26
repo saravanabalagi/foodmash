@@ -79,7 +79,7 @@ class Api::V1::PaymentsController < ApiApplicationController
 	def purchase_by_cod
 		return invalid_data unless params[:data][:payment_method]
 		if @success and @cart.set_payment_method('COD') and @current_user.award_mash_cash(check_for_promo_and_set(@cart)) and @cart.purchase!
-			render status: 200, json: {success: true, data: {order_id: @cart.order_id, promo_discount: promo_discount}}
+			render status: 200, json: {success: true, data: {order_id: @cart.order_id, promo_discount: @cart.promo_discount}}
 		elsif @cart.set_payment_method('COD') and @cart.purchase! 
 			render status: 200, json: {success: true, data: {order_id: @cart.order_id}}
 		else
