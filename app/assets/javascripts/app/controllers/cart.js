@@ -121,10 +121,6 @@ angular.module('foodmashApp.controllers')
 			});
 		}if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
 			$rootScope.disableButton('.cod-button', 'Confirming...');
-			if($scope.promo.id && $scope.promo.discount){
-				$scope.cart.promo_id = $scope.promo.id;
-				$scope.cart.promo_discount = $scope.promo.discount;
-			}
 			Payment.purchaseForCod($scope.cart).then(function(response){
 				toaster.pop('success', 'Cart was purchased!');
 				$rootScope.enableButton('.cod-button');
@@ -150,6 +146,7 @@ angular.module('foodmashApp.controllers')
 				useMashCash(promo_or_mash_cash);
 			}else{
 				$scope.promo = {};
+				$scope.cart.promo_id = null; $scope.cart.promo_discount = null;
 				calcTaxAndGrandTotal();
 				useMashCash(promo_or_mash_cash);
 			}
@@ -237,6 +234,10 @@ angular.module('foodmashApp.controllers')
 				$scope.cart.delivery_charge = response.cart.delivery_charge;
 				$scope.promo.id = response.cart.promo_id;
 				$scope.promo.discount = response.cart.promo_discount;
+				if($scope.promo.id && $scope.promo.discount){
+					$scope.cart.promo_id = $scope.promo.id;
+					$scope.cart.promo_discount = $scope.promo.discount;
+				}
 			}
 		}, function(err){
 			toaster.pop('error', 'Failed to apply promo code!');

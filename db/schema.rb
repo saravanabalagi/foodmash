@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419182523) do
+ActiveRecord::Schema.define(version: 20160426042026) do
 
   create_table "areas", force: :cascade do |t|
     t.string   "name"
@@ -164,6 +164,15 @@ ActiveRecord::Schema.define(version: 20160419182523) do
     t.boolean  "archive",         default: false
   end
 
+  create_table "invitations", force: :cascade do |t|
+    t.integer  "sender_id"
+    t.string   "recipient_email"
+    t.string   "token"
+    t.datetime "sent_at"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
   create_table "order_items", force: :cascade do |t|
     t.integer  "order_id"
     t.integer  "item_id"
@@ -197,9 +206,10 @@ ActiveRecord::Schema.define(version: 20160419182523) do
 
   create_table "promos", force: :cascade do |t|
     t.string   "code"
-    t.boolean  "active",     default: true
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.boolean  "active",              default: true
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.float    "discount_percentage", default: 0.0
   end
 
   create_table "promos_users", id: false, force: :cascade do |t|
@@ -263,6 +273,8 @@ ActiveRecord::Schema.define(version: 20160419182523) do
     t.string   "dob"
     t.string   "otp"
     t.float    "mash_cash",              default: 0.0
+    t.integer  "invitation_id"
+    t.integer  "invitation_limit",       default: 0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

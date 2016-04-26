@@ -117,7 +117,7 @@ class Cart < ActiveRecord::Base
 				promo = Promo.find(cart[:promo_id])
 				promo.users << self.user
 				self.promo_id = promo.id
-				self.promo_discount = self.total * 0.15
+				self.promo_discount = self.total * promo.discount_percentage
 				self.grand_total -= self.promo_discount
 			end
 			if cart[:mash_cash].present?
@@ -193,7 +193,6 @@ class Cart < ActiveRecord::Base
 		self.delivery_address_id = delivery_address_id
 		self.calculate_total
 		DeliveryAddress.make_primary(delivery_address_id)
-		# byebug
 		self.save!
 	end
 
@@ -231,7 +230,11 @@ class Cart < ActiveRecord::Base
 	end
 
 	def generate_order_id
-		self.order_id = "OD" + Digest::SHA1.hexdigest(Time.now.to_s)[0..11]
+		order_id = nil
+		begin 
+			self.order_id = "OD" + Digest::SHA1.hexdigest(Time.now.to_s)[0..11]
+			order_id = self.order_id
+		end while self.class.exists?(order_id: self.order_id)
 		self.save!
 		self.order_id
 	end
@@ -246,8 +249,8 @@ class Cart < ActiveRecord::Base
 		# end
 		if promo.present? and promo.active and (cart_promo.present? ? cart_promo.id != promo.id : true)
 			cart[:promo_id] = promo.id
-			cart[:grand_total] = cart[:grand_total].to_f - (cart[:total].to_f * 0.15)
-			cart[:promo_discount] = cart[:total].to_f * 0.15
+			cart[:grand_total] = cart[:grand_total].to_f - (cart[:total].to_f * promo.discount_percentage)
+			cart[:promo_discount] = cart[:total].to_f * promo.discount_percentage
 			return true, cart[:promo_discount], cart
 		else
 			return false, 0, nil
@@ -264,8 +267,8 @@ class Cart < ActiveRecord::Base
 		# end
 		if promo.present? and promo.active
 			self.promo_id = promo.id
-			self.grand_total -= self.total * 0.15
-			self.promo_discount = self.total * 0.15
+			self.grand_total -= self.total * promo.discount_percentage
+			self.promo_discount = self.total * promo.discount_percentage
 			return true, self.promo_discount, self.grand_total
 		else
 			return false, 0
