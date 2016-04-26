@@ -96,7 +96,7 @@ class Api::V1::PaymentsController < ApiApplicationController
  		if (cart.promo_discount.present? and cart.promo_id.present?) or cart.mash_cash.present?
  			return 0.0
  		else
- 			return cart.delivery_charge
+ 			return 30.0
  		end
  	end
 

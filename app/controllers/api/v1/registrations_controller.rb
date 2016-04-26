@@ -11,6 +11,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
     if resource.save! 
       session_token = resource.generate_session_token
       resource.sessions.create! session_token: session_token, device_id: params[:android_id]
+      SendSignupConfirmationJob.set(wait: 20.seconds).perform_later(resource)
       resource.award_mash_cash(20)
 	    render status: 201,
 	    json: {
