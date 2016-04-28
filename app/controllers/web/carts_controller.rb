@@ -17,7 +17,7 @@ class Web::CartsController < ApplicationController
 
 	def show
 		if @cart
-			render status: 200, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name, :price]}}], only: [:id, :quantity]} } ,:product => {only: [:id, :name, :price]}], only: [:id, :quantity, :total, :note]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :purchased_at, :grand_total, :vat, :delivery_charge, :promo_discount, :mash_cash, :awarded_mash_cash])
+			render status: 200, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name, :price, :dish_type_id]}}], only: [:id, :quantity]} } ,:product => {only: [:id, :name, :price]}], only: [:id, :quantity, :total, :note]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :purchased_at, :grand_total, :vat, :delivery_charge, :promo_discount, :mash_cash, :awarded_mash_cash])
 		else
 			render status: 200, json: {error: "Could not fetch cart!"}
 		end
