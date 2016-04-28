@@ -76,7 +76,7 @@ class Dish < ActiveRecord::Base
   end
 
   def ensure_dish_not_referenced
-    if combos.empty?
+    if combos.where(archive: false).empty?
       return true
     else
       errors.add(:base, "Combos present!")
