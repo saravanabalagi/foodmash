@@ -63,12 +63,14 @@ angular.module('foodmashApp.directives')
            $rootScope.currentUser = null; $rootScope.delivery_addresses = null;
            toaster.pop('error', 'Signed Out!');
            $rootScope.enableButton('.logout-button');
+           AuthService.removeCurrentUser();
            $location.path("/");
         }, function(err){
            $scope.currentUser = null;
            $rootScope.currentUser = null; $rootScope.delivery_addresses = null;
            toaster.pop('error', 'Signed Out!');
            $rootScope.enableButton('.logout-button');
+           AuthService.removeCurrentUser();
            $location.path("/");
         });
       };

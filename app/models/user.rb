@@ -65,9 +65,11 @@ class User < ActiveRecord::Base
     return reset_password_token
   end
 
-  def award_mash_cash(amount)
-    self.mash_cash += amount
-    self.save!   
+  def award_mash_cash(amount, cart = nil)
+    self.mash_cash += amount if amount
+    cart.awarded_mash_cash += amount if cart
+    cart.save! if cart
+    self.save! if amount
   end
 
   def use_mash_cash(amount)
