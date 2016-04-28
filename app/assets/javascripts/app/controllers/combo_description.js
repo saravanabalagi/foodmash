@@ -2,10 +2,11 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('ComboDescriptionController', ['$scope', '$location', 'toaster', 'CartService', 'ComboDescriptionService', function($scope, $location, toaster, CartService, ComboDescriptionService){
+.controller('ComboDescriptionController', ['$scope', '$location', 'toaster', 'CartService', 'ComboDescriptionService', '$filter', function($scope, $location, toaster, CartService, ComboDescriptionService, $filter){
 
 	$scope.selectedDishes = [];
 	$scope.combo = {};
+	$scope.selectedComboOption = null;
 
 	$scope.routeToRoot = function(){
 		$location.path("/");
@@ -36,12 +37,28 @@ angular.module('foodmashApp.controllers')
 
 	ComboDescriptionService.getComboForDescription().then(function(combo){
 		$scope.combo = combo;
+		var orderBy = $filter('orderBy');
+		orderBy($scope.combo.combo_options, 'priority', true);
+		$scope.selectComboOption($scope.combo.combo_options[0]);
 		$scope.load();
 	  	setQuantityForComboItems();
 	  	pushDefaultComboOption($scope.combo);
 	}, function(err){
 		$scope.combo = null;
 	});
+
+	$scope.selectComboOption = function(combo_option){
+		$scope.selectedComboOption = combo_option;
+		$scope.load();
+	};
+
+	$scope.checkIfComboOptionSelected = function(combo_option){
+		var check = false;
+		if(combo_option && combo_option.id && $scope.selectedComboOption && $scope.selectedComboOption.id && combo_option.id == $scope.selectedComboOption.id && combo_option.name == $scope.selectedComboOption.name){
+			check = true;
+		}
+		return check;
+	};
 
 	$scope.selectDish = function(combo, combo_option, dish){
 		var selectedDish = {"product": {}, "item": {}};

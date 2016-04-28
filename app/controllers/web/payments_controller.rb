@@ -33,7 +33,7 @@ class Web::PaymentsController < ApplicationController
 
  	def success
  		@user = @cart.user
- 		if params.present? and @cart.add_fields_from_payu(params) and @user.award_mash_cash(check_for_promo_and_set(@cart)) and @cart.purchase!
+ 		if params.present? and @cart.add_fields_from_payu(params) and @user.award_mash_cash(check_for_promo_and_set(@cart), @cart) and @cart.purchase!
 			render 'success'
 		else
 			render 'failure'
@@ -59,7 +59,7 @@ class Web::PaymentsController < ApplicationController
  	end
 
  	def purchase_for_cod
- 		if @cart.add_items_to_cart(params[:payment][:cart]) and @cart.set_payment_method('COD') and @current_user.award_mash_cash(check_for_promo_and_set(@cart)) and @cart.purchase!
+ 		if @cart.add_items_to_cart(params[:payment][:cart]) and @cart.set_payment_method('COD') and @current_user.award_mash_cash(check_for_promo_and_set(@cart), @cart) and @cart.purchase!
  			render status: 200, json: {message: 'Succesfully ordered!'}
  		else
  			render status: 422, json: {error: 'Password was incorrect!'}

@@ -16,7 +16,7 @@ class Invitation < ActiveRecord::Base
 	def generate_token
 		token = nil
 		begin
-			self.token = Digest::SHA1.hexdigest(Time.now.to_s)
+			self.token = self.sender.name[0..2].gsub(/\s+/, "") + Digest::SHA1.hexdigest(Time.now.to_s)[0..5]
 			token = self.token
 		end while self.class.exists?(token: self.token)
 		return token

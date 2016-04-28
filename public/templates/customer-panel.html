@@ -130,7 +130,7 @@
               </tr>
               <tr>
                 <td></td>
-                <td>Aggregation + Delivery</td>
+                <td>Aggregation Charges</td>
                 <td></td>
                 <td><span class="rupee"></span>{{selectedCart.delivery_charge}}</td>
               </tr>
@@ -145,6 +145,12 @@
                 <td>Mash Cash Used</td>
                 <td></td>
                 <td><span class="rupee"></span>- {{selectedCart.mash_cash}}</td>
+              </tr>
+              <tr ng-show="selectedCart.awarded_mash_cash">
+                <td></td>
+                <td>Mash Cash Awarded</td>
+                <td></td>
+                <td><span class="rupee"></span>{{selectedCart.awarded_mash_cash}}</td>
               </tr>
               <tr>
                 <td></td>

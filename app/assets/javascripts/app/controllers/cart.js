@@ -108,27 +108,31 @@ angular.module('foodmashApp.controllers')
 			toaster.pop('info', 'Delivery Address needs to be selected!');
 			return ;
 		}
-		if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'Payu'){
-			$scope.setup_details["amount"] = $scope.cart.grand_total;
-			Payment.getHash($scope.setup_details).then(function(response){
-				$scope.setup_details = response.setup_details;
-				$scope.processCart();
-				angular.element(document).ready(function (){
-					$('#payu-payment-form').submit();
+		if(checkIfDifferentDishtypesInCart()){
+			if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'Payu'){
+				$scope.setup_details["amount"] = $scope.cart.grand_total;
+				Payment.getHash($scope.setup_details).then(function(response){
+					$scope.setup_details = response.setup_details;
+					$scope.processCart();
+					angular.element(document).ready(function (){
+						$('#payu-payment-form').submit();
+					});
+				}, function(err){
+					toaster.pop('error', 'Could not generate hash');
 				});
-			}, function(err){
-				toaster.pop('error', 'Could not generate hash');
-			});
-		}if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
-			$rootScope.disableButton('.cod-button', 'Confirming...');
-			Payment.purchaseForCod($scope.cart).then(function(response){
-				toaster.pop('success', 'Cart was purchased!');
-				$rootScope.enableButton('.cod-button');
-				refreshCartAndSelectDelAdd();
-			}, function(err){
-				toaster.pop('error', 'Cart was not purchased!');
-				$rootScope.enableButton('.cod-button');
-			});
+			}if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
+				$rootScope.disableButton('.cod-button', 'Confirming...');
+				Payment.purchaseForCod($scope.cart).then(function(response){
+					toaster.pop('success', 'Cart was purchased!');
+					$rootScope.enableButton('.cod-button');
+					refreshCartAndSelectDelAdd();
+				}, function(err){
+					toaster.pop('error', 'Cart was not purchased!');
+					$rootScope.enableButton('.cod-button');
+				});
+			}
+		}else{
+			toaster.pop('error', 'Add atleast 2 different dish types to cart!');
 		}
 	};
 
@@ -204,6 +208,24 @@ angular.module('foodmashApp.controllers')
 			return true;
 		}
 		return false;
+	};
+
+	function checkIfDifferentDishtypesInCart(){
+		var check = false;
+		if($scope.cart && $scope.grand_total){
+			var dish_types = new Set();
+			$scope.cart.orders.filter(function(order){
+				order.order_items.filter(function(order_item){
+					if(!dish_types.has(order_item.item.dish_type_id)){
+						dish_types.add(order_item.item.dish_type_id);
+					}
+				});
+			});
+			if(dish_types.length > 2){
+				check = true;
+			}
+		}
+		return check;
 	};
 
 	function useMashCash(mash_cash){

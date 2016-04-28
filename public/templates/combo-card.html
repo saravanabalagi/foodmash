@@ -1,8 +1,8 @@
-<div class="col-sm-6 col-md-4">
+<div class="col-sm-6 col-md-6">
     <div class="thumbnail combo-card">
       <div class="img-wrapper">
         <img class="combo-image" src="{{combo.picture}}" ng-click="routeToComboDescription(combo)"/>
-        <div class="combo-price">
+        <div class="combo-price" ng-if="!combo.customizable">
           <span class="rupee">₹</span>
           <span>{{combo.price}}</span>
         </div>
@@ -10,7 +10,7 @@
         <div class="bottom-overlay">
             <div class="bottom-bar">
                 <div class="combo-name">{{combo.name}}</div>
-                <div class="quantity-counter-wrapper">
+                <div class="quantity-counter-wrapper" ng-if="!combo.customizable">
                     <div class="quantity-counter">
                         <a class="btn btn-border btn-raised btn-fab btn-fab-nano" ng-show="combo.quantity" role="button" ng-click="removeCombo(combo)"><i class="material-icons">remove</i> </a>
                         <span class="quantity" ng-show="combo.quantity">{{combo.quantity}}</span>

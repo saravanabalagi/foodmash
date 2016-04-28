@@ -73,7 +73,10 @@ class Cart < ActiveRecord::Base
 			when 'delivered' 
 				self.delivered_at = Time.now
 				current_user = User.find(self.user_id)
-				current_user.award_mash_cash(0.15 * self.grand_total) if ((self.delivered_at - self.purchased_at) > 1.hour)
+				if self.delivered_at - self.purchased_at > 1.hour
+					amount = 0.3 * self.grand_total 
+					current_user.award_mash_cash(amount, self)
+				end
 				deliver!
 		end
 	end
