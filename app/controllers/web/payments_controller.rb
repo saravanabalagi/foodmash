@@ -9,8 +9,8 @@ class Web::PaymentsController < ApplicationController
  		details = {
 			firstname: @current_user.name.split.first,
 			productinfo: 'a bunch of combos from Foodmash',
-			surl: 'http://localhost:3000/web/payments/success',
-			furl: 'http://localhost:3000/web/payments/failure',
+			surl: 'http://www.foodmash.in/web/payments/success',
+			furl: 'http://www.foodmash.in/web/payments/failure',
 			txnid: @cart.generate_order_id,
 			email: @current_user.email,
 			phone: @current_user.mobile_no,
