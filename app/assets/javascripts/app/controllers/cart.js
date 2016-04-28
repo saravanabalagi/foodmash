@@ -263,6 +263,7 @@ angular.module('foodmashApp.controllers')
 			}
 		}, function(err){
 			toaster.pop('error', 'Failed to apply promo code!');
+			$scope.promo = {};
 		});
 	};
 

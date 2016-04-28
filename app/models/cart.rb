@@ -63,6 +63,8 @@ class Cart < ActiveRecord::Base
 			when 'cancel' 
 				self.orders.destroy_all
 				self.delivery_charge = self.vat = self.total = self.grand_total = 0
+				current_user = User.find(self.user_id)
+				current_user.award_mash_cash(-self.awarded_mash_cash, self)
 				cancel!
 			when 'ordered' 
 				self.ordered_at = Time.now
