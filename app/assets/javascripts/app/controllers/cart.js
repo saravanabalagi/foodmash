@@ -221,7 +221,7 @@ angular.module('foodmashApp.controllers')
 					}
 				});
 			});
-			if(dish_types.length > 2){
+			if(dish_types.length >= 2){
 				check = true;
 			}
 		}
