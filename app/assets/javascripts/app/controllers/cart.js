@@ -212,7 +212,7 @@ angular.module('foodmashApp.controllers')
 
 	function checkIfDifferentDishtypesInCart(){
 		var check = false;
-		if($scope.cart && $scope.grand_total){
+		if($scope.cart && $scope.cart.grand_total){
 			var dish_types = new Set();
 			$scope.cart.orders.filter(function(order){
 				order.order_items.filter(function(order_item){

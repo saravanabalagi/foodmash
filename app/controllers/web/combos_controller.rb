@@ -48,7 +48,7 @@ class Web::CombosController < ApplicationController
 	end
 
 	def load_from_packaging_centre
-		@loadedFromPackagingCentre = Combo.where(params.permit(:id, :name, :packaging_centre_id)).where(active: true).order("price ASC").as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name, :logo]}}, only: [:id, :name, :price, :description, :picture, :label]} } , only: :id} }, only: [:id, :min_count, :name, :priority]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name, :logo]}}, only: [:id, :name, :description, :price, :picture, :label]} }, only: [:id, :min_count] } } ], only: [:name, :price, :id, :description, :available, :active, :picture, :label, :group_size, :category, :customizable])
+		@loadedFromPackagingCentre = Combo.where(params.permit(:id, :name, :packaging_centre_id)).where(active: true).order("price ASC").as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name, :logo]}}, only: [:id, :name, :price, :description, :picture, :label, :dish_type_id]} } , only: :id} }, only: [:id, :min_count, :name, :priority]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name, :logo]}}, only: [:id, :name, :description, :price, :picture, :label]} }, only: [:id, :min_count] } } ], only: [:name, :price, :id, :description, :available, :active, :picture, :label, :group_size, :category, :customizable])
 		user = User.find_by(user_token: params[:auth_user_token]) if params[:auth_user_token]
 		hash = Digest::SHA1.hexdigest(@loadedFromPackagingCentre.to_s)
 		if @loadedFromPackagingCentre
