@@ -210,6 +210,10 @@ angular.module('foodmashApp.controllers')
 		return false;
 	};
 
+	$scope.floatToInt = function(value){
+    	return value | 0;
+  	};
+
 	function checkIfDifferentDishtypesInCart(){
 		var check = false;
 		if($scope.cart && $scope.cart.grand_total){
@@ -232,13 +236,20 @@ angular.module('foodmashApp.controllers')
 		if(mash_cash <= 0){
 			toaster.pop('error', 'Mash Cash entered is negligible!');
 		}else if(mash_cash > 0 && mash_cash < 150){
-			toaster.pop('error', 'Mash Cash must be 150 or more to be utilized!');
-		}else if(mash_cash >=150 && $scope.cart.grand_total && !$scope.mash_cash && mash_cash <= $rootScope.currentUser.mash_cash){
-			$scope.mash_cash = mash_cash;
-			$scope.cart.grand_total -= $scope.mash_cash;
-			$scope.cart.grand_total = $scope.cart.grand_total.toFixed(2);
-			$scope.cart.mash_cash = $scope.mash_cash;
-			toaster.pop('success', 'Mash Cash of ' + $scope.mash_cash + ' was used!');
+			toaster.pop('error', 'Mash Cash less than 150 cannot be utilized!');
+		}else if(mash_cash >=150 && $scope.cart.grand_total && !$scope.mash_cash){
+			if(mash_cash > $scope.cart.grand_total){
+				toaster.pop('error', 'Cart grand total is lesser than Mash Cash value!');
+			}else if($rootScope.currentUser.mash_cash >= 150 && mash_cash <= $rootScope.currentUser.mash_cash){
+				$scope.mash_cash = mash_cash;
+				$scope.cart.grand_total -= $scope.mash_cash;
+				$scope.cart.grand_total = $scope.cart.grand_total.toFixed(2);
+				$scope.cart.mash_cash = $scope.mash_cash;
+				toaster.pop('success', 'Mash Cash of ' + $scope.mash_cash + ' was used!');
+			}
+			else{
+				toaster.pop('error', 'Your account does not have enough Mash Cash!');
+			}
 		}
 	};
 

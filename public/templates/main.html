@@ -1,4 +1,4 @@
- <div class="sidebar-wrapper sidebar-open">
+ <div class="sidebar-wrapper sidebar-open" ng-init="load()">
   <div class="sidebar">
     <section class="sidebar-section location-section">
       <i class="fa fa-map-marker"></i>
@@ -6,6 +6,12 @@
        <li class="dropdown location-dropdown">
          <a data-target="#" class="dropdown-toggle" data-toggle="dropdown" ng-click="fadeInLoader()">{{selectedArea.name}}</a>
        </li>
+     </ul>
+    </section>
+    <section class="sidebar-section location-section">
+      <i class="fa fa-money"></i>
+      <ul>
+         <a class="dropdown-toggle" data-target="#" data-content="Mash Cash can be used as real cash within Foodmash" data-toggle="popover" data-trigger="hover" data-placement="right">{{floatToInt(currentUser.mash_cash) | number}}</a>
      </ul>
     </section>
     <section class="sidebar-section">
@@ -20,7 +26,7 @@
         </li>
       </ul>
     </section>
-    <section class="sidebar-section">
+   <!--  <section class="sidebar-section">
       <h5>Size</h5>
       <ul class="sidebar-nav group-size">
         <li ng-repeat="option in sizeOptions" ng-class="{active: checkIfOptionSelected(option)}" ng-click="addOrRemoveFilters(option)">
@@ -30,8 +36,8 @@
           </a>
         </li>
       </ul>
-    </section>
-    <section class="sidebar-section">
+    </section> -->
+    <!-- <section class="sidebar-section">
       <h5>Preference</h5>
       <ul class="sidebar-nav type">
         <li ng-repeat="option in preferenceOptions" ng-class="{active: checkIfOptionSelected(option)}" 
@@ -42,7 +48,7 @@
           </a>
         </li>
       </ul>
-    </section>
+    </section> -->
     <section class="sidebar-section">
       <h5>Price</h5>
       <ul class="sidebar-nav price">
