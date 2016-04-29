@@ -2,10 +2,10 @@
     <div class="thumbnail combo-card">
       <div class="img-wrapper">
         <img class="combo-image" src="{{combo.picture}}" ng-click="routeToComboDescription(combo)"/>
-        <div class="combo-price" ng-if="!combo.customizable">
+        <!-- <div class="combo-price" ng-if="!combo.customizable">
           <span class="rupee">₹</span>
           <span>{{combo.price}}</span>
-        </div>
+        </div> -->
         <a class="btn btn-border btn-raised btn-fab btn-fab-nano info-button" role="button" ng-init="overlayShown=false" ng-click="overlayShown=!overlayShown"><i class="fa fa-info"></i> </a>
         <div class="bottom-overlay">
             <div class="bottom-bar">
