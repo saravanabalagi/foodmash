@@ -16,16 +16,20 @@ angular.module('foodmashApp.directives')
 			$scope.city = new City;
 			$scope.loadingCities = true;
 
-			City.query().then(function(cities){
-				if(cities.length > 0){
-				  $scope.cities = cities;		
-				}else{
-				  $scope.cities = new Array;
+			$scope.$watch('loadCities', function(n, o){
+				if(n){
+					City.query().then(function(cities){
+						if(cities.length > 0){
+						  $scope.cities = cities;		
+						}else{
+						  $scope.cities = new Array;
+						}
+						$scope.loadingCities = false;
+					}, function(err){
+						$scope.cities = null;
+						$scope.loadingCities = false;
+					});
 				}
-				$scope.loadingCities = false;
-			}, function(err){
-				$scope.cities = null;
-				$scope.loadingCities = false;
 			});
 
 			$scope.addCity = function(){

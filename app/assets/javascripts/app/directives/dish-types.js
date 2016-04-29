@@ -16,16 +16,20 @@ angular.module('foodmashApp.directives')
 			$scope.dish_type = new DishType;
 			$scope.loadingDishTypes = true;
 
-			DishType.query().then(function(dish_types){
-				if(dish_types.length > 0){
-				  $scope.dish_types = dish_types;		
-				}else{
-				  $scope.dish_types = new Array;
+			$scope.$watch('loadDishTypes', function(n, o){
+				if(n){
+					DishType.query().then(function(dish_types){
+						if(dish_types.length > 0){
+						  $scope.dish_types = dish_types;		
+						}else{
+						  $scope.dish_types = new Array;
+						}
+						$scope.loadingDishTypes = false;
+					}, function(err){
+						$scope.dish_types = null;
+						$scope.loadingDishTypes = false;
+					});
 				}
-				$scope.loadingDishTypes = false;
-			}, function(err){
-				$scope.dish_types = null;
-				$scope.loadingDishTypes = false;
 			});
 
 			$scope.addDishType = function(){

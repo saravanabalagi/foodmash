@@ -16,16 +16,20 @@ angular.module('foodmashApp.directives')
 			$scope.cuisine = new Cuisine;
 			$scope.loadingCuisines = true;
 
-			Cuisine.query().then(function(cuisines){
-				if(cuisines.length > 0){
-				  $scope.cuisines = cuisines;		
-				}else{
-				  $scope.cuisines = new Array;
+			$scope.$watch('loadCuisines', function(n, o){
+				if(n){
+					Cuisine.query().then(function(cuisines){
+						if(cuisines.length > 0){
+						  $scope.cuisines = cuisines;		
+						}else{
+						  $scope.cuisines = new Array;
+						}
+						$scope.loadingCuisines = false;
+					}, function(err){
+						$scope.cuisines = null;
+						$scope.loadingCuisines = false;
+					});
 				}
-				$scope.loadingCuisines = false;
-			}, function(err){
-				$scope.cuisines = null;
-				$scope.loadingCuisines = false;
 			});
 
 			$scope.addCuisine = function(){

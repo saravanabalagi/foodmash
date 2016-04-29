@@ -17,26 +17,30 @@ angular.module('foodmashApp.directives')
 			$scope.loadingRestaurants = true;
 			$scope.areas = [];
 
-			Areas.query().then(function(areas){
-				if(areas.length > 0){
-					$scope.areas = areas;
-				}else{
-					$scope.areas = null;
-				}
-			}, function(err){
-				$scope.areas = null;
-			});
+			$scope.$watch('loadRestaurants', function(n, o){
+				if(n){
+					Areas.query().then(function(areas){
+						if(areas.length > 0){
+							$scope.areas = areas;
+						}else{
+							$scope.areas = null;
+						}
+					}, function(err){
+						$scope.areas = null;
+					});
 
-			Restaurant.query().then(function(restaurants){
-				if(restaurants.length > 0){
-					$scope.restaurants = restaurants;
-				}else{
-					$scope.restaurants = new Array;
+					Restaurant.query().then(function(restaurants){
+						if(restaurants.length > 0){
+							$scope.restaurants = restaurants;
+						}else{
+							$scope.restaurants = new Array;
+						}
+						$scope.loadingRestaurants = false;
+					}, function(err){
+						$scope.restaurants = null;
+						$scope.loadingRestaurants = false;
+					});
 				}
-				$scope.loadingRestaurants = false;
-			}, function(err){
-				$scope.restaurants = null;
-				$scope.loadingRestaurants = false;
 			});
 
 			$scope.selectArea = function(area){
