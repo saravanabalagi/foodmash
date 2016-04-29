@@ -32,6 +32,9 @@ angular.module('foodmashApp.controllers')
                     });
                     $('.combo-card').matchHeight();
 			 	});
+			 	new WOW().init();
+			 	$('[data-toggle="tooltip"]').tooltip();
+			 	$('[data-toggle="popover"]').popover();
 			 });
 		};
 		
@@ -72,6 +75,10 @@ angular.module('foodmashApp.controllers')
 				});
 			}
 		});
+
+		$scope.floatToInt = function(value){
+        	return value | 0;
+      	};
 
 		$scope.selectSortOption = function(option){
 			if($scope.selectedSortOption !== option){
