@@ -5,6 +5,12 @@ angular.module('foodmashApp.controllers')
 .controller('PanelController', ['$scope','$location','toaster','$rootScope', function($scope, $location, toaster, $rootScope){
 
   $scope.selected = "";
+  $scope.loadCombos = false;
+  $scope.loadRestaurants = false;
+  $scope.loadDishTypes = false;
+  $scope.loadCuisines = false;
+  $scope.loadPackagingCentres = false;
+  $scope.loadCities = false;
 
   $scope.panelOptions = [
     {name: "Combos", alias: "Combos", icon_class: "fa fa-shopping-bag pull-right"},
@@ -15,6 +21,31 @@ angular.module('foodmashApp.controllers')
     {name: "Cities", alias: "Cities", icon_class: "fa fa-cubes pull-right"},
     {name: "Users", alias: "UserRoles", icon_class: "fa fa-user pull-right"}
   ];
+
+  $scope.loadData = function(){
+    if($scope.selected){
+      switch($scope.selected){
+        case "Combos": 
+        $scope.loadCombos = true;
+        break;
+        case "Restaurants": 
+        $scope.loadRestaurants = true;
+        break;
+        case "DishTypes": 
+        $scope.loadDishTypes = true;
+        break;
+        case "Cuisines": 
+        $scope.loadCuisines = true;
+        break;
+        case "PackagingCentres": 
+        $scope.loadPackagingCentres = true;
+        break;
+        case "Cities": 
+        $scope.loadCities = true;
+        break;
+      };
+    }
+  };
 
   $scope.selectPanelOption = function(option){
     if($scope.checkIfSelected(option)){

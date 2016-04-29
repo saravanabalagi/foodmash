@@ -33,26 +33,30 @@ angular.module('foodmashApp.directives')
 			];
 			$scope.combo.category =  $scope.categoryOptions[0].name;
 
-			Combo.query().then(function(combos){
-				if(combos.length > 0){
-					$scope.combos = combos;
-				}else{
-					$scope.combos = new Array;
-				}
-				$scope.loadingCombos = false;
-			}, function(err){
-				$scope.combos = null;
-				$scope.loadingCombos = false;
-			});
+			$scope.$watch('loadCombos', function(n, o){
+				if(n){
+					Combo.query().then(function(combos){
+						if(combos.length > 0){
+							$scope.combos = combos;
+						}else{
+							$scope.combos = new Array;
+						}
+						$scope.loadingCombos = false;
+					}, function(err){
+						$scope.combos = null;
+						$scope.loadingCombos = false;
+					});
 
-			PackagingCentre.query().then(function(packaging_centres){
-				if(packaging_centres.length > 0){
-					$scope.packaging_centres = packaging_centres;
-				}else{
-					$scope.packaging_centres = null;
+					PackagingCentre.query().then(function(packaging_centres){
+						if(packaging_centres.length > 0){
+							$scope.packaging_centres = packaging_centres;
+						}else{
+							$scope.packaging_centres = null;
+						}
+					}, function(err){
+						$scope.packaging_centres = null;
+					});
 				}
-			}, function(err){
-				$scope.packaging_centres = null;
 			});
 
             $scope.selectPackagingCentre = function(packaging_centre){

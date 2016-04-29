@@ -16,16 +16,20 @@ angular.module('foodmashApp.directives')
 			$scope.packaging_centre = new PackagingCentre;
 			$scope.loadingPackagingCentres = true;
 
-			PackagingCentre.query().then(function(packaging_centres){
-				if(packaging_centres.length > 0){
-				  $scope.packaging_centres = packaging_centres;		
-				}else{
-				  $scope.packaging_centres = new Array;
+			$scope.$watch('loadPackagingCentres', function(n, o){
+				if(n){
+					PackagingCentre.query().then(function(packaging_centres){
+						if(packaging_centres.length > 0){
+						  $scope.packaging_centres = packaging_centres;		
+						}else{
+						  $scope.packaging_centres = new Array;
+						}
+						$scope.loadingPackagingCentres = false;
+					}, function(err){
+						$scope.packaging_centres = null;
+						$scope.loadingPackagingCentres = false;
+					});
 				}
-				$scope.loadingPackagingCentres = false;
-			}, function(err){
-				$scope.packaging_centres = null;
-				$scope.loadingPackagingCentres = false;
 			});
 
 			$scope.addPackagingCentre = function(){
