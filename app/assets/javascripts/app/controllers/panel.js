@@ -11,6 +11,8 @@ angular.module('foodmashApp.controllers')
   $scope.loadCuisines = false;
   $scope.loadPackagingCentres = false;
   $scope.loadCities = false;
+  $scope.loadPromos = false;
+  $scope.loadVersions = false;
 
   $scope.panelOptions = [
     {name: "Combos", alias: "Combos", icon_class: "fa fa-shopping-bag pull-right"},
@@ -19,6 +21,8 @@ angular.module('foodmashApp.controllers')
     {name: "Cuisines", alias: "Cuisines", icon_class: "fa fa-flag pull-right"},
     {name: "Centres", alias: "PackagingCentres", icon_class: "fa fa-cube pull-right"},
     {name: "Cities", alias: "Cities", icon_class: "fa fa-cubes pull-right"},
+    {name: "Promos", alias: "Promos", icon_class: "fa fa-beer pull-right"},
+    {name: "Versions", alias: "Versions", icon_class: "fa fa-code-fork pull-right"},
     {name: "Users", alias: "UserRoles", icon_class: "fa fa-user pull-right"}
   ];
 
@@ -42,6 +46,12 @@ angular.module('foodmashApp.controllers')
         break;
         case "Cities": 
         $scope.loadCities = true;
+        break;
+        case "Promos": 
+        $scope.loadPromos = true;
+        break;
+        case "Versions":
+        $scope.loadVersions = true
         break;
       };
     }

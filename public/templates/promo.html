@@ -1,0 +1,14 @@
+
+<td ng-hide="updateShow">{{$index + 1}}</td>
+<td ng-hide="updateShow">{{promo.code}}</td>
+<td ng-hide="updateShow">{{promo.discount_percentage}}</td>
+<td ng-hide="updateShow">{{promo.active}}</td>
+<td ng-hide="updateShow" ng-init="updateShow = false" ng-click="updateShow=!updateShow; setUpdate(promo)"><i class="icon-edit"></i></td>
+<td ng-hide="updateShow" ng-click="deletePromo(promo)"><i class="icon-trash"></i></td>
+
+<td ng-show="updateShow">{{$index + 1}}</td>
+<td ng-show="updateShow"><input class="form-control" type="text" ng-model="updatedPromo.code"></td>
+<td ng-show="updateShow"><input class="form-control" type="number" min="0" max="1" step="0.05" ng-model="updatedPromo.discount_percentage"></td>
+<td ng-show="updateShow"><input class="form-control" type="checkbox" ng-model="updatedPromo.active"></td>
+<td ng-show="updateShow" ng-click="updateShow=!updateShow"><i class="fa fa-times-circle"></i></td>
+<td ng-show="updateShow" ng-click="updatePromo(promo)"><i class="fa fa-check-circle"></i></td>
