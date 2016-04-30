@@ -177,7 +177,7 @@ class Cart < ActiveRecord::Base
 					end
 				end
 				unless sim
-					future_order = self.orders.build(product_id: cart_item["id"], product_type: cart_item["type"], quantity: cart_item["quantity"], note: cart_item["note"])
+					future_order = self.orders.build(product_id: cart_item["id"], product_type: "Combo", quantity: cart_item["quantity"], note: cart_item["note"])
 					if cart_item["combo_dishes"].present?
 						cart_item["combo_dishes"].each do |combo_dish| 
 							future_order.order_items.build(item_id: combo_dish["dish"]["id"], item_type: "Dish", quantity: combo_dish["quantity"])
