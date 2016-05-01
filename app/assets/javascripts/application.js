@@ -16,11 +16,11 @@
 //= require angularjs/rails/resource
 //= require angularjs-toaster/toaster
 //= require angular-sanitize/angular-sanitize
+//= require angular-local-storage/dist/angular-local-storage
 //= require lodash/lodash
 //= require jquery/dist/jquery
 //= require bootstrap
 //= require ng-file-upload
-//= require material
 //= require ripples
 //= require jquery.matchHeight
 //= require jquery.touchSwipe

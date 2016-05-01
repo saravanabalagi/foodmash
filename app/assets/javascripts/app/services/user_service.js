@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.services')
 
- .service('UserService', ['$rootScope', '$q', '$cookieStore', '$http', 'AuthService', function($rootScope, $q, $cookieStore, $http, AuthService) {
+ .service('UserService', ['$rootScope', '$q', '$http', 'AuthService', function($rootScope, $q, $http, AuthService) {
       
       var service = this;     
       service.currentUser = AuthService.currentUser;
