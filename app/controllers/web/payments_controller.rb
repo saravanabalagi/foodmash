@@ -84,7 +84,7 @@ class Web::PaymentsController < ApplicationController
  		if (cart.promo_discount.present? and cart.promo_id.present?) or cart.mash_cash.present?
  			return 0.0
  		else
- 			return 30.0
+ 			return 0.0
  		end
  	end
  end
