@@ -42,7 +42,6 @@ angular.module('foodmashApp.controllers')
 		$scope.selectComboOption($scope.combo.combo_options[0]);
 		$scope.load();
 	  	setQuantityForComboItems();
-	  	pushDefaultComboOption($scope.combo);
 	}, function(err){
 		$scope.combo = null;
 	});
