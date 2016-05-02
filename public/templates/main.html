@@ -8,7 +8,7 @@
        </li>
      </ul>
     </section>
-    <section class="sidebar-section location-section">
+    <section class="sidebar-section location-section" ng-if="currentUser">
       <i class="fa fa-money"></i>
       <ul>
          <a class="dropdown-toggle" data-target="#" data-content="Mash Cash can be used as real cash within Foodmash" data-toggle="popover" data-trigger="hover" data-placement="right">{{floatToInt(currentUser.mash_cash) | number}}</a>
