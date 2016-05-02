@@ -12,9 +12,9 @@ class Api::V1::CheckConnectionController < ApiApplicationController
 	def instantiate
 		versions = Version.last
 		maintenance = {
-			title: 'Folks at Work',
-			message: 'Foodmash is under maintenance, please come back later :)',
-			image: 'http://vigilidelfuoco.usb.it/uploads/pics/men-at-work_02.jpg',
+			title: 'Welcome to Foodmash!',
+			message: 'We deliver from 7-10 p.m.',
+			image: 'https://s3-ap-southeast-1.amazonaws.com/foodmash-india/assets/welcome.jpg',
 			blocking: false
 		}
 		if params[:android_id].present?
