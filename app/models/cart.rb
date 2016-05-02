@@ -65,6 +65,9 @@ class Cart < ActiveRecord::Base
 				self.delivery_charge = self.vat = self.total = self.grand_total = 0
 				current_user = User.find(self.user_id)
 				current_user.award_mash_cash(-self.awarded_mash_cash, self)
+				self.promo_discount = self.promo_id = nil
+				current_user.award_mash_cash(self.mash_cash)
+				self.mash_cash = nil
 				cancel!
 			when 'ordered' 
 				self.ordered_at = Time.now
