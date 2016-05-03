@@ -74,7 +74,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
   	if @current_user and @current_user.valid_password? params[:data][:user][:old_password]
   		@current_user.password = params[:data][:user][:password]
   		@current_user.password_confirmation = params[:data][:user][:password_confirmation]
-  		@current_user.save!
+  		@current_user.save
   		render status: 201, json: {success: true, message: "Password was successfully changed!"}
   	else
   		render status: 200, json: {success: false, error: "Could not change password!"}

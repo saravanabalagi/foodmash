@@ -847,10 +847,14 @@ footer {
   .order-status-meter-wrapper {
     margin: 20px 0 30px 0;
     position: relative;
-    -webkit-text-align-last: justify;
-    -moz-text-align-last: justify;
-    -ms-text-align-last: justify;
-    text-align-last: justify;
+    text-align: justify;
+    line-height: 1;
+    height: 3em;
+    &:after {
+      content: "";
+      display: inline-block;
+      width:100%;
+    }
     i.fa {
       font-size: 20px;
       background-color: #444;
@@ -883,11 +887,15 @@ footer {
     }
   }
   .order-header {
+    &:after {
+      display: inline-block;
+      content: "";
+      width:100%;
+    }
     margin-bottom: 10px;
-    -webkit-text-align: justify;
-    -moz-text-align: justify;
-    -ms-text-align: justify;
-    text-align-last: justify;
+    text-align: justify;
+    line-height:1;
+    height:1em;
     span { display: inline-block; }
     .order-date {
       font-weight: bold;
@@ -895,10 +903,6 @@ footer {
       .order-time { font-weight: 100; }
     }
     .order-amount-wrapper {
-      -webkit-text-align: auto;
-      -moz-text-align: auto;
-      -ms-text-align: auto;
-      text-align-last: auto;
       font-weight: bold;
       &:before { font-weight:100; content: "Total amount: "; }
       .order-amount:before { content: "Rs."; }
@@ -998,10 +1002,14 @@ footer {
   .order-status-meter-wrapper {
     margin: 20px 0 30px 0;
     position: relative;
-    -webkit-text-align: justify;
-    -moz-text-align: justify;
-    -ms-text-align: justify;
-    text-align-last: justify;
+    text-align: justify;
+    line-height:1;
+    height:3em;
+    &:after {
+      content: "";
+      display: inline-block;
+      width: 100%;
+    }
     i.fa {
       font-size: 20px;
       background-color: #444;
@@ -1029,10 +1037,12 @@ footer {
   }
   .order-header {
     margin-bottom: 10px;
-    -webkit-text-align: justify;
-    -moz-text-align: justify;
-    -ms-text-align: justify;
-    text-align-last: justify;
+    text-align: justify;
+    &:after {
+      display: inline-block;
+      content: "";
+      width:100%;
+    }
     span { display: inline-block; }
     .order-date {
       font-weight: bold;
@@ -1040,10 +1050,6 @@ footer {
       .order-time { font-weight: 100; }
     }
     .order-amount-wrapper {
-      -webkit-text-align: auto;
-      -moz-text-align: auto;
-      -ms-text-align: auto;
-      text-align-last: auto;
       font-weight: bold;
       &:before { font-weight:100; content: "Total amount: "; }
       .order-amount:before { content: "Rs."; }
@@ -1051,10 +1057,14 @@ footer {
   }
   .restaurant-order-header {
     margin-bottom: 10px;
-    -webkit-text-align: justify;
-    -moz-text-align: justify;
-    -ms-text-align: justify;
-    text-align-last: justify;
+    text-align: justify;
+    height:3em;
+    line-height: 1;
+    &:after {
+      display: inline-block;
+      content: "";
+      width: 100%;
+    }
     span { display: inline-block; }
     .restaurant-name {
       font-weight: bold;
@@ -1062,10 +1072,6 @@ footer {
       .restaurant-branch { font-weight: 100; }
     }
     .restaurant-contact-wrapper {
-      -webkit-text-align: auto;
-      -moz-text-align: auto;
-      -ms-text-align: auto;
-      text-align-last: auto;
       font-weight: bold;
       &:before { font-weight:100; content: "Ph: "; }
     }
@@ -1154,10 +1160,14 @@ footer {
   .order-status-meter-wrapper {
     margin: 20px 0 30px 0;
     position: relative;
-    -webkit-text-align: justify;
-    -moz-text-align: justify;
-    -ms-text-align: justify;
-    text-align-last: justify;
+    text-align: justify;
+    line-height: 1;
+    height:3em;
+    &:after {
+      display: inline-block;
+      content: "";
+      width: 100%;
+    }
     i.fa {
       font-size: 20px;
       background-color: #444;
@@ -1185,10 +1195,14 @@ footer {
   }
   .order-header {
     margin-bottom: 10px;
-    -webkit-text-align: justify;
-    -moz-text-align: justify;
-    -ms-text-align: justify;
-    text-align-last: justify;
+    text-align: justify;
+    line-height: 1;
+    height: 1em;
+    &:after {
+      display: inline-block;
+      width:100%;
+      content: "";
+    }
     span { display: inline-block; }
     .order-date {
       font-weight: bold;
@@ -1196,10 +1210,6 @@ footer {
       .order-time { font-weight: 100; }
     }
     .order-amount-wrapper {
-      -webkit-text-align: auto;
-      -moz-text-align: auto;
-      -ms-text-align: auto;
-      text-align-last: auto;
       font-weight: bold;
       &:before { font-weight:100; content: "Total amount: "; }
       .order-amount:before { content: "Rs."; }
@@ -1278,14 +1288,18 @@ footer {
 .login-wrapper, .register-wrapper {
   padding: 20px;
   text-align: justify;
-  -moz-text-align-last: justify;
-  -webkit-text-align-last: justify;
-  text-align-last: justify;
+  line-height: 1;
+  height: 7em;
+  &:after {
+    display: inline-block;
+    content: "";
+    width: 100%;
+  }
   > * { display:inline-block; }
 }
 @media(max-width:550px) {
   .login-wrapper,.register-wrapper {
-    text-align: none;
+    text-align: default;
     > * { display: table; margin: 0 auto 30px;}
   }
 }
@@ -1474,6 +1488,24 @@ footer {
 /*CSS for sidebar ends*/
 
 /*CSS for combo-description begins*/
+.cart-view-row {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  .cart-view {
+    padding: 20px;
+    position: relative;
+    background-color: #555;
+    border-radius: 15px;
+    color: white;
+    .combo-contents { font-size: 13px; }
+    .combo-name { margin-right: 50px; }
+    .combo-price {
+      padding: inherit;
+      position: absolute;
+      top: 0; right: 0;
+    }
+  }
+}
 .combo-option-tabs {
   &:after {
     display: inline-block;
