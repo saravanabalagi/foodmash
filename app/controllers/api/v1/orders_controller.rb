@@ -5,7 +5,7 @@ class Api::V1::OrdersController < ApiApplicationController
 	respond_to :json
 
 	def update
-		if @order and @order.update_attributes! update_order_params
+		if @order and @order.update_attributes update_order_params
 			render status: 201, json: {success: true, data: {total: @order.cart.total, order: {quantity: @order.quantity, total: @order.total} } }
 		else
 			render status: 200, json: {success: false, error: "Could not update the order!"}
@@ -13,7 +13,7 @@ class Api::V1::OrdersController < ApiApplicationController
 	end
 
 	def destroy
-		if @order and @order.destroy!
+		if @order and @order.destroy
 			render status: 201, json: {success: true, data: {total: @order.cart.total}}
 		else
 			render status: 200, json: {success: false}

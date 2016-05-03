@@ -15,7 +15,7 @@ class Api::V1::DeliveryAddressesController < ApiApplicationController
 
 	def create 
 		@delivery_address = @current_user.delivery_addresses.build delivery_address_params
-		if @delivery_address.save!
+		if @delivery_address.save
 			render status: 201, json: {success: true, data: @delivery_addresses.as_json(only: [:id, :line1, :line2, :contact_no, :area_id, :latitude, :longitude, :primary, :name])}
 		else
 			render status: 200, json: {success: false, error: @delivery_address.errors}
@@ -23,7 +23,7 @@ class Api::V1::DeliveryAddressesController < ApiApplicationController
 	end
 
 	def update
-		if @delivery_address and @delivery_address.update_attributes! delivery_address_update_params
+		if @delivery_address and @delivery_address.update_attributes delivery_address_update_params
 			render status: 201, json: {success: true, data: @delivery_addresses.as_json(only: [:id, :line1, :line2, :contact_no, :area_id, :latitude, :longitude, :primary, :name])}
 		else
 			render status: 200, json: {success: false, error: "Could not update delivery address!"}
@@ -31,7 +31,7 @@ class Api::V1::DeliveryAddressesController < ApiApplicationController
 	end
 
 	def destroy
-		if @delivery_address and @delivery_address.destroy!
+		if @delivery_address and @delivery_address.destroy
 			render status: 201, json: {success: true}
 		else
 			render status: 200, json: {success: false, error: "Delivery address could not be found!"}

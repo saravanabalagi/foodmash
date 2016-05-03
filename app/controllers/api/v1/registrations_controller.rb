@@ -8,7 +8,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
   	# Create the user
 	  resource = User.new(sign_up_params)
     # Try to save them
-    if resource.save! 
+    if resource.save 
       session_token = resource.generate_session_token
       resource.sessions.create! session_token: session_token, device_id: params[:android_id]
       SendSignupConfirmationJob.set(wait: 20.seconds).perform_later(resource)

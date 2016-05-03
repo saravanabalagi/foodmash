@@ -13,7 +13,7 @@ class Api::V1::SessionsController < ApiApplicationController
       session_token = session.session_token if session.present?
       unless session.present?
 	  	session_token = resource.generate_session_token
-	  	resource.sessions.create! session_token: session_token, device_id: params[:android_id]
+	  	resource.sessions.create session_token: session_token, device_id: params[:android_id]
 	  end
 	  render status: 201,
 	    json: {
@@ -37,7 +37,7 @@ class Api::V1::SessionsController < ApiApplicationController
 	  return permission_denied unless params[:auth_user_token] == @current_user.user_token
 	  resource = User.find_for_database_authentication(user_token: params[:auth_user_token])
 	  return failure unless resource
-	  resource.sessions.where(session_token: params[:auth_session_token]).first.destroy!
+	  resource.sessions.where(session_token: params[:auth_session_token]).first.destroy
 	  render status: 201, 
 	  json: {
 	  	success: true
