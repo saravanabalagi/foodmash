@@ -60,6 +60,8 @@ gem 'tzinfo-data'
 
 gem 'material_icons'
 
+gem 'prerender_rails'
+
 group :production do
   gem 'execjs'
   gem 'pg'

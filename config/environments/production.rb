@@ -43,6 +43,8 @@ Rails.application.configure do
   ENV['key'] = 'i4GjyD'
   ENV['salt'] = 'YPBylwsU'
 
+  config.middleware.use Rack::Prerender
+
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Specifies the header that your server uses for sending files.
