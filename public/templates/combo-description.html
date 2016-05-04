@@ -4,7 +4,7 @@
   </div>
 
   <div class="combo-option-contents row">
-    <div class="combo-option-wrapper col-md-4 col-sm-6" ng-repeat="combo_option_dish in selectedComboOption.combo_option_dishes | orderBy: 'dish.price'">
+    <div class="combo-option-wrapper col-md-4 col-sm-6" ng-repeat="combo_option_dish in selectedComboOption.combo_option_dishes | orderBy: 'dish.price' | filter:search" ng-init="load()">
 
       <div class="thumbnail combo-option selected">
         <div class="img-wrapper">
