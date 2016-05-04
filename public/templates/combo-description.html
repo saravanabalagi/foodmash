@@ -37,7 +37,7 @@
     </div>
   </div>
 
-  <div class="cart-view-row row" ng-repeat="order in cart.orders">
+  <!-- <div class="cart-view-row row" ng-repeat="order in cart.orders">
     <div class="cart-view col-md-6 col-md-offset-3">
       <div class="combo">
         <span class="combo-name">{{order.product.name}}</span>
@@ -47,7 +47,8 @@
       </div>
       <div class="combo-price"><span class="rupee">₹</span>{{order.total}}</div>
     </div>
-  </div>
+  </div> -->
+  
   <div class="row add-to-cart-wrapper">
     <a ng-click="routeToRoot()" class="btn btn-raised btn-dark" role="button" data-toggle=snackbar data-content="Added to cart" data-timeout="3000"><i class="fa fa-angle-left"></i>Back</a>
     <a ng-click="addCombo(combo)" class="btn btn-raised btn-info" role="button" data-toggle=snackbar data-content="Added to cart" data-timeout="3000"><i class="fa fa-shopping-cart"></i>Add to Cart</a>

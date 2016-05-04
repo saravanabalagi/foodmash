@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('ComboDescriptionController', ['$scope', '$location', 'toaster', 'CartService', 'ComboDescriptionService', '$filter', function($scope, $location, toaster, CartService, ComboDescriptionService, $filter){
+.controller('ComboDescriptionController', ['$scope', '$location', 'toaster', 'CartService', 'ComboDescriptionService', '$filter', '$rootScope', function($scope, $location, toaster, CartService, ComboDescriptionService, $filter, $rootScope){
 
 	$scope.selectedDishes = [];
 	$scope.combo = {};

@@ -18,7 +18,7 @@ angular.module('foodmashApp.controllers')
 				routToCorrectPath();
 				$rootScope.enableButton('.register-button');
 			}, function(reason){
-				toaster.pop('error', 'Was not able to Register!');
+				toaster.pop('error', 'Email or Mobile no was already taken!');
 				$scope.signup.errors = reason;
 				$rootScope.enableButton('.register-button');
 			});
