@@ -1289,7 +1289,6 @@ footer {
   padding: 20px;
   text-align: justify;
   line-height: 1;
-  height: 7em;
   &:after {
     display: inline-block;
     content: "";
@@ -1301,6 +1300,43 @@ footer {
   .login-wrapper,.register-wrapper {
     text-align: default;
     > * { display: table; margin: 0 auto 30px;}
+  }
+}
+.session-tabs {
+  &:after {
+    display: inline-block;
+    width: 100%;
+    position: absolute;
+    height: 1px;
+    background-color: rgba(0,0,0,0.2);
+    left: 0;
+    bottom: -1px;
+    right: 0;
+  }
+  position: relative;
+  text-align: center;
+  margin-bottom: 20px;
+  .tab {
+    &.active {
+      &:hover {
+        color: #111111;
+        border-bottom: 3px solid $logo-red;
+      }
+      color: #111111;
+      border-bottom: 3px solid $logo-red;
+    }
+    &:hover {
+      color: #555555;
+      border-bottom: 3px solid $mild-blue-dark;
+    }
+    color: #999999;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 10px 20px;
+    display: inline-block;
+    vertical-align: middle;
+    transition: all 0.3s ease-in-out;
+    border-bottom: 3px solid transparent;
   }
 }
 /*Signin and Register*/

@@ -1,16 +1,18 @@
  <div class="signin-section">
    <div class="container">
 
-     <form class="col-md-6 col-sm-8 col-sm-offset-2" name="login_form" role="form" ng-submit="submitLogin()" autocomplete="on">
-      <div class="row">
-          <h2 align="center">Sign In</h2>
-      </div>
+   <div class="session-tabs row">
+       <div class="tab active" ng-init="login_tab=true" ng-click="login_tab=!login_tab" onclick="$(this).parent().find('div').removeClass('active');$(this).addClass('active');">Login</div>
+       <div class="tab" ng-click="login_tab=!login_tab" onclick="$(this).parent().find('div').removeClass('active');$(this).addClass('active');">Register</div>
+   </div>
+
+     <form class="col-md-6 col-sm-8 col-md-offset-3 col-sm-offset-2" ng-show="login_tab" name="login_form" role="form" ng-submit="submitLogin()" autocomplete="on">
       <div class="row">
        <div class="form-group label-floating">
          <div class="input-group">
            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-           <label for="login.email" class="control-label" for="email">Email Address</label>
-           <input name="login.email" ng-model="login.email" type="email" id="addon3a" class="form-control" required>
+           <label class="control-label">Email Address</label>
+           <input name="login.email" ng-model="login.email" type="email" class="form-control" required>
            <p class="help-block"></p>
            <span class="input-group-btn hidden">
              <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
@@ -24,8 +26,8 @@
        <div class="form-group label-floating">
          <div class="input-group">
            <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
-           <label for="login.password" class="control-label" for="password">Password</label>
-           <input name="login.password" ng-model="login.password" type="password" id="addon3a" class="form-control" required>
+           <label class="control-label">Password</label>
+           <input name="login.password" ng-model="login.password" type="password" class="form-control" required>
            <p class="help-block"></p>
            <span class="input-group-btn hidden">
              <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
@@ -37,28 +39,19 @@
        </div>
        <div>
          <div class="row login-wrapper">
-           <div class="checkbox login-checkbox">
-             <label>
-               <input type="checkbox">
-               <span style="padding:10px;">Remember me</span>
-             </label>
-           </div>
            <button type="submit" class="btn btn-raised btn-primary btn-login login-button"><i class="fa fa-sign-in"></i>Login</button>
          </div>
        </div>
      </form>
 
 
-       <form class="col-md-6 col-sm-8 col-sm-offset-2" name="signup_form" role="form" ng-submit="submitSignup()" autocomplete="on">
-           <div class="row">
-               <h2 align="center">Register</h2>
-           </div>
+       <form class="col-md-6 col-sm-8 col-md-offset-3 col-sm-offset-2" ng-hide="login_tab" name="signup_form" role="form" ng-submit="submitSignup()" autocomplete="on">
            <div class="row">
                <div class="form-group label-floating">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                       <label class="control-label" for="signup.name">Name</label>
-                       <input name="signup.name" ng-model="signup.name" type="text" id="addon3a" class="form-control" required>
+                       <label class="control-label">Name</label>
+                       <input name="signup.name" ng-model="signup.name" type="text" class="form-control" required>
                        <p class="help-block"></p>
            <span class="input-group-btn hidden">
              <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
@@ -72,8 +65,8 @@
                <div class="form-group label-floating">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                       <label class="control-label" for="signup.email">Email Address</label>
-                       <input  name="signup.email" ng-model="signup.email" type="email" id="addon3a" class="form-control" required>
+                       <label class="control-label">Email Address</label>
+                       <input  name="signup.email" ng-model="signup.email" type="email" class="form-control" required>
                        <p class="help-block"></p>
            <span class="input-group-btn hidden">
              <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
@@ -87,8 +80,8 @@
                <div class="form-group label-floating">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                       <label class="control-label" for="signup.mobile_no">Phone</label>
-                       <input name="signup.mobile_no" ng-model="signup.mobile_no" type="phone" id="addon3a" class="form-control">
+                       <label class="control-label">Phone</label>
+                       <input name="signup.mobile_no" ng-model="signup.mobile_no" type="phone" class="form-control">
                        <p class="help-block"></p>
            <span class="input-group-btn hidden">
              <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
@@ -102,8 +95,8 @@
                <div class="form-group label-floating">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
-                       <label class="control-label" for="signup.password">Password</label>
-                       <input name="signup.password" ng-model="signup.password" type="password" id="addon3a" class="form-control" required>
+                       <label class="control-label">Password</label>
+                       <input name="signup.password" ng-model="signup.password" type="password" class="form-control" required>
                        <p class="help-block"></p>
            <span class="input-group-btn hidden">
              <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
@@ -117,8 +110,8 @@
                <div class="form-group label-floating">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
-                       <label class="control-label" for="signup.password_confirmation">Password Confirmation</label>
-                       <input name="signup.password_confirmation" ng-model="signup.password_confirmation" type="password" id="addon3a" class="form-control" required>
+                       <label class="control-label">Password Confirmation</label>
+                       <input name="signup.password_confirmation" ng-model="signup.password_confirmation" type="password" class="form-control" required>
                        <p class="help-block"></p>
             <span class="input-group-btn hidden">
               <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
@@ -131,8 +124,7 @@
            <div class="row register-wrapper">
                <div class="checkbox register-checkbox">
                    <label>
-                       <input type="checkbox">
-                       <span style="padding:10px;">I accept all <a>terms &amp; conditions</a></span>
+                       <span style="padding:10px;">I accept all terms &amp; conditions</span>
                    </label>
                </div>
                <button type="submit" class="btn btn-raised btn-primary btn-register register-button"><i class="fa fa-user-plus"></i>Register</button>
