@@ -5,7 +5,7 @@ class Web::VersionsController < ApplicationController
 	load_and_authorize_resource skip_load_resource
 
 	def index
-		@versions = Version.where(params.permit(:id, :name))
+		@versions = Version.where(params.permit(:id, :version_name, :version_code))
 		if @versions 
 			render status: 200, json: @versions.as_json
 		else
@@ -45,10 +45,10 @@ class Web::VersionsController < ApplicationController
 	end
 
 	def version_params
-		params.require(:version).permit(:name, :change_log, :force)
+		params.require(:version).permit(:version_name, :changelog, :force, :version_code)
 	end
 
 	def version_update_params
-		params.require(:version).permit(:name, :change_log, :force)
+		params.require(:version).permit(:version_name, :changelog, :force, :version_code)
 	end
 end

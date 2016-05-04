@@ -1,0 +1,16 @@
+
+<td ng-hide="updateShow">{{$index + 1}}</td>
+<td ng-hide="updateShow">{{version.version_name}}</td>
+<td ng-hide="updateShow">{{version.changelog}}</td>
+<td ng-hide="updateShow">{{version.force}}</td>
+<td ng-hide="updateShow">{{version.version_code}}</td>
+<td ng-hide="updateShow" ng-init="updateShow = false" ng-click="updateShow=!updateShow; setUpdate(version)"><i class="icon-edit"></i></td>
+<td ng-hide="updateShow" ng-click="deleteVersion(version)"><i class="icon-trash"></i></td>
+
+<td ng-show="updateShow">{{$index + 1}}</td>
+<td ng-show="updateShow"><input class="form-control" type="text" ng-model="updatedVersion.version_name"></td>
+<td ng-show="updateShow"><input class="form-control" type="text" ng-model="updatedVersion.changelog"></td>
+<td ng-show="updateShow"><input class="form-control" type="checkbox" ng-model="updatedVersion.force"></td>
+<td ng-show="updateShow"><input class="form-control" type="text" ng-model="updatedVersion.version_code"></td>
+<td ng-show="updateShow" ng-click="updateShow=!updateShow"><i class="fa fa-times-circle"></i></td>
+<td ng-show="updateShow" ng-click="updateVersion(version)"><i class="fa fa-check-circle"></i></td>

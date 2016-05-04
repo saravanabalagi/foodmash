@@ -3,7 +3,7 @@
     <section class="sidebar-section">
       <h5>Manage</h5>
       <ul class="sidebar-nav type">
-        <li ng-repeat="option in panelOptions" ng-class="{active: checkIfSelected(option.alias)}" ng-click="selectPanelOption(option.alias)">
+        <li ng-repeat="option in panelOptions" ng-class="{active: checkIfSelected(option.alias)}" ng-click="selectPanelOption(option.alias); loadData()">
           <a>
             <span>{{option.name}}</span>
             <i class="{{option.icon_class}}"></i>
@@ -46,6 +46,10 @@
   <packaging-centres ng-show="checkIfSelected('PackagingCentres')"></packaging-centres>
 
   <cities ng-show="checkIfSelected('Cities')"></cities>
+
+  <promos ng-show="checkIfSelected('Promos')"></promos>
+
+  <versions ng-show="checkIfSelected('Versions')"></versions>
 
   <user-roles ng-show="checkIfSelected('UserRoles')"></user-roles>
 

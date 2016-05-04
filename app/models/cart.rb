@@ -63,6 +63,8 @@ class Cart < ActiveRecord::Base
 			when 'cancel' 
 				self.orders.destroy_all
 				self.delivery_charge = self.vat = self.total = self.grand_total = 0
+				current_user = User.find(self.user_id)
+				current_user.award_mash_cash(-self.awarded_mash_cash, self)
 				cancel!
 			when 'ordered' 
 				self.ordered_at = Time.now
@@ -73,7 +75,10 @@ class Cart < ActiveRecord::Base
 			when 'delivered' 
 				self.delivered_at = Time.now
 				current_user = User.find(self.user_id)
-				current_user.award_mash_cash(0.5 * self.grand_total) if ((self.delivered_at - self.purchased_at) > 1.hour)
+				if self.delivered_at - self.purchased_at > 1.hour
+					amount = 0.15 * self.grand_total 
+					current_user.award_mash_cash(amount, self)
+				end
 				deliver!
 		end
 	end
@@ -172,7 +177,7 @@ class Cart < ActiveRecord::Base
 					end
 				end
 				unless sim
-					future_order = self.orders.build(product_id: cart_item["id"], product_type: cart_item["type"], quantity: cart_item["quantity"], note: cart_item["note"])
+					future_order = self.orders.build(product_id: cart_item["id"], product_type: "Combo", quantity: cart_item["quantity"], note: cart_item["note"])
 					if cart_item["combo_dishes"].present?
 						cart_item["combo_dishes"].each do |combo_dish| 
 							future_order.order_items.build(item_id: combo_dish["dish"]["id"], item_type: "Dish", quantity: combo_dish["quantity"])
@@ -296,6 +301,7 @@ class Cart < ActiveRecord::Base
 		self.total = orders.to_a.sum{|o| (o.order_items.to_a.sum{|oi| (oi.item.price * oi.quantity) || 0} * o.quantity) || 0}
 		self.vat = 0.02 * self.total
 		self.delivery_charge = self.total < 200 ? 30 : 40
+		self.delivery_charge = 100 if self.total >= 1000
 		self.grand_total = self.total + self.vat + self.delivery_charge
 	end
 

@@ -1,5 +1,5 @@
 <a ng-if="currentUser" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-  <span class="username">{{floatToInt(currentUser.mash_cash) | number}}</span><i class="fa fa-user fa-append"></i><span class="caret"></span></a>
+  <span class="username">{{currentUser.name.split(' ')[0]}}</span><i class="fa fa-user fa-append"></i><span class="caret"></span></a>
 <ul ng-if="currentUser" class="dropdown-menu">
   <li ng-click="routToProfile()"><a><i class="fa fa-user pull-right"></i> Account </a></li>
   <li ng-click="routeToCustomerPanel()"><a><i class="fa fa-shopping-bag pull-right"></i> Order History </a></li>

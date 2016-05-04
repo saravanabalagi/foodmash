@@ -35,6 +35,10 @@ Rails.application.routes.draw do
 
     resources :delivery_addresses
 
+    resources :promos
+
+    resources :versions
+
      resources :cities do 
         collection do 
           get '/setCity', to: 'cities#set_city'

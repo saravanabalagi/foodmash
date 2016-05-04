@@ -31,7 +31,7 @@ class Web::DishesController < ApplicationController
 	end
 
 	def destroy
-		if @dish && @dish.update_attributes!(arcive: true, available: false)
+		if @dish && @dish.update_attributes!(archive: true, available: false)
 		  head :ok
 		else
 		  render status: 404, json: {error: "Dish with id #{params[:id]} not found!"}

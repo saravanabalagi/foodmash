@@ -108,27 +108,31 @@ angular.module('foodmashApp.controllers')
 			toaster.pop('info', 'Delivery Address needs to be selected!');
 			return ;
 		}
-		if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'Payu'){
-			$scope.setup_details["amount"] = $scope.cart.grand_total;
-			Payment.getHash($scope.setup_details).then(function(response){
-				$scope.setup_details = response.setup_details;
-				$scope.processCart();
-				angular.element(document).ready(function (){
-					$('#payu-payment-form').submit();
+		if(checkIfDifferentDishtypesInCart()){
+			if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'Payu'){
+				$scope.setup_details["amount"] = $scope.cart.grand_total;
+				Payment.getHash($scope.setup_details).then(function(response){
+					$scope.setup_details = response.setup_details;
+					$scope.processCart();
+					angular.element(document).ready(function (){
+						$('#payu-payment-form').submit();
+					});
+				}, function(err){
+					toaster.pop('error', 'Could not generate hash');
 				});
-			}, function(err){
-				toaster.pop('error', 'Could not generate hash');
-			});
-		}if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
-			$rootScope.disableButton('.cod-button', 'Confirming...');
-			Payment.purchaseForCod($scope.cart).then(function(response){
-				toaster.pop('success', 'Cart was purchased!');
-				$rootScope.enableButton('.cod-button');
-				refreshCartAndSelectDelAdd();
-			}, function(err){
-				toaster.pop('error', 'Cart was not purchased!');
-				$rootScope.enableButton('.cod-button');
-			});
+			}if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
+				$rootScope.disableButton('.cod-button', 'Confirming...');
+				Payment.purchaseForCod($scope.cart).then(function(response){
+					toaster.pop('success', 'Cart was purchased!');
+					$rootScope.enableButton('.cod-button');
+					refreshCartAndSelectDelAdd();
+				}, function(err){
+					toaster.pop('error', 'Cart was not purchased!');
+					$rootScope.enableButton('.cod-button');
+				});
+			}
+		}else{
+			toaster.pop('error', 'Add atleast 2 different dish types to cart!');
 		}
 	};
 
@@ -206,17 +210,46 @@ angular.module('foodmashApp.controllers')
 		return false;
 	};
 
+	$scope.floatToInt = function(value){
+    	return value | 0;
+  	};
+
+	function checkIfDifferentDishtypesInCart(){
+		var check = false;
+		if($scope.cart && $scope.cart.grand_total){
+			var dish_types = new Set();
+			$scope.cart.orders.filter(function(order){
+				order.order_items.filter(function(order_item){
+					if(!dish_types.has(order_item.item.dish_type_id)){
+						dish_types.add(order_item.item.dish_type_id);
+					}
+				});
+			});
+			if(dish_types.size >= 2){
+				check = true;
+			}
+		}
+		return check;
+	};
+
 	function useMashCash(mash_cash){
 		if(mash_cash <= 0){
 			toaster.pop('error', 'Mash Cash entered is negligible!');
 		}else if(mash_cash > 0 && mash_cash < 150){
-			toaster.pop('error', 'Mash Cash must be 150 or more to be utilized!');
-		}else if(mash_cash >=150 && $scope.cart.grand_total && !$scope.mash_cash && mash_cash <= $rootScope.currentUser.mash_cash){
-			$scope.mash_cash = mash_cash;
-			$scope.cart.grand_total -= $scope.mash_cash;
-			$scope.cart.grand_total = $scope.cart.grand_total.toFixed(2);
-			$scope.cart.mash_cash = $scope.mash_cash;
-			toaster.pop('success', 'Mash Cash of ' + $scope.mash_cash + ' was used!');
+			toaster.pop('error', 'Mash Cash less than 150 cannot be utilized!');
+		}else if(mash_cash >=150 && $scope.cart.grand_total && !$scope.mash_cash){
+			if(mash_cash > $scope.cart.grand_total){
+				toaster.pop('error', 'Cart grand total is lesser than Mash Cash value!');
+			}else if($rootScope.currentUser.mash_cash >= 150 && mash_cash <= $rootScope.currentUser.mash_cash){
+				$scope.mash_cash = mash_cash;
+				$scope.cart.grand_total -= $scope.mash_cash;
+				$scope.cart.grand_total = $scope.cart.grand_total.toFixed(2);
+				$scope.cart.mash_cash = $scope.mash_cash;
+				toaster.pop('success', 'Mash Cash of ' + $scope.mash_cash + ' was used!');
+			}
+			else{
+				toaster.pop('error', 'Your account does not have enough Mash Cash!');
+			}
 		}
 	};
 
@@ -241,6 +274,7 @@ angular.module('foodmashApp.controllers')
 			}
 		}, function(err){
 			toaster.pop('error', 'Failed to apply promo code!');
+			$scope.promo = {};
 		});
 	};
 

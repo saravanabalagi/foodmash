@@ -1,0 +1,41 @@
+
+ <div class="col-md-12">
+
+   <table class="table table-striped table-hover table-panel">
+     <thead>
+     <tr>
+       <th class="th-xs">#</th>
+       <th>
+         <div class="form-group label-floating is-empty">
+           <label class="control-label">Code</label>
+           <input class="form-control" type="text" ng-model="promo.code">
+           <span class="material-input"></span>
+         </div>
+       </th>
+        <th>
+         <div class="form-group label-floating is-empty">
+           <label class="control-label">Discount Percentage</label>
+           <input class="form-control" type="number" min="0" max="1" step="0.05" ng-model="promo.discount_percentage">
+           <span class="material-input"></span>
+         </div>
+       </th>
+       <th>
+         <div class="form-group label-floating is-empty">
+           <label class="control-label">Active</label>
+           <input class="form-control" type="checkbox" ng-model="promo.active">
+           <span class="material-input"></span>
+         </div>
+       </th>
+       <th class="th-xs"></th>
+       <th class="th-xs" ng-click="addPromo()"><i class="material-icons">add_circle_outline</i></th>
+     </tr>
+     </thead>
+     <tbody>
+
+    <tr promo ng-repeat="promo in promos"></tr>
+      
+     </tbody>
+   </table>
+
+ </div>
+
