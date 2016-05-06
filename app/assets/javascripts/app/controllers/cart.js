@@ -72,7 +72,7 @@ angular.module('foodmashApp.controllers')
 	 }
 
 	$scope.isDeliveryAddressSelected = function(delivery_address){
-		if($scope.cart.delivery_address_id == delivery_address.id){
+		if($scope.cart.delivery_address_id && $scope.cart.delivery_address_id == delivery_address.id){
 			return true;
 		}else{
 			return false;
@@ -94,7 +94,8 @@ angular.module('foodmashApp.controllers')
 	};
 
 	$scope.proceedToPayment = function(){
-		if($scope.validateCart()){
+		console.log($scope.cart);
+		if(validateCart()){
 			if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'Payu'){
 				$scope.setup_details["amount"] = $scope.cart.grand_total;
 				Payment.getHash($scope.setup_details).then(function(response){
@@ -198,7 +199,7 @@ angular.module('foodmashApp.controllers')
     	return value | 0;
   	};
 
-  	$scope.validateCart = function(){
+  	function validateCart(){
   		if($scope.cart.total == 0){
   			toaster.pop('info', 'Cart is empty!');
   			return false;
@@ -209,7 +210,7 @@ angular.module('foodmashApp.controllers')
   			$rootScope.storeLocation = '/cart';
   			return false;
   		}
-  		if(!angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser){
+  		if($rootScope.currentUser && !isDeliveryAddressSelectedFromList()){
   			toaster.pop('info', 'Delivery Address needs to be selected!');
   			return false;
   		}
@@ -218,6 +219,16 @@ angular.module('foodmashApp.controllers')
   			return false;
   		}
   		return true;
+  	};
+
+  	function isDeliveryAddressSelectedFromList(){
+  		var check = false;
+  		$scope.delivery_addresses.filter(function(del_add){
+  			if($scope.isDeliveryAddressSelected(del_add)){
+  				check = true;
+  			}
+  		});
+  		return check;
   	};
 
 	function checkIfDifferentDishtypesInCart(){
