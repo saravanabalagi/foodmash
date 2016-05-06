@@ -94,21 +94,7 @@ angular.module('foodmashApp.controllers')
 	};
 
 	$scope.proceedToPayment = function(){
-		if($scope.cart.total == 0){
-			toaster.pop('info', 'Cart is empty!');
-			return ;
-		}
-		if(!$rootScope.currentUser){
-			toaster.pop('info', 'Login and continue');
-			$location.path('/login');
-			$rootScope.storeLocation = '/cart';
-			return ;
-		}
-		if(!angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser){
-			toaster.pop('info', 'Delivery Address needs to be selected!');
-			return ;
-		}
-		if(checkIfDifferentDishtypesInCart()){
+		if($scope.validateCart()){
 			if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'Payu'){
 				$scope.setup_details["amount"] = $scope.cart.grand_total;
 				Payment.getHash($scope.setup_details).then(function(response){
@@ -131,8 +117,6 @@ angular.module('foodmashApp.controllers')
 					$rootScope.enableButton('.cod-button');
 				});
 			}
-		}else{
-			toaster.pop('error', 'Add atleast 2 different dish types to cart!');
 		}
 	};
 
@@ -212,6 +196,28 @@ angular.module('foodmashApp.controllers')
 
 	$scope.floatToInt = function(value){
     	return value | 0;
+  	};
+
+  	$scope.validateCart = function(){
+  		if($scope.cart.total == 0){
+  			toaster.pop('info', 'Cart is empty!');
+  			return false;
+  		}
+  		if(!$rootScope.currentUser){
+  			toaster.pop('info', 'Login and continue');
+  			$location.path('/login');
+  			$rootScope.storeLocation = '/cart';
+  			return false;
+  		}
+  		if(!angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser){
+  			toaster.pop('info', 'Delivery Address needs to be selected!');
+  			return false;
+  		}
+  		if(!checkIfDifferentDishtypesInCart()){
+  			toaster.pop('error', 'Add atleast 2 different dish types to cart!');
+  			return false;
+  		}
+  		return true;
   	};
 
 	function checkIfDifferentDishtypesInCart(){

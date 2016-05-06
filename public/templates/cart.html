@@ -132,7 +132,7 @@
     </div>
   </div>
 
-  <form style="display: none" id="payu-payment-form" action="https://secure.payu.in/_payment/" method="post" ng-show="setup_details">
+  <form style="display: none" id="payu-payment-form" action="https://secure.payu.in/_payment/" method="post" ng-show="setup_details" ng-if="validateCart()">
     <input hidden name="firstname" value="{{setup_details.firstname}}" />
     <input hidden name="email" value="{{setup_details.email}}" />
     <input hidden name="amount" value="{{setup_details.amount}}" />
