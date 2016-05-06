@@ -223,11 +223,13 @@ angular.module('foodmashApp.controllers')
 
   	function isDeliveryAddressSelectedFromList(){
   		var check = false;
-  		$scope.delivery_addresses.filter(function(del_add){
-  			if($scope.isDeliveryAddressSelected(del_add)){
-  				check = true;
-  			}
-  		});
+  		if($scope.delivery_addresses.length > 0){
+	  		$scope.delivery_addresses.filter(function(del_add){
+	  			if($scope.isDeliveryAddressSelected(del_add)){
+	  				check = true;
+	  			}
+	  		});
+  		}
   		return check;
   	};
 
