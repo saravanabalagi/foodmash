@@ -94,7 +94,6 @@ angular.module('foodmashApp.controllers')
 	};
 
 	$scope.proceedToPayment = function(){
-		console.log($scope.cart);
 		if(validateCart()){
 			if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'Payu'){
 				$scope.setup_details["amount"] = $scope.cart.grand_total;
