@@ -77,7 +77,7 @@ class Web::PaymentsController < ApplicationController
  	end
 
  	def set_payu_processed_cart
- 		@cart = Cart.where(order_id: params[:txnid]).first.presence
+ 		@cart = Cart.find_by(order_id: params[:txnid])
  	end
 
  	def check_for_promo_and_set(cart)
