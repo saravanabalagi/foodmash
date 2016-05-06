@@ -156,6 +156,14 @@ angular.module('foodmashApp.controllers')
         }
     };
 
+    $scope.calculatePorderPrice = function(pOrders){
+    	var total = 0;
+    	pOrders.filter(function(pOrder){
+    		total += pOrder.quantity * pOrder.item.price
+    	});
+    	return total
+    }
+
 	function findNextStatus(cart_status){
 		$scope.statuses.filter(function(status){
 			if(status.name == cart_status){

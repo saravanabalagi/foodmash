@@ -122,11 +122,11 @@
           </tbody>
         </table>
 
-        <div class="restaurant-based-order-description" ng-repeat="pOrder in packaging_centre_orders">
+        <div class="restaurant-based-order-description" ng-repeat="(restaurant, pOrders) in packaging_centre_orders | groupBy: 'item.restaurant.id'">
           <div class="restaurant-order-header">
-            <span class="restaurant-name">{{pOrder.item.restaurant.name}} <span class="restaurant-branch">{{pOrder.item.restaurant.branch}}</span></span>
+            <span class="restaurant-name">{{pOrders[0].item.restaurant.name}} <span class="restaurant-branch">{{pOrders[0].item.restaurant.branch}}</span></span>
             <span class="restaurant-contact-wrapper">
-              <span class="restaurant-contact"><a href="tel:+91 {{pOrder.item.restaurant.landline}}">+91 {{pOrder.item.restaurant.landline}}</a></span>
+              <span class="restaurant-contact"><a href="tel:+91 {{pOrders[0].item.restaurant.landline}}">+91 {{pOrders[0].item.restaurant.landline}}</a></span>
               <i class="fa fa-question-circle" title="Contact Details" data-placement="bottom" data-content="Address and other contact here" data-toggle="popover" data-trigger="hover"></i>
             </span>
           </div>
@@ -141,7 +141,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr ng-repeat="pOrder in pOrders">
                   <td>{{$index + 1}}</td>
                   <td>{{pOrder.item.name}}</td>
                   <td>x {{pOrder.quantity}}</td>
@@ -153,7 +153,7 @@
                   <td></td>
                   <td>Total</td>
                   <td></td>
-                  <td><span class="rupee"></span>{{pOrder.quantity * pOrder.item.price}}</td>
+                  <td><span class="rupee"></span>{{calculatePorderPrice(pOrders)}}</td>
                 </tr>
               </tfoot>
             </table>

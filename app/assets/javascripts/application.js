@@ -19,6 +19,7 @@
 //= require angular-local-storage/dist/angular-local-storage
 //= require lodash/lodash
 //= require jquery/dist/jquery
+//= require angular-filter/dist/angular-filter
 //= require bootstrap
 //= require ng-file-upload
 //= require ripples

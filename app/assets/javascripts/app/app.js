@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources', 
 	'foodmashApp.services', 'ngCookies', 'foodmashApp.directives', 'foodmashApp.controllers', 
-	'foodmashApp.interceptors', 'toaster', 'ngFileUpload', 'ngSanitize', 'LocalStorageModule'])
+	'foodmashApp.interceptors', 'toaster', 'ngFileUpload', 'ngSanitize', 'LocalStorageModule', 'angular.filter'])
 
 .config(['$routeProvider', '$locationProvider', '$httpProvider','railsSerializerProvider', 'localStorageServiceProvider', function($routeProvider, $locationProvider, $httpProvider, railsSerializerProvider, localStorageServiceProvider){
 	

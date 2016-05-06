@@ -22,7 +22,8 @@
     "jquery": "~2.1.4",
     "ng-load": "~1.0.2",
     "ng-file-upload": "~9.0.13",
-    "angular-local-storage": "~0.2.7"
+    "angular-local-storage": "~0.2.7",
+    "angular-filter": "~0.5.8"
   },
   "resolutions": {
     "angular-material": "~0.11.4"
