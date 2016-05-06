@@ -56,34 +56,59 @@ class Cart < ActiveRecord::Base
 		self.save!
 	end
 
+	def remove_fields_from_payu
+		self.mihpayid = nil
+		self.payment_method = nil
+		self.payment_status = nil
+		self.payment_unmappedstatus = nil
+		self.payment_card_category = nil
+		self.payment_source = nil
+		self.pg_type = nil
+		self.bank_ref_num = nil
+		self.bankcode = nil
+		self.payment_error = nil
+		self.payment_error_message = nil
+		self.payment_name_on_card = nil
+		self.payment_card_no = nil
+		self.issuing_bank = nil
+		self.payment_card_type = nil
+		self.purchased_at = nil
+	end
+
 	def change_status(status)
 		case status
 			when 'purchase' 
 				purchase!
 			when 'cancel' 
-				self.orders.destroy_all
-				self.delivery_charge = self.vat = self.total = self.grand_total = 0
-				current_user = User.find(self.user_id)
-				current_user.award_mash_cash(-self.awarded_mash_cash, self)
-				self.promo_discount = self.promo_id = nil
-				current_user.award_mash_cash(self.mash_cash)
-				self.mash_cash = nil
-				cancel!
-			when 'ordered' 
-				self.ordered_at = Time.now
-				order_cart!
-			when 'dispatched' 
-				self.dispatched_at = Time.now
-				dispatch!
-			when 'delivered' 
-				self.delivered_at = Time.now
-				current_user = User.find(self.user_id)
-				if self.delivered_at - self.purchased_at > 1.hour
-					amount = 0.15 * self.grand_total 
-					current_user.award_mash_cash(amount, self)
+				if cancel!
+					self.orders.destroy_all
+					self.delivery_charge = self.vat = self.total = self.grand_total = 0
+					current_user = User.find(self.user_id)
+					current_user.award_mash_cash(-self.awarded_mash_cash, self)
+					self.promo_discount = self.promo_id = nil
+					current_user.award_mash_cash(self.mash_cash)
+					self.mash_cash = nil
+					self.remove_fields_from_payu
 				end
-				deliver!
+			when 'ordered' 
+				if order_cart!
+					self.ordered_at = Time.now
+				end
+			when 'dispatched' 
+				if dispatch!
+					self.dispatched_at = Time.now
+				end
+			when 'delivered' 
+				if deliver!
+					self.delivered_at = Time.now
+					current_user = User.find(self.user_id)
+					if self.delivered_at - self.purchased_at > 1.hour
+						amount = 0.15 * self.grand_total 
+						current_user.award_mash_cash(amount, self)
+					end
+				end
 		end
+		self.save!
 	end
 
 	def add_items_to_cart(cart)
