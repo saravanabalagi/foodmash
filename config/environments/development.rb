@@ -28,8 +28,8 @@ Rails.application.configure do
   ENV['SECRET_ACCESS_KEY'] = 'ptmn4Lf4hOzcdf5x4VhyHYs4BkMqvwP0f3hyMnMa'
 
   # config.action_mailer.default_url_options = {host: 'localhost:3000'}
- config.action_mailer.delivery_method = :mailgun
- config.action_mailer.mailgun_settings = {
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = {
     api_key: 'key-94f4c01f83062ed201fee0c4463bacf5',
     domain: 'foodmash.in'
   } 
@@ -38,6 +38,10 @@ Rails.application.configure do
   ENV['salt'] = 'eCwWELxi'
 
   ENV['mailgun_api_key'] = 'key-94f4c01f83062ed201fee0c4463bacf5'
+
+  ENV['twilio-account-sid'] = 'ACa3f2ecc971d8239bdff382d6dfbcccdc'
+  ENV['twilio-auth-token'] = '075fed6cc817260e1dcb16d5ba3e615b'
+
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load

@@ -89,6 +89,15 @@ class User < ActiveRecord::Base
   def invitation_token=(token)
     self.invitation = Invitation.find_by(token: token)
   end
+
+  def send_sms(message)
+    @client = Twilio::REST::Client.new
+    @client.messages.create(
+      from: '+12407700044',
+      to: '+91' + self.mobile_no,
+      body: message
+    )
+  end
   
   private
 

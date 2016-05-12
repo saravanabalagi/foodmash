@@ -12,6 +12,7 @@ class SessionsController < Devise::SessionsController
     return failure unless resource.valid_password?(params[:user][:password])
     sign_in(resource)
     session_token = resource.generate_session_token
+    resource.send_sms('Welcome to the Foodmash experience, you are going to love it!')
     resource.sessions.create! session_token: session_token
     render status: 200,
       json: {

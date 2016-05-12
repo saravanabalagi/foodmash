@@ -317,7 +317,11 @@ angular.module('foodmashApp.controllers')
 				$scope.cart.delivery_charge = 30;
 				$scope.cart.grand_total = ($scope.cart.total + $scope.cart.vat + $scope.cart.delivery_charge).toFixed(2);
 			}else{
-				$scope.cart.delivery_charge = 40;
+				if($scope.cart.total >= 1000){
+					$scope.cart.delivery_charge = 100;
+				}else{
+					$scope.cart.delivery_charge = 40;
+				}
 				$scope.cart.grand_total = ($scope.cart.total + $scope.cart.vat + $scope.cart.delivery_charge).toFixed(2);
 			}
 		}else{
