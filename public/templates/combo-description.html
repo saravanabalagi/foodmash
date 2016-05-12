@@ -1,4 +1,10 @@
 <div class="container" ng-init="load()">
+
+  <div class="row add-to-cart-wrapper">
+    <a ng-click="routeToRoot()" class="btn btn-raised btn-dark" role="button" data-toggle=snackbar data-content="Added to cart" data-timeout="3000"><i class="fa fa-angle-left"></i>Back</a>
+    <a ng-click="addCombo(combo)" class="btn btn-raised btn-info" role="button" data-toggle=snackbar data-content="Added to cart" data-timeout="3000"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
+  </div>
+
   <div class="combo-option-tabs row">
     <div class="tab" ng-repeat="combo_option in combo.combo_options | orderBy: 'priority'" ng-class="{'active': checkIfComboOptionSelected(combo_option)}" ng-click="selectComboOption(combo_option)">{{combo_option.name}}</div>
   </div>
@@ -48,9 +54,4 @@
       <div class="combo-price"><span class="rupee">₹</span>{{order.total}}</div>
     </div>
   </div> -->
-  
-  <div class="row add-to-cart-wrapper">
-    <a ng-click="routeToRoot()" class="btn btn-raised btn-dark" role="button" data-toggle=snackbar data-content="Added to cart" data-timeout="3000"><i class="fa fa-angle-left"></i>Back</a>
-    <a ng-click="addCombo(combo)" class="btn btn-raised btn-info" role="button" data-toggle=snackbar data-content="Added to cart" data-timeout="3000"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
-  </div>
 </div>
