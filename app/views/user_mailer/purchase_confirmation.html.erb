@@ -23,12 +23,12 @@
 <div style="font-family: 'Segoe UI Light'; background-color: #111; color:#EEE; text-align: center;">
   <div style="padding: 20px;">
     <img style="width: 200px; height: auto;"
-         src="<%= asset_path('logo_hybrid_transparent.png') %>">
+         src="https://s3-ap-southeast-1.amazonaws.com/foodmash-india/assets/logo_hybrid_transparent.png">
   </div>
   <div class="content">
     <div class="title-wrapper">
       <div style="text-align: center; padding: 10px;">
-        <img style="display: inline-block; vertical-align: middle; width: 60px; height: auto;" src="<%= asset_path('tick_filled.svg') %>">
+        <img style="display: inline-block; vertical-align: middle; width: 60px; height: auto;" src="https://s3-ap-southeast-1.amazonaws.com/foodmash-india/assets/tick_filled.svg">
         <span style="display: inline-block; vertical-align: middle; font-family: 'Myriad Pro'; font-size: 25px; color: #009900; font-weight: bolder;">Order successfully placed</span>
       </div>
       <div class="title-message">Your order <strong><%= @cart.order_id.upcase %></strong> for <strong>INR <%= @cart.grand_total %></strong> has been received</div>
