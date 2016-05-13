@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-ruby '2.2.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
@@ -59,8 +58,6 @@ gem 'tzinfo-data'
 #for payment gateway integration
 
 gem 'material_icons'
-
-gem 'prerender_rails'
 
 group :production do
   gem 'execjs'
