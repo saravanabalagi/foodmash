@@ -6,21 +6,21 @@
           <span class="rupee">₹</span>
           <span>{{combo.price}}</span>
         </div> -->
-        <a class="btn btn-border btn-raised btn-fab btn-fab-nano info-button" role="button" ng-init="overlayShown=false" ng-click="overlayShown=!overlayShown"><i class="fa fa-info"></i> </a>
+        <a ng-if="!combo.customizable" class="btn btn-border btn-semi-transparent btn-raised btn-fab btn-fab-micro info-button" role="button" ng-init="overlayShown=false" ng-click="overlayShown=!overlayShown"><i class="fa fa-info"></i> </a>
         <div class="bottom-overlay">
             <div class="bottom-bar">
                 <div class="combo-name">{{combo.name}}</div>
                 <div class="quantity-counter-wrapper" ng-if="!combo.customizable">
                     <div class="quantity-counter">
-                        <a class="btn btn-border btn-raised btn-fab btn-fab-nano" ng-show="combo.quantity" role="button" ng-click="removeCombo(combo)"><i class="material-icons">remove</i> </a>
+                        <a class="btn btn-border btn-raised btn-semi-transparent btn-fab btn-fab-micro" ng-show="combo.quantity" role="button" ng-click="removeCombo(combo)"><i class="material-icons">remove</i> </a>
                         <span class="quantity" ng-show="combo.quantity">{{combo.quantity}}</span>
-                        <a class="btn btn-border btn-raised btn-fab btn-fab-nano" role="button" ng-click="addCombo(combo)"><i class="material-icons">add</i> </a>
+                        <a class="btn btn-border btn-raised btn-semi-transparent btn-fab btn-fab-micro" role="button" ng-click="addCombo(combo)"><i class="material-icons">add</i> </a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="info-overlay" ng-show="overlayShown">
-            <a class="btn btn-border btn-raised btn-fab btn-fab-nano info-close-button" role="button" ng-click="overlayShown=!overlayShown"><i class="fa fa-close"></i> </a>
+            <a class="btn btn-border btn-raised btn-fab btn-semi-transparent btn-fab-micro info-close-button" role="button" ng-click="overlayShown=!overlayShown"><i class="fa fa-close"></i> </a>
             <div class="combo-contents-wrapper">
                 <ul class="combo-contents">
                     <li ng-repeat="combo_option in combo.combo_options">
