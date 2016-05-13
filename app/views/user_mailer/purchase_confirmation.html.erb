@@ -72,14 +72,14 @@
 	<div class="parent">
 		<div class="logo-wrapper">
 			<img class="logo" 
-				src="<%= asset_path('logo_hybrid_transparent.png') %>">
+				src="https://s3-ap-southeast-1.amazonaws.com/foodmash-india/assets/logo_transparent.png">
 		</div>
 		<div class="content">
 			<div class="title-wrapper"> 
-				<div class="title-icon-wrapper">
+				<!-- <div class="title-icon-wrapper">
 					<img class="title-icon" src="<%= asset_path('tick_filled.svg') %>">
 					<span class="title-info">Order successfully placed</span>
-				</div>
+				</div> -->
 				<div class="title-message">Your order <strong><%= @cart.order_id %></strong> for <strong>INR <%= @cart.grand_total %></strong> has been received</div>
 			</div>
 			<div class="message"></div>
