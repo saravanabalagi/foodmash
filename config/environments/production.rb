@@ -35,6 +35,8 @@ Rails.application.configure do
   # Asset digests allow you to set far-future HTTP expiration dates on all assets,
   # yet still be able to expire them through the digest params.
   config.assets.digest = true
+	
+  ENV["SECRET_KEY_BASE"] = '04d5864597cb971607731236ef819ce855fb76b3ec60cac56ae3e611a83e55dde33acc6c5d7e5296a68cb0638a283d02052de99f7ef0f3214d505ed4c37c8c04'
 
   ENV['BUCKET_NAME'] = 'foodmash-india'
   ENV['ACCESS_KEY_ID'] = 'AKIAIHVZIHUKB5JAAZJA'
