@@ -6,7 +6,7 @@
           <span class="rupee">₹</span>
           <span>{{combo.price}}</span>
         </div> -->
-        <a class="btn btn-semi-transparent btn-raised btn-fab btn-fab-micro info-button" role="button" ng-init="overlayShown=false" ng-click="overlayShown=!overlayShown"><i class="fa fa-info"></i> </a>
+        <a ng-hide="combo.customizable" class="btn btn-semi-transparent btn-raised btn-fab btn-fab-micro info-button" role="button" ng-init="overlayShown=false" ng-click="overlayShown=!overlayShown"><i class="fa fa-info"></i> </a>
         <div class="bottom-overlay">
             <div class="bottom-bar">
                 <div class="combo-name">{{combo.name}}</div>
