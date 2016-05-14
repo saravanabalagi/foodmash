@@ -5,14 +5,21 @@
        <div class="tab active" ng-init="login_tab=true" ng-click="login_tab=!login_tab" onclick="$(this).parent().find('div').removeClass('active');$(this).addClass('active');">Login</div>
        <div class="tab" ng-click="login_tab=!login_tab" onclick="$(this).parent().find('div').removeClass('active');$(this).addClass('active');">Register</div>
    </div>
-
+    <div class="col-md-6 col-md-offset-3 text-align-center" ng-show="forgot_password" style="padding: 10px;">
+        We will send you a <strong>One Time Password (OTP)</strong> to your registered mobile number. <br> Enter it here to reset your password
+    </div>
      <form class="col-md-6 col-sm-8 col-md-offset-3 col-sm-offset-2" ng-show="login_tab" name="login_form" role="form" ng-submit="submitLogin()" autocomplete="on">
-      <div class="row">
-       <div class="form-group label-floating">
+      <div class="row" ng-hide="get_otp">
+       <div class="form-group label-floating is-empty">
          <div class="input-group">
-           <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-           <label class="control-label">Email Address</label>
-           <input name="login.email" ng-model="login.email" type="email" class="form-control" required>
+             <!--//TODO change is_phone to true if only numbers are present-->
+             <!--//TODO change is_phone to false empty or contains anything other than numbers-->
+           <span ng-hide="is_phone" class="input-group-addon"><i class="fa fa-envelope"></i></span>
+           <span ng-show="is_phone" class="input-group-addon"><i class="fa fa-phone"></i></span>
+            <!--//TODO Allow signing in using mobile number-->
+           <label class="control-label">Email Address / Mobile Number</label>
+           <input ng-show="is_phone" type="text" disabled="disabled" class="form-control" value="+91" style="width: 30px; margin-right: 10px; ">
+           <input name="login.email" ng-model="login.email" type="text" ng-class="{'is-phone': is_phone}" class="form-control" required>
            <p class="help-block"></p>
            <span class="input-group-btn hidden">
              <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
@@ -22,24 +29,37 @@
          </div>
        </div>
       </div>
-      <div class="row">
-       <div class="form-group label-floating">
-         <div class="input-group">
-           <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
-           <label class="control-label">Password</label>
-           <input name="login.password" ng-model="login.password" type="password" class="form-control" required>
-           <p class="help-block"></p>
-           <span class="input-group-btn hidden">
-             <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
-               <i class="fa fa-question"></i>
-             </a>
-           </span>
+     <div class="row" ng-hide="forgot_password || get_otp">
+         <div class="form-group label-floating is-empty">
+             <div class="input-group">
+                 <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
+                 <label class="control-label">Password</label>
+                 <input name="login.password" ng-model="login.password" type="password" class="form-control" required>
+                 <p class="help-block"></p>
+       <span class="input-group-btn hidden">
+         <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
+             <i class="fa fa-question"></i>
+         </a>
+       </span>
+             </div>
          </div>
-       </div>
-       </div>
+     </div>
+     <div class="row" ng-show="get_otp">
+         <div class="form-group label-floating is-empty">
+             <div class="input-group">
+                 <span class="input-group-addon"><i class="fa fa-shield"></i></span>
+                 <label class="control-label">One Time Password (OTP)</label>
+                 <input name="login.password" ng-model="login.otp" type="password" class="form-control" required>
+             </div>
+         </div>
+     </div>
        <div>
-         <div class="row login-wrapper">
-           <button type="submit" class="btn btn-raised btn-primary btn-login login-button"><i class="fa fa-sign-in"></i>Login</button>
+         <div class="row login-wrapper" style="text-align: center">
+            <button ng-hide="forgot_password" type="button" class="btn btn-raised btn-primary btn-login" ng-init="forgot_password=false" ng-click="forgot_password=!forgot_password"><i class="fa fa-key"></i>Forgot Password</button>
+            <button ng-hide="forgot_password" type="submit" class="btn btn-raised btn-success btn-login login-button"><i class="fa fa-sign-in"></i>Login</button>
+            <button ng-show="forgot_password && !get_otp" type="button" class="btn btn-raised btn-success btn-login" ng-init="get_otp=false" ng-click="get_otp=!get_otp"><i class="fa fa-key"></i>Get OTP</button>
+            <button ng-show="get_otp" type="button" class="btn btn-raised btn-success btn-login"><i class="fa fa-key"></i>Reset Password</button>
+            <button ng-show="forgot_password" type="button" class="btn btn-raised btn-primary btn-login" ng-click="forgot_password=false; get_otp=false"><i class="fa fa-times-circle"></i>Cancel</button>
          </div>
        </div>
      </form>
@@ -47,7 +67,7 @@
 
        <form class="col-md-6 col-sm-8 col-md-offset-3 col-sm-offset-2" ng-hide="login_tab" name="signup_form" role="form" ng-submit="submitSignup()" autocomplete="on">
            <div class="row">
-               <div class="form-group label-floating">
+               <div class="form-group label-floating is-empty">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
                        <label class="control-label">Name</label>
@@ -62,7 +82,7 @@
                </div>
            </div>
            <div class="row">
-               <div class="form-group label-floating">
+               <div class="form-group label-floating is-empty">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                        <label class="control-label">Email Address</label>
@@ -80,8 +100,9 @@
                <div class="form-group label-floating">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                       <label class="control-label">Phone</label>
-                       <input name="signup.mobile_no" ng-model="signup.mobile_no" type="phone" class="form-control">
+                       <label class="control-label">Mobile Number</label>
+                       <input type="text" disabled="disabled" class="form-control" value="+91" style="width: 30px; margin-right: 10px; ">
+                       <input name="signup.mobile_no" ng-model="signup.mobile_no" type="phone" class="form-control" style="width: calc(100% - 40px);">
                        <p class="help-block"></p>
            <span class="input-group-btn hidden">
              <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
@@ -92,7 +113,7 @@
                </div>
            </div>
            <div class="row">
-               <div class="form-group label-floating">
+               <div class="form-group label-floating is-empty">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
                        <label class="control-label">Password</label>
@@ -107,7 +128,7 @@
                </div>
            </div>
            <div class="row">
-               <div class="form-group label-floating">
+               <div class="form-group label-floating is-empty">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
                        <label class="control-label">Password Confirmation</label>

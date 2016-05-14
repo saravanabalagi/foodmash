@@ -1,31 +1,86 @@
-  <div class="col-md-6 order-history col-md-offset-1" ng-init="load()">
-    <form class="user-info" name="profileUpdateForm" ng-submit="updateProfile()">
-      <div>
-        <i class="fa fa-user"></i>
-        <input type="text" class="user-name" id="user-name" ng-model="user.name" />
+<div class="sidebar-wrapper sidebar-open" ng-init="load()">
+  <div class="sidebar">
+    <section class="sidebar-section">
+      <h5>Quick Links</h5>
+      <ul class="sidebar-nav group-size">
+        <li ng-click="routeToCustomerPanel()">
+          <a>
+            <span>Order History</span>
+            <i class="fa fa-shopping-bag pull-right"></i>
+          </a>
+        </li>
+        <li ng-click="routeToCustomerPanel()">
+          <a>
+            <span>Contact Us</span>
+            <i class="fa fa-phone pull-right"></i>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </div>
+</div>
+
+<div class="col-md-6 order-history col-md-offset-1" ng-init="load()">
+  <div class="thumbnail verify-account" ng-hide="user.verified">
+    <div class="title"> <i class="fa fa-prepend fa-exclamation-triangle"></i> Verify your account to proceed</div>
+    <div class="message">We will send {{user.mobile_no}} a One Time Password (OTP). Enter the OTP here to verify your account</div>
+    <div class="row" ng-show="show_otp">
+      <div class="form-group label-floating otp-form-group-centered">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-shield"></i></span>
+          <label class="control-label">Enter OTP</label>
+          <input ng-model="user.otp" type="text" class="form-control otp_input">
+          <p class="help-block"></p>
+           <span class="input-group-btn hidden">
+             <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
+               <i class="fa fa-question"></i>
+             </a>
+           </span>
+        </div>
       </div>
-      <div>
-        <i class="fa fa-envelope"></i>
-        <span class="user-email">{{user.email}}</span>
-        <i class="fa fa-question-circle" data-container="body" data-title="Email Address" data-content="Invoice will be sent to the mentioned email address. To change email address, logout and login with the preferred email address" data-toggle="popover" data-trigger="hover" data-placement="bottom"></i>
-      </div>
-      <div>
-        <i class="fa fa-mobile"></i>
-        <input type="text" class="user-phone-prefix" value="+91" disabled="true" />
-        <input type="text" class="user-phone" id="user-phone" ng-model="user.mobile_no" />
-      </div>
-      <div>
-        <i class="fa fa-unlock-alt"></i>
-        <input type="password" class="user-name" id="user-name" value="Lorem Ipsum" />
-      </div>
-      <div>
-        <i class="fa fa-unlock"></i>
-        <input type="password" class="user-name" id="user-name" value="Lorem Ipsum" />
-      </div>
-      <div>
-        <button type="submit" class="btn btn-success btn-raised save-button">Save</button>
-      </div>
-    </form>
+    </div>
+    <button ng-hide="show_otp" type="button" class="btn btn-info btn-raised" ng-click="show_otp=!show_otp" ng-init="show_otp=false">Get OTP to verify</button>
+    <button ng-show="show_otp" type="button" class="btn btn-success btn-raised">Verify Account</button>
+    <button ng-show="show_otp" type="button" class="btn btn-info btn-raised">Resend OTP</button>
   </div>
 
-<!-- <delivery-addresses></delivery-addresses>   -->
+
+    <form class="user-info" name="profileUpdateForm" ng-submit="updateProfile()">
+      <div>
+        <i class="fa fa-fw fa-user"></i>
+        <input type="text" ng-model="user.name" ng-disabled="change_password"/>
+      </div>
+      <div>
+        <i class="fa fa-fw fa-envelope"></i>
+        <span class="user-email">{{user.email}}</span>
+        <i class="fa fa-fw fa-question-circle" data-container="body" data-title="Email Address" data-content="Invoice will be sent to this email address. You cannot change your email address." data-toggle="popover" data-trigger="hover" data-placement="bottom"></i>
+      </div>
+      <div>
+        <i class="fa fa-fw fa-phone"></i>
+        <input type="text" class="user-phone-prefix" value="+91" disabled="true" />
+        <input type="text" class="user-phone" ng-model="user.mobile_no" ng-disabled="change_password" style="width: 90px;"/>
+        <!--//TODO check user.verified below-->
+        <i ng-show="user.verified" class="fa fa-fw fa-check-circle" data-container="body" data-title="Account Verified" data-content="Your account has been verified successfully" data-toggle="popover" data-trigger="hover" data-placement="bottom"></i>
+        <i ng-hide="user.verified" class="fa fa-fw fa-times-circle" data-container="body" data-title="Account not verified" data-content="Please verify your account to place orders. We'll send an OTP to your registered mobile number." data-toggle="popover" data-trigger="hover" data-placement="bottom"></i>
+      </div>
+      <div>
+        <i class="fa fa-fw fa-money"></i>
+        <span class="user-email">{{user.mash_cash}}</span>
+        <span class="user-email">MashCash</span>
+        <i class="fa fa-fw fa-question-circle" data-container="body" data-title="MashCash" data-content="Mash Cash can be used as real cash within Foodmash." data-toggle="popover" data-trigger="hover" data-placement="bottom"></i>
+      </div>
+      <div ng-show="change_password">
+        <i class="fa fa-fw fa-unlock-alt"></i>
+        <input type="password" value="Lorem Ipsum" />
+      </div>
+      <div ng-show="change_password">
+        <i class="fa fa-fw fa-unlock"></i>
+        <input type="password" value="Lorem Ipsum" />
+      </div>
+      <div>
+        <button ng-show="!change_password" type="submit" class="btn btn-success btn-raised save-button">Save</button>
+        <button type="button" class="btn btn-info btn-raised" ng-init="change_password=false" ng-click="change_password=!change_password">Change Password</button>
+      </div>
+    </form>
+</div>
+  <!--<delivery-addresses></delivery-addresses>-->

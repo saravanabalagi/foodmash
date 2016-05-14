@@ -59,7 +59,7 @@ angular.module('foodmashApp.controllers')
 
 		$scope.checkIfSideBarPresent = function(){
 			var current_path = $location.path();
-			if(current_path == '/' || current_path == '/panel' || current_path == '/customerPanel' || current_path == '/restaurantPanel' || current_path == '/packagingCentrePanel'){
+			if(current_path == '/' || current_path == '/panel' || current_path == '/customerPanel' || current_path == '/restaurantPanel' || current_path == '/packagingCentrePanel' || current_path == '/account'){
 				return true;
 			}else{
 				return false;
