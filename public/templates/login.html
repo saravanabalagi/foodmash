@@ -8,11 +8,12 @@
 
      <form class="col-md-6 col-sm-8 col-md-offset-3 col-sm-offset-2" ng-show="login_tab" name="login_form" role="form" ng-submit="submitLogin()" autocomplete="on">
       <div class="row">
-       <div class="form-group label-floating">
+       <div class="form-group label-floating is-empty">
          <div class="input-group">
            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-           <label class="control-label">Email Address</label>
-           <input name="login.email" ng-model="login.email" type="email" class="form-control" required>
+            <!--//TODO Allow signing in using mobile number-->
+           <label class="control-label">Email Address / Mobile Number</label>
+           <input name="login.email" ng-model="login.email" type="text" class="form-control" required>
            <p class="help-block"></p>
            <span class="input-group-btn hidden">
              <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
@@ -23,7 +24,7 @@
        </div>
       </div>
       <div class="row">
-       <div class="form-group label-floating">
+       <div class="form-group label-floating is-empty">
          <div class="input-group">
            <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
            <label class="control-label">Password</label>
@@ -47,7 +48,7 @@
 
        <form class="col-md-6 col-sm-8 col-md-offset-3 col-sm-offset-2" ng-hide="login_tab" name="signup_form" role="form" ng-submit="submitSignup()" autocomplete="on">
            <div class="row">
-               <div class="form-group label-floating">
+               <div class="form-group label-floating is-empty">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
                        <label class="control-label">Name</label>
@@ -62,7 +63,7 @@
                </div>
            </div>
            <div class="row">
-               <div class="form-group label-floating">
+               <div class="form-group label-floating is-empty">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                        <label class="control-label">Email Address</label>
@@ -80,8 +81,9 @@
                <div class="form-group label-floating">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                       <label class="control-label">Phone</label>
-                       <input name="signup.mobile_no" ng-model="signup.mobile_no" type="phone" class="form-control">
+                       <label class="control-label">Mobile Number</label>
+                       <input type="text" disabled="disabled" class="form-control" value="+91" style="width: 30px; margin-right: 10px; ">
+                       <input name="signup.mobile_no" ng-model="signup.mobile_no" type="phone" class="form-control" style="width: calc(100% - 40px);">
                        <p class="help-block"></p>
            <span class="input-group-btn hidden">
              <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
@@ -92,7 +94,7 @@
                </div>
            </div>
            <div class="row">
-               <div class="form-group label-floating">
+               <div class="form-group label-floating is-empty">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
                        <label class="control-label">Password</label>
@@ -107,7 +109,7 @@
                </div>
            </div>
            <div class="row">
-               <div class="form-group label-floating">
+               <div class="form-group label-floating is-empty">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
                        <label class="control-label">Password Confirmation</label>
