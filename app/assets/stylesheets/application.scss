@@ -1303,6 +1303,7 @@ footer {
 /*CSS for profile ends*/
 
 /*Signin and Register*/
+input.is-phone { width: calc(100% - 40px) !important; }
 .btn-login, .btn-register { padding: 10px 40px; font-size: 17px; }
 .login-checkbox, .register-checkbox { padding: 10px 0; }
 .login-wrapper, .register-wrapper {
