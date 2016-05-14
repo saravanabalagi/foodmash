@@ -144,7 +144,6 @@ $ambiguous-violet: #822fe6;
   font-url("myriadpro/myriadprosb.svg") format("svg");
   /* Legacy iOS */ }
 
-
 html {
   height: 100%;
   padding: 50px 0 0 0;
@@ -1238,9 +1237,29 @@ footer {
 
 
 /*CSS for profile begins*/
+.thumbnail.verify-account {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align:center; padding: 30px;-webkit-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.10);
+  -moz-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.10);
+  -ms-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.10);
+  .title {
+    font-family: 'Myriad Pro';
+    font-size: 20px;
+  }
+  .message {
+    padding: 10px 30px;
+  }
+  .otp-form-group-centered {
+    width: 120px;
+    margin: 28px auto 0 auto;
+    .otp-input { width:100px; }
+  }
+}
 .user-info {
   div {
-    i { padding: 13px; }
+    i { padding: 13px; margin-right: 10px; }
     .user-phone-prefix { width:30px; }
     input {
       background-color: transparent;
@@ -1355,6 +1374,13 @@ footer {
   left: 0px;
   bottom: 0;
   transition: all 0.3s ease-in-out;
+  .mash-cash-container {
+    margin: -3px 0;
+    padding: 3px 5px;
+    background: #FF0000;
+    color: #FFF;
+    border-radius: 4px;
+  }
   section {
     &.location-section {
       a { color: #CCC; }
