@@ -63,6 +63,7 @@ group :production do
   gem 'execjs'
   gem 'pg'
   gem 'rails_12factor'
+  gem 'prerender_rails'
 end
 
 # Use ActiveModel has_secure_password
