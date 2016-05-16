@@ -6,7 +6,7 @@ class Payment < ActiveRecord::Base
 	end
 
 	def self.calculate_mobile_sdk_hash
-		hash = ENV['key'] + '|' + 'payment_related_details_for_mobile_sdk' + '|' + '|' + ENV['salt']
+		hash = ENV['key'] + '|' + 'payment_related_details_for_mobile_sdk' + '|' + 'default' + '|' + ENV['salt']
 		Digest::SHA2.new(512).hexdigest(hash)
 	end
 
