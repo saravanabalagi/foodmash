@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('ComboDescriptionController', ['$scope', '$location', 'toaster', 'CartService', 'ComboDescriptionService', '$filter', '$rootScope', function($scope, $location, toaster, CartService, ComboDescriptionService, $filter, $rootScope){
+.controller('ComboDescriptionController', ['$scope', '$location', 'toaster', 'CartService', 'ComboDescriptionService', '$filter', '$rootScope', '$window', function($scope, $location, toaster, CartService, ComboDescriptionService, $filter, $rootScope, $window){
 
 	$scope.selectedDishes = [];
 	$scope.combo = {};
@@ -130,6 +130,7 @@ angular.module('foodmashApp.controllers')
 			setQuantityForComboItems();
 			pushDefaultComboOption($scope.combo);
 			toaster.pop('success', 'Added to cart!');
+			$window.fbq('track', 'AddToCart');
 		}else{
 			toaster.pop('error', 'Please select one more dish from another tab!');
 		}

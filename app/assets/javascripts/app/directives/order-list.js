@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('orderList', ['toaster','Combo','$q', function(toaster, Combo, $q){
+.directive('orderList', ['toaster','Combo','$q', '$window', function(toaster, Combo, $q, $window){
 
 	return {
 
@@ -10,7 +10,7 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/order-list.html',
 
-		controller: ['$scope', 'toaster', 'Combo', '$q', function($scope, toaster, Combo, $q){
+		controller: ['$scope', 'toaster', 'Combo', '$q', '$window', function($scope, toaster, Combo, $q, $window){
 
 			validateOrder();
 			$scope.fillingOrder = false;
@@ -22,6 +22,7 @@ angular.module('foodmashApp.directives')
 			$scope.addOrder = function(order){
 				var index = findOrderInCart(order.id);
 				order.quantity += 1;
+				$window.fbq('track', 'AddQuantityInCart');
 				if(angular.isNumber(index) && index >= 0){
 					if(order.quantity >= 1 && order.quantity <=50){
 						$scope.updateCartInfo();
@@ -49,6 +50,7 @@ angular.module('foodmashApp.directives')
 			$scope.removeOrder = function(order){
 				var index = findOrderInCart(order.id);
 				order.quantity -= 1;
+				$window.fbq('track', 'RemoveQuantityInCart');
 				if(angular.isNumber(index) && index >= 0){
 					if(order.quantity == 0){
 						$scope.deleteOrder(order);
@@ -78,6 +80,7 @@ angular.module('foodmashApp.directives')
 
 			$scope.deleteOrder = function(order){
 				var index = findOrderInCart(order.id);
+				$window.fbq('track', 'DeleteOrderInCart');
 				if(angular.isNumber(index) && index >= 0){		
 					$scope.cart.orders.splice(index, 1);
 					$scope.updateCartInfo();

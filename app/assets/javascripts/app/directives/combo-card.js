@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('comboCard', ['toaster','CartService', '$location', 'ComboDescriptionService', function(toaster, CartService, $location, ComboDescriptionService){
+.directive('comboCard', ['toaster','CartService', '$location', 'ComboDescriptionService', '$window', function(toaster, CartService, $location, ComboDescriptionService, $window){
 
 	return {
 
@@ -10,7 +10,7 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/combo-card.html',
 
-		controller: ['$scope', 'toaster','CartService', '$location', 'ComboDescriptionService', function($scope, toaster, CartService, $location, ComboDescriptionService){
+		controller: ['$scope', 'toaster','CartService', '$location', 'ComboDescriptionService', '$window', function($scope, toaster, CartService, $location, ComboDescriptionService, $window){
 
 			$scope.selectedDishes = [];
 
@@ -31,6 +31,7 @@ angular.module('foodmashApp.directives')
 				setQuantityForComboItems();
 				pushDefaultComboOption($scope.combo);
 				toaster.pop('success', 'Added to cart!');
+				$window.fbq('track', 'AddToCart');
 			};
 
 			$scope.removeCombo = function(combo){
@@ -39,6 +40,7 @@ angular.module('foodmashApp.directives')
 					$scope.combo.quantity -= 1;
 				}
 				toaster.pop('success', 'Removed from cart!');
+				$window.fbq('track', 'RemoveToCart');
 			};
 
 			$scope.getLabelClass = function(label){

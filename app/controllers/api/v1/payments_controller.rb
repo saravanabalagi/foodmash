@@ -2,8 +2,9 @@ class Api::V1::PaymentsController < ApiApplicationController
  	respond_to :json
  	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
  	before_filter :authenticate_user_from_token!, except: [:success, :failure]
-	before_filter :set_current_cart
+	before_filter :set_or_create_cart, only: [:purchase_by_cod, :get_hash]
 	before_filter :apply_promo_or_mash_cash, only: [:purchase_by_cod, :success]
+	before_filter :set_payu_processed_cart, only: [:success, :failure]
 
  	def index 
  		render status: 200
@@ -88,6 +89,15 @@ class Api::V1::PaymentsController < ApiApplicationController
 	end
 
 	private
+	def set_or_create_cart
+		session = @current_user.sessions.where(session_token: params[:auth_token]).first
+		return permission_denied unless session
+	  if @current_user 
+	    @cart = @current_user.carts.where(aasm_state: 'not_started').first.presence || Cart.create(user_id: @current_user.id)
+	    @cart.generate_order_id if !@cart.order_id.present?
+	  end
+	end
+	
 	def set_current_cart
 		@cart = @current_user.carts.where(aasm_state: 'not_started').first.presence
 	end
@@ -98,6 +108,10 @@ class Api::V1::PaymentsController < ApiApplicationController
  		else
  			return 0.0
  		end
+ 	end
+
+ 	def set_payu_processed_cart
+ 		@cart = Cart.find_by(order_id: params[:txnid])
  	end
 
  	def apply_promo_or_mash_cash

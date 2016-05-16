@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-	.controller('LoginController', ['$scope', '$location', 'AuthService', 'UserService','toaster','$rootScope', function($scope, $location, AuthService, UserService, toaster, $rootScope){
+	.controller('LoginController', ['$scope', '$location', 'AuthService', 'UserService','toaster','$rootScope', '$window', function($scope, $location, AuthService, UserService, toaster, $rootScope, $window){
 		$scope.signup = {};
 		$scope.login = {};
 
@@ -17,6 +17,7 @@ angular.module('foodmashApp.controllers')
 				toaster.pop('success', 'Registered successfully!');
 				routToCorrectPath();
 				$rootScope.enableButton('.register-button');
+				$window.fbq('track', 'CompleteLogin');
 			}, function(reason){
 				toaster.pop('error', 'Email or Mobile no was already taken!');
 				$scope.signup.errors = reason;
@@ -31,6 +32,7 @@ angular.module('foodmashApp.controllers')
 				toaster.pop('success', 'Signed In!');
 				routToCorrectPath();
 				$rootScope.enableButton('.login-button');
+				$window.fbq('track', 'CompleteRegistration');
 			}, function(reason){
 				toaster.pop('error', 'Failed to sign in!');
 				$scope.login.errors = reason;

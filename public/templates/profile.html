@@ -1,15 +1,15 @@
-<div class="sidebar-wrapper sidebar-open" ng-init="load()">
+ <div class="sidebar-wrapper sidebar-open" ng-init="load()">
   <div class="sidebar">
     <section class="sidebar-section">
-      <h5>Quick Links</h5>
+      <h5>Account</h5>
       <ul class="sidebar-nav group-size">
-        <li ng-click="routeToCustomerPanel()">
+        <li>
           <a>
             <span>Order History</span>
             <i class="fa fa-shopping-bag pull-right"></i>
           </a>
         </li>
-        <li ng-click="routeToCustomerPanel()">
+        <li>
           <a>
             <span>Contact Us</span>
             <i class="fa fa-phone pull-right"></i>
@@ -18,7 +18,10 @@
       </ul>
     </section>
   </div>
-</div>
+</div> 
+
+<div class="container">
+  <div class="row">
 
 <div class="col-md-6 order-history col-md-offset-1" ng-init="load()">
   <div class="thumbnail verify-account" ng-hide="user.verified">
@@ -63,12 +66,12 @@
         <i ng-show="user.verified" class="fa fa-fw fa-check-circle" data-container="body" data-title="Account Verified" data-content="Your account has been verified successfully" data-toggle="popover" data-trigger="hover" data-placement="bottom"></i>
         <i ng-hide="user.verified" class="fa fa-fw fa-times-circle" data-container="body" data-title="Account not verified" data-content="Please verify your account to place orders. We'll send an OTP to your registered mobile number." data-toggle="popover" data-trigger="hover" data-placement="bottom"></i>
       </div>
-      <div>
+     <!--  <div>
         <i class="fa fa-fw fa-money"></i>
         <span class="user-email">{{user.mash_cash}}</span>
         <span class="user-email">MashCash</span>
         <i class="fa fa-fw fa-question-circle" data-container="body" data-title="MashCash" data-content="Mash Cash can be used as real cash within Foodmash." data-toggle="popover" data-trigger="hover" data-placement="bottom"></i>
-      </div>
+      </div> -->
       <div ng-show="change_password">
         <i class="fa fa-fw fa-unlock-alt"></i>
         <input type="password" value="Lorem Ipsum" />
@@ -83,4 +86,6 @@
       </div>
     </form>
 </div>
-  <!--<delivery-addresses></delivery-addresses>-->
+
+  </div>
+</div>

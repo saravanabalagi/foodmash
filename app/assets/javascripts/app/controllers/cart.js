@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('CartController', ['$scope', '$q', 'toaster','$location','CartService','$rootScope', 'DeliveryAddress', 'Cart', 'Payment', '$http', '$httpParamSerializer', function($scope, $q, toaster, $location, CartService, $rootScope, DeliveryAddress, Cart, Payment, $http, $httpParamSerializer){
+.controller('CartController', ['$scope', '$q', 'toaster','$location','CartService','$rootScope', 'DeliveryAddress', 'Cart', 'Payment', '$http', '$httpParamSerializer', '$window', function($scope, $q, toaster, $location, CartService, $rootScope, DeliveryAddress, Cart, Payment, $http, $httpParamSerializer, $window){
 
 	$scope.cart = {};
 	$scope.cart.delivery_charge = 0;
@@ -101,6 +101,7 @@ angular.module('foodmashApp.controllers')
 					$scope.setup_details = response.setup_details;
 					$scope.processCart();
 					angular.element(document).ready(function (){
+						$window.fbq('track', 'Purchase', {value: $scope.cart.grand_total, currency: 'INR'});
 						$('#payu-payment-form').submit();
 					});
 				}, function(err){
@@ -109,6 +110,7 @@ angular.module('foodmashApp.controllers')
 			}if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
 				$rootScope.disableButton('.cod-button', 'Confirming...');
 				Payment.purchaseForCod($scope.cart).then(function(response){
+					$window.fbq('track', 'Purchase', {value: $scope.cart.grand_total, currency: 'INR'});
 					toaster.pop('success', 'Cart was purchased!');
 					$rootScope.enableButton('.cod-button');
 					refreshCartAndSelectDelAdd();

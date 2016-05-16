@@ -5,20 +5,20 @@
             <ul class="sidebar-nav location">
                 <li>
                     <a ng-click="fadeInLoader()" data-title="Delivery Location" data-container="body"
-                       data-content="Choose to which area you want your combo to be delivered" data-toggle="popover"
+                       data-content="Location to which you want your meal delivered" data-toggle="popover"
                        data-trigger="hover" data-placement="right">
                         <span>{{selectedArea.name}}</span>
                         <i class="fa fa-map-marker pull-right"></i>
                     </a>
                 </li>
-                <li ng-if="currentUser">
+               <!--  <li ng-if="currentUser">
                     <a data-title="MashCash" data-container="body"
                        data-content="Mash Cash can be used as real cash within Foodmash" data-toggle="popover"
                        data-trigger="hover" data-placement="right">
                         <span>MashCash</span>
                         <span class="mash-cash-container pull-right">{{floatToInt(currentUser.mash_cash) | number}}</span>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </section>
         <section class="sidebar-section">
