@@ -112,10 +112,10 @@ class Api::V1::PaymentsController < ApiApplicationController
 
  	def apply_promo_or_mash_cash
  		@success = nil
- 		if params[:data][:promo_code].present?
+ 		if params[:data].present? and params[:data][:promo_code].present?
  			@success, promo_discount, grand_total = @cart.apply_promo_code(params[:data][:promo_code].downcase)
  		end
- 		if params[:data][:mash_cash].present?
+ 		if params[:data].present? and params[:data][:mash_cash].present?
  			@success, mash_cash, grand_total = @cart.apply_mash_cash(params[:data][:mash_cash].to_f)
  		end
  		if @success and promo_discount
