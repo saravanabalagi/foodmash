@@ -90,7 +90,7 @@ class Api::V1::PaymentsController < ApiApplicationController
 
 	private
 	def set_or_create_cart
-		session = @current_user.sessions.where(session_token: params[:auth_token]).first
+		session = @current_user.sessions.where(session_token: params[:auth_session_token]).first
 		return permission_denied unless session
 	  if @current_user 
 	    @cart = @current_user.carts.where(aasm_state: 'not_started').first.presence || Cart.create(user_id: @current_user.id)
