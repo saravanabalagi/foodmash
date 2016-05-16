@@ -3,8 +3,8 @@ class Api::V1::PaymentsController < ApiApplicationController
  	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
  	prepend_before_filter :authenticate_user_from_token!, except: [:success, :failure]
 	before_filter :set_or_create_cart, only: [:purchase_by_cod, :get_hash]
-	prepend_before_filter :set_payu_processed_cart, only: [:success, :failure]
-	before_filter :apply_promo_or_mash_cash, only: [:purchase_by_cod, :success]
+	before_filter :apply_promo_or_mash_cash, only: [:purchase_by_cod, :get_hash]
+	before_filter :set_payu_processed_cart, only: [:success, :failure]
 
  	def index 
  		render status: 200
