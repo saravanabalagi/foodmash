@@ -4,7 +4,6 @@ class Api::V1::PaymentsController < ApiApplicationController
  	prepend_before_filter :authenticate_user_from_token!, except: [:success, :failure]
 	before_filter :set_or_create_cart, only: [:purchase_by_cod, :get_hash]
 	prepend_before_filter :set_payu_processed_cart, only: [:success, :failure]
-	before_filter :apply_promo_or_mash_cash, only: [:purchase_by_cod, :success]
 
  	def index 
  		render status: 200
@@ -44,6 +43,7 @@ class Api::V1::PaymentsController < ApiApplicationController
 	end
 
 	def success
+		apply_promo_or_mash_cash
  		if params.present? and @success and @cart.add_fields_from_payu(params) and @current_user.award_mash_cash(check_for_promo_and_set(@cart), @cart) and @cart.purchase!
 			render 'mobile_success'
 		else
@@ -79,6 +79,7 @@ class Api::V1::PaymentsController < ApiApplicationController
 
 	def purchase_by_cod
 		return invalid_data unless params[:data][:payment_method]
+		apply_promo_or_mash_cash
 		if @success and @cart.set_payment_method('COD') and @current_user.award_mash_cash(check_for_promo_and_set(@cart), @cart) and @cart.purchase!
 			render status: 200, json: {success: true, data: {order_id: @cart.order_id, promo_discount: @cart.promo_discount}}
 		elsif @cart.set_payment_method('COD') and @cart.purchase! 
