@@ -3,8 +3,8 @@ class Api::V1::PaymentsController < ApiApplicationController
  	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
  	before_filter :authenticate_user_from_token!, except: [:success, :failure]
 	before_filter :set_or_create_cart, only: [:purchase_by_cod, :get_hash]
-	before_filter :apply_promo_or_mash_cash, only: [:purchase_by_cod, :success]
 	before_filter :set_payu_processed_cart, only: [:success, :failure]
+	before_filter :apply_promo_or_mash_cash, only: [:purchase_by_cod, :success]
 
  	def index 
  		render status: 200
@@ -98,10 +98,6 @@ class Api::V1::PaymentsController < ApiApplicationController
 	  end
 	end
 	
-	def set_current_cart
-		@cart = @current_user.carts.where(aasm_state: 'not_started').first.presence
-	end
-
 	def check_for_promo_and_set(cart)
  		if (cart.promo_discount.present? and cart.promo_id.present?) or cart.mash_cash.present?
  			return 0.0
