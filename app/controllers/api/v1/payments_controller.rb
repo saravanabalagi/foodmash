@@ -48,7 +48,7 @@ class Api::V1::PaymentsController < ApiApplicationController
  		if params.present? and @success and @cart.add_fields_from_payu(params) and @user.award_mash_cash(check_for_promo_and_set(@cart), @cart) and @cart.purchase!
 			render 'mobile_success'
 		else
-			render 'mobile_success'
+			render 'mobile_failure'
 		end
  	end
 
