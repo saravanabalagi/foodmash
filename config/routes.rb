@@ -181,6 +181,7 @@ Rails.application.routes.draw do
           post '/getPaymentRelatedDetailsForMobileSdk', to: 'payments#get_payment_details_for_mobile_sdk'
           post '/applyPromoCode', to: 'payments#apply_promo_code'
           post '/applyMashCash', to: 'payments#apply_mash_cash'
+          post '/getMobileSdkHash', to: 'payments#get_mobile_sdk_hash'
         end
       end
 
