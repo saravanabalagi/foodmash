@@ -41,7 +41,6 @@ class Web::PaymentsController < ApplicationController
  	end
 
  	def failure
- 		@user = @cart.user
  		if params.present? and @cart.add_fields_from_payu(params)
 			render 'failure'
 		else
