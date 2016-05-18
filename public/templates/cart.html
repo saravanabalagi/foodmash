@@ -61,9 +61,9 @@
         </table>
         <div class="row promo-code-wrapper-row" ng-if="currentUser">
           <div class="form-group label-floating is-empty promo-code-wrapper">
-            <label class="control-label">Promo Code or Mash Cash</label>
+            <label class="control-label">Promo Code</label>
             <input class="form-control" type="text" id="promo-code" ng-model="promo_or_mash_cash">
-            <p class="help-block">Enter a valid Promo Code or Use Mash Cash</p>
+            <p class="help-block">Enter a valid Promo Code</p>
             <span class="material-input"></span>
           </div>
           <a class="btn btn-raised btn-success" ng-click="checkForPromoOrMashCash(promo_or_mash_cash)" ng-disabled="!promo_or_mash_cash.length"> Use </a>
