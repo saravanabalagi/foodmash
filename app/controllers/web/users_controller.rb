@@ -34,7 +34,7 @@ class Web::UsersController < ApplicationController
 	end
 
 	def verify_otp
-		if @current_user.otp == params[:otp] and @current_user.update_attributes!(verified: true)
+		if @current_user.otp == params[:otp] and ((Time.now - @current_user.otp_set) < 5.minutes) and @current_user.update_attributes!(verified: true)
 			@current_user.reset_otp
 			render status: 200, json: @current_user.as_json(:include => [{:roles => {:include => :resource}}], except: [:otp])
 		else
