@@ -18,9 +18,9 @@ class Api::V1::CheckConnectionController < ApiApplicationController
 			blocking: false
 		}
 		settings = {
-			 mash_cash: true,
-			 online_payments: true,
-			 verify_user: true
+			 mash_cash: false,
+			 online_payments: false,
+			 verify_user: false
 		}
 		if params[:android_id].present?
 			render status: 200, json: {success: true, data: {versions: versions, maintenance: maintenance, settings: settings}}
