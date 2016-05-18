@@ -43,7 +43,7 @@ class Web::UsersController < ApplicationController
 	end
 
 	def update
-		if @user and @user.update_attributes!(user_update_params) and @user.reload!
+		if @user and @user.update_attributes!(user_update_params)
 			render status: 200, json: @user.as_json(:include => [{:roles => {:include => :resource}}], except: [:otp])
 		else
 			render status: 422, json: {error: @user.errors.as_json}

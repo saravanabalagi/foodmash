@@ -94,30 +94,35 @@ angular.module('foodmashApp.controllers')
 	};
 
 	$scope.proceedToPayment = function(){
-		if(validateCart()){
-			if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'Payu'){
-				$scope.setup_details["amount"] = $scope.cart.grand_total;
-				Payment.getHash($scope.setup_details).then(function(response){
-					$scope.setup_details = response.setup_details;
-					$scope.processCart();
-					angular.element(document).ready(function (){
-						$window.fbq('track', 'Purchase', {value: $scope.cart.grand_total, currency: 'INR'});
-						$('#payu-payment-form').submit();
+		if(!$rootScope.currentUser.verified){
+			toaster.pop('error', 'Please verify account before placing an order!');
+			$location.path('/account');
+		}else{
+			if(validateCart()){
+				if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'Payu'){
+					$scope.setup_details["amount"] = $scope.cart.grand_total;
+					Payment.getHash($scope.setup_details).then(function(response){
+						$scope.setup_details = response.setup_details;
+						$scope.processCart();
+						angular.element(document).ready(function (){
+							$window.fbq('track', 'Purchase', {value: $scope.cart.grand_total, currency: 'INR'});
+							$('#payu-payment-form').submit();
+						});
+					}, function(err){
+						toaster.pop('error', 'Could not generate hash');
 					});
-				}, function(err){
-					toaster.pop('error', 'Could not generate hash');
-				});
-			}if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
-				$rootScope.disableButton('.cod-button', 'Confirming...');
-				Payment.purchaseForCod($scope.cart).then(function(response){
-					$window.fbq('track', 'Purchase', {value: $scope.cart.grand_total, currency: 'INR'});
-					toaster.pop('success', 'Cart was purchased!');
-					$rootScope.enableButton('.cod-button');
-					refreshCartAndSelectDelAdd();
-				}, function(err){
-					toaster.pop('error', 'Cart was not purchased!');
-					$rootScope.enableButton('.cod-button');
-				});
+				}if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
+					$rootScope.disableButton('.cod-button', 'Confirming...');
+					Payment.purchaseForCod($scope.cart).then(function(response){
+						$window.fbq('track', 'Purchase', {value: $scope.cart.grand_total, currency: 'INR'});
+						toaster.pop('success', 'Cart was purchased!');
+						$rootScope.enableButton('.cod-button');
+						refreshCartAndSelectDelAdd();
+					}, function(err){
+						toaster.pop('error', 'Cart was not purchased!');
+						$rootScope.enableButton('.cod-button');
+					});
+				}
 			}
 		}
 	};

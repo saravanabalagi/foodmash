@@ -112,38 +112,39 @@ class Cart < ActiveRecord::Base
 	end
 
 	def add_items_to_cart(cart)
-		if self.orders.present?
-			self.orders.each do |order|
-				order.destroy! unless cart[:orders].collect{|o| o[:id]}.compact.include? order.id
+		if self.user.verified
+			if self.orders.present?
+				self.orders.each do |order|
+					order.destroy! unless cart[:orders].collect{|o| o[:id]}.compact.include? order.id
+				end
 			end
-		end
-		self.reload
-		if cart[:orders].present?
-			cart[:orders].each do |cart_order|
-				if cart_order[:id].present?
-					current_order = self.orders.find(cart_order[:id]) if cart_order[:id]
-					if current_order
-						current_order.update_attributes!(quantity: cart_order[:quantity]) unless cart_order[:quantity] == current_order[:quantity]
-						if cart_order[:order_items].present?
-							current_order.order_items.each do |order_item|
-								cart_order[:order_items].each do |cart_order_item|
-									if cart_order_item[:id] and order_item.id == cart_order_item[:id]
-										order_item.update_attributes!(quantity: cart_order_item[:quantity]) unless order_item.quantity == cart_order_item[:quantity]
+			self.reload
+			if cart[:orders].present?
+				cart[:orders].each do |cart_order|
+					if cart_order[:id].present?
+						current_order = self.orders.find(cart_order[:id]) if cart_order[:id]
+						if current_order
+							current_order.update_attributes!(quantity: cart_order[:quantity]) unless cart_order[:quantity] == current_order[:quantity]
+							if cart_order[:order_items].present?
+								current_order.order_items.each do |order_item|
+									cart_order[:order_items].each do |cart_order_item|
+										if cart_order_item[:id] and order_item.id == cart_order_item[:id]
+											order_item.update_attributes!(quantity: cart_order_item[:quantity]) unless order_item.quantity == cart_order_item[:quantity]
+										end
 									end
 								end
 							end
 						end
-					end
-				else
-					future_order = self.orders.build(product_id: cart_order[:product][:id], product_type: cart_order[:product][:type], quantity: cart_order[:quantity], note: cart_order[:note])
-					if cart_order[:order_items].present?
-						cart_order[:order_items].each do |cart_order_item|
-							future_order.order_items.build(item_id: cart_order_item[:item][:id], item_type: "Dish", quantity: cart_order_item[:quantity])
+					else
+						future_order = self.orders.build(product_id: cart_order[:product][:id], product_type: cart_order[:product][:type], quantity: cart_order[:quantity], note: cart_order[:note])
+						if cart_order[:order_items].present?
+							cart_order[:order_items].each do |cart_order_item|
+								future_order.order_items.build(item_id: cart_order_item[:item][:id], item_type: "Dish", quantity: cart_order_item[:quantity])
+							end
 						end
 					end
 				end
 			end
-		end
 			self.delivery_address_id = cart[:delivery_address_id]
 			self.calculate_total
 			if cart[:promo_id].present? and cart[:promo_discount].present?
@@ -160,6 +161,7 @@ class Cart < ActiveRecord::Base
 			end
 			DeliveryAddress.make_primary(cart[:delivery_address_id])
 			self.save!
+		end
 	end
 
 	def add_cart(cart_items, delivery_address_id)
