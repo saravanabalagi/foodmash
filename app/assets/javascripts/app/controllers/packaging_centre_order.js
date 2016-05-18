@@ -87,17 +87,6 @@ angular.module('foodmashApp.controllers')
 		return icon_class;
 	};
 
-	$scope.getStatusAlias = function(status){
-		var alias = '';
-		$scope.statuses.filter(function(s){
-			if(s.name == status){
-				alias = s.alias;
-				return alias;
-			}
-		});
-		return alias;
-	};
-
 	$scope.getStatusPercent = function(status){
 		var percent = '';
 		$scope.statuses.filter(function(s){

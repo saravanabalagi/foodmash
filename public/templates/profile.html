@@ -24,15 +24,16 @@
   <div class="row">
 
 <div class="col-md-6 order-history col-md-offset-1" ng-init="load()">
-  <div class="thumbnail verify-account" ng-hide="user.verified">
+  <div class="thumbnail verify-account" ng-if="!user.verified">
     <div class="title"> <i class="fa fa-prepend fa-exclamation-triangle"></i> Verify your account to proceed</div>
-    <div class="message">We will send {{user.mobile_no}} a One Time Password (OTP). Enter the OTP here to verify your account</div>
-    <div class="row" ng-show="show_otp">
+    <div ng-show="user.otp_set" class="message">We have sent {{user.mobile_no}} a One Time Password (OTP). Enter the OTP here to verify your account</div>
+    <div ng-show="!user.otp_set" class="message">We will send {{user.mobile_no}} a One Time Password (OTP).</div>
+    <div class="row" ng-show="user.otp_set">
       <div class="form-group label-floating otp-form-group-centered">
         <div class="input-group">
           <span class="input-group-addon"><i class="fa fa-shield"></i></span>
           <label class="control-label">Enter OTP</label>
-          <input ng-model="user.otp" type="text" class="form-control otp_input">
+          <input ng-model="otp" type="text" class="form-control otp_input">
           <p class="help-block"></p>
            <span class="input-group-btn hidden">
              <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
@@ -42,9 +43,9 @@
         </div>
       </div>
     </div>
-    <button ng-hide="show_otp" type="button" class="btn btn-info btn-raised" ng-click="show_otp=!show_otp" ng-init="show_otp=false">Get OTP to verify</button>
-    <button ng-show="show_otp" type="button" class="btn btn-success btn-raised">Verify Account</button>
-    <button ng-show="show_otp" type="button" class="btn btn-info btn-raised">Resend OTP</button>
+    <button ng-hide="user.otp_set" type="button" class="btn btn-info btn-raised send-otp-button" ng-click="sendOtp()">Get OTP to verify</button>
+    <button ng-show="user.otp_set" ng-disabled="!otp.length" ng-click="verifyOtp(otp)" type="button" class="btn btn-success btn-raised verify-otp-button">Verify Account</button>
+    <button ng-show="user.otp_set" ng-click="resendOtp()" type="button" class="btn btn-info btn-raised resend-otp-button">Resend OTP</button>
   </div>
 
 

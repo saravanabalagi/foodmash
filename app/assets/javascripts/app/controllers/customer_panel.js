@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('CustomerPanelController', ['$scope','$location','toaster','$rootScope','Cart', 'CustomerPanelService', '$filter', 'ProfileService', 'AuthService', function($scope, $location, toaster, $rootScope, Cart, CustomerPanelService, $filter, ProfileService, AuthService){
+.controller('CustomerPanelController', ['$scope','$location','toaster','$rootScope','Cart', 'CustomerPanelService', '$filter', 'ProfileService', 'AuthService', '$timeout', function($scope, $location, toaster, $rootScope, Cart, CustomerPanelService, $filter, ProfileService, AuthService, $timeout){
 
 	$scope.carts = [];
 	$scope.selectedCart = CustomerPanelService.getSelectedCustomerPanelCart();
@@ -12,6 +12,7 @@ angular.module('foodmashApp.controllers')
 	$scope.sortOptions = CustomerPanelService.getCustomerPanelSortOptions();
 	$scope.selectedOption = CustomerPanelService.getSelectedCustomerPanelOption();
 	$scope.selectedSortOption = CustomerPanelService.getSelectedCustomerPanelSortOption();
+	$scope.timeoutPromise = {};
 	getSuitableStatus($scope.selectedCart);
 
 	ProfileService.loadUserForProfile().then(function(user){
@@ -29,6 +30,7 @@ angular.module('foodmashApp.controllers')
 		}
 		applyCustomerPanelFilterIfSelected();
 		applySortFilterIfSelected();
+		$scope.selectCart($scope.selectedCart || $scope.carts[0]);
 	}, function(err){
 		$scope.loadedCarts = null;
 		$scope.carts = null;
@@ -40,21 +42,29 @@ angular.module('foodmashApp.controllers')
 	      	$('[data-toggle="tooltip"]').tooltip();
 	      	$('[data-toggle="popover"]').popover();
 	      });
-	      CustomerPanelService.loadCartsForCustomer().then(function(carts){
-			if(carts && carts.length > 0){
-				$scope.loadedCarts = carts;
-				$scope.carts = carts;
-			}else{
-				$scope.loadedCarts = null;
-				$scope.carts = null;
-			}
-			applyCustomerPanelFilterIfSelected();
-			applySortFilterIfSelected();
-		}, function(err){
-			$scope.loadedCarts = null;
-			$scope.carts = null;
-		});
+      	(function tick(){
+	  	     CustomerPanelService.loadCartsForCustomer().then(function(carts){
+	  			if(carts && carts.length > 0){
+	  				$scope.loadedCarts = carts;
+	  				$scope.carts = carts;
+	  			}else{
+	  				$scope.loadedCarts = null;
+	  				$scope.carts = null;
+	  			}
+	  			applyCustomerPanelFilterIfSelected();
+	  			applySortFilterIfSelected();
+	  			$scope.selectCart($scope.selectedCart || $scope.carts[0]);
+	  		}, function(err){
+	  			$scope.loadedCarts = null;
+	  			$scope.carts = null;
+	  		});
+          	$scope.timeoutPromise = $timeout(tick, 30000);
+         })();
     };
+
+    $scope.$on('$destroy', function(){
+	 	$timeout.cancel($scope.timeoutPromise);
+	 });
 
     $scope.selectSortOption = function(option){
     	$scope.selectedSortOption = option;

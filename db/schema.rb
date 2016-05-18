@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160427173156) do
+ActiveRecord::Schema.define(version: 20160517235506) do
 
   create_table "areas", force: :cascade do |t|
     t.string   "name"
@@ -263,19 +263,19 @@ ActiveRecord::Schema.define(version: 20160427173156) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",                   default: "",   null: false
+    t.string   "name",                   default: "",    null: false
     t.string   "email"
-    t.string   "encrypted_password",     default: "",   null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,    null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.string   "mobile_no"
     t.string   "user_token"
     t.boolean  "offers",                 default: true
@@ -284,6 +284,8 @@ ActiveRecord::Schema.define(version: 20160427173156) do
     t.float    "mash_cash",              default: 0.0
     t.integer  "invitation_id"
     t.integer  "invitation_limit",       default: 0
+    t.boolean  "verified",               default: false
+    t.datetime "otp_set"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

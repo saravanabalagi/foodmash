@@ -40,6 +40,20 @@ angular.module('foodmashApp.controllers')
 			});			
 		};
 
+		$scope.checkIfEmailOrMobileNo = function(email_or_mobile_no){
+			if(email_or_mobile_no){
+				var re_for_mobile_no = /^[0-9]+$/;
+				if(!re_for_mobile_no.test(email_or_mobile_no)){
+					$scope.login.email = email_or_mobile_no;
+					return true;
+				}else if(re_for_mobile_no.test(email_or_mobile_no)){
+					$scope.login.mobile_no = email_or_mobile_no;
+					return false;
+				}
+			}
+			return null;
+		};
+
 		function routToCorrectPath(){
 			if($rootScope.storeLocation && $rootScope.storeLocation == "/cart"){
 				$location.path($rootScope.storeLocation);
