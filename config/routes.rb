@@ -74,8 +74,8 @@ Rails.application.routes.draw do
         post '/addRole', to: 'users#add_role'
         get '/findByEmail', to: 'users#find_by_email'
         post '/removeRole', to: 'users#remove_role'
-        get '/sendOtp', to: 'users#send_otp'
-        get '/verifyOtp', to: 'users#verify_otp'
+        post '/sendOtp', to: 'users#send_otp'
+        post '/verifyOtp', to: 'users#verify_otp'
       end
     end
 
