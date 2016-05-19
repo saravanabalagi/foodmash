@@ -41,6 +41,47 @@ class RegistrationsController < Devise::RegistrationsController
 		end
 	 end
 
+	def forgot_password
+	 	user = User.find_by(email: params[:user][:email]) || User.find_by(mobile_no: params[:user][:mobile_no])
+	 	if user and user.set_otp
+	     SendOtpJob.set(wait: 5.seconds).perform_later(user)
+	     MakeOtpNilJob.set(wait: 5.minutes).perform_later(user)
+	 		render status: 201, json: {otp: user.otp}
+	 	else
+	 		render status: 422, json: {success: false, error: "Could not reset password!"}
+	 	end
+	end
+
+	def check_otp
+	 	user = User.find_by(otp: params[:otp])
+	 	if user and ((Time.now - user.otp_set) < 5.minutes) and user.generate_otp_token(user.otp)
+	 		render status: 200, json: {otp_token: user.reset_password_token}
+	 	else
+	 		render status: 422, json: {error: "Invalid password reset token!"}
+	 	end
+	end
+
+	def reset_password_from_token
+	   return invalid_data unless params[:user][:otp_token]
+	 	user = User.find_by(reset_password_token: params[:user][:otp_token])
+	 	user.password = params[:user][:password]
+	 	user.password_confirmation = params[:user][:password_confirmation]
+	   #destroy previous sessions with the same android_id
+	   user.sessions.where(user_id: user.id).destroy_all
+	   #generate a new session for the same android_id
+	   session_token = user.generate_session_token
+	   user.sessions.create! session_token: session_token
+	   #reset the tokens to nil
+	   user.reset_password_token = nil
+	   self.otp = nil
+	   self.otp_set = nil
+	 	if user and user.save!
+	 		render status: 201, json: {user_token: user.user_token, session_token: session_token}
+	 	else
+	 		render status: 422, json: {error: "Password was not reset!"}
+	 	end
+	end
+
 	def destroy
 		if @current_user
 			@current_user.delete

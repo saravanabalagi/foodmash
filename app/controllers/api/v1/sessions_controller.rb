@@ -21,7 +21,7 @@ class Api::V1::SessionsController < ApiApplicationController
 	      data: {
         		user_token: resource.user_token,
         		session_token: session_token,
-				user: resource.as_json(:include => {:roles => {:include => :resource}})
+				user: resource.as_json(:include => [{:roles => {:include => :resource}}], except: [:otp])
           }
 		}
 	end

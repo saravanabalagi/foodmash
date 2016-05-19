@@ -143,6 +143,8 @@ Rails.application.routes.draw do
       #profile
       post '/profile', to: 'profile#show'
       post '/profile/update', to: 'profile#update'
+      post '/profile/sendOtp', to: 'profile#send_otp'
+      post '/profile/verifyOtp', to: 'profile#verify_otp'
       #carts
       resources :carts do 
         collection do 

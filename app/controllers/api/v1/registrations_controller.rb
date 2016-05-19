@@ -19,11 +19,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
         data: {
           user_token: resource.user_token,
           session_token: session_token,
-          user: {
-              email: resource.email,
-              mobile_no: resource.mobile_no,
-              name: resource.name
-          }
+          user: resource.as_json(:include => [{:roles => {:include => :resource}}], except: [:otp])
         }
 	    }
 	  else
@@ -84,6 +80,8 @@ class Api::V1::RegistrationsController < ApiApplicationController
   def forgot_password
   	user = User.find_by(email: params[:data][:user][:email]) || User.find_by(mobile_no: params[:data][:user][:mobile_no])
   	if user and user.set_otp
+      SendOtpJob.set(wait: 5.seconds).perform_later(user)
+      MakeOtpNilJob.set(wait: 5.minutes).perform_later(user)
   		render status: 201, json: {success: true, otp: user.otp}
   	else
   		render status: 200, json: {success: false, error: "Could not reset password!"}
@@ -92,7 +90,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
 
   def check_otp
   	user = User.find_by(otp: params[:data][:otp])
-  	if user and user.generate_otp_token(user.otp)
+  	if user and ((Time.now - user.otp_set) < 5.minutes) and user.generate_otp_token(user.otp)
   		render status: 200, json: {success: true, data: {otp_token: user.reset_password_token} }
   	else
   		render status: 200, json: {success: false, error: "Invalid password reset token!"}
@@ -112,7 +110,7 @@ class Api::V1::RegistrationsController < ApiApplicationController
     #reset the tokens to nil
     user.reset_password_token = nil
     user.otp = nil
-  	if user and user.save!
+  	if user and user.save
   		render status: 201, json: 
   		{
   			success: true, 
