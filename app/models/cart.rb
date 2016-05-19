@@ -165,70 +165,72 @@ class Cart < ActiveRecord::Base
 	end
 
 	def add_cart(cart_items, delivery_address_id)
-		if self.orders.present?
-			self.orders.each do |order|
-				if cart_items.present?
-					order.destroy! unless cart_items.collect{|i| i["id"]}.include? order.product.id
-				end 
-			end
-		end
-		self.reload
-
-		if cart_items.present?
-			cart_items.each do |cart_item|
-				sim = false
+		if self.user.verified
+			if self.orders.present?
 				self.orders.each do |order|
-					if check_for_similarity(order, cart_item)
-						order.update_attributes!(quantity: cart_item["quantity"]) unless cart_item["quantity"] == order.quantity
-						if order.order_items.present?
-							order.order_items.each do |order_item|
-								if cart_item["combo_dishes"].present?
-									cart_item["combo_dishes"].each do |combo_dish| 
-										if combo_dish["dish"]["id"] == order_item.item.id
-											order_item.update_attributes!(quantity: combo_dish["quantity"]) unless combo_dish["quantity"] == order_item.quantity
-										end
-									end							
-								end
-								if cart_item["combo_options"].present?
-									cart_item["combo_options"].each do |combo_option|
-										if combo_option["combo_option_dishes"].present?
-											combo_option["combo_option_dishes"].each do |combo_option_dish|
-												if combo_option_dish["dish"]["id"] == order_item.item.id
-													order_item.update_attributes!(quantity: combo_option_dish["quantity"]) unless combo_option_dish["quantity"] == order_item.quantity
+					if cart_items.present?
+						order.destroy! unless cart_items.collect{|i| i["id"]}.include? order.product.id
+					end 
+				end
+			end
+			self.reload
+
+			if cart_items.present?
+				cart_items.each do |cart_item|
+					sim = false
+					self.orders.each do |order|
+						if check_for_similarity(order, cart_item)
+							order.update_attributes!(quantity: cart_item["quantity"]) unless cart_item["quantity"] == order.quantity
+							if order.order_items.present?
+								order.order_items.each do |order_item|
+									if cart_item["combo_dishes"].present?
+										cart_item["combo_dishes"].each do |combo_dish| 
+											if combo_dish["dish"]["id"] == order_item.item.id
+												order_item.update_attributes!(quantity: combo_dish["quantity"]) unless combo_dish["quantity"] == order_item.quantity
+											end
+										end							
+									end
+									if cart_item["combo_options"].present?
+										cart_item["combo_options"].each do |combo_option|
+											if combo_option["combo_option_dishes"].present?
+												combo_option["combo_option_dishes"].each do |combo_option_dish|
+													if combo_option_dish["dish"]["id"] == order_item.item.id
+														order_item.update_attributes!(quantity: combo_option_dish["quantity"]) unless combo_option_dish["quantity"] == order_item.quantity
+													end
 												end
 											end
 										end
 									end
 								end
 							end
+							sim = true
+							break
 						end
-						sim = true
-						break
 					end
-				end
-				unless sim
-					future_order = self.orders.build(product_id: cart_item["id"], product_type: "Combo", quantity: cart_item["quantity"], note: cart_item["note"])
-					if cart_item["combo_dishes"].present?
-						cart_item["combo_dishes"].each do |combo_dish| 
-							future_order.order_items.build(item_id: combo_dish["dish"]["id"], item_type: "Dish", quantity: combo_dish["quantity"])
-						end							
-					end
-					if cart_item["combo_options"].present?
-						cart_item["combo_options"].each do |combo_option|
-							if combo_option["combo_option_dishes"].present?
-								combo_option["combo_option_dishes"].each do |combo_option_dish|
-									future_order.order_items.build(item_id: combo_option_dish["dish"]["id"], item_type: "Dish", quantity: combo_option_dish["quantity"])
+					unless sim
+						future_order = self.orders.build(product_id: cart_item["id"], product_type: "Combo", quantity: cart_item["quantity"], note: cart_item["note"])
+						if cart_item["combo_dishes"].present?
+							cart_item["combo_dishes"].each do |combo_dish| 
+								future_order.order_items.build(item_id: combo_dish["dish"]["id"], item_type: "Dish", quantity: combo_dish["quantity"])
+							end							
+						end
+						if cart_item["combo_options"].present?
+							cart_item["combo_options"].each do |combo_option|
+								if combo_option["combo_option_dishes"].present?
+									combo_option["combo_option_dishes"].each do |combo_option_dish|
+										future_order.order_items.build(item_id: combo_option_dish["dish"]["id"], item_type: "Dish", quantity: combo_option_dish["quantity"])
+									end
 								end
 							end
-						end
-					end	
+						end	
+					end
 				end
 			end
+			self.delivery_address_id = delivery_address_id
+			self.calculate_total
+			DeliveryAddress.make_primary(delivery_address_id)
+			self.save!
 		end
-		self.delivery_address_id = delivery_address_id
-		self.calculate_total
-		DeliveryAddress.make_primary(delivery_address_id)
-		self.save!
 	end
 
 	def check_for_similarity(order, cart_item)
