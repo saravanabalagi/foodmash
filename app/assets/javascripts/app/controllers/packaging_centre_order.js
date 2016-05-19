@@ -98,6 +98,17 @@ angular.module('foodmashApp.controllers')
 		return percent;
 	};
 
+	$scope.getStatusAlias = function(status){
+		var alias = '';
+		$scope.statuses.filter(function(s){
+			if(s.name == status){
+				alias = s.alias;
+				return alias;
+			}
+		});
+		return alias;
+	};
+
 	$scope.updateStatus = function(){
 		var d = $q.defer();
 		$rootScope.disableButton('.order-status-update-button');
