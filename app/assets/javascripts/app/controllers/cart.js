@@ -94,7 +94,7 @@ angular.module('foodmashApp.controllers')
 	};
 
 	$scope.proceedToPayment = function(){
-		if(!$rootScope.currentUser.verified){
+		if($rootScope.currentUser && !$rootScope.currentUser.verified){
 			toaster.pop('error', 'Please verify account before placing an order!');
 			$location.path('/account');
 		}else{
