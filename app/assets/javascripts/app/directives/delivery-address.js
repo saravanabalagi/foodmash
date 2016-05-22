@@ -36,15 +36,17 @@ angular.module('foodmashApp.directives')
 
 			$scope.deleteDeliveryAddress = function(delivery_address){
 				var d = $q.defer();
-				delivery_address.delete().then(function(response){
-					toaster.pop('success', 'Delivery Address was deleted!');
-					$scope.delivery_addresses.splice($scope.delivery_addresses.indexOf(delivery_address), 1);
-					$scope.reload();
-					d.resolve(response);
-				}, function(err){
-					toaster.pop('error', 'Delivery Address was not deleted!');
-					d.reject(err);
-				});
+				if(confirm('Are you sure ?')){
+					delivery_address.delete().then(function(response){
+						toaster.pop('success', 'Delivery Address was deleted!');
+						$scope.delivery_addresses.splice($scope.delivery_addresses.indexOf(delivery_address), 1);
+						$scope.reload();
+						d.resolve(response);
+					}, function(err){
+						toaster.pop('error', 'Delivery Address was not deleted!');
+						d.reject(err);
+					});
+				}
 			};
 
 		}]

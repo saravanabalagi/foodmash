@@ -3,7 +3,7 @@
 <td ng-hide="updateShow">{{promo.code}}</td>
 <td ng-hide="updateShow">{{promo.discount_percentage}}</td>
 <td ng-hide="updateShow">{{promo.active}}</td>
-<td ng-hide="updateShow" ng-init="updateShow = false" ng-click="updateShow=!updateShow; setUpdate(promo)"><i class="icon-edit"></i></td>
+<td ng-hide="updateShow" ng-init="updateShow = false" ng-click="updateShow=!updateShow; setUpdate(promo)"><i class="fa fa-pencil-square-o"></i></td>
 <td ng-hide="updateShow" ng-click="deletePromo(promo)"><i class="icon-trash"></i></td>
 
 <td ng-show="updateShow">{{$index + 1}}</td>

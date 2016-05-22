@@ -1,7 +1,7 @@
 
 <td ng-hide="updateShow">{{$index + 1}}</td>
 <td ng-hide="updateShow">{{packaging_centre.name}}</td>
-<td ng-hide="updateShow" ng-init="updateShow = false" ng-click="updateShow=!updateShow; setUpdate(packaging_centre)"><i class="icon-edit"></i></td>
+<td ng-hide="updateShow" ng-init="updateShow = false" ng-click="updateShow=!updateShow; setUpdate(packaging_centre)"><i class="fa fa-pencil-square-o"></i></td>
 <td ng-hide="updateShow" ng-click="deletePackagingCentre(packaging_centre)"><i class="icon-trash"></i></td>
 
 <td ng-show="updateShow">{{$index + 1}}</td>

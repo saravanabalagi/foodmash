@@ -4,7 +4,7 @@
 <td ng-hide="updateShow">{{version.changelog}}</td>
 <td ng-hide="updateShow">{{version.force}}</td>
 <td ng-hide="updateShow">{{version.version_code}}</td>
-<td ng-hide="updateShow" ng-init="updateShow = false" ng-click="updateShow=!updateShow; setUpdate(version)"><i class="icon-edit"></i></td>
+<td ng-hide="updateShow" ng-init="updateShow = false" ng-click="updateShow=!updateShow; setUpdate(version)"><i class="fa fa-pencil-square-o"></i></td>
 <td ng-hide="updateShow" ng-click="deleteVersion(version)"><i class="icon-trash"></i></td>
 
 <td ng-show="updateShow">{{$index + 1}}</td>

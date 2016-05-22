@@ -1,10 +1,10 @@
 
   <td ng-hide="updateShow">{{$index + 1}}</td>
   <td ng-hide="updateShow">{{dish_type.name}}</td>
-  <td ng-hide="updateShow" ng-init="updateShow = false" ng-click="updateShow=!updateShow; setUpdate(dish_type)"><i class="icon-edit"></i></td>
+  <td ng-hide="updateShow" ng-init="updateShow = false" ng-click="updateShow=!updateShow; setUpdate(dish_type)"><i class="fa fa-pencil-square-o"></i></td>
   <td ng-hide="updateShow" ng-click="deleteDishType(dish_type)"><i class="icon-trash"></i></td>
 
   <td ng-show="updateShow">{{$index + 1}}</td>
   <td ng-show="updateShow"><input class="form-control" type="text" ng-model="updatedDishType.name"></td>
-  <td ng-show="updateShow" ng-click="updateShow=!updateShow"><i class="icon-edit"></i></td>
+  <td ng-show="updateShow" ng-click="updateShow=!updateShow"><i class="fa fa-pencil-square-o"></i></td>
   <td ng-show="updateShow" ng-click="updateDishType(dish_type)"><i class="fa fa-check-circle"></i></td>
