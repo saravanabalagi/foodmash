@@ -74,12 +74,16 @@
         <i class="fa fa-fw fa-question-circle" data-container="body" data-title="MashCash" data-content="Mash Cash can be used as real cash within Foodmash." data-toggle="popover" data-trigger="hover" data-placement="bottom"></i>
       </div> -->
       <div ng-show="change_password">
-        <i class="fa fa-fw fa-unlock-alt"></i>
-        <input type="password" value="Lorem Ipsum" />
+        <i class="fa fa-fw fa-unlock"></i>
+        <input type="password" ng-model="user.old_password" placeholder="old password" />
       </div>
       <div ng-show="change_password">
-        <i class="fa fa-fw fa-unlock"></i>
-        <input type="password" value="Lorem Ipsum" />
+        <i class="fa fa-fw fa-unlock-alt"></i>
+        <input type="password" ng-model="user.password" placeholder="password" />
+      </div>
+      <div ng-show="change_password">
+        <i class="fa fa-fw fa-unlock-alt"></i>
+        <input type="password" ng-model="user.password_confirmation" placeholder="confirm password" />
       </div>
       <div>
         <button ng-show="!change_password" type="submit" class="btn btn-success btn-raised save-button">Save</button>
