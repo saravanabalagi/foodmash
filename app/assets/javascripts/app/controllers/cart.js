@@ -285,6 +285,8 @@ angular.module('foodmashApp.controllers')
 				toaster.pop('success', 'A discount of ' + response.promo_discount + ' was applied to cart!');
 			}else{
 				toaster.pop('error', 'Failed to apply promo code!');
+				$scope.promo = {};
+				calcTaxAndGrandTotal();
 			}
 			if(response.cart.grand_total && response.cart.promo_id && response.cart.promo_discount){
 				$scope.cart.grand_total = response.cart.grand_total.toFixed(2);
@@ -300,6 +302,7 @@ angular.module('foodmashApp.controllers')
 		}, function(err){
 			toaster.pop('error', 'Failed to apply promo code!');
 			$scope.promo = {};
+			calcTaxAndGrandTotal();
 		});
 	};
 
