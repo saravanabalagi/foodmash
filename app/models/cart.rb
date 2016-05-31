@@ -284,7 +284,7 @@ class Cart < ActiveRecord::Base
 		# else
 		# 	promo_user = nil
 		# end
-		if promo.present? and promo.active and (cart_promo.present? ? cart_promo.id != promo.id : true)
+		if promo.present? and promo.active and (cart_promo.present? ? cart_promo[:id] != promo.id : true)
 			cart[:promo_id] = promo.id
 			cart[:grand_total] = cart[:grand_total].to_f - (cart[:total].to_f * promo.discount_percentage)
 			cart[:promo_discount] = cart[:total].to_f * promo.discount_percentage
