@@ -4,7 +4,6 @@ angular.module('foodmashApp.controllers')
 
 .controller('BodyController', ['$scope', '$location', 'toaster', 'CartService', 'City', '$rootScope', 'localStorageService', function($scope, $location, toaster, CartService, City, $rootScope, localStorageService){
 
-		CartService.setCartGlobally();
 		$scope.cities = [];
 		$scope.selectedCity = {};
 		$scope.selectedArea = {name: 'Choose Area'};
@@ -22,6 +21,7 @@ angular.module('foodmashApp.controllers')
 		});
 
 		$scope.loadGlobal = function(){
+			CartService.setCartGlobally();
 			var area = localStorageService.get('selectedArea');
 			var city = localStorageService.get('selectedCity');
 			if(area && area.id){
