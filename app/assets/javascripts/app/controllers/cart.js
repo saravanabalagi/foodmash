@@ -280,8 +280,8 @@ angular.module('foodmashApp.controllers')
 
 	function applyPromoCode(promo_code){
 		$scope.cart.user_id = $rootScope.currentUser.id;
+		calcTaxAndGrandTotal();
 		Payment.validatePromoCode(promo_code, $scope.cart, $scope.promo).then(function(response){
-			calcTaxAndGrandTotal();
 			if(response.promo_discount){
 				toaster.pop('success', 'A discount of ' + response.promo_discount + ' was applied to cart!');
 			}else{
@@ -302,7 +302,6 @@ angular.module('foodmashApp.controllers')
 		}, function(err){
 			toaster.pop('error', 'Failed to apply promo code!');
 			$scope.promo = {};
-			calcTaxAndGrandTotal();
 		});
 	};
 
