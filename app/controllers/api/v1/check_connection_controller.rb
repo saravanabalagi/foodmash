@@ -12,9 +12,9 @@ class Api::V1::CheckConnectionController < ApiApplicationController
 	def instantiate
 		versions = Version.last
 		maintenance = {
-			title: 'Rains Galore',
-			message: 'Operations halted due to rain, please come back tomorrow!',
-			image: 'https://s3-ap-southeast-1.amazonaws.com/foodmash-india/assets/blame_it_on_rain.png',
+			title: 'Welcome to Foodmash!',
+			message: 'We deliver from 7-10 p.m.',
+			image: 'https://s3-ap-southeast-1.amazonaws.com/foodmash-india/assets/welcome.jpg',
 			blocking: false
 		}
 		settings = {
