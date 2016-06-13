@@ -22,8 +22,8 @@ angular.module('foodmashApp.controllers')
 
 		$scope.loadGlobal = function(){
 			CartService.setCartGlobally();
-			var area = $cookieStore.put('selectedArea');
-			var city = $cookieStore.put('selectedCity');
+			var area = $cookieStore.get('selectedArea');
+			var city = $cookieStore.get('selectedCity');
 			if(area && area.id){
 				$scope.selectedArea = $rootScope.area = area;
 				$scope.selectedCity = $rootScope.city = city;
