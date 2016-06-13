@@ -103,10 +103,12 @@ angular.module('foodmashApp.controllers')
 					$scope.setup_details["amount"] = $scope.cart.grand_total;
 					Payment.getHash($scope.setup_details).then(function(response){
 						$scope.setup_details = response.setup_details;
-						$scope.processCart();
-						angular.element(document).ready(function (){
-							$window.fbq('track', 'Purchase', {value: $scope.cart.grand_total, currency: 'INR'});
-							$('#payu-payment-form').submit();
+						$scope.processCart().then(function(response){
+							angular.element(document).ready(function (){
+								$window.fbq('track', 'Purchase', {value: $scope.cart.grand_total, currency: 'INR'});
+								$('#payu-payment-form').submit();
+							});
+						}, function(err){
 						});
 					}, function(err){
 						toaster.pop('error', 'Could not generate hash');
