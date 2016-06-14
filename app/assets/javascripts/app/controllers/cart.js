@@ -244,15 +244,17 @@ angular.module('foodmashApp.controllers')
 	function checkIfDifferentDishtypesInCart(){
 		var check = false;
 		if($scope.cart && $scope.cart.grand_total){
-			var dish_types = new Set();
+			var dish_types = [];
 			$scope.cart.orders.filter(function(order){
 				order.order_items.filter(function(order_item){
-					if(!dish_types.has(order_item.item.dish_type_id)){
-						dish_types.add(order_item.item.dish_type_id);
+					var checkForDishType = false;
+					dish_types.filter(function(dType){ if(dType == order_item.item.dish_type_id){ checkForDishType = true; } });
+					if(!checkForDishType){
+						dish_types.push(order_item.item.dish_type_id);
 					}
 				});
 			});
-			if(dish_types.size >= 2){
+			if(dish_types.length >= 2){
 				check = true;
 			}
 		}

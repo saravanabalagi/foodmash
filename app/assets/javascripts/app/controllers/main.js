@@ -104,20 +104,23 @@ angular.module('foodmashApp.controllers')
 		};
 
 	 	$scope.checkIfOptionSelected = function(option){
-	 		if($scope.selected.has(option))
+	 		if(hasBeenSelected(option))
 	 			return true;
 	 		return false;
 	 	};
 
  	 	$scope.addOrRemoveFilters = function(option){
- 	 		if($scope.selected.has(option)){
- 	 			$scope.selected.delete(option);
+ 	 		if(hasBeenSelected(option)){
+ 	 			var index = $scope.selected.indexOf(option);
+ 	 			if(angular.isNumber(index) && index != -1){
+ 	 				$scope.selected.splice(index, 1);
+ 	 			}
  	 		}else{
- 	 			$scope.selected.add(option);
+ 	 			$scope.selected.push(option);
  	 		}
  	 		MainService.setSelectedSet($scope.selected);
 
- 	 		if($scope.selected.size == 0){
+ 	 		if($scope.selected.length == 0){
  	 			$scope.combos = $scope.loadedFromPackagingCentre;
  	 		}else{
  	 			applyFilters();
@@ -127,6 +130,16 @@ angular.module('foodmashApp.controllers')
 
  	 	$scope.changeArea = function(area){
  	 		$rootScope.area = area;
+ 	 	};
+
+ 	 	function hasBeenSelected(option){
+ 	 		var check = false
+ 	 		$scope.selected.filter(function(curOption){
+ 	 			if(option.name == curOption.name){
+ 	 				check = true;
+ 	 			}
+ 	 		});
+ 	 		return check;
  	 	};
 
  	 	function applySortFilterIfSelected(){
@@ -153,10 +166,10 @@ angular.module('foodmashApp.controllers')
 	 	function checkIfTypeSelected(options, alias){
 	 		var isSelected = false;
  			options.filter(function(option){
- 				if(option.alias == alias && $scope.selected.has(option)){
+ 				if(option.alias == alias && hasBeenSelected(option)){
  					isSelected = true;
  				}
- 				if(option.name == 'Mega' && alias >= option.alias && $scope.selected.has(option)){
+ 				if(option.name == 'Mega' && alias >= option.alias && hasBeenSelected(option)){
  					isSelected = true;
  				}
  			});
@@ -166,7 +179,7 @@ angular.module('foodmashApp.controllers')
 	 	function checkForSelectedFilters(options){
 	 		var isSelected = true;
  			options.filter(function(option){
- 				if($scope.selected.has(option)){
+ 				if(hasBeenSelected(option)){
  					isSelected = false;
  				}
  			});

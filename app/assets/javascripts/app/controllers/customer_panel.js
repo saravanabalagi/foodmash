@@ -24,13 +24,14 @@ angular.module('foodmashApp.controllers')
 		if(carts && carts.length > 0){
 			$scope.loadedCarts = carts;
 			$scope.carts = carts;
+			updateSelectedCart();
+			$scope.selectCart($scope.selectedCart || $scope.carts[0]);
 		}else{
 			$scope.loadedCarts = null;
 			$scope.carts = null;
 		}
 		applyCustomerPanelFilterIfSelected();
 		applySortFilterIfSelected();
-		$scope.selectCart($scope.selectedCart || $scope.carts[0]);
 	}, function(err){
 		$scope.loadedCarts = null;
 		$scope.carts = null;
@@ -47,13 +48,14 @@ angular.module('foodmashApp.controllers')
 	  			if(carts && carts.length > 0){
 	  				$scope.loadedCarts = carts;
 	  				$scope.carts = carts;
+	  				updateSelectedCart();
+	  				$scope.selectCart($scope.selectedCart || $scope.carts[0]);
 	  			}else{
 	  				$scope.loadedCarts = null;
 	  				$scope.carts = null;
 	  			}
 	  			applyCustomerPanelFilterIfSelected();
 	  			applySortFilterIfSelected();
-	  			$scope.selectCart($scope.selectedCart || $scope.carts[0]);
 	  		}, function(err){
 	  			$scope.loadedCarts = null;
 	  			$scope.carts = null;
@@ -148,6 +150,12 @@ angular.module('foodmashApp.controllers')
 			price += oi.quantity * oi.item.price * order.quantity;
 		});
 		return price;
+	};
+
+	function updateSelectedCart(){
+		if($scope.selectedCart && $scope.selectedCart.id){
+			$scope.carts.filter(function(cart){ if(cart.id == $scope.selectedCart.id){ var index = $scope.carts.indexOf(cart); $scope.selectedCart =  $scope.carts[index]; } });
+		}
 	};
 
 	function applyCustomerPanelFilterIfSelected(){

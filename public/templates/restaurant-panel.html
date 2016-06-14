@@ -73,13 +73,13 @@
       <div class="col-md-6 order-description" ng-show="selectedCart.order_id">
         <h3>{{selectedCart.order_id}}</h3>
         <div class="order-status-wrapper">Order status: <span class="order-status">{{selectedStatus.alias}}</span></div>
-        <div class="order-status-meter-wrapper">
+       <!--  <div class="order-status-meter-wrapper">
           <div class="progress progress-striped active order-status-meter">
             <div class="progress-bar" style="{{selectedStatus.percent}}"></div>
           </div>
           <i ng-repeat-start="status in statuses" class="{{status.icon_class}}" ng-class="{'completed' : checkIfCompleted(status)}" data-toggle="tooltip" title="{{status.alias}}" data-delay="{'show': 1}" data-placement="bottom"></i><span ng-repeat-end> </span>
-        </div>
-        <div class="order-status-update-wrapper">Update as <span class="btn btn-info btn-raised order-status-update">Ready</span></div>
+        </div> -->
+        <!-- <div class="order-status-update-wrapper">Update as <span class="btn btn-info btn-raised order-status-update">Ready</span></div> -->
         <div class="order-header">
           <span class="order-date">{{selectedCart.purchased_at | date: 'MMM dd, yyyy HH:mm:ss'}}</span>
           <span class="order-amount-wrapper">
@@ -112,12 +112,12 @@
                 <td></td>
                 <td><span class="rupee"></span>{{selectedOrderItemsTotal()}}</td>
               </tr>
-              <tr class="additional-notes-wrapper">
+              <!-- <tr class="additional-notes-wrapper">
                 <td colspan="4">
                   <span><i class="fa fa-edit"></i></span>
                   <span class="additional-notes">Make noodles more spicy</span>
                 </td>
-              </tr>
+              </tr> -->
             </tfoot>
           </table>
         </div>
