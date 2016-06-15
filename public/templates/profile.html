@@ -23,7 +23,7 @@
 <div class="container">
   <div class="row">
 
-<div class="col-md-6 order-history col-md-offset-1" ng-init="load()">
+<div class="col-md-6 col-md-offset-1" ng-init="load()">
   <div class="thumbnail verify-account" ng-if="!user.verified">
     <div class="title"> <i class="fa fa-prepend fa-exclamation-triangle"></i> Verify your account to proceed</div>
     <div ng-show="user.otp_set" class="message">We have sent {{user.mobile_no}} a One Time Password (OTP). Enter the OTP here to verify your account</div>
@@ -62,7 +62,7 @@
       <div>
         <i class="fa fa-fw fa-phone"></i>
         <input type="text" class="user-phone-prefix" value="+91" disabled="true" />
-        <input type="text" class="user-phone" ng-model="user.mobile_no" ng-disabled="change_password" style="width: 90px;"/>
+        <input type="text" class="user-phone" ng-model="user.mobile_no" ng-disabled="change_password" />
         <!--//TODO check user.verified below-->
         <i ng-show="user.verified" class="fa fa-fw fa-check-circle" data-container="body" data-title="Account Verified" data-content="Your account has been verified successfully" data-toggle="popover" data-trigger="hover" data-placement="bottom"></i>
         <i ng-hide="user.verified" class="fa fa-fw fa-times-circle" data-container="body" data-title="Account not verified" data-content="Please verify your account to place orders. We'll send an OTP to your registered mobile number." data-toggle="popover" data-trigger="hover" data-placement="bottom"></i>

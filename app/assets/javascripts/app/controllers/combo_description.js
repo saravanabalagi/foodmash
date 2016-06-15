@@ -123,7 +123,7 @@ angular.module('foodmashApp.controllers')
 	};
 
 	$scope.addCombo = function(combo){
-		if(checkForNonCompulsoryComboOptions(combo)){
+		if(checkForNonCompulsoryComboOptions(combo) && checkForCompulsoryComboOptions(combo)){
 			pushAllComboDishes(combo);
 			CartService.addToCart(combo, $scope.selectedDishes);
 			$scope.selectedDishes = [];
@@ -131,8 +131,13 @@ angular.module('foodmashApp.controllers')
 			pushDefaultComboOption($scope.combo);
 			toaster.pop('success', 'Added to cart!');
 			$window.fbq('track', 'AddToCart');
-		}else{
+		}
+		else if(!checkForNonCompulsoryComboOptions(combo)){
 			toaster.pop('error', 'Please select one more dish from another tab!');
+		}
+		else if(!checkForCompulsoryComboOptions(combo)){
+			var compulsoryTab = findCompulsoryTab(combo);
+			toaster.pop('error', 'Please select atleast one from tab '+ compulsoryTab);
 		}
 	};
 
@@ -187,6 +192,31 @@ angular.module('foodmashApp.controllers')
 		});
 		return presence;
 	};
+
+	function checkForCompulsoryComboOptions(combo){
+		var presence = false;
+		$scope.selectedDishes.filter(function(selectedDish){
+			combo.combo_options.filter(function(combo_option){
+				if(combo_option.id == selectedDish.category_id && combo_option.min_count){
+					presence = true;
+				}
+			});
+		});
+		if($scope.selectedDishes.length > 0 && combo.customizable){
+			presence = true;
+		}
+		return presence;
+	};
+
+	function findCompulsoryTab(combo){
+		var compulsoryTab = '';
+		combo.combo_options.filter(function(combo_option){
+			if(combo_option.min_count){
+				compulsoryTab += combo_option.name;
+			}
+		});
+		return compulsoryTab;
+	}
 
 	function checkAndPush(selectedDish){
 		for(var i = 0; i<$scope.selectedDishes.length; i++){

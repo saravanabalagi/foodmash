@@ -85,6 +85,14 @@ angular.module('foodmashApp.controllers')
 		}
 	};
 
+	$scope.isSelected = function(delivery_address){
+		var check = false;
+		if($scope.cart.delivery_address_id == delivery_address.id){
+			check = true;
+		}
+		return check;
+	};
+
 	$scope.setCod = function(){
 		$scope.payment_method = 'COD';
 	};

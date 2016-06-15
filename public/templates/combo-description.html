@@ -28,12 +28,12 @@
                 <i class="icon-label {{getLabelClass(combo_option_dish.dish.label)}}"></i>
                 <span>{{combo_option_dish.dish.name}}</span>
               </div>
-              <div class="quantity-counter-wrapper">
-                <div class="quantity-counter">
-                  <a ng-show="checkIfSelected(selectedComboOption, combo_option_dish)" ng-click="removeSelectedDish(selectedComboOption, combo_option_dish)" class="btn btn-border btn-semi-transparent btn-raised btn-fab btn-fab-micro" role="button"><i class="material-icons">remove</i> </a>
-                  <span ng-show="checkIfSelected(selectedComboOption, combo_option_dish)" class="quantity">{{showQuantityOfSelectedDish(selectedComboOption, combo_option_dish)}}</span>
-                  <a ng-click="selectDish(combo, selectedComboOption, combo_option_dish.dish)" class="btn btn-semi-transparent btn-border btn-raised btn-fab btn-fab-micro" role="button"><i class="material-icons">add</i> </a>
-                </div>
+            </div>
+            <div class="quantity-counter-wrapper">
+              <div class="quantity-counter">
+                <a ng-show="checkIfSelected(selectedComboOption, combo_option_dish)" ng-click="removeSelectedDish(selectedComboOption, combo_option_dish)" class="btn btn-border btn-semi-transparent btn-raised btn-fab btn-fab-micro" role="button"><i class="material-icons">remove</i> </a>
+                <span ng-show="checkIfSelected(selectedComboOption, combo_option_dish)" class="quantity">{{showQuantityOfSelectedDish(selectedComboOption, combo_option_dish)}}</span>
+                <a ng-click="selectDish(combo, selectedComboOption, combo_option_dish.dish)" class="btn btn-semi-transparent btn-border btn-raised btn-fab btn-fab-micro" role="button"><i class="material-icons">add</i> </a>
               </div>
             </div>
           </div>
