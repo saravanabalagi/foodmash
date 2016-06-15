@@ -6,12 +6,13 @@ angular.module('foodmashApp.services')
   
    var service = this;
    service.restaurant = {};
-   service.cart = {};
+   service.selectedRestaurantPanelCart = null;
+   service.selectedRestaurantPanelOption = null;
+   service.selectedSortOption = null;
    service.restaurantPanelOptions = [
       {name: 'Current', icon_class: 'fa fa-inbox pull-right', checkout: 'Delivered'},
       {name: 'Delivered', icon_class: 'fa fa-archive pull-right', checkout: 'Current'}
     ];
-    service.selectedRestaurantPanelOption = null;
 
     service.statuses = [
       {name: "purchased", alias: "Placed Order", icon_class: "fa fa-clock-o", percent: 'width:0%'},
@@ -24,7 +25,6 @@ angular.module('foodmashApp.services')
       {name: 'Newest First', icon_class: 'fa fa-sort-amount-asc pull-right', reverse: true},
       {name: 'Oldest First', icon_class: 'fa fa-sort-amount-desc pull-right', reverse: false}
     ];
-    service.selectedSortOption = null;
 
   service.getRestaurantPanelSortOptions = function(){
     return service.sortOptions;
@@ -42,7 +42,7 @@ angular.module('foodmashApp.services')
     service.selectedRestaurantPanelOption = selectedRestaurantPanelOption || service.restaurantPanelOptions[0];
   };
 
-  service.getSelectedRestaurantPanelOption = function(selectedRestaurantPanelOption){
+  service.getSelectedRestaurantPanelOption = function(){
       return service.selectedRestaurantPanelOption;
   };
 
@@ -50,16 +50,16 @@ angular.module('foodmashApp.services')
     service.selectedSortOption = selectedSortOption || service.sortOptions[0];
   };
 
-  service.getSelectedSortOption = function(selectedSortOption){
+  service.getSelectedSortOption = function(){
       return service.selectedSortOption;
   };
 
   service.setSelectedRestaurantPanelCart = function(cart){
-    service.cart = cart;
+    service.selectedRestaurantPanelCart = cart;
   };
 
   service.getSelectedRestaurantPanelCart = function(){
-    return service.cart;
+    return service.selectedRestaurantPanelCart;
   };
 
   service.setSelectedRestaurantPanelOption(service.restaurantPanelOptions[0]);
@@ -67,17 +67,17 @@ angular.module('foodmashApp.services')
 
    service.getCartsForPanel = function(role){
       var d = $q.defer();
-      if(service.restaurant && !service.restaurant.name){
+      if(service.restaurant && !service.restaurant.id){
          Restaurant.query({id: role.resource.id}).then(function(restaurants){
           if(restaurants.length > 0){
             service.restaurant = restaurants[0];
-
             service.restaurant.getCartsForRestaurant().then(function(carts){
               if(carts && carts.length > 0){
                 service.restaurant.carts = carts;
               }else{
                 service.restaurant.carts = null;
               }
+              d.resolve(service.restaurant);
             }, function(err){
               service.restaurant.carts = null;
               d.resolve(service.restaurant);
@@ -107,6 +107,7 @@ angular.module('foodmashApp.services')
             }else{
               service.restaurant.carts = null;
             }
+            d.resolve(service.restaurant);
           }, function(err){
             service.restaurant.carts = null;
             d.resolve(service.restaurant);

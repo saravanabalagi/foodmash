@@ -21,6 +21,8 @@ angular.module('foodmashApp.controllers')
 	});
 
 	CustomerPanelService.getCartsForCustomer().then(function(carts){
+		applyCustomerPanelFilterIfSelected();
+		applySortFilterIfSelected();
 		if(carts && carts.length > 0){
 			$scope.loadedCarts = carts;
 			$scope.carts = carts;
@@ -30,8 +32,6 @@ angular.module('foodmashApp.controllers')
 			$scope.loadedCarts = null;
 			$scope.carts = null;
 		}
-		applyCustomerPanelFilterIfSelected();
-		applySortFilterIfSelected();
 	}, function(err){
 		$scope.loadedCarts = null;
 		$scope.carts = null;
@@ -45,6 +45,8 @@ angular.module('foodmashApp.controllers')
 	      });
       	(function tick(){
 	  	     CustomerPanelService.loadCartsForCustomer().then(function(carts){
+	  	     	applyCustomerPanelFilterIfSelected();
+	  			applySortFilterIfSelected();
 	  			if(carts && carts.length > 0){
 	  				$scope.loadedCarts = carts;
 	  				$scope.carts = carts;
@@ -54,8 +56,6 @@ angular.module('foodmashApp.controllers')
 	  				$scope.loadedCarts = null;
 	  				$scope.carts = null;
 	  			}
-	  			applyCustomerPanelFilterIfSelected();
-	  			applySortFilterIfSelected();
 	  		}, function(err){
 	  			$scope.loadedCarts = null;
 	  			$scope.carts = null;

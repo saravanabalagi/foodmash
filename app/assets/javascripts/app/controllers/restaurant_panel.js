@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('RestaurantPanelController', ['$scope','$location','toaster','$rootScope','Restaurant', '$filter', 'RestaurantPanelService', '$timeout', function($scope, $location, toaster, $rootScope, Restaurant, $filter, RestaurantPanelService, $timeout){
+.controller('RestaurantPanelController', ['$scope','$location','toaster','$rootScope', 'RestaurantPanelService', 'Restaurant', '$filter', '$timeout', function($scope, $location, toaster, $rootScope, RestaurantPanelService, Restaurant, $filter, $timeout){
 
 	$scope.user = $rootScope.currentUser;
 	$scope.roles = $rootScope.currentUser.roles;
@@ -18,10 +18,13 @@ angular.module('foodmashApp.controllers')
 	$scope.selectedOption = RestaurantPanelService.getSelectedRestaurantPanelOption();
 	$scope.selectedSortOption = RestaurantPanelService.getSelectedSortOption();
 	$scope.timeoutPromise = {};
+	getSuitableStatus($scope.selectedCart);
 
 	$scope.roles.filter(function(role){
 		if(role.name == "restaurant_admin"){
 			RestaurantPanelService.getCartsForPanel(role).then(function(restaurant){
+				applyRestaurantPanelOptionFilterIfSelected();
+				applySortFilterIfSelected();
 				if(restaurant && restaurant.carts && restaurant.carts.length > 0){
 					$scope.restaurant = restaurant;
 					$scope.loadedCarts = restaurant.carts;
@@ -33,52 +36,46 @@ angular.module('foodmashApp.controllers')
 					$scope.loadedCarts = null;
 					$scope.carts = null;
 				}
-				applyRestaurantPanelOptionFilterIfSelected();
-				applySortFilterIfSelected();
 			}, function(err){
 				$scope.loadedCarts = null;
 				$scope.restaurant = null;
 				$scope.carts = null;
-				applyRestaurantPanelOptionFilterIfSelected();
-				applySortFilterIfSelected();
 			});
 		}
 	});
 
 	$scope.load = function(){
-		(function tick(){
-			$scope.roles.filter(function(role){
-				if(role.name == "restaurant_admin"){
-					RestaurantPanelService.loadCartsForPanel(role).then(function(restaurant){
-						if(restaurant && restaurant.carts && restaurant.carts.length > 0){
-							$scope.restaurant = restaurant;
-							$scope.loadedCarts = restaurant.carts;
-							$scope.carts = restaurant.carts ;
-							updateSelectedCart();
-							$scope.selectCart($scope.selectedCart || $scope.carts[0]);
-						}else{
-							$scope.restaurant = null;
-							$scope.loadedCarts = null;
-							$scope.carts = null;
-						}
-						applyRestaurantPanelOptionFilterIfSelected();
-						applySortFilterIfSelected();
-					}, function(err){
-						$scope.loadedCarts = null;
-						$scope.restaurant = null;
-						$scope.carts = null;
-						applyRestaurantPanelOptionFilterIfSelected();
-						applySortFilterIfSelected();
-					});
-				}
-			});
-			$scope.timeoutPromise = $timeout(tick, 30000);
-		})();
 	    angular.element(document).ready(function (){
 	      new WOW().init();
 	      $('[data-toggle="tooltip"]').tooltip();
 	      $('[data-toggle="popover"]').popover();
 	    });
+	    (function tick(){
+	    	$scope.roles.filter(function(role){
+	    		if(role.name == "restaurant_admin"){
+	    			RestaurantPanelService.loadCartsForPanel(role).then(function(restaurant){
+	    				applyRestaurantPanelOptionFilterIfSelected();
+	    				applySortFilterIfSelected();
+	    				if(restaurant && restaurant.carts && restaurant.carts.length > 0){
+	    					$scope.restaurant = restaurant;
+	    					$scope.loadedCarts = restaurant.carts;
+	    					$scope.carts = restaurant.carts ;
+	    					updateSelectedCart();
+	    					$scope.selectCart($scope.selectedCart || $scope.carts[0]);
+	    				}else{
+	    					$scope.restaurant = null;
+	    					$scope.loadedCarts = null;
+	    					$scope.carts = null;
+	    				}
+	    			}, function(err){
+	    				$scope.loadedCarts = null;
+	    				$scope.restaurant = null;
+	    				$scope.carts = null;
+	    			});
+	    		}
+	    	});
+	    	$scope.timeoutPromise = $timeout(tick, 30000);
+	    })();
 	 };
 
 	 $scope.$on('$destroy', function(){
@@ -87,6 +84,7 @@ angular.module('foodmashApp.controllers')
 
 	 $scope.selectSortOption = function(option){
     	$scope.selectedSortOption = option;
+    	RestaurantPanelService.setSelectedSortOption($scope.selectedSortOption);
     	applyRestaurantPanelOptionFilterIfSelected();
     	applySortFilterIfSelected();
     };
@@ -119,6 +117,13 @@ angular.module('foodmashApp.controllers')
 		}
 		return false;
 	};
+
+	$scope.checkIfCartSelected = function(cart){
+    	if(cart && $scope.selectedCart && cart.id && $scope.selectedCart.id && cart.id == $scope.selectedCart.id){
+    		return true;
+    	}
+    	return false;
+    };
 
 	$scope.selectCart = function(cart){
 		$scope.selectedCart = cart;
@@ -189,13 +194,17 @@ angular.module('foodmashApp.controllers')
 
 	function getOrderItems(cart){
 		$scope.selectedOrderItems = [];
-		cart.orders.filter(function(order){
-			order.order_items.filter(function(order_item){
-				if(order_item.item.restaurant.id == $scope.restaurant.id){
-					$scope.selectedOrderItems.push(order_item);
-				};
+		if(cart.orders && cart.orders.length > 0){
+			cart.orders.filter(function(order){
+				if(order.order_items && order.order_items.length > 0){
+					order.order_items.filter(function(order_item){
+						if(order_item.item.restaurant.id == $scope.restaurant.id){
+							$scope.selectedOrderItems.push(order_item);
+						};
+					});
+				}
 			});
-		});
+		}
 	};
 
 }]);

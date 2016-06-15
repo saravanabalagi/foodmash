@@ -57,7 +57,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="cart in carts" ng-click="selectCart(cart)" ng-class="{'active' : selectedCart == cart}">
+          <tr ng-repeat="cart in carts" ng-click="selectCart(cart)" ng-class="{'active' : checkIfCartSelected(cart)}">
             <td>{{cart.order_id}}</td>
             <td>{{cart.total}}</td>
             <td>{{cart.purchased_at | date: 'MMM dd, yyyy HH:mm:ss'}}</td>
@@ -72,7 +72,8 @@
 
       <div class="col-md-6 order-description" ng-show="selectedCart.order_id">
         <h3>{{selectedCart.order_id}}</h3>
-        <div class="order-status-wrapper">Order status: <span class="order-status">{{selectedStatus.alias}}</span></div>
+        <h3>Payment Method - {{selectedCart.payment_method}}</h3>
+        <!-- <div class="order-status-wrapper">Order status: <span class="order-status">{{selectedStatus.alias}}</span></div> -->
        <!--  <div class="order-status-meter-wrapper">
           <div class="progress progress-striped active order-status-meter">
             <div class="progress-bar" style="{{selectedStatus.percent}}"></div>
@@ -84,7 +85,6 @@
           <span class="order-date">{{selectedCart.purchased_at | date: 'MMM dd, yyyy HH:mm:ss'}}</span>
           <span class="order-amount-wrapper">
             <span class="order-amount">{{selectedOrderItemsTotal()}}</span>
-            <i class="fa fa-question-circle" title="Payment Status" data-placement="bottom" data-content="Payment will be done in 7 days" data-toggle="popover" data-trigger="hover"></i>
           </span>
         </div>
         <div class="order-contents">

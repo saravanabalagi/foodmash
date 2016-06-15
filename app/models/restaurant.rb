@@ -16,7 +16,10 @@ class Restaurant < ActiveRecord::Base
 			dishes.each do |dish|
 				if dish.order_items.present?
 					dish.order_items.each do |order_item|
-						carts_list << order_item.order.cart
+						cart = order_item.order.cart
+						if cart.present? and cart.purchased_at.present?
+							carts_list << cart if (cart.purchased_at >= Time.now.beginning_of_month and cart.purchased_at <= Time.now.end_of_month)
+						end
 					end
 				end
 			end
