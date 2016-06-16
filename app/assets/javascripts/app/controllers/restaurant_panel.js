@@ -23,13 +23,13 @@ angular.module('foodmashApp.controllers')
 	$scope.roles.filter(function(role){
 		if(role.name == "restaurant_admin"){
 			RestaurantPanelService.getCartsForPanel(role).then(function(restaurant){
-				applyRestaurantPanelOptionFilterIfSelected();
-				applySortFilterIfSelected();
 				if(restaurant && restaurant.carts && restaurant.carts.length > 0){
 					$scope.restaurant = restaurant;
 					$scope.loadedCarts = restaurant.carts;
 					$scope.carts = restaurant.carts ;
 					updateSelectedCart();
+					applyRestaurantPanelOptionFilterIfSelected();
+					applySortFilterIfSelected();
 	  				$scope.selectCart($scope.selectedCart || $scope.carts[0]);
 				}else{
 					$scope.restaurant = null;
@@ -54,13 +54,13 @@ angular.module('foodmashApp.controllers')
 	    	$scope.roles.filter(function(role){
 	    		if(role.name == "restaurant_admin"){
 	    			RestaurantPanelService.loadCartsForPanel(role).then(function(restaurant){
-	    				applyRestaurantPanelOptionFilterIfSelected();
-	    				applySortFilterIfSelected();
 	    				if(restaurant && restaurant.carts && restaurant.carts.length > 0){
 	    					$scope.restaurant = restaurant;
 	    					$scope.loadedCarts = restaurant.carts;
 	    					$scope.carts = restaurant.carts ;
 	    					updateSelectedCart();
+	    					applyRestaurantPanelOptionFilterIfSelected();
+	    					applySortFilterIfSelected();
 	    					$scope.selectCart($scope.selectedCart || $scope.carts[0]);
 	    				}else{
 	    					$scope.restaurant = null;
