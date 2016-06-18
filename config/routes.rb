@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     resources :combos do 
       collection do 
         post 'getComboAvailability', to: 'combos#get_combo_availability'
-        get 'loadFromPackagingCentre', to: 'combos#load_from_packaging_centre'
+        post 'loadFromPackagingCentre', to: 'combos#load_from_packaging_centre'
       end
     end
 

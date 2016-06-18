@@ -18,10 +18,10 @@ angular.module('foodmashApp.resources')
 		return d.promise;
 	};
 
-	resource.loadFromPackagingCentre = function(){
+	resource.loadFromPackagingCentre = function(val){
 		var self = this;
 		var d = $q.defer();
-		resource.$get(self.$url('loadFromPackagingCentre')).then(function(loadedFromPackagingCentre){
+		resource.$post(self.$url('loadFromPackagingCentre'), {packaging_centre_id: val.packaging_centre_id}).then(function(loadedFromPackagingCentre){
 			d.resolve(loadedFromPackagingCentre);
 		}, 
 		function(err){ d.reject(err); });
