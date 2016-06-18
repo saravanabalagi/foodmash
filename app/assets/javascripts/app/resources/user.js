@@ -41,6 +41,28 @@ angular.module('foodmashApp.resources')
 		return d.promise;
 	};
 
+	resource.sendOtp = function(){
+		var self = this;
+		var d = $q.defer();
+		resource.$get(self.$url('sendOtp')).then(function(response){
+			d.resolve(response);
+		}, function(err){
+			d.reject(err);
+		});
+		return d.promise;
+	};
+
+	resource.verifyOtp = function(otp){
+		var self = this;
+		var d = $q.defer();
+		resource.$get(self.$url('verifyOtp'), {otp: otp}).then(function(response){
+			d.resolve(response);
+		}, function(err){
+			d.reject(err);
+		});
+		return d.promise;
+	};
+
 
 	return resource;
 }]);

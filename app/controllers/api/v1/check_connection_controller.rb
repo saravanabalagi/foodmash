@@ -17,8 +17,13 @@ class Api::V1::CheckConnectionController < ApiApplicationController
 			image: 'https://s3-ap-southeast-1.amazonaws.com/foodmash-india/assets/welcome.jpg',
 			blocking: false
 		}
+		settings = {
+			 mash_cash: true,
+			 online_payments: true,
+			 verify_user: true
+		}
 		if params[:android_id].present?
-			render status: 200, json: {success: true, data: {versions: versions, maintenance: maintenance, settings: nil}}
+			render status: 200, json: {success: true, data: {versions: versions, maintenance: maintenance, settings: settings}}
 		else
 			render status: 404, json: {success: false}
 		end 

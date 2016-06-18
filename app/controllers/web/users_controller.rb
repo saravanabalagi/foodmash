@@ -1,13 +1,14 @@
 class Web::UsersController < ApplicationController
 	respond_to :json
 	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
+	prepend_before_filter :authenticate_user_from_token!, only: [:get_otp, :verify_otp]
 	before_filter :set_user, only: :update
 	load_and_authorize_resource skip_load_resource
 
 	def index
 		@users = User.where(params.permit(:id, :email))
 		if @users
-			render status: 200, json: @users.as_json(:include => {:roles => {:include => :resource}})
+			render status: 200, json: @users.as_json(:include => [{:roles => {:include => :resource}}], except: [:otp])
 		else
 			render status: 404, json: {error: "User not found!"}
 		end
@@ -22,9 +23,28 @@ class Web::UsersController < ApplicationController
 		end
 	end
 
+	def send_otp
+		if @current_user.set_otp
+			SendOtpJob.set(wait: 20.seconds).perform_later(@current_user)
+			MakeOtpNilJob.set(wait: 5.minutes).perform_later(@current_user)
+			render status: 200, json: @current_user.as_json(:include => [{:roles => {:include => :resource}}], except: [:otp])
+		else
+			render status: 404, json: {error: "Was not able to send otp!"}
+		end
+	end
+
+	def verify_otp
+		if @current_user.otp == params[:otp] and @current_user.update_attributes!(verified: true)
+			@current_user.reset_otp
+			render status: 200, json: @current_user.as_json(:include => [{:roles => {:include => :resource}}], except: [:otp])
+		else
+			render status: 422, json: {error: 'Account was not verified'}
+		end
+	end
+
 	def update
-		if @user and @user.update_attributes!(user_update_params)
-			render status: 200, json: @user.as_json(:include => {:roles => {:include => :resource}})
+		if @user and @user.update_attributes!(user_update_params) and @user.reload!
+			render status: 200, json: @user.as_json(:include => [{:roles => {:include => :resource}}], except: [:otp])
 		else
 			render status: 422, json: {error: @user.errors.as_json}
 		end
@@ -34,7 +54,7 @@ class Web::UsersController < ApplicationController
 		@user = User.find params[:user][:id]
 		resource = fetch_resource
 		if @user and @user.add_role(params[:user][:role_name], resource)
-			render status: 200, json: @user.as_json(:include => {:roles => {:include => :resource}})
+			render status: 200, json: @user.as_json(:include => [{:roles => {:include => :resource}}], except: [:otp])
 		else
 			render status: 422, json: {error: "Failed to add role"}
 		end
@@ -44,7 +64,7 @@ class Web::UsersController < ApplicationController
 		@user = User.find params[:user][:id]
 		resource = fetch_resource
 		if @user and @user.remove_role(params[:user][:role_name], resource)
-			render status: 200, json: @user.as_json(:include => {:roles => {:include => :resource}})
+			render status: 200, json: @user.as_json(:include => [{:roles => {:include => :resource}}], except: [:otp])
 		else
 			render status: 422, json: {error: "Failed to remove role!"}
 		end

@@ -4,7 +4,7 @@
       <div class="col-md-6 order-description">
         <h3>{{cart.order_id}}</h3>
         <h3>Payment Method - {{cart.payment_method}}</h3>
-        <div class="order-status-wrapper">Order status: <span class="order-status">{{getStatusAlias(cart.aasm_state)}}</span></div>
+        <div class="order-status-wrapper">Order status: <span class="order-status">{{next_status.alias}}</span></div>
         <div class="order-status-meter-wrapper">
           <div class="progress progress-striped active order-status-meter">
             <div class="progress-bar" style="{{getStatusPercent(cart.aasm_state)}}"></div>

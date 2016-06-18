@@ -22,6 +22,7 @@ class User < ActiveRecord::Base
   before_create :generate_user_token
   before_create :set_invitation_limit
   after_create :assign_default_role
+  after_save :unverify_if_mobile_no_changed
 
   def ability
     @ability ||= Ability.new(self)
@@ -37,8 +38,17 @@ class User < ActiveRecord::Base
 
   def set_otp
     self.otp = generate_otp
-    self.reset_password_token = generate_otp_token(self.otp)
+    self.otp_set = Time.now
     self.save!
+  end
+
+  def reset_otp
+    now = Time.now
+    if (now - self.otp_set) >= 5.minutes
+      self.otp = nil
+      self.otp_set = nil
+      self.save!
+    end
   end
 
   def generate_session_token
@@ -57,14 +67,6 @@ class User < ActiveRecord::Base
     return otp
   end
   
-  def generate_otp_token(otp)
-    reset_password_token = nil
-    begin 
-      reset_password_token = SecureRandom.hex(otp.to_i)[0..16]
-    end while self.class.exists?(reset_password_token: reset_password_token)
-    return reset_password_token
-  end
-
   def award_mash_cash(amount, cart = nil)
     self.mash_cash += amount if amount
     cart.awarded_mash_cash += amount if cart
@@ -97,6 +99,13 @@ class User < ActiveRecord::Base
       to: '+91' + self.mobile_no,
       body: message
     )
+  end
+
+  def unverify_if_mobile_no_changed
+    if self.mobile_no_changed?
+      self.verified = false
+      self.reset_otp
+    end
   end
   
   private
