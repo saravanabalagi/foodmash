@@ -33,6 +33,22 @@ class Web::UsersController < ApplicationController
 		end
 	end
 
+	def check_email
+		if !User.where(email: params[:user][:email]).present?
+			render status: 200, json: {success: true}
+		else
+			render status: 200, json: {success: false}
+		end
+	end
+
+	def check_mobile_no
+		if !User.where(mobile_no: params[:user][:mobile_no]).present?
+			render status: 200, json: {success: true}
+		else
+			render status: 200, json: {success: false}
+		end
+	end
+
 	def verify_otp
 		if @current_user.otp == params[:user][:otp] and ((Time.now - @current_user.otp_set) < 5.minutes) and @current_user.update_attributes!(verified: true)
 			@current_user.reset_otp

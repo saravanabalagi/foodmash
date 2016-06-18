@@ -76,6 +76,8 @@ Rails.application.routes.draw do
         post '/removeRole', to: 'users#remove_role'
         post '/sendOtp', to: 'users#send_otp'
         post '/verifyOtp', to: 'users#verify_otp'
+        post '/checkEmail', to: 'users#check_email'
+        post '/checkMobileNo', to: 'users#check_mobile_no'
       end
     end
 
