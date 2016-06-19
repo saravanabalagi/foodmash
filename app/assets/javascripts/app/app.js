@@ -4,18 +4,15 @@ angular.module('foodmashApp', ['ngRoute', 'foodmashApp.resources',
 	'foodmashApp.services', 'ngCookies', 'foodmashApp.directives', 'foodmashApp.controllers', 
 	'foodmashApp.interceptors', 'toaster', 'ngFileUpload', 'ngSanitize', 'LocalStorageModule', 'angular.filter'])
 
-.config(['$routeProvider', '$locationProvider', '$httpProvider','railsSerializerProvider', 'localStorageServiceProvider', function($routeProvider, $locationProvider, $httpProvider, railsSerializerProvider, localStorageServiceProvider){
+.config(['$compileProvider', function ($compileProvider) {
+  	$compileProvider.debugInfoEnabled(false);
+}])
+
+.config(['$routeProvider', '$locationProvider', '$httpProvider','railsSerializerProvider', function($routeProvider, $locationProvider, $httpProvider, railsSerializerProvider){
 	
 	$httpProvider.interceptors.push('UserAuthInterceptor');
 
 	railsSerializerProvider.underscore(angular.identity).camelize(angular.identity);
-
-	localStorageServiceProvider
-	.setPrefix('foodmashApp')
-	.setStorageType('localStorage')
-	.setStorageCookie(30, '/')
-	.setStorageCookieDomain('www.foodmash.in')
-	.setNotify(true, true);
 
 	$routeProvider
 	

@@ -44,7 +44,7 @@ angular.module('foodmashApp.resources')
 	resource.sendOtp = function(){
 		var self = this;
 		var d = $q.defer();
-		resource.$get(self.$url('sendOtp')).then(function(response){
+		resource.$post(self.$url('sendOtp')).then(function(response){
 			d.resolve(response);
 		}, function(err){
 			d.reject(err);
@@ -55,7 +55,7 @@ angular.module('foodmashApp.resources')
 	resource.verifyOtp = function(otp){
 		var self = this;
 		var d = $q.defer();
-		resource.$get(self.$url('verifyOtp'), {otp: otp}).then(function(response){
+		resource.$post(self.$url('verifyOtp'), {otp: otp}).then(function(response){
 			d.resolve(response);
 		}, function(err){
 			d.reject(err);

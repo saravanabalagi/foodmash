@@ -7,6 +7,46 @@ angular.module('foodmashApp.services')
       var service = this;     
       service.currentUser = AuthService.currentUser;
 
+       service.checkEmail = function(params){
+        var d = $q.defer();
+        $http({
+          url: '/web/users/checkEmail',
+          method: 'POST',
+          data: {
+            user: params
+          }
+        }).success(function(response){ 
+          if(response.success){
+            d.resolve(response);
+          }else{
+            d.reject(response)
+          }
+        }).error(function(err){ 
+          d.reject(err);
+        });
+        return d.promise;
+      };
+
+       service.checkMobileNo = function(params){
+        var d = $q.defer();
+        $http({
+          url: '/web/users/checkMobileNo',
+          method: 'POST',
+          data: {
+            user: params
+          }
+        }).success(function(response) { 
+          if(response.success){
+            d.resolve(response);
+          }else{
+            d.reject(response)
+          }
+        }).error(function(err){ 
+          d.reject(err);
+        });
+        return d.promise;
+      };
+
       service.login = function(params) {
         var d = $q.defer();
         $http({

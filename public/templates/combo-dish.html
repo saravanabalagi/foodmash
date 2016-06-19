@@ -6,7 +6,7 @@
 <td ng-hide="updateShow">{{combo_dish.dish.name}}</td>
 <td ng-hide="updateShow">{{combo_dish.min_count}}</td>
 <td ng-hide="updateShow">{{combo_dish.priority}}</td>
-<td ng-hide="updateShow" ng-click="updateShow=!updateShow; setUpdate(combo_dish)"><i class="icon-edit"></i></td>
+<td ng-hide="updateShow" ng-click="updateShow=!updateShow; setUpdate(combo_dish)"><i class="fa fa-pencil-square-o"></i></td>
 <td ng-hide="updateShow" ng-click="deleteComboDish(combo_dish)"><i class="icon-trash"></i></td>
 
  <td ng-show="updateShow">{{$index + 1}}</td>

@@ -10,12 +10,12 @@
         <div class="bottom-overlay">
             <div class="bottom-bar">
                 <div class="combo-name">{{combo.name}}</div>
-                <div class="quantity-counter-wrapper" ng-if="!combo.customizable">
-                    <div class="quantity-counter">
-                        <a class="btn btn-border btn-raised btn-semi-transparent btn-fab btn-fab-micro" ng-show="combo.quantity" role="button" ng-click="removeCombo(combo)"><i class="material-icons">remove</i> </a>
-                        <span class="quantity" ng-show="combo.quantity">{{combo.quantity}}</span>
-                        <a class="btn btn-border btn-raised btn-semi-transparent btn-fab btn-fab-micro" role="button" ng-click="addCombo(combo)"><i class="material-icons">add</i> </a>
-                    </div>
+            </div>
+            <div class="quantity-counter-wrapper" ng-if="!combo.customizable">
+                <div class="quantity-counter">
+                    <a class="btn btn-border btn-raised btn-semi-transparent btn-fab btn-fab-micro" ng-show="combo.quantity" role="button" ng-click="removeCombo(combo)"><i class="material-icons">remove</i> </a>
+                    <span class="quantity" ng-show="combo.quantity">{{combo.quantity}}</span>
+                    <a class="btn btn-border btn-raised btn-semi-transparent btn-fab btn-fab-micro" role="button" ng-click="addCombo(combo)"><i class="material-icons">add</i> </a>
                 </div>
             </div>
         </div>

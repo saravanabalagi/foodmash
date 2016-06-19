@@ -64,12 +64,12 @@
                </div>
            </div>
            <div class="row">
-               <div class="form-group label-floating is-empty">
+               <div class="form-group label-floating is-empty signup-email">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                        <label class="control-label">Email Address</label>
                        <input  name="signup.email" ng-model="signup.email" type="email" class="form-control" required>
-                       <p class="help-block"></p>
+                       <p class="help-block">{{emailCheckMessage}}</p>
            <span class="input-group-btn hidden">
              <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
                  <i class="fa fa-user-plus"></i>
@@ -79,13 +79,13 @@
                </div>
            </div>
            <div class="row">
-               <div class="form-group label-floating">
+               <div class="form-group label-floating signup-mobile-no">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
                        <label class="control-label">Mobile Number</label>
                        <input type="text" disabled="disabled" class="form-control" value="+91" style="width: 30px; margin-right: 10px; ">
                        <input name="signup.mobile_no" ng-model="signup.mobile_no" type="phone" class="form-control" style="width: calc(100% - 40px);">
-                       <p class="help-block"></p>
+                       <p class="help-block">{{mobileNoCheckMessage}}</p>
            <span class="input-group-btn hidden">
              <a class="btn btn-raised btn-danger btn-fab btn-fab-micro">
                  <i class="fa fa-user-plus"></i>

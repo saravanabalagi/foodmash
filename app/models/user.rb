@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable
+         :recoverable, :rememberable, :trackable, :validatable
 
   delegate :can?, :cannot?, to: :ability
 
@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   before_create :generate_user_token
   before_create :set_invitation_limit
   after_create :assign_default_role
-  after_save :unverify_if_mobile_no_changed
+  before_save :unverify_if_mobile_no_changed
 
   def ability
     @ability ||= Ability.new(self)
@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
 
   def reset_otp
     now = Time.now
-    if (now - self.otp_set) >= 5.minutes
+    if (now - (self.otp_set || (Time.now - 1.day))) >= 5.minutes
       self.otp = nil
       self.otp_set = nil
       self.save!
@@ -104,7 +104,7 @@ class User < ActiveRecord::Base
   def unverify_if_mobile_no_changed
     if self.mobile_no_changed?
       self.verified = false
-      self.reset_otp
+      self.otp = self.otp_set = nil
     end
   end
   

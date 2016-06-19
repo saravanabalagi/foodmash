@@ -6,7 +6,7 @@
  <td ng-hide="updateShowForCombo">{{combo.packaging_centre.name}}</td>
  <td ng-hide="updateShowForCombo"><span class="checkbox-material"><input type="checkbox" ng-checked="{{combo.customizable}}" onclick="return false"></td>
  <td ng-hide="updateShowForCombo">{{combo.price}}</td>
- <td ng-hide="updateShowForCombo"  ng-click="updateShowForCombo = !updateShowForCombo; setUpdate(combo)" ng-init="updateShowForCombo=false"><i class="icon-edit"></i></td>
+ <td ng-hide="updateShowForCombo"  ng-click="updateShowForCombo = !updateShowForCombo; setUpdate(combo)" ng-init="updateShowForCombo=false"><i class="fa fa-pencil-square-o"></i></td>
  <td ng-hide="updateShowForCombo" ng-click="deleteCombo(combo)"><i class="icon-trash"></i></td>
 
   <span class="progress" ng-show="file.progress > 0 && file.progress != 100">{{file.progress + '%'}}</span>

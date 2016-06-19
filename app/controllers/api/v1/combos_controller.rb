@@ -12,7 +12,7 @@ class Api::V1::CombosController < ApiApplicationController
 			{
 				combos: @combos.as_json(:include => [{:combo_options => {:include => {:combo_option_dishes => {:include => {:dish => {:include => [{:restaurant => {only: [:id, :name, :logo]}}], only: [:id, :name, :description, :label, :price, :picture]} } , only: :id} }, only: [:id, :name, :description, :priority, :min_count]} }, {:combo_dishes => {:include => {:dish => {:include => {:restaurant => {only: [:id, :name, :logo]}}, only: [:id, :name, :description, :label, :price, :picture] } }, only: [:id, :priority, :min_count] } } ], only: [:name, :id, :no_of_purchases, :description, :group_size, :available, :label, :price, :picture, :category, :customizable]), 
 				cart: @cart.as_json(:include => {:orders => {:include => {:product => {only: :id}}, only: [:id, :quantity, :total]} }, only: [:id, :total]),
-				user: @user.as_json(:include => {:roles => {:include => :resource}}) }
+				user: @user.as_json(:include => [{:roles => {:include => :resource}}], except: [:otp]) }
 			}
 		else
 			render status: 404, json: {success: false, error: "Could not load the combos!"}

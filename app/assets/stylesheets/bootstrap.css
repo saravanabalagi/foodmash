@@ -486,7 +486,7 @@ th {
 .glyphicon-tint:before {
   content: "\e064";
 }
-.glyphicon-edit:before {
+.glyphfa fa-pencil-square-o:before {
   content: "\e065";
 }
 .glyphicon-share:before {

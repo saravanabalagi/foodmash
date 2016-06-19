@@ -2,9 +2,8 @@
 
 angular.module('foodmashApp.controllers')
 
-.controller('BodyController', ['$scope', '$location', 'toaster', 'CartService', 'City', '$rootScope', 'localStorageService', function($scope, $location, toaster, CartService, City, $rootScope, localStorageService){
+.controller('BodyController', ['$scope', '$location', 'toaster', 'CartService', 'City', '$rootScope', '$cookieStore', function($scope, $location, toaster, CartService, City, $rootScope, $cookieStore){
 
-		CartService.setCartGlobally();
 		$scope.cities = [];
 		$scope.selectedCity = {};
 		$scope.selectedArea = {name: 'Choose Area'};
@@ -22,8 +21,9 @@ angular.module('foodmashApp.controllers')
 		});
 
 		$scope.loadGlobal = function(){
-			var area = localStorageService.get('selectedArea');
-			var city = localStorageService.get('selectedCity');
+			CartService.setCartGlobally();
+			var area = $cookieStore.get('selectedArea');
+			var city = $cookieStore.get('selectedCity');
 			if(area && area.id){
 				$scope.selectedArea = $rootScope.area = area;
 				$scope.selectedCity = $rootScope.city = city;
@@ -50,8 +50,8 @@ angular.module('foodmashApp.controllers')
 			$scope.selectedArea = area;
 			$rootScope.area = $scope.selectedArea;
 			setLoadCombos();
-			localStorageService.set('selectedArea', $scope.selectedArea);
-			localStorageService.set('selectedCity', $scope.selectedCity);
+			$cookieStore.put('selectedArea', $scope.selectedArea);
+			$cookieStore.put('selectedCity', $scope.selectedCity);
 			angular.element(document).ready(function(){
 				$('.continue-button').click();
 			});

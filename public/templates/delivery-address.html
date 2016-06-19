@@ -1,4 +1,4 @@
- <td ng-click="selectDeliveryAddress(delivery_address)"><i ng-hide="updateShow" class="fa fa-check-circle"></i></td>
+ <td ng-click="selectDeliveryAddress(delivery_address)"><i ng-hide="updateShow || !isSelected(delivery_address)" class="fa fa-check-circle"></i></td>
  <td ng-click="selectDeliveryAddress(delivery_address)">
     <div class="combo" ng-hide="updateShow">
      <span class="combo-name">{{delivery_address.name}}</span>
@@ -15,6 +15,6 @@
          <input type="text" placeholder="Contact No" ng-model="updatedDeliveryAddress.contact_no" />
      </div>
  </td>
- <td><i ng-click="updateShow = !updateShow; setUpdate(delivery_address)" class="icon-edit"></i></td>
+ <td ng-hide="updateShow"><i ng-click="updateShow = !updateShow; setUpdate(delivery_address)" class="fa fa-pencil-square-o edit-button"></i></td>
  <td ng-hide="updateShow"><i ng-click="deleteDeliveryAddress(delivery_address)" class="icon-trash"></i></td>
  <td ng-show="updateShow" colspan="2"><a ng-click="updateDeliveryAddress(delivery_address)" class="btn btn-success margin-zero"><i class="fa fa-check-circle"></i> Save</a></td>

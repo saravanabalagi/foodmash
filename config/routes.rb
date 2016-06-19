@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     resources :combos do 
       collection do 
         post 'getComboAvailability', to: 'combos#get_combo_availability'
-        get 'loadFromPackagingCentre', to: 'combos#load_from_packaging_centre'
+        post 'loadFromPackagingCentre', to: 'combos#load_from_packaging_centre'
       end
     end
 
@@ -74,8 +74,10 @@ Rails.application.routes.draw do
         post '/addRole', to: 'users#add_role'
         get '/findByEmail', to: 'users#find_by_email'
         post '/removeRole', to: 'users#remove_role'
-        get '/sendOtp', to: 'users#send_otp'
-        get '/verifyOtp', to: 'users#verify_otp'
+        post '/sendOtp', to: 'users#send_otp'
+        post '/verifyOtp', to: 'users#verify_otp'
+        post '/checkEmail', to: 'users#check_email'
+        post '/checkMobileNo', to: 'users#check_mobile_no'
       end
     end
 
@@ -143,6 +145,8 @@ Rails.application.routes.draw do
       #profile
       post '/profile', to: 'profile#show'
       post '/profile/update', to: 'profile#update'
+      post '/profile/sendOtp', to: 'profile#send_otp'
+      post '/profile/verifyOtp', to: 'profile#verify_otp'
       #carts
       resources :carts do 
         collection do 

@@ -6,7 +6,7 @@ angular.module('foodmashApp.services')
   
    var service = this;
    service.selectedSortOption = null;
-   service.selected = new Set();
+   service.selected = [];
 
    service.sortOptions = [
    	{name: 'Low to High', icon_class: 'fa fa-sort-amount-asc pull-right', reverse: false},

@@ -85,6 +85,14 @@ angular.module('foodmashApp.controllers')
 		}
 	};
 
+	$scope.isSelected = function(delivery_address){
+		var check = false;
+		if($scope.cart.delivery_address_id == delivery_address.id){
+			check = true;
+		}
+		return check;
+	};
+
 	$scope.setCod = function(){
 		$scope.payment_method = 'COD';
 	};
@@ -94,30 +102,37 @@ angular.module('foodmashApp.controllers')
 	};
 
 	$scope.proceedToPayment = function(){
-		if(validateCart()){
-			if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'Payu'){
-				$scope.setup_details["amount"] = $scope.cart.grand_total;
-				Payment.getHash($scope.setup_details).then(function(response){
-					$scope.setup_details = response.setup_details;
-					$scope.processCart();
-					angular.element(document).ready(function (){
-						$window.fbq('track', 'Purchase', {value: $scope.cart.grand_total, currency: 'INR'});
-						$('#payu-payment-form').submit();
+		if($rootScope.currentUser && !$rootScope.currentUser.verified){
+			toaster.pop('error', 'Please verify account before placing an order!');
+			$location.path('/account');
+		}else{
+			if(validateCart()){
+				if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'Payu'){
+					$scope.setup_details["amount"] = $scope.cart.grand_total;
+					Payment.getHash($scope.setup_details).then(function(response){
+						$scope.setup_details = response.setup_details;
+						$scope.processCart().then(function(response){
+							angular.element(document).ready(function (){
+								$window.fbq('track', 'Purchase', {value: $scope.cart.grand_total, currency: 'INR'});
+								$('#payu-payment-form').submit();
+							});
+						}, function(err){
+						});
+					}, function(err){
+						toaster.pop('error', 'Could not generate hash');
 					});
-				}, function(err){
-					toaster.pop('error', 'Could not generate hash');
-				});
-			}if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
-				$rootScope.disableButton('.cod-button', 'Confirming...');
-				Payment.purchaseForCod($scope.cart).then(function(response){
-					$window.fbq('track', 'Purchase', {value: $scope.cart.grand_total, currency: 'INR'});
-					toaster.pop('success', 'Cart was purchased!');
-					$rootScope.enableButton('.cod-button');
-					refreshCartAndSelectDelAdd();
-				}, function(err){
-					toaster.pop('error', 'Cart was not purchased!');
-					$rootScope.enableButton('.cod-button');
-				});
+				}if($scope.cart.total != 0 && angular.isNumber($scope.cart.delivery_address_id) && $rootScope.currentUser && $scope.payment_method == 'COD'){
+					$rootScope.disableButton('.cod-button', 'Confirming...');
+					Payment.purchaseForCod($scope.cart).then(function(response){
+						$window.fbq('track', 'Purchase', {value: $scope.cart.grand_total, currency: 'INR'});
+						toaster.pop('success', 'Cart was purchased!');
+						$rootScope.enableButton('.cod-button');
+						refreshCartAndSelectDelAdd();
+					}, function(err){
+						toaster.pop('error', 'Cart was not purchased!');
+						$rootScope.enableButton('.cod-button');
+					});
+				}
 			}
 		}
 	};
@@ -237,15 +252,17 @@ angular.module('foodmashApp.controllers')
 	function checkIfDifferentDishtypesInCart(){
 		var check = false;
 		if($scope.cart && $scope.cart.grand_total){
-			var dish_types = new Set();
+			var dish_types = [];
 			$scope.cart.orders.filter(function(order){
 				order.order_items.filter(function(order_item){
-					if(!dish_types.has(order_item.item.dish_type_id)){
-						dish_types.add(order_item.item.dish_type_id);
+					var checkForDishType = false;
+					dish_types.filter(function(dType){ if(dType == order_item.item.dish_type_id){ checkForDishType = true; } });
+					if(!checkForDishType){
+						dish_types.push(order_item.item.dish_type_id);
 					}
 				});
 			});
-			if(dish_types.size >= 2){
+			if(dish_types.length >= 2){
 				check = true;
 			}
 		}
@@ -275,11 +292,13 @@ angular.module('foodmashApp.controllers')
 
 	function applyPromoCode(promo_code){
 		$scope.cart.user_id = $rootScope.currentUser.id;
+		calcTaxAndGrandTotal();
 		Payment.validatePromoCode(promo_code, $scope.cart, $scope.promo).then(function(response){
 			if(response.promo_discount){
 				toaster.pop('success', 'A discount of ' + response.promo_discount + ' was applied to cart!');
 			}else{
 				toaster.pop('error', 'Failed to apply promo code!');
+				$scope.promo = {};
 			}
 			if(response.cart.grand_total && response.cart.promo_id && response.cart.promo_discount){
 				$scope.cart.grand_total = response.cart.grand_total.toFixed(2);

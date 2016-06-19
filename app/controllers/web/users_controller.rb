@@ -25,25 +25,52 @@ class Web::UsersController < ApplicationController
 
 	def send_otp
 		if @current_user.set_otp
-			SendOtpJob.set(wait: 20.seconds).perform_later(@current_user)
+			SendOtpJob.set(wait: 5.seconds).perform_later(@current_user)
 			MakeOtpNilJob.set(wait: 5.minutes).perform_later(@current_user)
-			render status: 200, json: @current_user.as_json(:include => [{:roles => {:include => :resource}}], except: [:otp])
+			render status: 201, json: @current_user.as_json(:include => [{:roles => {:include => :resource}}], except: [:otp])
 		else
-			render status: 404, json: {error: "Was not able to send otp!"}
+			render status: 422, json: {error: "Was not able to send otp!"}
+		end
+	end
+
+	def check_email
+		if !User.where(email: params[:user][:email]).present?
+			render status: 200, json: {success: true}
+		else
+			render status: 200, json: {success: false}
+		end
+	end
+
+	def check_mobile_no
+		if !User.where(mobile_no: params[:user][:mobile_no]).present?
+			render status: 200, json: {success: true}
+		else
+			render status: 200, json: {success: false}
 		end
 	end
 
 	def verify_otp
-		if @current_user.otp == params[:otp] and @current_user.update_attributes!(verified: true)
+		if @current_user.otp == params[:user][:otp] and ((Time.now - @current_user.otp_set) < 5.minutes) and @current_user.update_attributes!(verified: true)
 			@current_user.reset_otp
-			render status: 200, json: @current_user.as_json(:include => [{:roles => {:include => :resource}}], except: [:otp])
+			render status: 201, json: @current_user.as_json(:include => [{:roles => {:include => :resource}}], except: [:otp])
 		else
 			render status: 422, json: {error: 'Account was not verified'}
 		end
 	end
 
+	def change_password
+		if @current_user and @current_user.valid_password? params[:user][:old_password]
+			@current_user.password = params[:user][:password]
+			@current_user.password_confirmation = params[:user][:password_confirmation]
+			@current_user.save!
+			render status: 201, json: {message: "Password was successfully changed!"}
+		else
+			render status: 422, json: {error: "Could not change password!"}
+		end
+	end
+
 	def update
-		if @user and @user.update_attributes!(user_update_params) and @user.reload!
+		if @user and @user.update_attributes!(user_update_params)
 			render status: 200, json: @user.as_json(:include => [{:roles => {:include => :resource}}], except: [:otp])
 		else
 			render status: 422, json: {error: @user.errors.as_json}
