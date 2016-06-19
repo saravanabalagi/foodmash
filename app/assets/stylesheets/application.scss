@@ -643,6 +643,25 @@ footer {
   }
 }
 
+@media (max-width: 768px) {
+  .loader {
+    div.loader-wrapper {
+      .choose-delivery-location-wrapper {
+        font-size: 18px;
+        margin-top: -30px !important;
+        > .dropdown {
+          > .dropdown-toggle {
+            margin: 15px 3px;
+            padding: 6px 10px;
+            min-width: 130px;
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
+}
+
 .thumbnail.combo-card {
   position: relative;
   -webkit-box-shadow: 0 1px 7px 1px rgba(0, 0, 0, 0.1);
