@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('combos', ['toaster', 'Combo', '$q', 'PackagingCentre', 'Aws', 'Upload', function(toaster, Combo, $q, PackagingCentre, Aws, Upload){
+.directive('combos', ['toaster', 'Combo', '$rootScope', '$q', 'PackagingCentre', 'Aws', 'Upload', 'ComboService', function(toaster, Combo, $rootScope, $q, PackagingCentre, Aws, Upload, ComboService){
 
 	return {
 
@@ -10,12 +10,24 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/combos.html',
 
-		controller: ['$scope', 'toaster', 'Combo', '$q', 'PackagingCentre', 'Aws', 'Upload', function($scope, toaster, Combo, $q, PackagingCentre, Aws, Upload){
+		controller: ['$scope', 'toaster', 'Combo', '$rootScope', '$q', 'PackagingCentre', 'Aws', 'Upload', 'ComboService', function($scope, toaster, Combo, $rootScope, $q, PackagingCentre, Aws, Upload, ComboService){
 
 			$scope.combo = new Combo;
 			$scope.combos = [];
 			$scope.packaging_centres = [];
 			$scope.loadingCombos = true;
+
+			ComboService.getDishTypesForCombo().then(function(dish_types){
+				var dish_types = dish_types;
+			}, function(err){
+				var dish_types = null;
+			});
+
+			ComboService.getRestaurantsForCombo($rootScope.area.packaging_centre_id).then(function(restaurants){
+				var restaurants = restaurants;
+			}, function(err){
+				var restaurants = null;
+			});
 
 			$scope.activeOptions = 
 			[

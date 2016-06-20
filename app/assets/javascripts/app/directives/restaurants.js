@@ -2,7 +2,7 @@
 
 angular.module('foodmashApp.directives')
 
-.directive('restaurants', ['toaster', 'Restaurant', '$q', 'PackagingCentre', 'Areas', 'Aws', 'Upload', 'DishType', 'Cuisine', function(toaster, Restaurant, $q, PackagingCentre, Areas, Aws, Upload, DishType, Cuisine){
+.directive('restaurants', ['toaster', 'Restaurant', '$q', 'PackagingCentre', 'Areas', 'Aws', 'Upload', 'DishType', 'Cuisine', 'DishService', function(toaster, Restaurant, $q, PackagingCentre, Areas, Aws, Upload, DishType, Cuisine, DishService){
 
 	return {
 
@@ -10,12 +10,24 @@ angular.module('foodmashApp.directives')
 
 		templateUrl: '/templates/restaurants.html',
 
-		controller: ['$scope', 'toaster', 'Restaurant', '$q', 'PackagingCentre', 'Areas', 'Aws', 'Upload', 'DishType', 'Cuisine', function($scope, toaster, Restaurant, $q, PackagingCentre, Areas, Aws, Upload, DishType, Cuisine){
+		controller: ['$scope', 'toaster', 'Restaurant', '$q', 'PackagingCentre', 'Areas', 'Aws', 'Upload', 'DishType', 'Cuisine', 'DishService', function($scope, toaster, Restaurant, $q, PackagingCentre, Areas, Aws, Upload, DishType, Cuisine, DishService){
 
 			$scope.restaurant = new Restaurant;
 			$scope.restaurants = [];
 			$scope.loadingRestaurants = true;
 			$scope.areas = [];
+
+			DishService.getCuisinesForDish().then(function(cuisines){
+				var cuisines = cuisines;
+			}, function(err){
+				var cuisines = null;
+			});
+
+			DishService.getDishTypesForDish().then(function(dish_types){
+				var dish_types = dish_types;
+			}, function(err){
+				var dish_types = null;
+			});
 
 			$scope.$watch('loadRestaurants', function(n, o){
 				if(n){
