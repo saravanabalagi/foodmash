@@ -183,9 +183,9 @@ class Cart < ActiveRecord::Base
 							order.update_attributes!(quantity: cart_item["quantity"]) unless cart_item["quantity"] == order.quantity
 							if order.order_items.present?
 								order.order_items.each do |order_item|
-									if cart_item["combo_options"].present?
+									if cart_item["combo_options"] and cart_item["combo_options"].present?
 										cart_item["combo_options"].each do |combo_option|
-											if combo_option["combo_option_dishes"].present?
+											if combo_option["combo_option_dishes"] and combo_option["combo_option_dishes"].present?
 												combo_option["combo_option_dishes"].each do |combo_option_dish|
 													if combo_option_dish["dish"]["id"] == order_item.item.id
 														order_item.update_attributes!(quantity: combo_option_dish["quantity"]) unless combo_option_dish["quantity"] == order_item.quantity
@@ -202,9 +202,9 @@ class Cart < ActiveRecord::Base
 					end
 					unless sim
 						future_order = self.orders.build(product_id: cart_item["id"], product_type: "Combo", quantity: cart_item["quantity"], note: cart_item["note"])
-						if cart_item["combo_options"].present?
+						if cart_item["combo_options"] and cart_item["combo_options"].present?
 							cart_item["combo_options"].each do |combo_option|
-								if combo_option["combo_option_dishes"].present?
+								if combo_option["combo_option_dishes"] and combo_option["combo_option_dishes"].present?
 									combo_option["combo_option_dishes"].each do |combo_option_dish|
 										future_order.order_items.build(item_id: combo_option_dish["dish"]["id"], item_type: "Dish", quantity: combo_option_dish["quantity"])
 									end
@@ -226,9 +226,9 @@ class Cart < ActiveRecord::Base
 		cart_order_item_count = 0
 		if order.product.id == cart_item["id"]
 			order.order_items.each do |order_item|
-				if cart_item["combo_options"].present?
+				if cart_item["combo_options"] and cart_item["combo_options"].present?
 					cart_item["combo_options"].each do |combo_option|
-						if combo_option["combo_option_dishes"].present?
+						if combo_option["combo_option_dishes"] and combo_option["combo_option_dishes"].present?
 							combo_option["combo_option_dishes"].each do |combo_option_dish|
 								if order_item.item.id == combo_option_dish["dish"]["id"]
 									cart_order_item_count += 1
