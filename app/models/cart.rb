@@ -113,19 +113,19 @@ class Cart < ActiveRecord::Base
 
 	def add_items_to_cart(cart)
 		if self.user.verified
-			if self.orders.present?
+			if self.orders and self.orders.present?
 				self.orders.each do |order|
 					order.destroy! unless cart[:orders].collect{|o| o[:id]}.compact.include? order.id
 				end
 			end
 			self.reload
-			if cart[:orders].present?
+			if cart[:orders] and cart[:orders].present?
 				cart[:orders].each do |cart_order|
 					if cart_order[:id].present?
 						current_order = self.orders.find(cart_order[:id]) if cart_order[:id]
 						if current_order
 							current_order.update_attributes!(quantity: cart_order[:quantity]) unless cart_order[:quantity] == current_order[:quantity]
-							if cart_order[:order_items].present?
+							if cart_order[:order_items] and cart_order[:order_items].present?
 								current_order.order_items.each do |order_item|
 									cart_order[:order_items].each do |cart_order_item|
 										if cart_order_item[:id] and order_item.id == cart_order_item[:id]
@@ -137,7 +137,7 @@ class Cart < ActiveRecord::Base
 						end
 					else
 						future_order = self.orders.build(product_id: cart_order[:product][:id], product_type: cart_order[:product][:type], quantity: cart_order[:quantity], note: cart_order[:note])
-						if cart_order[:order_items].present?
+						if cart_order[:order_items] and cart_order[:order_items].present?
 							cart_order[:order_items].each do |cart_order_item|
 								future_order.order_items.build(item_id: cart_order_item[:item][:id], item_type: "Dish", quantity: cart_order_item[:quantity])
 							end
@@ -147,14 +147,14 @@ class Cart < ActiveRecord::Base
 			end
 			self.delivery_address_id = cart[:delivery_address_id]
 			self.calculate_total
-			if cart[:promo_id].present? and cart[:promo_discount].present?
+			if cart[:promo_id] and cart[:promo_id].present? and cart[:promo_discount] and cart[:promo_discount].present?
 				promo = Promo.find(cart[:promo_id])
 				promo.users << self.user
 				self.promo_id = promo.id
 				self.promo_discount = self.total * promo.discount_percentage
 				self.grand_total -= self.promo_discount
 			end
-			if cart[:mash_cash].present?
+			if cart[:mash_cash] and cart[:mash_cash].present?
 				user = self.user
 				self.mash_cash = cart[:mash_cash].to_f if user.use_mash_cash(cart[:mash_cash].to_f)
 				self.grand_total -= self.mash_cash
@@ -166,22 +166,22 @@ class Cart < ActiveRecord::Base
 
 	def add_cart(cart_items, delivery_address_id)
 		if self.user.verified
-			if self.orders.present?
+			if self.orders and self.orders.present?
 				self.orders.each do |order|
-					if cart_items.present?
+					if cart_items and cart_items.present?
 						order.destroy! unless cart_items.collect{|i| i["id"]}.include? order.product.id
 					end 
 				end
 			end
 			self.reload
 
-			if cart_items.present?
+			if cart_items and cart_items.present?
 				cart_items.each do |cart_item|
 					sim = false
 					self.orders.each do |order|
 						if check_for_similarity(order, cart_item)
 							order.update_attributes!(quantity: cart_item["quantity"]) unless cart_item["quantity"] == order.quantity
-							if order.order_items.present?
+							if order.order_items and order.order_items.present?
 								order.order_items.each do |order_item|
 									if cart_item["combo_options"] and cart_item["combo_options"].present?
 										cart_item["combo_options"].each do |combo_option|
