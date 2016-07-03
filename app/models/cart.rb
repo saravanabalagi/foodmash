@@ -169,7 +169,7 @@ class Cart < ActiveRecord::Base
 	end
 
 	def add_cart(cart_items, delivery_address_id)
-		if self.user.verified
+		# if self.user.verified
 			if self.orders and self.orders.present?
 				self.orders.each do |order|
 					if order and order.present? and cart_items and cart_items.present?
@@ -226,7 +226,7 @@ class Cart < ActiveRecord::Base
 			self.calculate_total
 			DeliveryAddress.make_primary(delivery_address_id)
 			self.save!
-		end
+		# end
 	end
 
 	def check_for_similarity(order, cart_item)
