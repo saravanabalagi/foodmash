@@ -70,7 +70,7 @@ class Api::V1::PaymentsController < ApiApplicationController
  	end
 
  	def apply_promo_code
- 		success, promo_discount, grand_total = @cart.apply_promo_code(params[:data][:promo_code].downcase)
+ 		success, promo_discount, grand_total = @cart.apply_promo_code(params[:data][:promo_code].downcase) || nil, nil, nil
  	 	if success and promo_discount
  	 		render status: 200, json: {success: success, data: {promo_discount: promo_discount, grand_total: grand_total}}
  	 	else
