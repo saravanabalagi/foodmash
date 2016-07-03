@@ -2,7 +2,7 @@ class Api::V1::PaymentsController < ApiApplicationController
  	respond_to :json
  	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
  	prepend_before_filter :authenticate_user_from_token!, except: [:success, :failure]
-	before_filter :set_or_create_cart, only: [:purchase_by_cod, :get_hash]
+	before_filter :set_or_create_cart, only: [:purchase_by_cod, :get_hash, :apply_promo_code, :apply_mash_cash]
 	before_filter :apply_promo_or_mash_cash, only: [:purchase_by_cod, :get_hash]
 	before_filter :set_payu_processed_cart, only: [:success, :failure]
 
@@ -80,6 +80,7 @@ class Api::V1::PaymentsController < ApiApplicationController
  	end
 
  	def apply_mash_cash
+ 		return invalid_data unless @cart
  		success, mash_cash, grand_total = @cart.apply_mash_cash(params[:data][:mash_cash].to_f)
  		if success and mash_cash and mash_cash > 0.0
  			render status: 200, json: {success: success, data: {mash_cash: mash_cash, grand_total: grand_total}}
