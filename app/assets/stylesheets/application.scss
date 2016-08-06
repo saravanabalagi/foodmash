@@ -500,13 +500,24 @@ footer {
       .add-note-wrapper {
         padding: 0 10px 15px;
         position: absolute;
+        z-index: 99;
         background: rgba(255,255,255,0.95);
         border-radius: 10px;
         border: 10px solid rgba(0,0,0,0.3);
         width: 400px;
         text-align: center;
-        .add-note { width:70%; text-align: left; margin-right: 10px; }
-        > * { display: inline-block; }
+        .add-note { width:70%; text-align: left; margin-right: 10px; display: inline-block; }
+        .extras {
+          label {
+            input[type='checkbox'] { margin-right: 5px;}
+            input[type='radio'] { margin-right: 5px;}
+            margin: 0px 5px;
+          }
+          .extras-table {
+            margin: auto;
+            text-align: left;
+          }
+        }
         &:before {
           position: absolute;
           content: '';
