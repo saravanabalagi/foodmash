@@ -9,7 +9,7 @@ class Web::CartsController < ApplicationController
 	def index
 		@carts = Cart.where(params.permit(:user_id, :id, :aasm_state, :order_id)).where.not(aasm_state: 'not_started')
 		if @carts
-			render status: 200, json: @carts.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name, :price]}}], only: [:id, :quantity]} } ,:product => {only: [:id, :name, :price]}], only: [:id, :quantity, :total, :note]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :purchased_at, :grand_total, :vat, :delivery_charge, :promo_discount, :mash_cash, :awarded_mash_cash])
+			render status: 200, json: @carts.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {:include => {:restaurant => {only: [:id, :name, :area_id, :landline]}}, only: [:id, :name, :price]}}], only: [:id, :quantity]}}, :product => {only: [:id, :name, :price]}], only: [:id, :quantity, :total, :note]}}, only: [:id, :total, :payment_method, :order_id, :aasm_state, :purchased_at, :grand_total, :vat, :delivery_charge, :promo_discount, :mash_cash, :awarded_mash_cash])
 		else
 			render status: 422, json: {error: "Could not fetch carts!"}
 		end
@@ -17,7 +17,7 @@ class Web::CartsController < ApplicationController
 
 	def show
 		if @cart
-			render status: 200, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name, :price, :dish_type_id]}}], only: [:id, :quantity]} } ,:product => {only: [:id, :name, :price]}], only: [:id, :quantity, :total, :note]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :purchased_at, :grand_total, :vat, :delivery_charge, :promo_discount, :mash_cash, :awarded_mash_cash])
+			render status: 200, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {:include => {:restaurant => {only: [:id, :name, :area_id, :landline]}}, only: [:id, :name, :price, :dish_type_id]}}], only: [:id, :quantity]} } ,:product => {only: [:id, :name, :price]}], only: [:id, :quantity, :total, :note]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :purchased_at, :grand_total, :vat, :delivery_charge, :promo_discount, :mash_cash, :awarded_mash_cash])
 		else
 			render status: 200, json: {error: "Could not fetch cart!"}
 		end
@@ -26,7 +26,7 @@ class Web::CartsController < ApplicationController
 	def add_to_cart
 		# return invalid_data unless params[:cart][:cart][:payment_method]
 		if @cart and @cart.add_items_to_cart(params[:cart][:cart])
-			render status: 200, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {only: [:id, :name, :price]}}], only: [:id, :quantity]} } ,:product => {only: [:id, :name, :price]}], only: [:id, :quantity, :total, :note]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :purchased_at, :grand_total, :vat, :delivery_charge, :promo_discount, :mash_cash, :awarded_mash_cash])
+			render status: 200, json: @cart.as_json(:include => {:orders => {:include => [{:order_items => {:include => [{:item => {:include => {:restaurant => {only: [:id, :name, :area_id, :landline]}}, only: [:id, :name, :price]}}], only: [:id, :quantity]} } ,:product => {only: [:id, :name, :price]}], only: [:id, :quantity, :total, :note]} }, only: [:id, :total, :payment_method, :order_id, :aasm_state, :purchased_at, :grand_total, :vat, :delivery_charge, :promo_discount, :mash_cash, :awarded_mash_cash])
 		else
 			render status: 404, json: {success: false, error: "Could not fetch cart!"}
 		end
