@@ -4,7 +4,9 @@
     <div class="combo">
       <span class="combo-name">{{order.product.name}}</span>
       <div ng-repeat="order_item in order.order_items">
-        <span>{{order_item.quantity}} x {{order_item.item.name}} ({{order_item.item.restaurant.name}})</span>
+        <span>{{order_item.quantity}} x {{order_item.item.name}}
+          <i ng-show="order_item.item.restaurant.name.indexOf('Subway')>-1" class="fa fa-paperclip"></i>
+        </span>
       </div>
       <span ng-show="order.note" class="attached-note" data-title="Attached Note" data-content="{{order.note}}" data-toggle="popover" data-trigger="hover" data-placement="bottom"><i class="fa fa-paperclip"></i> Note Attached</span>
       <a class="btn btn-primary" ng-init="showNote=false" ng-click="showNote=!showNote"><i class="fa fa-edit"></i>Note</a>
@@ -15,8 +17,7 @@
           <p class="help-block">Add your preferences</p>
           <span class="material-input"></span>
         </div>
-        <!--<div class="extras" ng-show="hasSubway()">-->
-        <div class="extras">
+        <div class="extras" ng-show="hasSubway()">
           <div class="combo-option-tabs">
             <div class="tab" ng-repeat="t in subwayTabs" ng-class="{'active': checkIfSubwayTabSelected(t)}" ng-click="selectSubwayTab(t)">{{t}}</div>
           </div>

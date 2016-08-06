@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160517231943) do
+ActiveRecord::Schema.define(version: 20160806190146) do
 
   create_table "areas", force: :cascade do |t|
     t.string   "name"
@@ -190,6 +190,7 @@ ActiveRecord::Schema.define(version: 20160517231943) do
     t.datetime "updated_at",             null: false
     t.string   "aasm_state"
     t.integer  "quantity",   default: 1, null: false
+    t.text     "note"
   end
 
   create_table "orders", force: :cascade do |t|
