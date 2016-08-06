@@ -77,6 +77,7 @@ angular.module('foodmashApp.directives')
 						selectedDish["item"]["id"] = parseInt(combo["combo_dishes"][i].dish.id, 10);
 						selectedDish["item"]["name"] = combo["combo_dishes"][i].dish.name;
 						selectedDish["item"]["dish_type_id"] = combo["combo_dishes"][i].dish.dish_type_id;
+						selectedDish["item"]["restaurant"] = combo["combo_dishes"][i].dish.restaurant;
 						selectedDish["item"]["price"] = parseFloat(combo["combo_dishes"][i].dish.price);
 						selectedDish["added_at"] = Date.now();
 						selectedDish["quantity"] = combo["combo_dishes"][i].quantity;
@@ -104,6 +105,7 @@ angular.module('foodmashApp.directives')
 								selectedDish["item"]["id"] = parseInt(lowest_combo_option_dish.dish.id, 10);
 								selectedDish["item"]["name"] = lowest_combo_option_dish.dish.name;
 								selectedDish["item"]["dish_type_id"] = lowest_combo_option_dish.dish.dish_type_id;
+								selectedDish["item"]["restaurant"] = lowest_combo_option_dish.dish.restaurant;
 								selectedDish["item"]["price"] = parseFloat(lowest_combo_option_dish.dish.price);
 							}
 							selectedDish["added_at"] = Date.now();
@@ -129,6 +131,7 @@ angular.module('foodmashApp.directives')
 						selectedDish["item"]["id"] = parseInt(lowest_non_compulsory_combo_option_dish.dish.id, 10);
 						selectedDish["item"]["name"] = lowest_non_compulsory_combo_option_dish.dish.name;
 						selectedDish["item"]["dish_type_id"] = lowest_non_compulsory_combo_option_dish.dish.dish_type_id;
+						selectedDish["item"]["restaurant"] = lowest_non_compulsory_combo_option_dish.dish.restaurant;
 						selectedDish["item"]["price"] = parseFloat(lowest_non_compulsory_combo_option_dish.dish.price);
 						selectedDish["added_at"] = Date.now();
 						selectedDish["quantity"] = 1;
