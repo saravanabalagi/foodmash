@@ -28,13 +28,13 @@ angular.module('foodmashApp.directives')
             $scope.selectBread = function(bread, orderItem) {
                 $scope.selectedBread = bread;
                 orderItem["note"]["selectedBread"]= $scope.selectedBread;
-                console.log($scope.selectedBread);
-                console.log(orderItem);
+                //console.log($scope.selectedBread);
+                //console.log(orderItem);
             };
             $scope.selectBreadToastType = function(type, orderItem) {
                 $scope.selectedBreadToastType = type;
                 orderItem["note"]["selectedBreadToastType"]= $scope.selectedBreadToastType;
-                console.log($scope.selectedBreadToastType);
+                //console.log($scope.selectedBreadToastType);
             };
             $scope.selectVeggie = function(veggie, orderItem) {
                 if($scope.subwayVeggies.indexOf(veggie)==0) {
@@ -50,7 +50,7 @@ angular.module('foodmashApp.directives')
                 }
                 if($scope.selectedVeggies.length==0) $scope.selectedVeggies.push($scope.subwayVeggies[0]);
                 orderItem["note"]["selectedVeggies"]= $scope.selectedVeggies;
-                console.log($scope.selectedVeggies);
+                //console.log($scope.selectedVeggies);
             };
             $scope.selectSauce = function(sauce, orderItem) {
                 var index = $scope.selectedSauces.indexOf(sauce);
@@ -58,7 +58,7 @@ angular.module('foodmashApp.directives')
                 else $scope.selectedSauces.push(sauce);
                 if($scope.selectedSauces.length>5) { $scope.selectedSauces.splice($scope.selectedSauces.length-1,1); return false; }
                 orderItem["note"]["selectedSauces"]= $scope.selectedSauces;
-                console.log($scope.selectedSauces);
+                //console.log($scope.selectedSauces);
             };
 
             $scope.isSelectedBread = function(bread){ return $scope.selectedBread == bread; };
@@ -227,6 +227,7 @@ angular.module('foodmashApp.directives')
             $scope.hasSubway = function() {
                 var isSubwayPresent = false;
                 for(var i=0;i<$scope.order.order_items.length;i++){
+                    //console.log($scope.order.order_items[i].item.restaurant.name);
                     if($scope.order.order_items[i].item.restaurant.name.indexOf('Subway') > -1)
                         isSubwayPresent = true;
                 }
