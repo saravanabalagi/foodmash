@@ -498,20 +498,27 @@ footer {
       }
       .attached-note { color: $success-green; }
       .add-note-wrapper {
-        padding: 0 10px 15px;
+        max-width: 100%;
+        padding: 20px 15px;
         position: absolute;
         z-index: 99;
+        left: 0; right: 0;
         background: rgba(255,255,255,0.95);
         border-radius: 10px;
         border: 10px solid rgba(0,0,0,0.3);
         width: 400px;
         text-align: center;
-        .add-note { width:70%; text-align: left; margin-right: 10px; display: inline-block; }
+        .add-note {
+          width: 70%;
+          text-align: left;
+          display: inline-block;
+          margin: 0;
+        }
         .extras {
           label {
             input[type='checkbox'] { margin-right: 5px;}
             input[type='radio'] { margin-right: 5px;}
-            margin: 0px 5px;
+            margin: 0 5px;
           }
           .extras-table {
             margin: auto;

@@ -1,22 +1,21 @@
 
   <td>{{$index + 1}}</td>
   <td>
-    <div class="combo">
+    <div class="combo" ng-init="order.note=getNoteJson()">
       <span class="combo-name">{{order.product.name}}</span>
       <div ng-repeat="order_item in order.order_items">
-        <span>{{order_item.quantity}} x {{order_item.item.name}}
-          <i ng-show="order_item.item.restaurant.name.indexOf('Subway')>-1" class="fa fa-paperclip"></i>
-        </span>
+        <span>{{order_item.quantity}} x {{order_item.item.name}}</span>
       </div>
-      <span ng-show="order.note" class="attached-note" data-title="Attached Note" data-content="{{order.note}}" data-toggle="popover" data-trigger="hover" data-placement="bottom"><i class="fa fa-paperclip"></i> Note Attached</span>
+      <span ng-show="order.note.extras" class="attached-note" data-title="Attached Note" data-content="{{order.note.extras}}" data-toggle="popover" data-trigger="hover" data-placement="bottom"><i class="fa fa-paperclip"></i> Note Attached</span>
       <a class="btn btn-primary" ng-init="showNote=false" ng-click="showNote=!showNote"><i class="fa fa-edit"></i>Note</a>
       <div class="add-note-wrapper" ng-show="showNote">
         <div class="form-group label-floating is-empty add-note">
           <label class="control-label">Note</label>
-          <input class="form-control" type="text" ng-model="order.note">
+          <input class="form-control" type="text" ng-model="order.note.extras">
           <p class="help-block">Add your preferences</p>
           <span class="material-input"></span>
         </div>
+        <!--<div class="extras">-->
         <div class="extras" ng-show="hasSubway()">
           <div class="combo-option-tabs">
             <div class="tab" ng-repeat="t in subwayTabs" ng-class="{'active': checkIfSubwayTabSelected(t)}" ng-click="selectSubwayTab(t)">{{t}}</div>
@@ -24,8 +23,8 @@
           <table class="extras-table bread" ng-show="checkIfSubwayTabSelected('Bread')">
             <tbody>
             <tr data-ng-repeat="type in subwayBreadToastTypes" ng-if="$even" style="margin-top:10px">
-              <td><label><input type="radio" ng-click="selectBreadToastType(subwayBreadToastTypes[$index])" ng-checked="isSelectedBreadToastType(subwayBreadToastTypes[$index])" name="subway-bread-type" value="{{subwayBreadToastTypes[$index]}}">{{subwayBreadToastTypes[$index]}}</label></td>
-              <td><label><input type="radio" ng-click="selectBreadToastType(subwayBreadToastTypes[$index+1])" ng-checked="isSelectedBreadToastType(subwayBreadToastTypes[$index+1])" name="subway-bread-type" value="{{subwayBreadToastTypes[$index+1]}}">{{subwayBreadToastTypes[$index+1]}}</label></td>
+              <td><label><input type="radio" ng-click="selectBreadToastType(subwayBreadToastTypes[$index], order)" ng-checked="isSelectedBreadToastType(subwayBreadToastTypes[$index])" name="subway-bread-type" value="{{subwayBreadToastTypes[$index]}}">{{subwayBreadToastTypes[$index]}}</label></td>
+              <td><label><input type="radio" ng-click="selectBreadToastType(subwayBreadToastTypes[$index+1], order)" ng-checked="isSelectedBreadToastType(subwayBreadToastTypes[$index+1])" name="subway-bread-type" value="{{subwayBreadToastTypes[$index+1]}}">{{subwayBreadToastTypes[$index+1]}}</label></td>
             </tr>
             <tr>
               <td><br /></td>
@@ -34,24 +33,24 @@
             </tbody>
             <tbody>
             <tr data-ng-repeat="bread in subwayBreads" ng-if="$even">
-              <td><label><input type="radio" ng-click="selectBread(subwayBreads[$index])" ng-checked="isSelectedBread(subwayBreads[$index])" name="subway-bread" value="{{subwayBreads[$index]}}">{{subwayBreads[$index]}}</label></td>
-              <td><label><input type="radio" ng-click="selectBread(subwayBreads[$index+1])" ng-checked="isSelectedBread(subwayBreads[$index+1])" name="subway-bread" value="{{subwayBreads[$index+1]}}">{{subwayBreads[$index+1]}}</label></td>
+              <td><label><input type="radio" ng-click="selectBread(subwayBreads[$index], order)" ng-checked="isSelectedBread(subwayBreads[$index])" name="subway-bread" value="{{subwayBreads[$index]}}">{{subwayBreads[$index]}}</label></td>
+              <td><label><input type="radio" ng-click="selectBread(subwayBreads[$index+1], order)" ng-checked="isSelectedBread(subwayBreads[$index+1])" name="subway-bread" value="{{subwayBreads[$index+1]}}">{{subwayBreads[$index+1]}}</label></td>
             </tr>
             </tbody>
           </table>
           <table class="extras-table sauce" ng-show="checkIfSubwayTabSelected('Sauce')">
             <tbody>
             <tr data-ng-repeat="sauce in subwaySauces" ng-if="$even">
-              <td><label><input type="checkbox" ng-disabled="selectedSauces.length>=5 && !isSelectedSauce(subwaySauces[$index])" ng-click="selectSauce(subwaySauces[$index])" ng-checked="isSelectedSauce(subwaySauces[$index])" name="subway-sauces" value="{{subwaySauces[$index]}}">{{subwaySauces[$index]}}</label></td>
-              <td><label><input type="checkbox" ng-disabled="selectedSauces.length>=5 && !isSelectedSauce(subwaySauces[$index+1])" ng-click="selectSauce(subwaySauces[$index+1])" ng-checked="isSelectedSauce(subwaySauces[$index+1])" name="subway-sauces" value="{{subwaySauces[$index+1]}}">{{subwaySauces[$index+1]}}</label></td>
+              <td><label><input type="checkbox" ng-disabled="selectedSauces.length>=5 && !isSelectedSauce(subwaySauces[$index])" ng-click="selectSauce(subwaySauces[$index], order)" ng-checked="isSelectedSauce(subwaySauces[$index])" name="subway-sauces" value="{{subwaySauces[$index]}}">{{subwaySauces[$index]}}</label></td>
+              <td><label><input type="checkbox" ng-disabled="selectedSauces.length>=5 && !isSelectedSauce(subwaySauces[$index+1])" ng-click="selectSauce(subwaySauces[$index+1], order)" ng-checked="isSelectedSauce(subwaySauces[$index+1])" name="subway-sauces" value="{{subwaySauces[$index+1]}}">{{subwaySauces[$index+1]}}</label></td>
             </tr>
             </tbody>
           </table>
           <table class="extras-table veggies" ng-show="checkIfSubwayTabSelected('Veggies')">
             <tbody>
             <tr data-ng-repeat="veggie in subwayVeggies" ng-if="$even">
-              <td><label><input type="checkbox" ng-click="selectVeggie(subwayVeggies[$index])" ng-checked="isSelectedVeggie(subwayVeggies[$index])" name="subway-veggies" value="{{subwayVeggies[$index]}}">{{subwayVeggies[$index]}}</label></td>
-              <td><label><input type="checkbox" ng-click="selectVeggie(subwayVeggies[$index+1])" ng-checked="isSelectedVeggie(subwayVeggies[$index+1])" name="subway-veggies" value="{{subwayVeggies[$index+1]}}">{{subwayVeggies[$index+1]}}</label></td>
+              <td><label><input type="checkbox" ng-click="selectVeggie(subwayVeggies[$index], order)" ng-checked="isSelectedVeggie(subwayVeggies[$index])" name="subway-veggies" value="{{subwayVeggies[$index]}}">{{subwayVeggies[$index]}}</label></td>
+              <td><label><input type="checkbox" ng-click="selectVeggie(subwayVeggies[$index+1], order)" ng-checked="isSelectedVeggie(subwayVeggies[$index+1])" name="subway-veggies" value="{{subwayVeggies[$index+1]}}">{{subwayVeggies[$index+1]}}</label></td>
             </tr>
             </tbody>
           </table>

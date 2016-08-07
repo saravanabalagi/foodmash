@@ -25,9 +25,18 @@ angular.module('foodmashApp.directives')
             $scope.selectedVeggies = [$scope.subwayVeggies[0]];
             $scope.selectedSauces = [];
 
-            $scope.selectBread = function(bread) { $scope.selectedBread = bread; console.log($scope.selectedBread);};
-            $scope.selectBreadToastType = function(type) { $scope.selectedBreadToastType = type; console.log($scope.selectedBreadToastType);};
-            $scope.selectVeggie = function(veggie) {
+            $scope.selectBread = function(bread, orderItem) {
+                $scope.selectedBread = bread;
+                orderItem["note"]["selectedBread"]= $scope.selectedBread;
+                console.log($scope.selectedBread);
+                console.log(orderItem);
+            };
+            $scope.selectBreadToastType = function(type, orderItem) {
+                $scope.selectedBreadToastType = type;
+                orderItem["note"]["selectedBreadToastType"]= $scope.selectedBreadToastType;
+                console.log($scope.selectedBreadToastType);
+            };
+            $scope.selectVeggie = function(veggie, orderItem) {
                 if($scope.subwayVeggies.indexOf(veggie)==0) {
                     $scope.selectedVeggies = [$scope.subwayVeggies[0]];
                     return;
@@ -40,13 +49,15 @@ angular.module('foodmashApp.directives')
                     $scope.selectedVeggies.push(veggie);
                 }
                 if($scope.selectedVeggies.length==0) $scope.selectedVeggies.push($scope.subwayVeggies[0]);
+                orderItem["note"]["selectedVeggies"]= $scope.selectedVeggies;
                 console.log($scope.selectedVeggies);
             };
-            $scope.selectSauce = function(sauce) {
+            $scope.selectSauce = function(sauce, orderItem) {
                 var index = $scope.selectedSauces.indexOf(sauce);
                 if(index>-1) $scope.selectedSauces.splice(index,1);
                 else $scope.selectedSauces.push(sauce);
                 if($scope.selectedSauces.length>5) { $scope.selectedSauces.splice($scope.selectedSauces.length-1,1); return false; }
+                orderItem["note"]["selectedSauces"]= $scope.selectedSauces;
                 console.log($scope.selectedSauces);
             };
 
@@ -54,6 +65,16 @@ angular.module('foodmashApp.directives')
             $scope.isSelectedBreadToastType = function(type){ return $scope.selectedBreadToastType == type; };
             $scope.isSelectedVeggie = function(veggie){ return $scope.selectedVeggies.indexOf(veggie)>-1; };
             $scope.isSelectedSauce = function(sauce){ return $scope.selectedSauces.indexOf(sauce)>-1; };
+
+            $scope.getNoteJson = function() {
+                var note = {};
+                note["selectedBread"] = $scope.selectedBread;
+                note["selectedBreadToastType"] = $scope.selectedBreadToastType;
+                note["selectedVeggies"] = $scope.selectedVeggies;
+                note["selectedSauces"] = $scope.selectedSauces;
+                note["extras"] = "";
+                return note;
+            };
 
             $scope.selectedSubwayTab = $scope.subwayTabs[0];
 			$scope.fillingOrder = false;
@@ -201,7 +222,7 @@ angular.module('foodmashApp.directives')
 					}
 				}
 				return -1;
-			};
+			}
 
             $scope.hasSubway = function() {
                 var isSubwayPresent = false;
