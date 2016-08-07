@@ -41,7 +41,7 @@ class Web::PackagingCentresController < ApplicationController
 	def get_carts_for_centre
 		@carts = @packaging_centre.get_carts_for_centre
 		if @carts
-			render status: 200, json: @carts.as_json(:include => [{:orders => {:include => [{:order_items => {:include => [{:item => {:include => {:restaurant => {only: [:id, :name, :area_id, :landline]}}, only: [:id, :name, :price]}}], only: [:id, :quantity]} } ,:product => {only: [:id, :name, :price]}], only: [:id, :quantity, :total, :updated_at, :note]} }, :user, :delivery_address => {:include => [:area => {:include => [:city]}]}], only: [:id, :total, :payment_method, :order_id, :aasm_state, :purchased_at, :grand_total, :vat, :delivery_charge, :delivered_at, :promo_discount, :mash_cash, :awarded_mash_cash])
+			render status: 200, json: @carts.as_json(:include => [{:orders => {:include => [{:order_items => {:include => [{:item => {:include => {:restaurant => {only: [:id, :name, :area_id, :landline]}}, only: [:id, :name, :price]}}], only: [:id, :quantity, :note]} } ,:product => {only: [:id, :name, :price]}], only: [:id, :quantity, :total, :updated_at, :note]} }, :user, :delivery_address => {:include => [:area => {:include => [:city]}]}], only: [:id, :total, :payment_method, :order_id, :aasm_state, :purchased_at, :grand_total, :vat, :delivery_charge, :delivered_at, :promo_discount, :mash_cash, :awarded_mash_cash])
 		else
 			render status: 404, json: {error: "Could not fetch carts!"}
 		end
