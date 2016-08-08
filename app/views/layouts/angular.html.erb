@@ -84,7 +84,7 @@
       <div class="container-fluid">
         <div class="navbar-header pull-left">
           <ul class="nav navbar-nav sidebar-options-wrapper pull-left">
-            <li class="sidebar-options" onclick="sidebarToggle()"><a><i class="fa fa-bars"></i></a></li>
+            <li ng-show="checkIfSideBarPresent()" class="sidebar-options" onclick="sidebarToggle()"><a><i class="fa fa-bars"></i></a></li>
           </ul>
           <a class="navbar-brand" ng-click="routeToRoot()">
             <img src="assets/logo_transparent.png" />
