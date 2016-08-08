@@ -16,7 +16,7 @@
           <span class="material-input"></span>
         </div>
         <!--<div class="extras">-->
-        <div class="extras" ng-show="hasSubway()">
+        <div class="extras" ng-if="hasSubway()">
           <div class="combo-option-tabs">
             <div class="tab" ng-repeat="t in subwayTabs" ng-class="{'active': checkIfSubwayTabSelected(t)}" ng-click="selectSubwayTab(t)">{{t}}</div>
           </div>
