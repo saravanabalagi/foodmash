@@ -279,7 +279,7 @@ h3, .h3 {
     .form-group {
       position: relative;
       .input-search-icon {
-        font-size: 20px;
+        font-size: 23px;
         position: absolute;
         top: 0;
         bottom: 0;
@@ -298,7 +298,7 @@ h3, .h3 {
   .navbar {
     margin-bottom: 0;
     .nav.navbar-nav { margin: 0; }
-    .username, .cart { display:none; }
+    .username, .cart, .location-name { display:none; }
     .navbar-search-form { margin:0; display: inline-block; }
     // .input-search { display: inline-block; width: 90%; }
     .navbar-header ul.pull-left li.dropdown.pull-left {

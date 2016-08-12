@@ -1,74 +1,75 @@
-<div class="sidebar-wrapper sidebar-open" ng-init="load()">
-    <div class="sidebar">
-        <section class="sidebar-section">
-            <h5>Deliver to</h5>
-            <ul class="sidebar-nav location">
-                <li>
-                    <a ng-click="fadeInLoader()" data-title="Delivery Location" data-container="body"
-                       data-content="Location to which you want your meal delivered" data-toggle="popover"
-                       data-trigger="hover" data-placement="right">
-                        <span>{{selectedArea.name}}</span>
-                        <i class="fa fa-map-marker pull-right"></i>
-                    </a>
-                </li>
-               <!--  <li ng-if="currentUser">
-                    <a data-title="MashCash" data-container="body"
-                       data-content="Mash Cash can be used as real cash within Foodmash" data-toggle="popover"
-                       data-trigger="hover" data-placement="right">
-                        <span>MashCash</span>
-                        <span class="mash-cash-container pull-right">{{floatToInt(currentUser.mash_cash) | number}}</span>
-                    </a>
-                </li> -->
-            </ul>
-        </section>
-        <section class="sidebar-section">
-            <h5>Type</h5>
-            <ul class="sidebar-nav group-size">
-                <li ng-repeat="option in mainOptions" ng-class="{active: checkIfOptionSelected(option)}"
-                    ng-click="addOrRemoveFilters(option)">
-                    <a>
-                        <span>{{option.name}}</span>
-                        <i class="{{option.icon_class}}"></i>
-                    </a>
-                </li>
-            </ul>
-        </section>
-   <!--  <section class="sidebar-section">
-      <h5>Size</h5>
-      <ul class="sidebar-nav group-size">
-        <li ng-repeat="option in sizeOptions" ng-class="{active: checkIfOptionSelected(option)}" ng-click="addOrRemoveFilters(option)">
-          <a>
-            <span>{{option.name}}</span>
-            <i class="{{option.icon_class}}" style="{{option.style}}"></i>
-          </a>
-        </li>
-      </ul>
-    </section> -->
-    <!-- <section class="sidebar-section">
-      <h5>Preference</h5>
-      <ul class="sidebar-nav type">
-        <li ng-repeat="option in preferenceOptions" ng-class="{active: checkIfOptionSelected(option)}" 
-        ng-click="addOrRemoveFilters(option)">
-          <a>
-            <span>{{option.name}}</span>
-            <i class="{{option.icon_class}}"></i>
-          </a>
-        </li>
-      </ul>
-    </section> -->
-    <!-- <section class="sidebar-section">
-      <h5>Price</h5>
-      <ul class="sidebar-nav price">
-        <li ng-repeat="option in sortOptions" ng-click="selectSortOption(option)" ng-class="{'active': checkIfSortOptionSelected(option)}">
-          <a>
-            <span>{{option.name}}</span>
-            <i class="{{option.icon_class}}"></i>
-          </a>
-        </li>
-      </ul>
-    </section> -->
-  </div>
-</div>
+<!--Disabling sidebar on mainpage-->
+<!--<div class="sidebar-wrapper sidebar-open" ng-init="load()">-->
+    <!--<div class="sidebar">-->
+        <!--<section class="sidebar-section">-->
+            <!--<h5>Deliver to</h5>-->
+            <!--<ul class="sidebar-nav location">-->
+                <!--<li>-->
+                    <!--<a ng-click="fadeInLoader()" data-title="Delivery Location" data-container="body"-->
+                       <!--data-content="Location to which you want your meal delivered" data-toggle="popover"-->
+                       <!--data-trigger="hover" data-placement="right">-->
+                        <!--<span>{{selectedArea.name}}</span>-->
+                        <!--<i class="fa fa-map-marker pull-right"></i>-->
+                    <!--</a>-->
+                <!--</li>-->
+               <!--&lt;!&ndash;  <li ng-if="currentUser">-->
+                    <!--<a data-title="MashCash" data-container="body"-->
+                       <!--data-content="Mash Cash can be used as real cash within Foodmash" data-toggle="popover"-->
+                       <!--data-trigger="hover" data-placement="right">-->
+                        <!--<span>MashCash</span>-->
+                        <!--<span class="mash-cash-container pull-right">{{floatToInt(currentUser.mash_cash) | number}}</span>-->
+                    <!--</a>-->
+                <!--</li> &ndash;&gt;-->
+            <!--</ul>-->
+        <!--</section>-->
+        <!--<section class="sidebar-section">-->
+            <!--<h5>Type</h5>-->
+            <!--<ul class="sidebar-nav group-size">-->
+                <!--<li ng-repeat="option in mainOptions" ng-class="{active: checkIfOptionSelected(option)}"-->
+                    <!--ng-click="addOrRemoveFilters(option)">-->
+                    <!--<a>-->
+                        <!--<span>{{option.name}}</span>-->
+                        <!--<i class="{{option.icon_class}}"></i>-->
+                    <!--</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</section>-->
+   <!--&lt;!&ndash;  <section class="sidebar-section">-->
+      <!--<h5>Size</h5>-->
+      <!--<ul class="sidebar-nav group-size">-->
+        <!--<li ng-repeat="option in sizeOptions" ng-class="{active: checkIfOptionSelected(option)}" ng-click="addOrRemoveFilters(option)">-->
+          <!--<a>-->
+            <!--<span>{{option.name}}</span>-->
+            <!--<i class="{{option.icon_class}}" style="{{option.style}}"></i>-->
+          <!--</a>-->
+        <!--</li>-->
+      <!--</ul>-->
+    <!--</section> &ndash;&gt;-->
+    <!--&lt;!&ndash; <section class="sidebar-section">-->
+      <!--<h5>Preference</h5>-->
+      <!--<ul class="sidebar-nav type">-->
+        <!--<li ng-repeat="option in preferenceOptions" ng-class="{active: checkIfOptionSelected(option)}" -->
+        <!--ng-click="addOrRemoveFilters(option)">-->
+          <!--<a>-->
+            <!--<span>{{option.name}}</span>-->
+            <!--<i class="{{option.icon_class}}"></i>-->
+          <!--</a>-->
+        <!--</li>-->
+      <!--</ul>-->
+    <!--</section> &ndash;&gt;-->
+    <!--&lt;!&ndash; <section class="sidebar-section">-->
+      <!--<h5>Price</h5>-->
+      <!--<ul class="sidebar-nav price">-->
+        <!--<li ng-repeat="option in sortOptions" ng-click="selectSortOption(option)" ng-class="{'active': checkIfSortOptionSelected(option)}">-->
+          <!--<a>-->
+            <!--<span>{{option.name}}</span>-->
+            <!--<i class="{{option.icon_class}}"></i>-->
+          <!--</a>-->
+        <!--</li>-->
+      <!--</ul>-->
+    <!--</section> &ndash;&gt;-->
+  <!--</div>-->
+<!--</div>-->
 
 
 <div class="container">
