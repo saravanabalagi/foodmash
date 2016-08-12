@@ -131,10 +131,10 @@
 
     <div class="content-layout">
       <div ng-view></div>
-      <div class="footer-push"></div>
+      <div class="footer-push" ng-hide="footerDisabled()"></div>
     </div>
 
-    <footer>
+    <footer ng-hide="footerDisabled()">
       <span>&copy; Copyright 2015.</span>
       <span>Meals on Wheels Technology LLP.</span>
       <span>All rights reserved.</span>

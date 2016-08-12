@@ -57,6 +57,12 @@ angular.module('foodmashApp.controllers')
 			});
 		};
 
+        $scope.footerDisabled = function() {
+            var current_path = $location.path();
+            if(current_path == '/combo-description') return true;
+            else return false;
+        };
+
 		$scope.checkIfSideBarPresent = function(){
 			var current_path = $location.path();
 			if(

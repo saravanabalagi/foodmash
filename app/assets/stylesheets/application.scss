@@ -1780,6 +1780,16 @@ input.is-phone { width: calc(100% - 45px) !important; }
 }
 
 .add-to-cart-wrapper { text-align: center; }
+@media (max-width: 768px) {
+  .combo-option-contents.row { padding-bottom: 25px; }
+  .add-to-cart-wrapper {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: 9999;
+    background: rgba(0,0,0,1);
+  }
+}
 /*CSS for combo-description ends*/
 
 /*CSS for legalese ends*/
