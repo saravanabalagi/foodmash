@@ -1,6 +1,8 @@
 <a ng-if="currentUser" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
   <span class="username">{{currentUser.name.split(' ')[0]}}</span><i class="fa fa-user fa-append"></i><span class="caret"></span></a>
 <ul ng-if="currentUser" class="dropdown-menu">
+  <li ng-show="checkIfSideBarPresent()" ng-click="fadeInLoader()"><a><i class="fa fa-map-marker pull-right"></i> {{selectedArea.name}} </a></li>
+  <li ng-show="checkIfSideBarPresent()" role="separator" class="divider"></li>
   <li ng-click="routToProfile()"><a><i class="fa fa-user pull-right"></i> Account </a></li>
   <li ng-click="routeToCustomerPanel()"><a><i class="fa fa-shopping-bag pull-right"></i> Order History </a></li>
   <li ng-if="hasRolesForPanel()" ng-click="routeToPanel()"><a><i class="fa fa-wrench pull-right"></i> Panel </a></li>
