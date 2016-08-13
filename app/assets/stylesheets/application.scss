@@ -665,7 +665,7 @@ footer {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .loader {
     div.loader-wrapper {
       .choose-delivery-location-wrapper {
@@ -984,6 +984,12 @@ footer {
 }
 @media(max-width:500px) { .order-description { padding: 10px !important; } }
 @media(max-width:767px) { .order-history { padding: 0; } }
+@media(max-width:374px) { .table-order-history .order-id {
+  max-width: 85px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+} }
 /*CSS for order history*/
 
 
@@ -1553,7 +1559,7 @@ input.is-phone { width: calc(100% - 45px) !important; }
   body.sidebar-body { padding-left: 200px; }
   .sidebar-wrapper { width: 200px; }
 }
-@media(min-width:768px) {
+@media(min-width:767px) {
   body.sidebar-body { padding-left:150px; }
   .sidebar-wrapper { top: 50px; width:150px; }
   .sidebar-wrapper + .container { width: 600px }
@@ -1583,7 +1589,7 @@ input.is-phone { width: calc(100% - 45px) !important; }
 }
 
 //Disable hover for smaller devices
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .sidebar-wrapper section > ul.sidebar-nav > li
   {
     &.active {
@@ -1780,7 +1786,7 @@ input.is-phone { width: calc(100% - 45px) !important; }
 }
 
 .add-to-cart-wrapper { text-align: center; }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .combo-option-contents.row { padding-bottom: 25px; }
   .add-to-cart-wrapper {
     position: fixed;
@@ -1815,5 +1821,27 @@ input.is-phone { width: calc(100% - 45px) !important; }
   .caption { padding: 20px 9px 9px 9px; }
 }
 /*CSS for legalese ends*/
+
+/*CSS for user-panel ends*/
+.dropdown-menu {
+  .divider {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(229, 229, 229, 1);
+  }
+}
+@media (max-width: 767px) {
+  .navbar .navbar-nav .open .dropdown-menu {
+    .divider {
+      border-bottom: 1px solid;
+      opacity: 0.3;
+      width: 100%;
+      border-left: 30px solid transparent;
+      border-right: 50px solid transparent;
+    }
+  }
+}
+/*CSS for user-panel ends*/
 
 

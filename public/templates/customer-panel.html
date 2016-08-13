@@ -36,7 +36,7 @@
             <th><i class="fa fa-fw fa-check-circle"></i></th>
             <th>
               <div class="form-group label-floating is-empty">
-                <label class="control-label">Order ID</label>
+                <label class="control-label order-id">Order ID</label>
                 <input class="form-control" type="text">
                 <span class="material-input"></span>
               </div>
@@ -60,7 +60,7 @@
           <tbody>
           <tr ng-repeat="cart in carts" ng-click="selectCart(cart)" ng-class="{'active' : checkIfCartSelected(cart)}">
             <td><i class="{{getStatusIcon(cart.aasm_state)}}" data-toggle="tooltip" title="{{getStatusAlias(cart.aasm_state)}}" data-delay="{'show': 1}" data-placement="right"></i></td>
-            <td>{{cart.order_id}}</td>
+            <td class="order-id">{{cart.order_id}}</td>
             <td>{{cart.grand_total}}</td>
             <td>{{cart.purchased_at | date: 'MMM dd, yyyy HH:mm'}}</td>
           </tr>
