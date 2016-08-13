@@ -83,10 +83,9 @@
   <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
       <div class="container-fluid">
         <div class="navbar-header pull-left">
-          <!--Disabling sidebar toggle temp-->
-          <!--<ul class="nav navbar-nav sidebar-options-wrapper pull-left">-->
-            <!--<li ng-show="checkIfSideBarPresent()" class="sidebar-options" onclick="sidebarToggle()"><a><i class="fa fa-bars"></i></a></li>-->
-          <!--</ul>-->
+          <ul ng-show="checkIfSideBarPresent()" class="nav navbar-nav sidebar-options-wrapper pull-left">
+            <li class="sidebar-options" onclick="sidebarToggle()"><a><i class="fa fa-bars"></i></a></li>
+          </ul>
           <a class="navbar-brand" ng-click="routeToRoot()">
             <img src="assets/logo_transparent.png" />
             <span class="logo-white">Food</span><span class="logo-red">mash</span>
@@ -94,7 +93,7 @@
         </div>
 
         <div class="navbar-header pull-right">
-          <ul class="nav navbar-nav pull-left">
+          <ul ng-hide="checkIfSideBarPresent()" class="nav navbar-nav pull-left">
             <li><a ng-click="fadeInLoader()">
               <span class="location-name">{{selectedArea.name}}</span>
               <i class="fa fa-map-marker fa-append"></i>
