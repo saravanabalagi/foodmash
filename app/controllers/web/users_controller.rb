@@ -1,16 +1,21 @@
 class Web::UsersController < ApplicationController
 	respond_to :json
-	rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
+  rescue_from ActiveRecord::RecordNotFound, with: :invalid_data
+	rescue_from CanCan::AccessDenied, with: :forbidden_request
 	prepend_before_filter :authenticate_user_from_token!, only: [:get_otp, :verify_otp]
 	before_filter :set_user, only: :update
 	load_and_authorize_resource skip_load_resource
 
 	def index
-		@users = User.where(params.permit(:id, :email))
-		if @users
-			render status: 200, json: @users.as_json(:include => [{:roles => {:include => :resource}}], except: [:otp])
+		if params[:id].present? || (@current_user && (@current_user.has_role? :super_admin))
+			@users = User.where(params.permit(:id, :email))
+			if @users
+				render status: 200, json: @users.as_json(:include => [{:roles => {:include => :resource}}], except: [:otp])
+			else
+				render status: 404, json: {error: "User not found!"}
+			end
 		else
-			render status: 404, json: {error: "User not found!"}
+			permission_denied
 		end
 	end
 

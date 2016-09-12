@@ -6,6 +6,12 @@ class Ability
     
       user ||= User.new # guest user (not logged in)
 
+      # if user.role == :super_admin
+      #   can :manage, :all
+      # elsif user.role == :restaurant_admin
+      #   can :read, :update, Restaurant,
+      # end
+
       can :manage, :all if user.has_role? :super_admin
 
       #abilities for restaurant_admin
@@ -48,9 +54,16 @@ class Ability
         user.id == cart.user_id and user.has_role? :customer
       end
 
-      can :manage, User do |u|
-        user.id == u.id
+      if user.has_role? :customer
+        can :manage, User, :id => user.id
       end
+
+      # can :manage, User do |u|
+      #   user.id == u.id and user.has_role? :customer
+      # end
+
+      # can :manage, User, :verified => true
+      # can :manage, User, :id => user.id
 
       can :manage, DeliveryAddress do |delivery_address|
         DeliveryAddress.pluck(:user_id).include? user.id
